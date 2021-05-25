@@ -1,0 +1,2 @@
+;;; Generated package description from pnpm-mode.el  -*- no-byte-compile: t -*-
+(define-package "pnpm-mode" "20200527.557" "Minor mode for working with pnpm projects" '((emacs "24.1")) :commit "391207e6505948b0d0cb57b802ee4885e3292c21" :authors '(("Rajasegar Chandran" . "rajasegar.c@gmail.com")) :maintainer '("Rajasegar Chandran" . "rajasegar.c@gmail.com") :keywords '("convenience" "project" "javascript" "node" "npm" "pnpm") :url "https://github.com/rajasegar/pnpm-mode")

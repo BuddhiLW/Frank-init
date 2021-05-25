@@ -1,0 +1,56 @@
+* Let's make JavaScript Funcional again
+
+** JavaScript was a Frankstein experiment
+- Embeding Scheme, with Java syntax, on the Netscape (Brandan Eich).
+
+** Let's learn Lambda Calculus, with Javascript.
+*** Function Abstraction
+**** Identity Function
+=λx.x= the identity function.
+
+This, in javascript, can be expressed as:
+#+begin_src javascript 
+  function (x) {
+      return x;
+  }
+#+end_src
+
+Or, with the =Arrow Function=
+
+#+begin_src javascript
+  const E =
+      x => x;
+#+end_src
+
+**** The exponential function
+=λy.y²=
+
+#+begin_src js
+  const Square =
+            y => y ** 2;
+#+end_src
+
+*** Functional Application
+=EA = E(A)=
+=EA = (λy.y²)(A)=
+#+begin_src js
+  const E =
+            y => (y ** 2);       // Abstraction.
+  E(A);                          // Application.
+#+end_src
+
+#+begin_src js
+  for (var i = 0; i < selected.length; i++) {
+      // Variable responsible to count selected items in one of the rolls
+      selected[i].addEventListener("click", function() {
+          if (buyImages.length > 0) {
+              buyImages[0].classList.remove("buy");
+              show[0].classList.remove("show");
+          }
+          this.classList.add("buy");
+          this.getElementsByClassName("animation-hidden")[0].classList.add("show");
+
+      });
+
+  };
+#+end_src

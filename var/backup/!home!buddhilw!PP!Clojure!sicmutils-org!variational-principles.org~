@@ -1,0 +1,204 @@
+#+AUTHOR: BuddhiLW
+#+STARTUP: latexpreview
+#+LATEX_HEADER: \usepackage{amsmath, physics}
+#+PROPERTY: header-args:clojure :tangle ./src/sicmutils_org/var-mechanics1.clj :mkdirp yes
+
+* Name Space (ns)
+#+begin_src clojure :tangle ./src/sicmutils_org/var-mechanics1.clj :mkdirp
+    (ns sicmutils-org.var-mechanics1
+      (:require [uncomplicate.neanderthal
+                 [native :refer [dv dge]]
+                 [core :refer [mv mm nrm2 dot axpy]]] ;; => sicmutils.env conflict with :refer pi
+                [sicmutils.env :as env]))
+  (env/bootstrap-repl!)
+#+end_src
+
+#+RESULTS:
+: class java.lang.IllegalStateException
+ 
+
+* Generalizes Coordinates
+** Mathematical representations
+#+begin_src clojure :tangle ./src/sicmutils_org/var-mechanics1.clj :mkdirp
+  (def render (comp ->infix simplify))
+
+  (square (sin (+ 'a 3)))
+  ;;=> (expt (sin (+ a 3)) 2)
+
+  (render (square (sin (+ 'a 3))))
+  ;;=> "sin²(a + 3)"
+#+end_src
+
+#+RESULTS:
+| class clojure.lang.Compiler$CompilerException |
+| class clojure.lang.Compiler$CompilerException |
+| class clojure.lang.Compiler$CompilerException |
+
+** Generalizes coordinates
+
+*** General form transformation
+Transformation to generalized coordinates:  $(x_1, x_2, \cdots, y_1, y_2, \cdots, z_1, z_2, \cdots) \rightarrow (q_1, q_2, \cdots, q_{3N})$.
+\begin{equation}
+\label{eq:rect-transf}
+  \begin{aligned}
+    \begin{cases}
+      x_1 &= f_1(q_1,...,q_{3N}) \\
+      & \vdots \\
+      z_N &= f_{3N}(q_1,...,q_{3N})  \\
+    \end{cases}
+  \end{aligned}
+\end{equation}                         
+**** Carterian to Polar
+Example, Cartesian to Polar coordinates transformation.
+c\begin{equation}
+  \begin{aligned}
+    \begin{cases}
+      x &= r \sin{\theta} \cos{\phi} \\      
+      y &= r \sin{\theta} \sin{\phi} \\
+      z &= r \cos{\theta} \\
+    \end{cases}
+  \end{aligned}
+\end{equation}                         
+
+Any transformation with validation has to meet the following condition:
++ The functions $f_{i}$ shall be finite.
++ Single valued.
++ Continuous.
++ Differentiable.
++ The Jacobian must be not zero, for atleast _one_ combination of $n$ functions.
+
+*** Constrains
+There can be $m$ constrains, in general form, out of the $n$ coordinates,
+\begin{equation}
+\phi_{i} (q_1, q_2, \cdots, q_n) = 0, \quad (i = 1, \cdots, m)
+\end{equation}
+
+The degree of freedoms, then, are: $n' = n - m$.
+
+** Configuration Space
+
+Let these be the solutions of motion,
+
+\begin{equation}
+  \begin{aligned}
+    \begin{cases}
+      x_1 &= f_1(t) \\
+      & \vdots \\
+      z_N &= f_{3N}(t)  \\
+    \end{cases}
+  \end{aligned}
+\end{equation}                         
+
+There exist, also, a curve, in the *Generalized Sonfiguration Space*, in which  
+
+\begin{equation}
+  \begin{aligned}
+    \begin{cases}
+      q_1 &= q_1(t) \\
+      & \vdots \\
+      q_n &= q_{n}(t)  \\
+    \end{cases}
+  \end{aligned}
+\end{equation}                         
+
+** Mapping of the space on itself
+
+It's possible to map also a generalized coordinates into another generalized coodinates.
+
+$(q_1, q_2, \cdots, q_{n}) \rightarrow (\overline{q}_1, \overline{q}_2, \cdots, \overline{q}_{n})$.
+
+This imply, analogous to \autoref{eq:rect-transf}, that there must a exist a correspondence, of the form,
+
+\begin{equation}
+\label{eq:general-transf}
+  \begin{aligned}
+    \begin{cases}
+      \overline{q}_1 &= f_1(q_1,...,q_{n}) \\
+      & \vdots \\
+      \overline{q}_n &= f_{n}(q_1,...,q_{n})  \\
+    \end{cases}
+  \end{aligned}
+\end{equation}                         
+
+In which, the diferential form,
+
+\begin{equation}
+\label{eq:general-diff}
+  \begin{aligned}
+    \begin{cases}
+      \textrm{d}\overline{q}_1 &=  \frac{\partial{f_1}}{\partial{q_1}} \textrm{d}q_1 +
+      \cdots + \frac{\partial{f_1}}{\partial{q_n}}\textrm{d}q_{n}\\
+      & \vdots \\
+      \textrm{d}\overline{q}_n &= \frac{\partial{f_n}}{\partial{q_1}} \textrm{d}q_1 +
+      \cdots + \frac{\partial{f_n}}{\partial{q_n}}\textrm{d}q_{n}  \\
+    \end{cases}
+  \end{aligned}
+\end{equation}                         
+
+satisfies  orginary regulatiry conditions,
++ The functions $f_{i}$ shall be finite.
++ Single valued.
++ Continuous.
++ Differentiable.
++ The Jacobian $\Delta$ must not be zero.
+
+\begin{equation}
+\mathbf{\Delta} =
+\begin{bmatrix}
+  \pdv{f_1}{q_1} &
+    \cdots &
+    \pdv{f_1}{q_n} \\%[1ex] % <-- 1ex more space between rows of matrix
+  \vdots &
+    \ddots &
+    \vdots \\%[1ex]
+  \pdv{f_n}{q_1} &
+    \cdots &
+    \pdv{f_n}{q_n}
+\end{bmatrix}
+\end{equation}
+
+That is, \texttt{These equations show that no matter what functional relations exist between the two sets of coordinates, their /differentials/ are always /linearly/ dependent}.
+
+See that $q \rightarrow \overline{q}$  /point-transformation/ is a isomorphic transformation. 
+
+#+CAPTION: q-space to $\overline{q}$-space
+#+attr_html: :width 400px
+#+attr_latex: :width 400px
+#+NAME:   fig:q-space-transform
+[[./resources/q-transfomation.jpeg]]
+
+** Programming of these concepts
+
+[[https://dragan.rocks/articles/17/Clojure-Linear-Algebra-Refresher-Matrix-Transformations][Matrix algebra]]  knowledge, using neanderthal library,
+
+$T: R^{3} \to R^{2}$ , in which $T(x,y,z) = (f_{1}(x,y,z), f_{2}(x,y,z))$, for example, $T(x,y,z)=(2x,y-z)$.
+
+For $T(1, 4, -2)$, we have $T(x, y, z)=(2*1, 4-(-2)) \Leftrightarrow T(x, y, z)=(2, 6)$.
+
+Let's program this behaviour
+#+begin_src clojure :tangle ./src/sicmutils_org/var-mechanics1.clj :mkdirp
+  (defn transformation-1 [x]
+   (dv (* 2.0 (x 0)) (- (x 1) (x 2))))
+#+end_src
+
+#+RESULTS:
+: #'sicmutils-org.var-mechanics1/transformation-1
+
+- The *dv* is implemented as a recursive call, and using Intel MKL (Math Kernel Library) to generate a vector.
+  + /Syntax/:  $[(x \, n) \Leftrightarrow x_{n}] \, \land  \, [<,> \Leftrightarrow <\textrm{space}>]$
+    + in this case, our function-body is structurely similar to $(2*x_{0}, x_{1} - x_{2})$.
+
+#+begin_src clojure :tangle ./src/sicmutils_org/var-mechanics1.clj :mkdirp
+  (transformation-1 (dv 1 4 -2))
+#+end_src
+
+#+RESULTS:
+: #RealBlockVector[double, n:2, offset: 0, stride:1]
+: [   2.00    6.00 ]
+
+#+begin_example
+: #RealBlockVector[double, n:2, offset: 0, stride:1]
+: [   2.00    6.00 ]
+#+end_example
+
+*** 

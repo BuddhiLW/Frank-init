@@ -1,0 +1,95 @@
+%%% Local Variables:
+%%% TeX-engine: xetex
+%%% TeX-master: ""
+%%% End:
+
+\documentclass[a5paper,11pt,landscape,parskip]{scrartcl}
+\usepackage[top=0cm, bottom=1cm, left=1cm, right=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage[brazilian]{babel}
+
+\pagestyle{empty}
+
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{10mm}
+
+\usepackage{tgheros}
+% \usepackage{Consolatas}
+\usepackage{yfonts}
+
+
+% \newcommand*{\myfont}{\fontfamily{frcursive}\selectfont}
+% \newcommand*{\myfontt}{}
+
+% \usepackage[default]{frcursive}
+\usepackage{calligra}
+\usepackage{fontspec}
+\usepackage{aurical}
+% \newfontfamily\foo{aurical}
+\DeclareTextFontCommand{\textfoo}{\foo}
+% \fontspec{texgyrepagella-regular.otf}[Mapping=tex-text]
+% \setmainfont{Cambria}
+% \setromanfont{Times New Roman}
+% \setsansfont{Arial}
+% \setmonofont[Color={0019D4}]{Courier New}
+% \setmainfont{QTBlackForest}
+% \setmainfont{QTBlackForest}
+% \setsansfont[Ligatures=TeX]{Arial}
+% \usepackage[default]{frcursive}
+
+% \selectfont
+\usepackage[pages=some]{background}
+% \backgroundsetup{
+% scale=1,
+% color=black,
+% opacity=0.4,
+% angle=0,
+% contents={%
+%   \includegraphics[width=\paperwidth,height=\paperheight]{./w1.jpg}
+%   }%
+% }
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% \usebackgroundtemplate{
+%   \includegraphics[width=\linewidth,
+%   height=\paperheight]{./w1-op1.jpg}
+% }
+
+\begin{document}
+% \clearpage
+% \begin{minipage}[t]{20cm}
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[opacity=0.30,inner sep=pt] at (current
+      page.center){\includegraphics[width=\paperwidth,height=1.1\paperheight]{w7.jpeg}};
+      % \node at (1,1) {\includegraphics[scale=1]{example-image-a}};
+      % \node at (1.5,1) {\includegraphics[scale=0.25]{example-image-b}};
+    \end{tikzpicture}
+    % \caption{Using Tikz Overlay}
+  \end{figure}
+% \end{minipage}
+
+\calligra\Huge
+    \begin{flushleft}
+      A época Natalina chegou...
+
+      {\fontsize{20}{20}\selectfont\Fontauri%\slshape
+        % \rmfamily %\normalfont
+        %\gothfamily\fraklines
+        {\fontsize{10}{10}\textinit{D}}esejo a todos uma reunião. Se
+        não pudermos nos reunir presencialmente, pelo menos que nos
+        reunamos onde mais importa, nos interesses; os valores; e os
+        princípios morais.
+
+        Que nos encontremos onde mais importa, na
+        Noosfera. Que façamos um Banquete que dê orgulho a Sócrates e
+        Platão. Pois, dessa maneira, começamos o ano em Eudaimonia
+        consigo e com os outros.}
+
+        \hspace*{0em}\kern -0.33em Wagner José \kern -0.22em
+        Branquinho,\\            \hspace*{0em}\kern -0.33em Feliz Natal!
+      \end{flushleft}
+\end{document}

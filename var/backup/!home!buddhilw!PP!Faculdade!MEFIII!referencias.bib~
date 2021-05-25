@@ -1,0 +1,12 @@
+@misc{forrest_2016, title={Moore's Law dead in 2021: Here's what the next revolution will mean}, url={https://www.techrepublic.com/article/moores-law-dead-in-2021-heres-what-the-next-revolution-will-mean/}, journal={TechRepublic}, publisher={TechRepublic}, author={Forrest, Conner}, year={2016}, month={Jul}}
+
+@article{moore2012computing,
+  title={Computing's power limit demonstrated},
+  author={Moore, Samuel K},
+  journal={IEEE Spectrum},
+  volume={49},
+  number={5},
+  pages={14--16},
+  year={2012},
+  publisher={IEEE}
+}

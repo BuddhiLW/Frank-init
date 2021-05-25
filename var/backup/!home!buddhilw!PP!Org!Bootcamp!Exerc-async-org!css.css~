@@ -1,0 +1,3 @@
+div.figure{
+    width: 640px;
+}

@@ -1,0 +1,60 @@
+#+TITLE: Aula 20;  弟二十课
+
+* 第二十课
+#+AUTHOR:老市:张小. 学生: 小白色 佩德罗.
+
+#+LATEX_COMPILER: xelatex
+#+LATEX_HEADER: \usepackage{xltxtra}
+#+LATEX_HEADER: \setmainfont{Source Han Sans CN}
+#+LATEX_HEADER: \usepackage{tikz}
+# #+LATEX_HEADER: \usepackage[edges]{forest}
+# #+LATEX_HEADER: \usepackage[all]{genealogytree}
+# #+LATEX_HEADER: \usetikzlibrary{shadows.blur}
+
+# 第二十课
+*** Revisão dos números
+(零)一 (二两) 三四五六七八九.
+líng, yī, (èr liǎng), sān, sì, wǔ, liù, qī, bā, jiǔ.
+
+
+
+*** Explicações e anotações
+- 你每天几点起床? nǐ{S.} měi tiān (jǐ diàn){h.} (qǐ chuáng){V.}?.
+  + 你 每天 几点 吃饭?  (...) chī fàn (refeição)
+  + 你 每天 几点 学汉语? (...) xué hàn kè (estudar aula de mandarim)
+  + 你 每天 几点 做作业. (...) 做作业 (zuò zuò yè) - lição de casa
+
+- 老市什么 zuò zuò yè?( lǎoshī, shènme zuò zuò yè?)
+  
+** Vocabulário
+**** Gramática
+S. + 每天 + h. + V.
+**** Horários do dia
+- 早上 (zǎo shang) [6h ~ 8/9h],  早 (cedinho) (crescente)
+  + 早晨 (zǎochen)
+- 上午 (shàng wǔ) [8/9h ~ 11h], (crescente) (sol)
+- 中午 (zhōng wǔ) [12h~13h], (meio) (sol)
+- 下午 (xià wǔ) [13h~17/18h], (descendente) (sol)
+- 晚上 (wǎn shang) [18h/19h~23h]
+- 夜里
+  - 半夜 (bàn yè) [24h~1h]
+  - 凌晨 (líng chén) [1h~5h]
+# * Cultura
+
+** Vocabulários extras do texto
+-  起床  qǐ chuáng
+- 时候 shíhou (momento)
+- 睡觉 shuì jiào (Ir à cama / dormir)
+
+** Refeições
++ 早饭 -> zǎo fàn [café da manhã]
++ 午饭 / 中饭-> wǔ fàn / zhōng fàn [almoço]
++ 晚饭 -> wǎn fàn [jantar]
+
++ Note:
+  * Usa-se o verbo 吃(chī) para acompanhar esses eventos.
+  * Usa-se a palavra 饭(fàn) para  designar refeição genêrica.
+
+** 课文
+*** Pequena adição de frase de aula
+不要看书 (búyào kàn shū)

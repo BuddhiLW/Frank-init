@@ -1,0 +1,29 @@
+\begin{tcolorbox}[tabularx={p{3cm}|
+    >{\centering\arraybackslash}X|
+    p{3cm}|
+    >{\centering\arraybackslash}X|
+  }]
+  %%%%%%%%%%%%%% Primeira linha
+  % \hline
+  \multicolumn{4}{c}{\cellcolor[HTML]{B8CCE4}\textbf{Apreciação de Riscos e Redução de Riscos - <<Máquina X>>}}\\\hline
+  
+  \multicolumn{1}{l|}{\cellcolor[HTML]{F2F2F2} \textbf{Máquina}}&
+  {\cellcolor{white} <<Máquina X>>} &
+
+  \multicolumn{1}{l|}{\cellcolor[HTML]{F2F2F2} \textbf{Analista}}&
+  {\cellcolor{white} <<Analista>>} \\\hline
+
+  \multicolumn{1}{l|}{\cellcolor[HTML]{F2F2F2}{
+      \begin{minipage}{25mm}\textbf{Fonte de \\ Informação}\end{minipage}}}&
+  {\cellcolor{white} <<Fonte de Informação>>} &
+
+  \multicolumn{1}{l|}{\cellcolor[HTML]{F2F2F2} \textbf{Método}}&
+  {\cellcolor{white} <<Método>>} \\\hline
+
+  \multicolumn{1}{l|}{\cellcolor[HTML]{F2F2F2} \textbf{Extensão}}&
+  {\cellcolor{white} <<Extensão>>} &
+  
+  \multicolumn{1}{l|}{\cellcolor[HTML]{F2F2F2} \textbf{Data}}&
+  {\cellcolor{white} <<Data>>} \\
+
+\end{tcolorbox}

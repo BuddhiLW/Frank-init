@@ -1,0 +1,85 @@
+
+\subsubsection{MODELOS DAS MÁQUINAS DO CONJUNTO DE MÁQUINAS DE TECER ROUPAS SEM COSTURA}
+% ##############################
+% SM8-TOP 2V
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=-90]{img/IMG_4266}
+  \caption[IMG_4266]{SM8-TOP 2V}
+  \label{fig:img4266}
+\end{figure}
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM8-TOP2V\\
+  \hline
+  \hline
+\end{tabular}	
+% ##############################
+% SM–SIMPLE–TOP2
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=-90]{img/IMG_4307}
+  \caption[IMG_4307]{SM–SIMPLE–TOP2}
+  \label{fig:img4307}
+\end{figure}
+
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM – SIMPLE – TOP2\\
+  \hline
+  \hline
+\end{tabular}
+
+
+% ##############################
+% SM8-TOP 2
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=-90]{img/IMG_4291}
+  \caption[IMG_4266]{SM8-TOP 2}
+  \label{fig:img4291}
+\end{figure}
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM8-TOP2\\
+  \hline
+  \hline
+\end{tabular}
+% ##############################
+% SM8-TR 1
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=0]{img/SM8-TR1}
+  \caption[SM8-TR1]{SM8-TR 1}
+  \label{fig:img4291}
+\end{figure}
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM8-TR 1\\
+  \hline
+  \hline
+\end{tabular}

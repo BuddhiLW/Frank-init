@@ -1,0 +1,128 @@
+cd ..
+ls
+sh create-dir.sh
+git add .
+git commit -m "Update template com imports"
+git push
+cd ..
+ls
+cd ../ClojureScript/
+ls
+lein new lab-web
+ls
+rm -rf lab-web/
+ls
+lein new luminus lab-web
+ls lab-web/
+ls
+rm -rf ./lab-web
+lein new luminus wants-cider +cljs
+ls
+rm -rf ./lab-web
+ls
+rm -rf ./wants-cider
+ls
+lein new luminus lab-web +cljs +h2
+ls
+lsblk
+clear
+lsblk
+sudo lsblk
+lsblk
+ddrescue
+ddrescue -h
+clear
+lsblk
+sudo mount /dev/sdb1 /mnt
+lsblk
+ls -l /mnt/
+ls -l --file-size=G /mnt/ 
+ls -l --block-size=1G /mnt/ 
+ls -l --block-size=1M /mnt/ 
+ls -l --block-size=1MB /mnt/ 
+ls -sh /mnt/ 
+ls -l --block-size=1MB /mnt/ 
+lsblk
+clear
+lsblk
+ls -l --block-size=1MB /mnt/ 
+sudo ddrescue -d -v /dev/sdc3 /mnt/wagner-uncorrupt.img /mnt/log-backup.logfile
+lsblk
+sudo mount /dev/sdb1 /mnt/
+ls /mnt/
+sudo ddrescue -d -v /dev/sdc3 /mnt/wagner-uncorrupt.img /mnt/log-backup.logfile
+ls -l -size /mnt/
+ls -l --size /mnt/
+ls -l --size --block-size=G /mnt/
+clear
+mkdir /mnt-img/
+sudo mkdir /mnt-img/
+sudo mount /mnt/wagner-uncorrupt.img /mnt-im
+sudo mount /mnt/wagner-uncorrupt.img /mnt-img/
+mount -o loop,ro /mnt/wagner-uncorrupt.img /mnt-img/
+lsblk
+fdisk -l
+sudo fdisk -l /dev/sdc
+sudo testdisk /dev/sdc
+clear
+lsblk
+photorec /mnt/wagner-uncorrupt.img
+mkidr backup/comp-wagner
+mkdir backup/comp-wagner
+mkdir ~/backups/comp-wagner
+fdisk -l /dev/sda
+sudo fdisk -l /dev/sda
+du -h /home/buddhilw
+du -sh /home/buddhilw
+df
+ls
+cd ..
+ls
+ls backups/
+du -h backups/
+du -hs backups/
+ls
+cd Insync/
+ls
+cd pedro.branquinho@usp.br/
+ls
+cd Google\ Drive/
+ls
+cd Backup/
+ls
+cd ..
+cd PC-buddhilw/
+ls
+cd 
+ls
+ls StoreDrive/
+du -h
+du --help
+du -s
+sudo du -s ./
+sudo rclone sync -PLv ./Documents-b rclone:PC-buddhilw/
+rclone sync -PLv ./Documents-b rclone:PC-buddhilw/
+rclone sync -P ./Documents-b rclone:PC-buddhilw/
+rclone sync -P ./Documents-b rclone:./PC-buddhilw/
+rclone config
+rclone sync -P ./Documents-b rclone:PC-buddhilw/
+rclone 
+rclone config
+rclone sync -P ./Documents-b rclone-pc:PC-buddhilw/
+rclone sync -P ./Documents-b/* rclone-pc:PC-buddhilw/Documents-b/
+rclone sync -rP ./Documents-b/* rclone-pc:PC-buddhilw/Documents-b/
+rclone sync -rP ./Documents-b/* rclone-pc:PC-buddhilw/Documents-b/ --help
+rclonse sync -help
+rclonse sync --help
+rclone sync -
+rclone sync -h
+rclone sync --help
+rclone gelp flags
+rclone help flags
+--fast-list                            Use recursive list if available. Uses more memory but fewer transactions.
+ls Documents-b/
+rclone sync -P ./Documents-b rclone-pc:PC-buddhilw/Documents-b/
+clear
+ls
+ls Documents-b/
+ls Programs/

@@ -1,0 +1,1 @@
+[buddhilw@artixdesk ~]$ rclone sync -P /mnt/ rclone:wagner-backup/

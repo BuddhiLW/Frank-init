@@ -1,0 +1,18 @@
+(ns sicmutils-org.var-mechanics1
+  (:use [uncomplicate.neanderthal core native]))
+
+(:require [clojure2d.core :refer :all]
+            [fastmath.core :as m]
+            [fastmath.vector :as v])
+
+(def render (comp ->infix simplify))
+
+(square (sin (+ 'a 3)))
+
+
+(render (square (sin (+ 'a 3))))
+
+(defn transformation-1 [x]
+ (n.native/dv (* 2.0 (x 0)) (- (x 1) (x 2))))
+
+(transformation-1 (dv 1 4 -2))

@@ -1,0 +1,18 @@
+% ###################################
+% Imagem com anotações
+% ###################################
+\begin{tikzpicture}[line width=3pt]	
+  \node[anchor=south west,inner sep=0] (image) at (0,0,0) %{\includegraphics[width=4in,angle=-90]{IMG_4291}};
+  {\includegraphics[width=0.7\textwidth,angle=-90]{img/IMG_4291}};	
+  \begin{scope}[x={(image.south east)},y={(image.north west)}]
+    \draw[red,dashed,-latex] (0.8,0.8) -- +(1.1in,0.2in)node[anchor=west] {\Large\textbf{1}};
+    \draw [red](0.8,0.8) circle (10pt);
+    \draw[red,dashed,-latex] (0.6,0.6) -- +(1.9in,0)node[anchor=west] {\Large\textbf{2}};
+    \draw [red](0.6,0.6) circle (10pt);
+    \draw[red,dashed,-latex] (0.4,0.5) -- +(-2in,0)node[anchor=east] {\Large\textbf{3}};
+    \draw [red](0.4,0.5) circle (10pt);
+    \draw[red,dashed,-latex] (0.5,0.4) -- +(-2.4in,-0.5in)node[anchor=east] {\Large\textbf{4}};
+    \draw [red](0.5,0.4) circle (10pt);	
+  \end{scope}
+\end{tikzpicture}
+\clearpage

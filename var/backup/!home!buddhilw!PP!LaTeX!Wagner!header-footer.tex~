@@ -1,0 +1,24 @@
+  \fancyhead[C]{%
+    \begin{NiceTabular}{ccc}[hvlines, cell-space-top-limit=6pt,cell-space-bottom-limit=3pt]
+      \Block{}{\includegraphics[scale=0.3]{./img/logo.png}}&
+      \Block[l]{}<\bfseries\fontsize{8}{9}\selectfont>{
+        APRECIAÇÃO DE RISCO - INVENTÁRIO DE MÁQUINAS \\
+        NR-12 - Segurança no Trabalho em Máquinas e Equipamentos \\
+        NR-01 - Disposições Gerais - Gerenciamento de Riscos}&  
+      \Block{}<\fontsize{8}{9}> {
+        {\fontsize{11}{4}\textnumero}{\bfseries 210420 LUPO 01}
+        \\
+        \hline
+        Data:  \DTMToday\\Pág. \thepage\ de \pageref{LastPage}}  
+    \end{NiceTabular}%  
+  } % end fancy head
+  \fancyfoot[C]{%     
+    \begin{NiceTabular}{ccc}[hvlines, cell-space-top-limit=6pt,cell-space-bottom-limit=1pt]
+      \Block{}{\fontsize{8}{9}\selectfont{Data: \DTMToday}}&
+      \Block[l]{}<\bfseries\fontsize{8}{9}\selectfont>{Elaborado
+        por: Wagner José Branquinho,  \\
+        Engenheiro Mecânico e de Segurança do Trabalho.  \\
+        \hspace*{\fill} CREA 0601546708\hspace*{\fill}} & 
+      \Block[l]{}<\fontsize{8}{8}\selectfont> {{\bfseries Aprovação}:\\LUPO S.A.\\CNPJ:43.948.405/0001-69}  \\ 
+    \end{NiceTabular}%   end fancy foot
+  } 

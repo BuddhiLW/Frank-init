@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<!-- 2021-03-16 Tue 18:36 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&lrm;</title>
+<meta name="generator" content="Org mode">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="https://sandyuraz.com/styles/org.min.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org67db674">1. Hard coding</a>
+<ul>
+<li><a href="#orge004286">1.1. Pedrão</a>
+<ul>
+<li><a href="#orgc9394a0">1.1.1. HTML e CSS, primeiro exercício</a></li>
+</ul>
+</li>
+<li><a href="#org9749f2a">1.2. Pedrão Aula 2</a>
+<ul>
+<li><a href="#org7a93158">1.2.1. CSS</a></li>
+<li><a href="#orgf4caf42">1.2.2. HTML</a></li>
+<li><a href="#org1de92ce">1.2.3. Primeiro Exercício</a></li>
+<li><a href="#orge56a578">1.2.4. Segundo exercício</a></li>
+<li><a href="#org8d76ea0">1.2.5. Terceiro exercício</a></li>
+<li><a href="#org2563205">1.2.6. Quarto exercício</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org67db674" class="outline-2">
+<h2 id="org67db674"><span class="section-number-2">1</span> Hard coding</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orge004286" class="outline-3">
+<h3 id="orge004286"><span class="section-number-3">1.1</span> Pedrão</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Usaremos:
+</p>
+<ul class="org-ul">
+<li><a href="https://codesandbox.io/">https://codesandbox.io/</a></li>
+<li><a href="https://www.notion.so/bootcampra/Materiais-e9e449a49af2432c8fed55dcd0957ffa">https://www.notion.so/bootcampra/Materiais-e9e449a49af2432c8fed55dcd0957ffa</a></li>
+</ul>
+</div>
+<div id="outline-container-orgc9394a0" class="outline-4">
+<h4 id="orgc9394a0"><span class="section-number-4">1.1.1</span> HTML e CSS, primeiro exercício</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li><a href="https://codesandbox.io/">https://codesandbox.io/</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;link href="css/style.css" rel="stylesheet" type="text/css"&gt;
+    &lt;link rel="icon" href="https://clojurescript.org/images/cljs-logo-icon-32.png"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;h2&gt;Recomendados&lt;/h2&gt;
+      &lt;p&gt;&lt;strong&gt;Vídeos&lt;/strong&gt; que &lt;em&gt;selecionamos&lt;/em&gt; para você&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;script src="js/compiled/globo.js" type="text/javascript"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+<p title="The Org mode homepage" style="color:red;">
+<a href="https://orgmode.org" title="The Org mode homepage" style="color:red;">Orgmode site</a>
+</p>
+
+
+<div id="orgcee08d3" class="figure">
+<p><img src="file:///home/buddhilw/PP/Org/Bootcamp/Resources/PrimeiraSemana/Orgmode.jpg" alt="Orgmode.jpg" style="float:left;margin:20px 20px 20px 0px;">
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org9749f2a" class="outline-3">
+<h3 id="org9749f2a"><span class="section-number-3">1.2</span> Pedrão Aula 2</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-org7a93158" class="outline-4">
+<h4 id="org7a93158"><span class="section-number-4">1.2.1</span> CSS</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<div class="org-src-container">
+<pre class="src src-css">.titulo {
+    font-weight: bold;
+    color: gray;
+}
+
+.subtitulo{
+    color: darkblue;
+}
+h1 {
+    color: #A3A100;
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li>Usar "reset CSS" -&gt; <a href="https://meyerweb.com/eric/tools/css/reset/">Meyer Reset CSS</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf4caf42" class="outline-4">
+<h4 id="orgf4caf42"><span class="section-number-4">1.2.2</span> HTML</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<div class="org-src-container">
+<pre class="src src-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;YouTube&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;h1 class="titulo"&gt;Pedrão sabe muito sobre front-end&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1de92ce" class="outline-4">
+<h4 id="org1de92ce"><span class="section-number-4">1.2.3</span> Primeiro Exercício</h4>
+<div class="outline-text-4" id="text-1-2-3">
+</div>
+<ol class="org-ol">
+<li><a id="org4fb28e5"></a>CSS<br>
+<div class="outline-text-5" id="text-1-2-3-1">
+<div class="org-src-container">
+<pre class="src src-css">p {
+    color: orange;
+}
+.p1 {
+    text-decoration: underline;
+}
+.p2 {
+    font-style: italic;
+}
+.p3 {
+    font-style: italic; /* Itálico */
+    text-decoration: underline;
+}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgd760afd"></a>HTML<br>
+<div class="outline-text-5" id="text-1-2-3-2">
+<div class="org-src-container">
+<pre class="src src-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;title&gt;Exercício&lt;/title&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;p class="p1"&gt;
+      Find empty spot in cupboard and sleep all day and sometimes switches in
+      french and say "miaou" just because well why not. Rub face on owner meow
+      and walk away. Need to check on human, have not seen in an hour might be
+      dead oh look, human is alive, hiss at human, feed me instantly break out
+      into full speed gallop across the house for no reason.
+    &lt;/p&gt;
+    &lt;p class="p2"&gt;
+      I like big cats and i can not lie i'm bored inside, let me out i'm lonely
+      outside, let me in i can't make up my mind whether to go in or out, guess
+      i'll just stand partway in and partway out, contemplating the universe for
+      half an hour how dare you nudge me with your foot?!?! leap into the air in
+      greatest offense! stuff and things sit in a box for hours bite off human's
+      toes i like fish.
+    &lt;/p&gt;
+    &lt;p class="p3"&gt;
+      Meow in empty rooms rub my belly hiss. Cat ass trophy side-eyes your
+      "jerk" other hand while being petted yet you are a captive audience while
+      sitting on the toilet, pet me kick up litter cats are the world ptracy.
+      Meow loudly just to annoy owners look at dog hiiiiiisssss catty ipsum yet
+      cat sit like bread. Swat at dog whenever a door is opened, rush in before
+      the human that box? i can fit in that box your pillow is now my pet bed
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<ul class="org-ul">
+<li>alt/title -&gt; contexto de imagem para mecanismos de procura</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orge56a578" class="outline-4">
+<h4 id="orge56a578"><span class="section-number-4">1.2.4</span> Segundo exercício</h4>
+<div class="outline-text-4" id="text-1-2-4">
+</div>
+<ol class="org-ol">
+<li><a id="orgcdd7f14"></a>CSS<br>
+<div class="outline-text-5" id="text-1-2-4-1">
+<div class="org-src-container">
+<pre class="src src-css">body {
+    background: #fafafa;
+}
+h1 {
+    color: #333333;
+}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org13f7f8a"></a>HTML<br>
+<div class="outline-text-5" id="text-1-2-4-2">
+<div class="org-src-container">
+<pre class="src src-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+  &lt;link
+    rel="stylesheet"
+    href="https://cdn.rawgit.com/filipelinhares/ress/master/dist/ress.min.css
+	  "
+    /&gt;
+  &lt;link rel="stylesheet" href="st.css" /&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Bem-vindo à Home&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org8d76ea0" class="outline-4">
+<h4 id="org8d76ea0"><span class="section-number-4">1.2.5</span> Terceiro exercício</h4>
+<div class="outline-text-4" id="text-1-2-5">
+<ul class="org-ul">
+<li>Dimensionamento</li>
+<li>Disposição</li>
+</ul>
+</div>
+
+<ol class="org-ol">
+<li><a id="org5555589"></a>CSS<br>
+<div class="outline-text-5" id="text-1-2-5-1">
+<ul class="org-ul">
+<li>Usar div (division) -&gt; ambientes locais</li>
+<li>margin-bottom</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-css">body {
+    background-color: #f9f9f9;
+    font-family: Arial;
+}
+
+h1, h2, .titulo-video, .subtitulo-video	{
+    margin-left: 20px
+}
+
+h1{
+    font-size: 20px;
+    font0weight: bold;
+}
+h2{
+    font-size: 15px;
+    color: #333
+}
+
+.titulo-video{
+    font-weight: bold;
+}
+
+.subtitulo-video {
+    color: gray;
+}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org2f437f7"></a>HTML<br>
+<div class="outline-text-5" id="text-1-2-5-2">
+<div class="org-src-container">
+<pre class="src src-html">
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org2563205" class="outline-4">
+<h4 id="org2563205"><span class="section-number-4">1.2.6</span> Quarto exercício</h4>
+<div class="outline-text-4" id="text-1-2-6">
+</div>
+<ol class="org-ol">
+<li><a id="org492ded9"></a>CSS<br>
+<div class="outline-text-5" id="text-1-2-6-1">
+<div class="org-src-container">
+<pre class="src src-css">button {
+    height: 200px;
+    width: 100px;
+    margin-top: 200px;
+}
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="orgdc805fd"></a>HTML<br>
+<div class="outline-text-5" id="text-1-2-6-2">
+<div class="org-src-container">
+<pre class="src src-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Senhora, senhora!&lt;/title&gt;
+    &lt;meta charset="utf-8" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Senhora, senhora!&lt;/h1&gt;
+    &lt;button&gt;Não sou funcionária da assembleia!&lt;/button&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2021-03-16 Tue 18:36</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+    "configurations": [{
+        "name": "Web Browser",
+        "type": "chrome",
+        "url": "http://localhost:3000"
+    }]
+}

@@ -1,0 +1,41 @@
+%% Minhadata invertida, ano, mês, dia.
+\def\minhadata{\leavevmode\hbox{\the\year\twodigits\month\twodigits\day}}
+\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
+
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}% see tabularx
+
+\fancyhead[C]{%
+    \begin{NiceTabular}{cp{10cm}c}[hvlines, cell-space-top-limit=6pt,cell-space-bottom-limit=3pt]
+      \Block{}{\includegraphics[scale=0.5]{../../img/logo.png}}&
+      \Block[X]{}<\bfseries\fontsize{8}{9}\selectfont>{
+        APRECIAÇÃO DE RISCO - INVENTÁRIO DE MÁQUINAS \\
+        NR-12 - Segurança no Trabalho em Máquinas e Equipamentos \\
+        NR-01 - Disposições Gerais - Gerenciamento de Riscos}&  
+      \Block{}<\fontsize{8}{9}> {
+        {\fontsize{11}{4}}{\bfseries \textrm{N}\textordmasculine \minhadata{} \empresa}
+        \\
+        \hline
+        {\fontsize{8}{9}\selectfont Pág. \thepage\ de \pageref{LastPage}}}  
+    \end{NiceTabular}%  
+  } % end fancy head
+  \fancyfoot[C]{%     
+    \begin{NiceTabular}{cp{10cm}c}[hvlines, cell-space-top-limit=6pt,cell-space-bottom-limit=1pt]
+      \Block{}{\fontsize{8}{9}\selectfont{Data: \DTMToday}}&
+      \Block[X]{}<\bfseries\fontsize{8}{9}\selectfont>{
+        Elaborado por: Wagner José Branquinho,  \\
+        Engenheiro Mecânico e de Segurança do Trabalho.  \\
+        \hspace*{\fill} CREA 0601546708\hspace*{\fill}} & 
+      \Block[l]{}<\fontsize{8}{8}\selectfont> {{\bfseries Aprovação}:\\FMC LTDA\\CNPJ:\cnpj}  \\ 
+    \end{NiceTabular}%   end fancy foot
+  } 
+
+
+% \documentclass{article}
+% \usepackage{datetime}
+% \newdate{date}{06}{09}{2012}
+% \date{\displaydate{date}}
+
+% \begin{document}
+% \maketitle
+% We discussed in the question session on \displaydate{date} unimportant stuff.
+% \end{document}

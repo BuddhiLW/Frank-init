@@ -1,0 +1,70 @@
+% ###########
+% Medidas de Segurança
+% ###########
+\centering
+
+{\fontsize{8}{9}\selectfont
+  \begin{tabular}{
+    >{\centering}p{2cm}|
+    >{\centering}p{.5cm}|
+    >{\centering}p{4cm}|
+    >{\centering}p{.75cm}|
+    >{\centering}p{.75cm}|
+    >{\centering}p{.75cm}|
+    >{\centering}p{1cm}|
+    >{\centering}p{1cm}|
+    >{\centering}p{2cm}|
+    >{\centering}p{1cm}
+    }%\arraybackslash
+
+    % \hline
+    \hline
+    % cabeçalho
+    \rowcolor[HTML]{DBD7D2}\multicolumn{10}{c}{\textbf{MEDIDAS DE SEGURANÇA}}\\%color Timberwolf
+    \hline
+    % linha 1
+    \multicolumn{2}{c|}{\textbf{Medida Segurança}}& \textbf{Tipo} & \textbf{Sim} & \textbf{Não} & \textbf{NA} & \textbf{Conf.} &\multicolumn{3}{c}{\textbf{Observações}}\\	
+    \hline
+    % linha 2
+    \text{Proteções}& \text{} & \text{Conjunto tecer} & & & & &\multicolumn{3}{c}{}\\	
+    \cline{3-7}
+    % linha 3
+    \multirow{-1}{*}{\text{Mecânicas}}& \multirow{-2}{*}{\text{Fixa}} & Transmissão de Força & & & & &\multicolumn{3}{c}{}\\	
+    \hline
+    % linha 4
+    \multicolumn{2}{c|}{Dispositivos de partida,}& Liga/Desliga & & & & &\multicolumn{3}{c}{}\\	
+    \cline{3-7}
+    % linha 5
+    \multicolumn{2}{c|}{\multirow{-1}{*}{\text{acionamento e parada}}}& Ch. Geral Bloqueio & & & & &\multicolumn{3}{c}{}\\	
+    \hline
+    % linha 6
+    \multicolumn{2}{c|}{Dispositivos de Atuação}& Chaves Contactoras &  & & & &\multicolumn{3}{c}{}\\	
+    \cline{3-7}
+    \hline
+    % linha 7
+    \multicolumn{2}{c|}{}& Extra baixa tensão &  & & & &\multicolumn{3}{c}{}\\	
+    \cline{3-7}
+    % linha 8
+    \multicolumn{2}{c|}{\multirow{-2}{*}{\text{Dispositivos Elétricos}}}& Aterramento & & & & &\multicolumn{3}{c}{}\\	
+    \hline
+    % linha 9
+    \multicolumn{2}{c|}{}& Diagramas Elétricos & & & & &\multicolumn{3}{c}{}\\	
+    \cline{3-7}
+    % linha 10
+    \multicolumn{2}{c|}{\multirow{-2}{*}{\text{Documentação}}}& Laudos Técnicos NR 12 & & & & &\multicolumn{3}{c}{}\\	
+    \hline
+    % linha 11
+    \multicolumn{2}{c|}{} & \multicolumn{8}{|c}{\text{NA->Não se Aplica\quad AP->Análise Prejudicada}}\\
+    % linha 12
+    \multicolumn{2}{c|}{\multirow{-2}{*}{\text{Legenda}}} & \multicolumn{8}{|c}{\text{Conf.->Em conformidade Legal}}\\
+    \hline
+    % linha 13
+    \multicolumn{8}{c|}{\cellcolor[HTML]{F0E68C}\text{Categoria de Segurança Requerida (ABNT NBR ISO 14.153:2013)}} & \multicolumn{2}{|c}{\cellcolor[HTML]{F0E68C}\text{2}}\\%Light khaki
+    \hline
+    % linha 14
+    \multicolumn{8}{c|}{\cellcolor[HTML]{ADD8E6}\text{Categoria de Segurança Aplicada}} & \multicolumn{2}{|c}{\cellcolor[HTML]{ADD8E6}\text{2}}\\%Light Blue
+    \hline
+    % \hline
+    % \hline
+  \end{tabular}
+}

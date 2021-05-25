@@ -1,0 +1,100 @@
+* Let's try another font on org-mode
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda () (set-frame-font "<a-greek-supporting-font>" t)))
+#+end_src
+
+But, we must find some great-looking font avaliable on my system which supports greek.
+
+In [[https://www.emacswiki.org/emacs/UnicodeFonts]] we have the mode unicode-fonts, which will install us a pack of very different fonts, from the latin alphabet.
+
+** unicode-mode
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
+  (use-package unicode-fonts
+    :config
+    (unicode-fonts-setup))
+#+end_src
+
+#+RESULTS:
+: t
+
+This makes the command (unicode-fonts-setup) run just after the unicode-fonts is loaded.
+
+** Use
+#+begin_example
+C-h h 
+#+end_example
+
+We get a file already showing us all this Hellos in a gazzilion of languages, including Greek.
+
+#+CAPTION: Hello File
+#+ATTR_ORG: :width 800
+[[file:./images/hello.png]]
+
+#+CAPTION: Hello File - Greek(s)
+#+ATTR_ORG: :width 800
+[[file:images/hello-greek.png]]
+
+
+** Download Gentium font
+https://software.sil.org/gentium/download/
+
+1. Extract file
+2. (Linux)
+   - Move to /usr/share/fonts
+3. fc-cache -vf
+   
+* Changing org-mode specific
+
+Back to
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda () (set-frame-font "<a-greek-supporting-font>" t)))
+#+end_src
+
+One font which support greek is Gentium Plus.
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
+  (add-hook 'org-mode-hook (lambda () (set-frame-font "Gentium Plus" t)))
+ #+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
+  ;; Use variable width font faces in current buffer
+   (defun my-buffer-face-mode-variable ()
+     "Set font to a variable width (proportional) fonts in current buffer"
+     (interactive)
+     (setq buffer-face-mode-face '(:family "Symbola" :height 100 :width semi-condensed))
+     (buffer-face-mode))
+
+   ;; Use monospaced font faces in current buffer
+   (defun my-buffer-face-mode-fixed ()
+     "Sets a fixed width (monospace) font in current buffer"
+     (interactive)
+     (setq buffer-face-mode-face '(:family "Inconsolata" :height 100))
+     (buffer-face-mode))
+
+   ;; Set default font faces for Info and ERC modes
+   (add-hook 'erc-mode-hook 'my-buffer-face-mode-variable)
+   (add-hook 'Info-mode-hook 'my-buffer-face-mode-variable)
+ #+end_src
+
+ #+RESULTS:
+
+#+begin_src emacs-lisp
+  (set-face-attribute 'default t :font "Gentium Plus" :height efs/default-font-size)
+#+end_src
+
+From:
+C-h f set-default-attribute RET;
+C-s frame;
+
+#+begin_quote
+(defun set-face-attribute (face frame &rest args) (. . .))
+
+If FRAME is nil, set the attributes for all existing frames, as
+well as the default for new frames.  If FRAME is t, change the
+default for new frames only.
+#+end_quote

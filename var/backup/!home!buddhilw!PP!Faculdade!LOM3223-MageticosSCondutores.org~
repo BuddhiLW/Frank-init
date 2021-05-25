@@ -1,0 +1,4 @@
+#+AUTHOR: BuddhiLW
+#+STARTUP: latexpreview
+#+PROPERTY: header-args:js :tangle ./tex/aulas.tex :mkdirp yes
+

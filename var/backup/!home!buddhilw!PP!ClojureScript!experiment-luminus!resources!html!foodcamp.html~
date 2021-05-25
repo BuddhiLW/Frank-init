@@ -1,0 +1,129 @@
+<div class="container-fc">
+    <div class="top"><span>FoodCamp</span>
+        <p>Sua comida em 6 minutos</p>
+    </div>
+    <div class="white-container">
+        <!-- <img src="/img/warning_clojure.png" style="width:100px"></img> -->
+        <h1>Primeiro, seu prato</h1>
+        <div class="feed-roll">
+            <ul>
+                <li class="selection">
+                    <div>
+                        <img alt="" src="img/1.jpg">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Franco Yin Yang</span>
+                    <span class="subtitle1">Um pouco de batata, um pouco de salada</span>
+                    <div class="tag1"> <span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+                <li class="selection">
+                    <div>
+                        <img alt="" src="img/1.jpg">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Franco Yin Yang</span>
+                    <span class="subtitle1">Um pouco de batata, um pouco de salada</span>
+                    <div class="tag1"> <span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+                <li class="selection">
+                    <div>
+                        <img alt="" src="img/1.jpg">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Franco Yin Yang</span>
+                    <span class="subtitle1">Um pouco de batata, um pouco de salada </span>
+                    <div class="tag1"><span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+            </ul>
+        </div>
+
+        <h1>Agora, sua bebida</h1>
+
+        <div class="feed-roll2">
+            <ul>
+                <li class="drink">
+                    <div>
+                        <img alt="" src="img/2.png">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Coquinha gelada</span>
+                    <span class="subtitle1">Lata 350ml</span>
+                    <div class="tag1"><span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+                <li class="drink">
+                    <div>
+                        <img alt="" src="img/2.png">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Coquinha gelada</span>
+                    <span class="subtitle1">Lata 350ml</span>
+                    <div class="tag1"><span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+                <li class="drink">
+                    <div>
+                        <img alt="" src="img/2.png">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Coquinha gelada</span>
+                    <span class="subtitle1">Lata 350ml</span>
+                    <div class="tag1"><span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+
+            </ul>
+        </div>
+
+        <h1>Por fim, sua sobremesa</h1>
+
+        <div class="feed-roll3">
+            <ul>
+                <li class="dessert">
+                    <div>
+                        <img alt="" src="img/3.png">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Pudim</span>
+                    <span class="subtitle1">Apenas pudim</span>
+                    <div class="tag1"><span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+
+                <li class="dessert">
+                    <div>
+                        <img alt="" src="img/3.png">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Pudim</span>
+                    <span class="subtitle1">Apenas pudim</span>
+                    <div class="tag1"><span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+
+                <li class="dessert">
+                    <div>
+                        <img alt="" src="img/3.png">
+                    </div>
+                    <a href="#"></a>
+                    <span class="title1">Pudim</span>
+                    <span class="subtitle1">Apenas pudim</span>
+                    <div class="tag1"><span class="price">R$ 14,90</span> <img src="img/tag.svg" class="animation-hidden"></div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="footer">
+            <a href="#">
+                <p class="foot"><span>Selecione os 3 itens </br> para fechar seu pedido</span></p>
+            </a>
+        </div>
+    </div>
+    <div class="confirmation">
+        <h1>Confirme seu pedido</h1>
+        <p>Frango Yin Yang <span>14,90</span></p>
+        <p>Coquinha gelada <span>4,90</span></p>
+        <p>Pudim<span>7,90</span></p>
+        <p> TOTAL <span>R$27,70</span></p>
+        <p class="confirmation-footer">Tudo certo, pode pedir!</p>
+        <p class="cancel-footer">Cancelar</p>
+    </div>
+
+    <!-- <script src="js/highlight-buys.js"></script> -->
+</div>

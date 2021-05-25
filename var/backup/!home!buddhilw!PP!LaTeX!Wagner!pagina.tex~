@@ -1,0 +1,896 @@
+\documentclass[12pt,a4paper, article]{abntex2}
+%%% Classe especial para formatação de documentos sob as normas ABNT.
+
+%%%%%%%%%%%% ----------- PACOTES/PACKAGES ----------- %%%%%%%%%%%%%%
+\usepackage[hmargin=1cm,top=4cm,headheight=85pt,footskip=50pt]{geometry}
+
+%%% Special Tables // Tabelas especiais
+\usepackage[table, dvipsnames, svgnames]{xcolor} %% Definição de cores
+\usepackage[most]{tcolorbox}  %%Mudar ambiente de blocos, utilizado na tabela.
+\usepackage{multirow,booktabs}  %Habilita múltiplas colunas
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+%%% 
+% #####################################################
+% Cores
+% TimberWolf DBD7D2
+% Sunset FAD6A5
+% Light khaki F0E68C
+% Light Blue ADD8E6
+% #####################################################
+% \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10,expansion]{microtype} %% Better font \\ Melhores fontes
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{enumitem} %% Package to change enumerate labels
+\usepackage[table]{xcolor}
+\renewcommand{\arraystretch}{0}
+\usepackage{array}
+\usepackage[skip=0.333\baselineskip]{caption}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage{morefloats}			% permite mais floats
+\usepackage{parskip}			% espaçamento entre os parágrafos
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\BeforeBeginEnvironment{figure}{\vskip-2ex}
+\AfterEndEnvironment{figure}{\vskip-1ex}
+\usepackage{lastpage}
+\usepackage[brazil]{babel}		% idiomas
+\usepackage{listings}
+\usepackage{indentfirst}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{metalogo}
+\hypersetup{
+  pdftitle={\@title}, 
+  pdfauthor={\@author},
+  pdfsubject={Modelo de artigo científico com abnTeX2},
+  pdfcreator={LaTeX with abnTeX2},
+  pdfkeywords={abnt}{latex}{abntex}{abntex2}{atigo científico}, 
+  colorlinks=true,       		% false: boxed links; true: colored links
+  linkcolor=blue,          	% color of internal links
+  citecolor=blue,        		% color of links to bibliography
+  filecolor=magenta,      		% color of file links
+  urlcolor=blue,
+  bookmarksdepth=4
+}
+\renewcommand{\arraystretch}{1.6}
+\newcommand{\squeezeup}{\vspace{-2.5mm}}
+\makeatother
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+% ---
+
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+  \ifcase #1 %
+  Nenhuma citação no texto.%
+  \or
+  Citado na página #2.%
+  \else
+  Citado #1 vezes nas páginas #2.%
+  \fi}%
+% ---
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Espaçamento simples
+\SingleSpacing
+
+
+%%%%%% HEADERS  <<<<<<<<<<<<<<
+\usepackage{nicematrix} % <<<< added for an easy  table
+\usepackage[datesep=/,useregional=numeric]{datetime2} %<<<<< added format date
+\DTMsetdatestyle{ddmmyyyy}
+
+\usepackage{fancyhdr} % Required for header and footer configuration
+\renewcommand{\headrulewidth}{0pt}
+
+\fancypagestyle{firstpagestyle}{% to use only in the first page
+  % \fancyhf{}% Clear default headers and footers
+  \fancyhead[CE,CO,LE,LO,RE,RO]{} %% clear out all headers
+  \fancyfoot[CE,CO,LE,LO,RE,RO]{} %% clear out all headers
+  \input{header-footer.tex}
+}%%%%%% firstpagestyle ends
+% #################################################
+% 
+% 
+% 
+% #################################################
+\begin{document}
+% Seleciona o idioma do documento (conforme pacotes do babel)
+% \selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing  
+% \thispagestyle{firstpagestyle}  % or only the first page <<<<<<<
+\pagestyle{firstpagestyle}
+\thispagestyle{title}
+
+\begin{center}
+  \includegraphics[width=0.4\linewidth]{img/logo}\\
+  \vspace{.5cm}
+  \begin{bfseries}
+    \Large{LUPO S/A \\ CNPJ – 43.948.405/0001-69}\\
+    {\small{RODOVIA WASHINGTON LUIS S/Nº, KM 276,5\\
+        RECREIO CAMPESTRE IDANORMA\\CEP:- 14.803-900 – ARARAQUARA - SP\\}}
+    \vspace{1.5cm}
+    {\large\textsc{“APRECIAÇÃO DE RISCOS DE MÁQUINAS”}}\\
+    {\small {NR-12 – SEGURANÇA NO TRABALHO EM MÁQUINAS E EQUIPAMENTOS}}\\[1\baselineskip]
+    {\large\textsc{“INVENTÁRIO DE RISCOS DE MÁQUINAS”}}\\
+    {\small {NR-1 – DISPOSIÇÕES GERAIS E GERENCIAMENTO DE RISCOS}}\\[1\baselineskip]
+    \vspace{1.5cm}
+    \large{N\textordmasculine 210420 LUPO 01}\\[1\baselineskip]
+    \vspace{1.5cm}
+    {\large\textsc{“SETOR DE TECELAGEM SEM COSTURA 1,2,3 E 4”}}\\
+    \vspace{3.5cm}
+    \large{FRANCA - SP\\ \today \\}
+  \end{bfseries}
+\end{center}
+\clearpage
+
+\tableofcontents\thispagestyle{title}
+\clearpage
+
+% repeat on all pages <<<<<<<<<<<<<<<
+\pagestyle{firstpagestyle}
+\section{OBJETIVO}
+O presente documento técnico apresenta a apreciação de risco de máquinas e equipamentos instalados na unidade fabril da empresa contratante no âmbito da Norma Regulamentadora NR 12 da Secretaria do Trabalho do Ministério da Economia.
+
+
+\section{INTRODUÇÃO}
+
+Todo empregador deve adotar medidas de proteção para o trabalho em máquinas e
+equipamentos, capazes de resguardar a saúde e a integridade física dos trabalhadores, segundo a NR 12. Esta Norma Regulamentadora - NR e seus anexos definem referências técnicas, princípios fundamentais e medidas de proteção para resguardar a saúde e a integridade física dos trabalhadores e estabelece requisitos mínimos para a prevenção de acidentes e doenças do trabalho nas fases de projeto e de utilização de máquinas e equipamentos, e ainda à sua fabricação, importação, comercialização, exposição e cessão a qualquer título, em todas as atividades econômicas.
+
+Na aplicação desta NR e de seus anexos, devem-se considerar as características das máquinas e equipamentos, do processo, a apreciação de riscos e o estado da técnica.
+
+E de acordo com a NR 12 na seção 12.5 – Sistemas de segurança, diz que as zonas de perigo das máquinas e equipamentos devem possuir sistemas de segurança, caracterizados por proteções fixas, proteções móveis e dispositivos de segurança interligados, que resguardem proteção à saúde e à integridade física dos trabalhadores (12.5.1). De acordo com o item 12.5.2, os sistemas de segurança devem ser selecionados e instalados atendendo além de outros requisitos aos seguintes requisitos: ter categoria de segurança conforme apreciação de riscos previstas nas normas técnicas oficiais e estar sob responsabilidade de técnica de profissional legalmente habilitado, trabalhador previamente qualificado e com registro no competente conselho de classe.
+
+O objetivo da apreciação de riscos é identificar os perigos e estimar e avaliar os riscos para que
+possam ser reduzidos. Apreciação de risco é um processo composto por uma série de etapas que
+permite analisar e avaliar os riscos de forma sistemática. É seguida sempre que necessário pela
+redução dos riscos.
+
+Para a realização da estimativa de risco foi utilizado método híbrido, pontuação numérica e
+matriz de riscos, a metodologia de estimativa de risco HRN – Hazard Rating Number é uma
+metodologia adequada para a realização da avaliação de risco e priorização de ações, visto que
+fornece uma ampla gama de gradações de risco. Método baseado na norma ISO 12.100:2013,
+considerada eficaz. Este método ficou conhecido através de artigo publicado pela revista “Safety and
+Healt Prectitioner (1990) pelo especialista na área Chris Steel”. Os parâmetros utilizados por este
+método são: Grau de severidade do possível dano; exposição ao risco; probabilidade de ocorrência
+do dano e o número de pessoas expostas ao risco.
+
+Após a identificação dos perigos permanentes ou que possam surgir inesperadamente
+durante o uso da máquina e a apreciação de riscos foi realizada a avaliação, da categoria de segurança
+requerida, utilizando a metodologia apontada pela norma técnica ABNT NBR ISO 14153:2013, que é
+uma ferramenta de estimativa de risco, método do tipo “gráfico de riscos”, e seu resultado é utilizado
+para a definição de determinar parâmetros de projeto dos sistemas de segurança do comando de
+máquinas, projetos de painéis elétricos de comando e controle. Determinam o comportamento
+requerido, das partes relacionadas a segurança do sistema de comando, com relação à sua resistência
+a falhas e estimar a probabilidade de ocorrência de dano.
+\begin{description}
+\item[Categoria:] Classificação das partes de um sistema de comando relacionadas à segurança, com respeito à sua resistência a defeitos e seu subsequente comportamento na condição de defeito, que é alcançada pela combinação e interligação das partes e/ou por sua confiabilidade. O desempenho com relação à ocorrência de defeitos, de uma parte de um sistema de comando, relacionado à segurança,
+  é dividido em cinco categorias (B, 1, 2, 3 e 4) segundo a norma ABNT NBR 14153 - Segurança de máquinas - Partes de sistemas de comando relacionadas à segurança - Princípios gerais para projeto, equivalente à norma EN 954-1 - \textit{Safety of machinery - Safety related parts of control systems}, que leva em conta princípios qualitativos para sua seleção.
+
+\item[Categoria B:] Principalmente caracterizada pela seleção de componentes. A ocorrência de um defeito
+  pode levar à perda da função de segurança.
+
+\item[Categoria 1:] A ocorrência de um defeito pode levar à perda da função de segurança, porém a probabilidade de ocorrência é menor que para a categoria B.
+
+
+\item[Categoria 2:] A função de segurança é verificada em intervalos pelo sistema:
+
+  \begin{enumerate}[label=\alph*)]
+  \item a ocorrência de um defeito pode levar a perda da função de segurança entre as verificações; e
+    
+  \item a perda da função de segurança é detectada pela verificação.
+  \end{enumerate}
+
+\item[Categoria 3:] e quando o comportamento de sistema permite que:
+
+  \begin{enumerate}[label=\alph*)]
+    
+  \item  quando ocorrer o defeito isolado, a função de segurança sempre seja cumprida;
+    
+  \item alguns, mas não todos, defeitos sejam detectados; e
+    
+  \item o acúmulo de defeitos não detectados leve à perda da função de segurança.
+  \end{enumerate}
+
+\item[Categoria 4:] quando as partes dos sistemas de comando relacionadas à segurança devem ser
+  projetadas de tal forma que:
+
+  \begin{enumerate}[label=\alph*)]
+  \item uma falha isolada em qualquer dessas partes relacionadas à segurança não leve à perda das funções de segurança, e
+    
+  \item{a falha isolada seja detectada antes ou durante a próxima atuação sobre a função de segurança,
+      como, por exemplo, imediatamente, ao ligar o comando, ao final do ciclo de operação da máquina. Se
+      essa detecção não for possível, o acúmulo de defeitos não deve levar à perda das funções de
+      segurança.}
+  \end{enumerate}
+
+  De acordo com o item 12.1.11, da NR-12, as máquinas nacionais ou importadas fabricadas de acordo com a NBR ISO 13849, Partes 1 e 2, são consideradas em conformidade com os requisitos de segurança previstos nesta NR, com relação às partes de sistemas de comando relacionadas à segurança.
+\end{description}
+\section{APRECIAÇÃO DE RISCOS DE MÁQUINAS DA PRODUÇÃO - SETOR TECELAGEM SEM COSTURA}
+A apreciação de riscos será realizada para o grupo de máquinas, devido a similaridade das
+máquinas que compõem o conjunto de máquinas de tecer, pois foram todas fabricadas pele mesma
+empresa, e os diversos modelos tem as mesmas características construtivas quanto as partes e
+componentes e zonas de perigo. Portanto as matrizes de “Identificação de Riscos”, a “Apreciação de
+Riscos e Redução de Riscos” e de “Categoria de Segurança Requerida”, são as mesmas para todas as
+máquinas.
+
+\subsection{CONJUNTO DE MÁQUINAS DE TECER PEÇAS DE ROUPAS SEM COSTURA}
+
+\begin{table}
+  \setlength{\tabcolsep}{-1pt}%
+  \setlength\extrarowheight{2pt}
+  \centering
+  % \caption{Máquinas de Tecer sem Costura}
+  \label{Tab1-Máquinas de Tecer sem Costura}
+  \begin{tabular}{
+    >{\centering\arraybackslash}p{2.5cm}|
+    >{\centering\arraybackslash}p{15.5cm}
+    }
+    \hline
+    \hline
+    & Conjunto de máquinas de tecelagem.\\
+    \hline
+    \cellcolor[HTML]{E5E4E2}\textbf{Máquinas Tipo}& Máquina de tecer circular eletrônica de malha única com 8 alimentações, com 2 pontos de seleção de agulhas em cada alimentação de malharia, para a produção de peças de vestuário simples sem costura para roupas íntimas, outdoor, moda praia, malhas esportivas e de saúde.\\
+    \hline 
+    \cellcolor[HTML]{E5E4E2}\textbf{Utilização Prevista} & Produção de peças de vestuário simples sem costura para roupas íntimas, outdoor, moda praia, malhas esportivas e de saúde.\\
+    \hline
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsubsection{MODELOS DAS MÁQUINAS DO CONJUNTO DE MÁQUINAS DE TECER ROUPAS SEM COSTURA}
+% ##############################
+% SM8-TOP 2V
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=-90]{img/IMG_4266}
+  \caption[IMG_4266]{SM8-TOP 2V}
+  \label{fig:img4266}
+\end{figure}
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM8-TOP2V\\
+  \hline
+  \hline
+\end{tabular}	
+% ##############################
+% SM–SIMPLE–TOP2
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=-90]{img/IMG_4307}
+  \caption[IMG_4307]{SM–SIMPLE–TOP2}
+  \label{fig:img4307}
+\end{figure}
+
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM – SIMPLE – TOP2\\
+  \hline
+  \hline
+\end{tabular}
+
+
+% ##############################
+% SM8-TOP 2
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=-90]{img/IMG_4291}
+  \caption[IMG_4266]{SM8-TOP 2}
+  \label{fig:img4291}
+\end{figure}
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM8-TOP2\\
+  \hline
+  \hline
+\end{tabular}
+% ##############################
+% SM8-TR 1
+% ##############################
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth,angle=0]{img/SM8-TR1}
+  \caption[SM8-TR1]{SM8-TR 1}
+  \label{fig:img4291}
+\end{figure}
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}|
+  >{\centering\arraybackslash}p{9cm}
+  }
+  \hline
+  \hline
+  \cellcolor[HTML]{E5E4E2}\textbf{Fabricante}& MSANTONI SPA – PAIS DE ORIGEM ITÁLIA\\\hline 
+  \cellcolor[HTML]{E5E4E2}\textbf{Modelo} & SM8-TR 1\\
+  \hline
+  \hline
+\end{tabular}
+% ##############################
+% Tabela - Medidas de Segurança
+% ##############################
+\subsubsection{Sistemas de Segurança e medidas de proteção das máquinas do conjunto de máquinas de tecer roupas sem costura}
+% \section{Secção Tabelas Não-Padrão ABNT}
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}% see tabularx
+\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+  colback=white, colframe=black!70,colbacktitle=Salmon!30!white,
+  coltitle=black,center title,sharp corners, drop fuzzy
+  shadow=black!30!white, beforeafter skip=2pt}
+\begin{tcolorbox}[tabularx={p{0.5cm}|p{2cm}|X|c|c|c|c|}]
+  %%%%%%%%%%%%%% Primeira linha
+  \hline
+  \cellcolor{orange!30} &
+  \cellcolor[HTML]{DBD7D2}  &
+  \cellcolor{white} &
+  \cellcolor[HTML]{DBD7D2} &
+  \texttt{Setor}  &   \texttt{Planta} & \texttt{Patrimônio} \\
+  %%%%%%%%%%%%% Primeira linha
+  \cline{5-7} %%%%%% Tracejado entre a coluna 5 e 7.
+  %%%%%%%%%%%%%%%% Segunda linha
+  \multirow{-2}{*}{\cellcolor{orange!30}\textbf{N.}} &
+  \multirow{-2}{*}{\cellcolor[HTML]{DBD7D2} \textbf{Máquina}}&
+  \multirow{-2}{*}{\cellcolor{white} \textbf{<<Nome da máquina>>}}&
+  \multirow{-2}{*}{\cellcolor[HTML]{DBD7D2} \textbf{Localização}}&
+  <<Setor>>&
+  <<Planta>>&
+  <<Patrimônio>>
+  %%%%%%%%%%%%%%%% Segunda linha
+\end{tcolorbox}
+
+\begin{tcolorbox}[tabularx={p{3cm}|X|}]
+  %%%%%%%%%%%%%% Primeira linha
+  \hline
+  \cellcolor[HTML]{DBD7D2}  &
+  \cellcolor{white} &
+  \multirow{-2}{*}{\cellcolor[HTML]{DBD7D2} \textbf{\begin{minipage}{2.5cm}Utilização Prevista\end{minipage}}}&
+  \multirow{-2}{*}{\cellcolor{white} \textbf{<<Utilização Prevista>>}}&
+\end{tcolorbox}
+
+% \newcolumntype{Y}{>{\centering\arraybackslash}m{1in}}% see tabularx
+\begin{tcolorbox}[tabularx={p{3cm}|
+    >{\centering\arraybackslash}X|
+    c|
+    c|
+    c|
+  }]
+  %%%%%%%%%%%%%% Primeira linha
+  \hline
+  % % \cellcolor{orange!30} &
+  \cellcolor[HTML]{DBD7D2} &
+  \multicolumn{4}{c}{\cellcolor[HTML]{DBD7D2} \textbf{Fabricante}}\\
+  % % linha 1
+  \cellcolor[HTML]{DBD7D2}&
+  \multicolumn{4}{c}{\cellcolor{white} <<Fabricante>>} \\
+  
+  \cellcolor[HTML]{DBD7D2} &
+  \cellcolor[HTML]{DBD7D2} Modelo&
+  \cellcolor[HTML]{DBD7D2} Número Série&
+  \cellcolor[HTML]{DBD7D2} Data Fabricação&
+  \cellcolor[HTML]{DBD7D2} Capacidade Produtiva\\
+
+  \multirow{-4}{*}{\cellcolor[HTML]{DBD7D2} \textbf{Identificação}} &
+  <<Modelo>>&
+  <<Número de Série>>&
+  <<Data>>&
+  <<Capacidade>>\\
+\end{tcolorbox}
+
+\clearpage
+
+\centering
+\begin{tabular}{
+  >{\centering}p{2cm}|
+  >{\centering}p{.5cm}|
+  >{\centering}p{4cm}|
+  >{\centering}p{.75cm}|
+  >{\centering}p{.75cm}|
+  >{\centering}p{.75cm}|
+  >{\centering}p{1cm}|
+  >{\centering}p{1cm}|
+  >{\centering}p{2cm}|
+  >{\centering}p{1cm}
+  }%\arraybackslash
+  \hline
+  \hline
+  % cabeçalho
+  \rowcolor[HTML]{DBD7D2}\multicolumn{10}{c}{\textbf{MEDIDAS DE SEGURANÇA}}\\%color Timberwolf
+  \hline
+  % linha 1
+  \multicolumn{2}{c|}{\textbf{Medida Segurança}}& \textbf{Tipo} & \textbf{Sim} & \textbf{Não} & \textbf{NA} & \textbf{Conf.} &\multicolumn{3}{c}{\textbf{Observações}}\\	
+  \hline
+  % linha 2
+  \text{Proteções}& \text{} & \text{Conjunto tecer} & & & & &\multicolumn{3}{c}{}\\	
+  \cline{3-7}
+  % linha 3
+  \multirow{-1}{*}{\text{Mecânicas}}& \multirow{-2}{*}{\text{Fixa}} & Transmissão de Força & & & & &\multicolumn{3}{c}{}\\	
+  \hline
+  % linha 4
+  \multicolumn{2}{c|}{Dispositivos de partida,}& Liga/Desliga & & & & &\multicolumn{3}{c}{}\\	
+  \cline{3-7}
+  % linha 5
+  \multicolumn{2}{c|}{\multirow{-1}{*}{\text{acionamento e parada}}}& Ch. Geral Bloqueio & & & & &\multicolumn{3}{c}{}\\	
+  \hline
+  % linha 6
+  \multicolumn{2}{c|}{Dispositivos de Atuação}& Chaves Contactoras &  & & & &\multicolumn{3}{c}{}\\	
+  \cline{3-7}
+  \hline
+  % linha 7
+  \multicolumn{2}{c|}{}& Extra baixa tensão &  & & & &\multicolumn{3}{c}{}\\	
+  \cline{3-7}
+  % linha 8
+  \multicolumn{2}{c|}{\multirow{-2}{*}{\text{Dispositivos Elétricos}}}& Aterramento & & & & &\multicolumn{3}{c}{}\\	
+  \hline
+  % linha 9
+  \multicolumn{2}{c|}{}& Diagramas Elétricos & & & & &\multicolumn{3}{c}{}\\	
+  \cline{3-7}
+  % linha 10
+  \multicolumn{2}{c|}{\multirow{-2}{*}{\text{Documentação}}}& Laudos Técnicos NR 12 & & & & &\multicolumn{3}{c}{}\\	
+  \hline
+  % linha 11
+  \multicolumn{2}{c|}{} & \multicolumn{8}{|c}{\text{NA->Não se Aplica\quad AP->Análise Prejudicada}}\\
+  % linha 12
+  \multicolumn{2}{c|}{\multirow{-2}{*}{\text{Legenda}}} & \multicolumn{8}{|c}{\text{Conf.->Em conformidade Legal}}\\
+  \hline
+  % linha 13
+  \multicolumn{8}{c|}{\cellcolor[HTML]{F0E68C}\text{Categoria de Segurança Requerida (ABNT NBR ISO 14.153:2013)}} & \multicolumn{2}{|c}{\cellcolor[HTML]{F0E68C}\text{2}}\\%Light khaki
+  \hline
+  % linha 14
+  \multicolumn{8}{c|}{\cellcolor[HTML]{ADD8E6}\text{Categoria de Segurança Aplicada}} & \multicolumn{2}{|c}{\cellcolor[HTML]{ADD8E6}\text{2}}\\%Light Blue
+  \hline
+  \hline
+  \hline	
+\end{tabular}
+\clearpage
+\subsubsection{Partes componentes e zonas de perigo das máquinas do conjunto de máquinas de tecer roupas sem costura}
+% ###################################
+% Imagem com anotações
+% ###################################
+\begin{tikzpicture}[line width=3pt]	
+  \node[anchor=south west,inner sep=0] (image) at (0,0,0) %{\includegraphics[width=4in,angle=-90]{IMG_4291}};
+  {\includegraphics[width=0.7\textwidth,angle=-90]{img/IMG_4291}};	
+  \begin{scope}[x={(image.south east)},y={(image.north west)}]
+    \draw[red,dashed,-latex] (0.8,0.8) -- +(1.1in,0.2in)node[anchor=west] {\Large\textbf{1}};
+    \draw [red](0.8,0.8) circle (10pt);
+    \draw[red,dashed,-latex] (0.6,0.6) -- +(1.9in,0)node[anchor=west] {\Large\textbf{2}};
+    \draw [red](0.6,0.6) circle (10pt);
+    \draw[red,dashed,-latex] (0.4,0.5) -- +(-2in,0)node[anchor=east] {\Large\textbf{3}};
+    \draw [red](0.4,0.5) circle (10pt);
+    \draw[red,dashed,-latex] (0.5,0.4) -- +(-2.4in,-0.5in)node[anchor=east] {\Large\textbf{4}};
+    \draw [red](0.5,0.4) circle (10pt);	
+  \end{scope}
+\end{tikzpicture}
+\clearpage
+% ###################################
+% Tabela - Zonas de Perigo
+% ###################################
+
+% {\fontfamily{cmr10}\selectfont\small{
+% \begin{table}[!h]	
+%   \centering
+%   \caption{Identificação dos Perigos.}
+\begin{sideways}
+  \rowcolors{2}{gray!15}{white}
+  \scalebox{0.8}{
+    \scriptsize{
+      \begin{tabular}{@{}
+        >{\raggedleft}p{.5cm}|p{.5cm}|c|p{2.cm}|c|c|c|c|p{2cm}p{2.5cm}|p{2.5cm}|c@{}}
+	\rowcolor[HTML]{DBD7D2}
+	\hline
+	\hline
+	% cabeçalho
+	\rowcolor[HTML]{DBD7D2}\multicolumn{12}{c}{\textbf{Identificação dos Perigos – Máquinas do conjunto de tecer vestuário sem costura}}\\%color Timberwolf
+	\hline
+	% linha
+	% ##########################################  
+	\multicolumn{3}{l|}{Máquina}
+	&\multicolumn{4}{l|}{Tecer roupas sem costura}
+	&Método 
+	&\multicolumn{4}{l}{Lista de Verificação ABNT NBR ISO 12.100:2013 – Anexo B}\\
+	\hline	
+	% linha
+	% ##########################################  
+	\multicolumn{3}{l|}{\parbox{2.75cm}{Fonte de Informação}}
+	&\multicolumn{4}{l|}{Inspeção e observação do processo, e da operação}
+	&Analista 
+	&\multicolumn{4}{l}{Wagner José Branquinho}\\
+	\hline
+	% linha
+	% ##########################################  
+	\multicolumn{3}{l|}{Extensão}
+	&\multicolumn{4}{l|}{Fase de Uso, ajustes, operação e manutenção}
+	&Data 
+	&\multicolumn{4}{l}{\today}\\
+	\hline
+	% linha
+	% ##########################################  
+	\multicolumn{5}{c}{}
+	&\multicolumn{2}{c|}{Perigo - Tab B1}
+	& \multicolumn{5}{c}{Cenário de Acidente} \\
+	\hline
+	% linha
+	% ##########################################  
+	\begin{sideways}\parbox{1cm}{Tipo}\end{sideways}
+	&\begin{sideways}\parbox{1cm}{Ref.\,N\textordmasculine\,}\end{sideways} 
+	&\parbox{1.25cm}{Ciclo de Vida Tab.B3} 
+	&\parbox{2cm}{Zona de Perigo}
+	&\parbox{1.5cm}{Tarefa/ Operação Tab.B4}
+	& Origem 
+	&\parbox{1.75cm}{Consequência Potencial}
+	&\multicolumn{2}{l|}{\parbox{4cm}{Situação Perigosa Tab B3}}
+	&\multicolumn{2}{l|}{\parbox{4cm}{Evento Perigoso Tab B4}}
+	& \begin{sideways}\parbox{1cm}{Ref.\,N\textordmasculine\,}\end{sideways}\\[5pt]
+	\hline
+	% 
+	% linha
+	% ########################################## 
+	
+	& 1.1
+	&\cellcolor{white}  
+	&\cellcolor{white}
+	&\cellcolor{white}
+	&\parbox{2cm}{Movimentação do cabeçote} 
+	& \parbox{2.5cm}{Lacerações/ Cortes}
+	&\multicolumn{2}{l|}{\parbox{5cm}{Durante operação, invasão da zona do movimento de rotação do cabeçote}}  
+	&\multicolumn{2}{l|}{ \parbox{5cm}{Acessar a zona de movimento de giro do cabeço, contato com as bordas serrilhadas, pode levar a pequenos cortes e lacerações.}}
+	&1.1\\[20pt]
+	% \hline
+	% linha
+	% ##########################################  
+	
+	&1.2
+	& 
+	&\multirow{-2}{*}{\parbox{2cm}{Operação de Tecer}}
+	&\cellcolor{white} 
+	& \parbox{2.5cm}{Movimento de partes e peças, agulhas e mecanismos}
+	&\parbox{2.5cm}{Lacerações/Cortes}  
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante operação partes e peças em movimento}}  
+	& \multicolumn{2}{l|}{\parbox{5cm}{Acessar a zona de movimento de giro do cabeço, contato com as bordas serrilhadas, pode levar a pequenos cortes e lacerações}}
+	&1.2 \\[20pt]
+	% \hline
+	% linha 
+	% ########################################## 
+	
+	& 2
+	&\cellcolor{white} 
+	&\parbox{2cm}{Sistema de Abastecimento} 
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Movimento de partes e peças} 
+	&  \parbox{2.5cm}{Não há riscos de lesões}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual}}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Não há risco de contatos com partes e peças, processo de abastecimento automático sem contato manual.}}
+	& 2 \\[20pt]
+	% \hline
+	% ########################################## 
+	
+	& 3
+	& 
+	&\parbox{2cm}{Descarga}  
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Elementos do conjunto de transmissão de força} 
+	& \parbox{2.5cm}{Não há riscos de lesões}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual}}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Não há risco de contatos com partes e peças, processo de abastecimento automático sem contato manual.}}
+	&3 \\[20pt]
+	% \hline
+	% ########################################## 
+	\begin{sideways}\multirow{-1.5}{*}{\parbox{.5cm}{Mecânicos}}\end{sideways}
+	& 4
+	&\cellcolor{white}
+	&\parbox{2cm}{Sistema de Transmissão de Força}  
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Elementos do conjunto de transmissão de força} 
+	&  \parbox{2.5cm}{Esmagamento e Aprisionamento}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Polias e correias em movimento, partes e peças em movimento.}}
+	&  \multicolumn{2}{l|}{\parbox{5cm}{Acesso e contato com os elementos do conjunto de transmissão de força em movimento}}
+	& 4 \\[20pt]
+	% \hline
+	% ########################################## 
+	
+	& 3
+	& 
+	&\parbox{2cm}{Painel Elétrico, comandos e Componentes elétricos}   
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Partes Elétricas vivas – Componentes de acionamento energizados} 
+	&  \parbox{2.5cm}{Eletrocussão, choque, queimaduras, ficar preso, escaldo e outros}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante a interação com a máquinas como; operação, ajustes, limpeza, entrar em contato com partes da máquina que podem ficar energizadas sob condição de falha.}}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Por alguma falha do operador ou de componentes, entrar em contato com componentes elétricos.}}
+	&  3\\[30pt]
+	% \hline
+	% ########################################## 
+	\begin{sideways}\multirow{-1.5}{*}{\parbox{.5cm}{Elétrico}}\end{sideways}
+	& 4
+	&\multirow{-13}{*}{\cellcolor{white}\begin{sideways}\parbox{7.25cm}{Fase de uso : Operação, ajustes e manutenção}\end{sideways}}
+	&\parbox{2cm}{Estrutura da máquina, partes e peças}   
+	&\multirow{-13}{*}{\cellcolor{white}\begin{sideways}\parbox{7.25cm}{Operação da máquina, tecer roupas sem costura}\end{sideways}}
+	&\parbox{2.5cm}{Partes vivas sob condições de falha – Partes ou peças energizadas} 
+	& \parbox{2.5cm}{Eletrocussão, choque, queimaduras, ficar preso, escaldo e outros}
+	&\multicolumn{2}{l|}{\parbox{5cm}{Durante a interação com a máquinas como; operação, ajustes, limpeza, entrar em contato com partes da máquina que podem ficar energizadas sob condição de falha.} }
+	&\multicolumn{2}{l|}{\parbox{5cm}{Entrar em contato com partes da máquina que podem se tornara energizadas sob alguma condição de falha.}}
+	& 4\\[30pt]
+	% ########################################## 
+	\hline
+	\hline	
+      \end{tabular}}%end scriptsize
+  }%end scalebox
+\end{sideways}
+% \end{table}%
+\clearpage
+\subsubsection{Identificação dos Perigos – Máquinas do conjunto de tecer sem vestuário sem costura}
+% ###################################
+% Tabela - Identificação dos Perigos
+% ###################################
+
+% \begin{sideways}
+\begin{tabular}{
+  >{\centering\arraybackslash}p{2cm}|
+  >{\arraybackslash}p{6cm}|
+  >{\arraybackslash}p{6cm}
+  }
+  \hline
+  \hline
+  % cabeçalho
+  \rowcolor[HTML]{DBD7D2}\begin{sideways}\textbf{Legenda}\end{sideways}&\multicolumn{2}{c}{\textbf{Parte da máquina/sistema/zona de perigo}}\\%color Timberwolf
+  \hline
+  % linha 1-1
+                                                                       & & \text{1.1 – Zona do cabeçote}\\
+                                                                       % linha 1-2
+  \multirow{-2}{*}{\text{1}}& \multirow{-2}{*}{\text{Zona de Operação de tecer}}& \text{1.2 – Mecanismos das agulhas}\\
+  \hline
+  % linha 2
+  \text{2}&\multicolumn{2}{l}{\text{Zona de abastecimento - Conjunto de abastecimento}}\\
+  \hline
+  % linha 3
+  \text{3}&\multicolumn{2}{l}{\text{Zona de descarga – Conjunto de descarga}}\\
+  \hline
+  % linha 4
+  \text{4}&\multicolumn{2}{l}{\text{Sistema de transmissão de força}}\\
+  \hline
+  % linha 5
+  \text{5}&\multicolumn{2}{l}{\text{Componentes Elétricos Painel Elétrico de controle e comendo}}\\
+  \hline
+  % linha 6
+  \text{6}&\multicolumn{2}{l}{\text{Estrutura da Máquina}}\\
+  \hline
+  \hline	
+\end{tabular}
+% \end{sideways}
+
+\subsubsection{Indicação das Medidas de Proteção e Sistemas de Segurança De acordo com as análises de riscos, as máquinas do conjunto de máquinas}
+De acordo com as análises de riscos, as máquinas do conjunto de máquinas do setor da
+tecelagem de peças de vestuário, roupas, sem costura, apresentam baixo risco o que não necessita de
+adoção de medidas de segurança, porém toda e qualquer estado de segurança pode ser melhorado, e
+para que ocorra essa melhoria, devem ser adotadas as seguintes medidas de segurança e ou sistemas
+de segurança. De acordo com os requisitos da Norma Regulamentadora NR 12:\\
+As proteções fixas da zona de operação de tecer, zona de movimentação do cabeçote e a zona
+de movimentação dos mecanismos das agulhas devem ser fixadas a estrutura da máquina, de acordo
+com o item:\\
+12.5 – Sistemas de segurança em seu subitem\\
+12.5.4 - Para fins de aplicação desta NR, considera-se proteção o elemento especificamente
+utilizado para prover segurança por meio de barreira física, podendo ser: a) proteção fixa, que deve
+ser mantida em sua posição de maneira permanente ou por meio de elementos de fixação que só
+permitam sua remoção ou abertura com o uso de ferramentas.\\
+Ou como alternativa, se o acesso a zona de risco do sistema de tecer se fizer necessária mais
+de uma vez por dia, com a remoção da proteção fixa pode adotar proteção móvel obedecendo o
+seguinte item:\\
+12.5.6 A proteção deve ser móvel quando o acesso a uma zona de perigo for requerido mais
+de uma vez por turno de trabalho, observando-se que:\\
+a) a proteção deve ser associada a um dispositivo de intertravamento quando sua abertura não
+possibilitar o acesso à zona de perigo antes da eliminação do risco; e\\
+b) a proteção deve ser associada a um dispositivo de intertravamento com bloqueio quando sua
+abertura possibilitar o acesso à zona de perigo antes da eliminação do risco.\\
+Conceito de proteção móvel de acordo com o item 12.5.4 Para fins de aplicação desta NR,
+considera-se proteção o elemento especificamente utilizado para prover segurança por meio de
+barreira física, podendo ser: b) proteção móvel, que pode ser aberta sem o uso de ferramentas,
+geralmente ligada por elementos mecânicos à estrutura da máquina ou a um elemento fixo próximo,
+e deve se associar a dispositivos de intertravamento.\\
+
+\subsubsection{Estimativa da Categoria de Segurança Requerida – Máquinas do conjunto de tecer peças de vestuário sem costura}
+\begin{sideways}
+  \rowcolors{2}{gray!15}{white}
+  % \scalebox{0.8}{
+  \scriptsize{
+    \begin{tabular}{@{}
+	% >{\raggedleft}p{1.5cm}|p{1cm}|p{2.cm}|c|c|c|c|p{1cm}|p{1cm}|p{1cm}|p{1cm}|c@{}}
+      >{\raggedleft}p{1.5cm}|p{1cm}|c|c|c|c|c|p{.75cm}|p{.25cm}|p{.25cm}|p{.25cm}|c@{}}
+      \rowcolor[HTML]{DBD7D2}
+      \hline
+      \hline
+      % cabeçalho
+      \rowcolor[HTML]{DBD7D2}\multicolumn{12}{c}{\textbf{Estimativa da Categoria de Segurança Requerida – Máquinas do conjunto de tecer peças de vestuário sem costura}}\\%color Timberwolf
+      \hline
+      % linha
+      % ##########################################  
+      {Máquina}
+      &\multicolumn{4}{l|}{Tecer peças de vestuáro sem costura}
+      &Analista
+      &\multicolumn{6}{l}{Wagner José Branquinho}\\
+      \hline	
+      % linha
+      % ##########################################  
+      \parbox[l]{1.5cm}{\; Fonte}
+      &\multicolumn{4}{l|}{Inspeção e observação do processo, e da operação}
+      &Método
+      &\multicolumn{6}{l}{Lista de Verificação ABNT NBR ISO 12.100:2013 – Anexo B}\\
+      \hline
+      % linha
+      % ##########################################  
+      Extensão
+      &\multicolumn{4}{l|}{Fase de Uso, ajustes, operação e manutenção}
+      &Data 
+      &\multicolumn{6}{l}{\today}\\[5pt]
+      \hline
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{S1 - Ferimento Leve (normalmente reversível)}}
+      &\multicolumn{5}{c}{} \\
+      \cline{3-6}
+      % linha
+      % ########################################## 
+      \multicolumn{3}{l}{\multirow{-2}{*}{S - Severidade do ferimento}}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{S2 - Ferimento Sério (normalmente irreversível) incluindo morte}}
+      & \multicolumn{5}{c}{} \\[5pt]
+      \cline{1-6}
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{F1 - Baixo tempo de exposição}}
+      & \multicolumn{5}{c}{} \\
+      \cline{3-6}
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{\multirow{-2}{*}{F – Frequência/ Tempo exposição}}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{F2 - Tempo de exposição longo}}
+      & \multicolumn{5}{c}{} \\[5pt]
+      \cline{1-6}
+      % linha
+      % ########################################## 
+      \multicolumn{3}{l}{}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{P1 – Possível sob condições específicas}}
+      & \multicolumn{5}{c}{} \\
+      \cline{3-6}
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{\multirow{-2}{*}{P – Possibilidade de evitar o perigo}}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{P2 – Quase nunca possível}}
+      &\multicolumn{5}{c}{\multirow{-6}{*}{\parbox[c]{7cm}{\includegraphics[width=7cm]{img/cat-seg.png}}}}\\[5pt]
+      \hline
+      % linha
+      % ########################################## 
+      \rowcolor[HTML]{ADD8E6}\multicolumn{12}{c}{\textbf{Estimativa da Categoria de Segurança}}\\%Light Blue
+      \hline
+      % linha
+      % ########################################## 
+      \parbox[l|]{1cm}{Tipo}
+      &\parbox[l|]{1cm}{Ref.\,N\textordmasculine\,}
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de Perigo}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Situação Perigosa}}
+      &S
+      &F
+      &P
+      &Cat.Seg.\\[5pt]
+      \hline  				 
+      % ########################################## 
+      & 1.1
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de operação de tecer}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante operação, invasão da zona de rotação do cabeçote.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 1.2
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de operação de tecer}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante operação partes e peças em movimento.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 2
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona do sistema de abastecimento}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 3
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de descarga}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 4
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona do sistema de transmissão de força}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Polias e correias em movimento, partes e peças em movimento.}}
+      &S2
+      &F1
+      &P1
+      &2\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 5
+      &\multicolumn{2}{l|}{\parbox{4cm}{Painel Elétrico, comandos de acionamento – Componentes Elétricos}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Contato elétrico direto.}}
+      &S2
+      &F1
+      &P1
+      &2\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 6
+      &\multicolumn{2}{l|}{\parbox{4cm}{Partes da Máquinas que possam se tornar energizadas por alguma condição de falha.}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Contato com partes da máquina, energizadas por alguma falha.}}
+      &S2
+      &F1
+      &P2
+      &2\\[15pt]
+      % \hline
+      % linha
+      % ########################################## 
+      \rowcolor[HTML]{F0E68C}\multicolumn{11}{c|}{\textbf{Categoria de Segurança Requerida}}
+      &2\\%Light Khaki
+      \hline
+      % linha
+      % ##########################################  
+
+      \hline
+      \hline	
+    \end{tabular}}%end scriptsize
+  % }%end scalebox
+\end{sideways}
+% \end{table}%
+\clearpage
+
+\end{document}

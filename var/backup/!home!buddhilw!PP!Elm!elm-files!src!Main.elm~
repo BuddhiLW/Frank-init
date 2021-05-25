@@ -1,0 +1,38 @@
+module Main exposing (main)
+
+import Html exposing (text)
+
+
+greeting : String
+greeting =
+    "Hello, Static Elm!"
+
+
+meaningOfLife : Int
+meaningOfLife =
+    42
+
+
+pi : Float
+pi =
+    3.1415
+
+
+
+-- text (Debug.toString pi)
+-- text (Debug.toString greeting)
+
+
+hl : String -> String
+hl name =
+    "Hello, " ++ name ++ "."
+
+
+bottlesOf contents amount =
+    Debug.toString amount ++ " bottles of " ++ contents ++ " on the wall."
+
+
+main =
+    -- text (Debug.toString meaningOfLife)
+    -- text (hl "Functional Elm")
+    text (bottlesOf "juice" True)

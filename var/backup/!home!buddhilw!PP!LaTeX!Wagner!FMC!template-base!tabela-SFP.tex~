@@ -1,0 +1,42 @@
+\begin{tcolorbox}[tabularx={>{\raggedright}p{4cm}|
+    >{\raggedright}Y|
+    >{\centering}X|}]
+  \cellcolor{white}&
+  S1 - Ferimento Leve (normalmente reversível) & 
+  \multicolumn{1}{c}{\multirow{2}{*}{\parbox[c]{7cm}{\includegraphics[width=\linewidth]{img/cat-seg.png}}}}\\\cline{2-2}
+
+  \multirow{-2}{*}{
+    \begin{minipage}{3.5cm}
+      \textbf{S - Severidade do ferimento}
+    \end{minipage}} &
+  S2 - Ferimento Sério (normalmente irreversível) incluindo morte&\\
+  \cline{1-2}
+  % \cmidrule{1pt}{1-2}
+
+  %%Frequência
+   &
+   F1 - Baixo tempo de exposição&\\
+   \cline{2-2}
+
+  \multirow{-2}{*}{
+    \begin{minipage}{3.5cm}
+      \textbf{F - Frequência/Tempo exposição}
+    \end{minipage}} &
+  F2 - Tempo de exposição longo&\\
+  \cline{1-2}
+
+  %%Possibilidade de evitar o perigo
+   &
+   P1 - Possível sob condições específicas&\\
+   \cline{2-2}
+
+  \multirow{-2}{*}{
+    \begin{minipage}{3.5cm}
+      \textbf{P - Possibilidade de evitar o perigo}
+    \end{minipage}} &
+  P2 - Quase nunca possível&\\
+  \cline{1-2}
+  %% ffff00 --> Amarelo
+  %% ff0000 --> Vermelho
+  %% 00B050 -> Verde
+\end{tcolorbox}

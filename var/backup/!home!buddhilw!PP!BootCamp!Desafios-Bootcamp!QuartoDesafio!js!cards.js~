@@ -1,0 +1,62 @@
+var querierAll = s => document.querySelectorAll(s);
+const cards = querierAll("li");
+
+cards.forEach((card) => {
+    card.addEventListener("click", select);
+});
+
+var arrayChildren = () => Array.from(this.parentElement.children);
+
+var remover = e => c => e.classList.remove(c);
+// cons is a well known alias for construct, from other languages
+var cons = e => c => e.classList.add(c);
+
+var counter = 0;
+function select(e) {
+    // const children = Array.from(this.parentElement.children);
+    // let active = query
+    cards.forEach((card) => {
+        remover(card)("card-border");
+        remover(card)("active");
+        if (card) {
+            cons(card)("hidden");
+        }
+    });
+    cons(this)("card-border");
+    cons(this)("active");
+    remover(this)("hidden");
+//     orderConfirmation();
+}
+
+// Snippet from https://www.w3docs.com/snippets/javascript/how-to-randomize-shuffle-a-javascript-array.html
+function shuffleArray(array) {
+    let curId = array.length;
+    // There remain elements to shuffle
+    while (0 !== curId) {
+        // Pick a remaining element
+        let randId = Math.floor(Math.random() * curId);
+        curId -= 1;
+        // Swap it with the current element.
+        let tmp = array[curId];
+        array[curId] = array[randId];
+        array[randId] = tmp;
+    }
+    return array;
+}
+
+var assignId = e => identity => e.id = `card${identity}`;
+
+var assignIdAll = (number) => {
+    console.log(number);
+    let indexArray = Array.from(Array(number/2).keys());
+    let indexShuffled = shuffleArray(indexArray);
+    for (var i = 0; i < number/2; i++) {
+        assignId(cards[i])(indexShuffled[i]);
+    }
+    indexShuffled = shuffleArray(indexShuffled);
+    for (var j = number/2; j < number; j++) {
+        assignId(cards[j])(indexShuffled[j - number/2]);
+    }
+};
+
+// initGame();

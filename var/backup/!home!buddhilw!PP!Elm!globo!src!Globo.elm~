@@ -1,0 +1,9 @@
+module globo exposing (..)
+
+import Html exposing (..)
+
+
+view model =
+    div [class top]
+	[
+	]

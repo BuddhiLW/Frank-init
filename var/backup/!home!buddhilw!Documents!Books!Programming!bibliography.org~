@@ -1,0 +1,14 @@
+*  Bibliography for further citations
+** Clojure
+#+begin_src js
+  @book{book:{2967748},
+        title =     {Web Development with Clojure, Third Edition},
+        author =    {Dmitri Sotnikov and Scot Brown},
+        publisher = {The Pragmatic Bookshelf},
+        isbn =      {9781680506822},
+        year =      {2021},
+        series =    {},
+        edition =   {3},
+        volume =    {},
+        url =       {http://gen.lib.rus.ec/book/index.php?md5=77F8623AAE8E49C9EE936E406FE7B1DF}}
+#+end_src

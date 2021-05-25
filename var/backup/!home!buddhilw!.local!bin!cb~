@@ -1,0 +1,1 @@
+wal -i $(find ~/wpp -type f | shuf |awk 'FNR == 1')

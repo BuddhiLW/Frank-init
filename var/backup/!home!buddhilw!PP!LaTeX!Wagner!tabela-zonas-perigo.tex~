@@ -1,0 +1,388 @@
+% ###################################
+% Tabela - Zonas de Perigo
+% ###################################
+
+\begin{sideways}
+  \rowcolors{2}{gray!15}{white}
+  \scalebox{0.8}{
+    \scriptsize{
+      \begin{tabular}{@{}
+        >{\raggedleft}p{.5cm}|p{.5cm}|c|p{2.cm}|c|c|c|c|p{2cm}p{2.5cm}|p{2.5cm}|c@{}}
+	\rowcolor[HTML]{DBD7D2}
+	\hline
+	\hline
+	% cabeçalho
+	\rowcolor[HTML]{DBD7D2}\multicolumn{12}{c}{\textbf{Identificação dos Perigos – Máquinas do conjunto de tecer vestuário sem costura}}\\%color Timberwolf
+	\hline
+	% linha
+	% ##########################################  
+	\multicolumn{3}{l|}{Máquina}
+	&\multicolumn{4}{l|}{Tecer roupas sem costura}
+	&Método 
+	&\multicolumn{4}{l}{Lista de Verificação ABNT NBR ISO 12.100:2013 – Anexo B}\\
+	\hline	
+	% linha
+	% ##########################################  
+	\multicolumn{3}{l|}{\parbox{2.75cm}{Fonte de Informação}}
+	&\multicolumn{4}{l|}{Inspeção e observação do processo, e da operação}
+	&Analista 
+	&\multicolumn{4}{l}{Wagner José Branquinho}\\
+	\hline
+	% linha
+	% ##########################################  
+	\multicolumn{3}{l|}{Extensão}
+	&\multicolumn{4}{l|}{Fase de Uso, ajustes, operação e manutenção}
+	&Data 
+	&\multicolumn{4}{l}{\today}\\
+	\hline
+	% linha
+	% ##########################################  
+	\multicolumn{5}{c}{}
+	&\multicolumn{2}{c|}{Perigo - Tab B1}
+	& \multicolumn{5}{c}{Cenário de Acidente} \\
+	\hline
+	% linha
+	% ##########################################  
+	\begin{sideways}\parbox{1cm}{Tipo}\end{sideways}
+	&\begin{sideways}\parbox{1cm}{Ref.\,N\textordmasculine\,}\end{sideways} 
+	&\parbox{1.25cm}{Ciclo de Vida Tab.B3} 
+	&\parbox{2cm}{Zona de Perigo}
+	&\parbox{1.5cm}{Tarefa/ Operação Tab.B4}
+	& Origem 
+	&\parbox{1.75cm}{Consequência Potencial}
+	&\multicolumn{2}{l|}{\parbox{4cm}{Situação Perigosa Tab B3}}
+	&\multicolumn{2}{l|}{\parbox{4cm}{Evento Perigoso Tab B4}}
+	& \begin{sideways}\parbox{1cm}{Ref.\,N\textordmasculine\,}\end{sideways}\\[5pt]
+	\hline
+	% 
+	% linha
+	% ########################################## 
+	
+	& 1.1
+	&\cellcolor{white}  
+	&\cellcolor{white}
+	&\cellcolor{white}
+	&\parbox{2cm}{Movimentação do cabeçote} 
+	& \parbox{2.5cm}{Lacerações/ Cortes}
+	&\multicolumn{2}{l|}{\parbox{5cm}{Durante operação, invasão da zona do movimento de rotação do cabeçote}}  
+	&\multicolumn{2}{l|}{ \parbox{5cm}{Acessar a zona de movimento de giro do cabeço, contato com as bordas serrilhadas, pode levar a pequenos cortes e lacerações.}}
+	&1.1\\[20pt]
+	% \hline
+	% linha
+	% ##########################################  
+	
+	&1.2
+	& 
+	&\multirow{-2}{*}{\parbox{2cm}{Operação de Tecer}}
+	&\cellcolor{white} 
+	& \parbox{2.5cm}{Movimento de partes e peças, agulhas e mecanismos}
+	&\parbox{2.5cm}{Lacerações/Cortes}  
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante operação partes e peças em movimento}}  
+	& \multicolumn{2}{l|}{\parbox{5cm}{Acessar a zona de movimento de giro do cabeço, contato com as bordas serrilhadas, pode levar a pequenos cortes e lacerações}}
+	&1.2 \\[20pt]
+	% \hline
+	% linha 
+	% ########################################## 
+	
+	& 2
+	&\cellcolor{white} 
+	&\parbox{2cm}{Sistema de Abastecimento} 
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Movimento de partes e peças} 
+	&  \parbox{2.5cm}{Não há riscos de lesões}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual}}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Não há risco de contatos com partes e peças, processo de abastecimento automático sem contato manual.}}
+	& 2 \\[20pt]
+	% \hline
+	% ########################################## 
+	
+	& 3
+	& 
+	&\parbox{2cm}{Descarga}  
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Elementos do conjunto de transmissão de força} 
+	& \parbox{2.5cm}{Não há riscos de lesões}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual}}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Não há risco de contatos com partes e peças, processo de abastecimento automático sem contato manual.}}
+	&3 \\[20pt]
+	% \hline
+	% ########################################## 
+	\begin{sideways}\multirow{-1.5}{*}{\parbox{.5cm}{Mecânicos}}\end{sideways}
+	& 4
+	&\cellcolor{white}
+	&\parbox{2cm}{Sistema de Transmissão de Força}  
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Elementos do conjunto de transmissão de força} 
+	&  \parbox{2.5cm}{Esmagamento e Aprisionamento}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Polias e correias em movimento, partes e peças em movimento.}}
+	&  \multicolumn{2}{l|}{\parbox{5cm}{Acesso e contato com os elementos do conjunto de transmissão de força em movimento}}
+	& 4 \\[20pt]
+	% \hline
+	% ########################################## 
+	
+	& 3
+	& 
+	&\parbox{2cm}{Painel Elétrico, comandos e Componentes elétricos}   
+	& \cellcolor{white}
+	&\parbox{2.5cm}{Partes Elétricas vivas – Componentes de acionamento energizados} 
+	&  \parbox{2.5cm}{Eletrocussão, choque, queimaduras, ficar preso, escaldo e outros}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Durante a interação com a máquinas como; operação, ajustes, limpeza, entrar em contato com partes da máquina que podem ficar energizadas sob condição de falha.}}
+	& \multicolumn{2}{l|}{\parbox{5cm}{Por alguma falha do operador ou de componentes, entrar em contato com componentes elétricos.}}
+	&  3\\[30pt]
+	% \hline
+	% ########################################## 
+	\begin{sideways}\multirow{-1.5}{*}{\parbox{.5cm}{Elétrico}}\end{sideways}
+	& 4
+	&\multirow{-13}{*}{\cellcolor{white}\begin{sideways}\parbox{7.25cm}{Fase de uso : Operação, ajustes e manutenção}\end{sideways}}
+	&\parbox{2cm}{Estrutura da máquina, partes e peças}   
+	&\multirow{-13}{*}{\cellcolor{white}\begin{sideways}\parbox{7.25cm}{Operação da máquina, tecer roupas sem costura}\end{sideways}}
+	&\parbox{2.5cm}{Partes vivas sob condições de falha – Partes ou peças energizadas} 
+	& \parbox{2.5cm}{Eletrocussão, choque, queimaduras, ficar preso, escaldo e outros}
+	&\multicolumn{2}{l|}{\parbox{5cm}{Durante a interação com a máquinas como; operação, ajustes, limpeza, entrar em contato com partes da máquina que podem ficar energizadas sob condição de falha.} }
+	&\multicolumn{2}{l|}{\parbox{5cm}{Entrar em contato com partes da máquina que podem se tornara energizadas sob alguma condição de falha.}}
+	& 4\\[30pt]
+	% ########################################## 
+	\hline
+	\hline	
+      \end{tabular}}%end scriptsize
+  }%end scalebox
+\end{sideways}
+% \end{table}%
+\clearpage
+\subsubsection{Identificação dos Perigos – Máquinas do conjunto de tecer sem vestuário sem costura}
+% ###################################
+% Tabela - Identificação dos Perigos
+% ###################################
+
+% \begin{sideways}
+\begin{tabular}{
+  >{\centering\arraybackslash}p{2cm}|
+  >{\arraybackslash}p{6cm}|
+  >{\arraybackslash}p{6cm}
+  }
+  \hline
+  \hline
+  % cabeçalho
+  \rowcolor[HTML]{DBD7D2}\begin{sideways}\textbf{Legenda}\end{sideways}&\multicolumn{2}{c}{\textbf{Parte da máquina/sistema/zona de perigo}}\\%color Timberwolf
+  \hline
+  % linha 1-1
+                                                                       & & \text{1.1 – Zona do cabeçote}\\
+                                                                       % linha 1-2
+  \multirow{-2}{*}{\text{1}}& \multirow{-2}{*}{\text{Zona de Operação de tecer}}& \text{1.2 – Mecanismos das agulhas}\\
+  \hline
+  % linha 2
+  \text{2}&\multicolumn{2}{l}{\text{Zona de abastecimento - Conjunto de abastecimento}}\\
+  \hline
+  % linha 3
+  \text{3}&\multicolumn{2}{l}{\text{Zona de descarga – Conjunto de descarga}}\\
+  \hline
+  % linha 4
+  \text{4}&\multicolumn{2}{l}{\text{Sistema de transmissão de força}}\\
+  \hline
+  % linha 5
+  \text{5}&\multicolumn{2}{l}{\text{Componentes Elétricos Painel Elétrico de controle e comendo}}\\
+  \hline
+  % linha 6
+  \text{6}&\multicolumn{2}{l}{\text{Estrutura da Máquina}}\\
+  \hline
+  \hline	
+\end{tabular}
+% \end{sideways}
+
+\subsubsection{Indicação das Medidas de Proteção e Sistemas de Segurança De acordo com as análises de riscos, as máquinas do conjunto de máquinas}
+De acordo com as análises de riscos, as máquinas do conjunto de máquinas do setor da
+tecelagem de peças de vestuário, roupas, sem costura, apresentam baixo risco o que não necessita de
+adoção de medidas de segurança, porém toda e qualquer estado de segurança pode ser melhorado, e
+para que ocorra essa melhoria, devem ser adotadas as seguintes medidas de segurança e ou sistemas
+de segurança. De acordo com os requisitos da Norma Regulamentadora NR 12:\\
+As proteções fixas da zona de operação de tecer, zona de movimentação do cabeçote e a zona
+de movimentação dos mecanismos das agulhas devem ser fixadas a estrutura da máquina, de acordo
+com o item:\\
+12.5 – Sistemas de segurança em seu subitem\\
+12.5.4 - Para fins de aplicação desta NR, considera-se proteção o elemento especificamente
+utilizado para prover segurança por meio de barreira física, podendo ser: a) proteção fixa, que deve
+ser mantida em sua posição de maneira permanente ou por meio de elementos de fixação que só
+permitam sua remoção ou abertura com o uso de ferramentas.\\
+Ou como alternativa, se o acesso a zona de risco do sistema de tecer se fizer necessária mais
+de uma vez por dia, com a remoção da proteção fixa pode adotar proteção móvel obedecendo o
+seguinte item:\\
+12.5.6 A proteção deve ser móvel quando o acesso a uma zona de perigo for requerido mais
+de uma vez por turno de trabalho, observando-se que:\\
+a) a proteção deve ser associada a um dispositivo de intertravamento quando sua abertura não
+possibilitar o acesso à zona de perigo antes da eliminação do risco; e\\
+b) a proteção deve ser associada a um dispositivo de intertravamento com bloqueio quando sua
+abertura possibilitar o acesso à zona de perigo antes da eliminação do risco.\\
+Conceito de proteção móvel de acordo com o item 12.5.4 Para fins de aplicação desta NR,
+considera-se proteção o elemento especificamente utilizado para prover segurança por meio de
+barreira física, podendo ser: b) proteção móvel, que pode ser aberta sem o uso de ferramentas,
+geralmente ligada por elementos mecânicos à estrutura da máquina ou a um elemento fixo próximo,
+e deve se associar a dispositivos de intertravamento.\\
+
+\subsubsection{Estimativa da Categoria de Segurança Requerida – Máquinas do conjunto de tecer peças de vestuário sem costura}
+\begin{sideways}
+  \rowcolors{2}{gray!15}{white}
+  % \scalebox{0.8}{
+  \scriptsize{
+    \begin{tabular}{@{}
+	% >{\raggedleft}p{1.5cm}|p{1cm}|p{2.cm}|c|c|c|c|p{1cm}|p{1cm}|p{1cm}|p{1cm}|c@{}}
+      >{\raggedleft}p{1.5cm}|p{1cm}|c|c|c|c|c|p{.75cm}|p{.25cm}|p{.25cm}|p{.25cm}|c@{}}
+      \rowcolor[HTML]{DBD7D2}
+      \hline
+      \hline
+      % cabeçalho
+      \rowcolor[HTML]{DBD7D2}\multicolumn{12}{c}{\textbf{Estimativa da Categoria de Segurança Requerida – Máquinas do conjunto de tecer peças de vestuário sem costura}}\\%color Timberwolf
+      \hline
+      % linha
+      % ##########################################  
+      {Máquina}
+      &\multicolumn{4}{l|}{Tecer peças de vestuáro sem costura}
+      &Analista
+      &\multicolumn{6}{l}{Wagner José Branquinho}\\
+      \hline	
+      % linha
+      % ##########################################  
+      \parbox[l]{1.5cm}{\; Fonte}
+      &\multicolumn{4}{l|}{Inspeção e observação do processo, e da operação}
+      &Método
+      &\multicolumn{6}{l}{Lista de Verificação ABNT NBR ISO 12.100:2013 – Anexo B}\\
+      \hline
+      % linha
+      % ##########################################  
+      Extensão
+      &\multicolumn{4}{l|}{Fase de Uso, ajustes, operação e manutenção}
+      &Data 
+      &\multicolumn{6}{l}{\today}\\[5pt]
+      \hline
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{S1 - Ferimento Leve (normalmente reversível)}}
+      &\multicolumn{5}{c}{} \\
+      \cline{3-6}
+      % linha
+      % ########################################## 
+      \multicolumn{3}{l}{\multirow{-2}{*}{S - Severidade do ferimento}}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{S2 - Ferimento Sério (normalmente irreversível) incluindo morte}}
+      & \multicolumn{5}{c}{} \\[5pt]
+      \cline{1-6}
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{F1 - Baixo tempo de exposição}}
+      & \multicolumn{5}{c}{} \\
+      \cline{3-6}
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{\multirow{-2}{*}{F – Frequência/ Tempo exposição}}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{F2 - Tempo de exposição longo}}
+      & \multicolumn{5}{c}{} \\[5pt]
+      \cline{1-6}
+      % linha
+      % ########################################## 
+      \multicolumn{3}{l}{}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{P1 – Possível sob condições específicas}}
+      & \multicolumn{5}{c}{} \\
+      \cline{3-6}
+      % linha
+      % ##########################################  
+      \multicolumn{3}{l}{\multirow{-2}{*}{P – Possibilidade de evitar o perigo}}
+      &\multicolumn{4}{l|}{\parbox[l|]{7cm}{P2 – Quase nunca possível}}
+      &\multicolumn{5}{c}{\multirow{-6}{*}{\parbox[c]{7cm}{\includegraphics[width=7cm]{img/cat-seg.png}}}}\\[5pt]
+      \hline
+      % linha
+      % ########################################## 
+      \rowcolor[HTML]{ADD8E6}\multicolumn{12}{c}{\textbf{Estimativa da Categoria de Segurança}}\\%Light Blue
+      \hline
+      % linha
+      % ########################################## 
+      \parbox[l|]{1cm}{Tipo}
+      &\parbox[l|]{1cm}{Ref.\,N\textordmasculine\,}
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de Perigo}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Situação Perigosa}}
+      &S
+      &F
+      &P
+      &Cat.Seg.\\[5pt]
+      \hline  				 
+      % ########################################## 
+      & 1.1
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de operação de tecer}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante operação, invasão da zona de rotação do cabeçote.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 1.2
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de operação de tecer}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante operação partes e peças em movimento.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 2
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona do sistema de abastecimento}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 3
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona de descarga}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Durante funcionamento, descarga é de forma automatizada, sem contato manual.}}
+      &S1
+      &-
+      &-
+      &1\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 4
+      &\multicolumn{2}{l|}{\parbox{4cm}{Zona do sistema de transmissão de força}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Polias e correias em movimento, partes e peças em movimento.}}
+      &S2
+      &F1
+      &P1
+      &2\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 5
+      &\multicolumn{2}{l|}{\parbox{4cm}{Painel Elétrico, comandos de acionamento – Componentes Elétricos}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Contato elétrico direto.}}
+      &S2
+      &F1
+      &P1
+      &2\\[15pt]
+      % \hline
+      % linha
+      % ##########################################  
+      & 6
+      &\multicolumn{2}{l|}{\parbox{4cm}{Partes da Máquinas que possam se tornar energizadas por alguma condição de falha.}}
+      &\multicolumn{4}{l|}{\parbox{9cm}{Contato com partes da máquina, energizadas por alguma falha.}}
+      &S2
+      &F1
+      &P2
+      &2\\[15pt]
+      % \hline
+      % linha
+      % ########################################## 
+      \rowcolor[HTML]{F0E68C}\multicolumn{11}{c|}{\textbf{Categoria de Segurança Requerida}}
+      &2\\%Light Khaki
+      \hline
+      % linha
+      % ##########################################  
+
+      \hline
+      \hline	
+    \end{tabular}}%end scriptsize
+  % }%end scalebox
+\end{sideways}

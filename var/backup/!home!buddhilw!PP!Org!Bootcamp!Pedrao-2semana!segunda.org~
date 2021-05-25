@@ -1,0 +1,56 @@
+
+* Especifidade 
+** Exercício encapsulamento de propriedades
+
+*** Problema das receitas
+1) Fazer com que todas List Items  das Unordenated Lists sejam escritos em bold.
+2) Fazer com que as cores de List Items das Ordenated Lists alternem-se.
+
+#+begin_src css
+  ul li {
+      font-weight: bold;
+  }
+  ol li:nth-child(odd) {
+      color:darkred;
+  }
+  ol li:nth-child(even) { 
+      color:darkcyan;
+  }
+#+end_src
+
+#+begin_export html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Receita</title>
+  </head>
+  <body>
+    <img src="https://m.bonde.com.br/img/bondenews/2018/07/img_3085.jpg" alt="">
+    <h1>Bolo de fubá</h1>
+    
+    <h2>Ingredientes</h2>
+    <ul>
+      <li>3 ovos inteiros</li>
+      <li>2 xícaras (chá) de açúcar</li>
+      <li>2 xícaras (chá) de fubá</li>
+      <li>3 colheres (sopa) de farinha de trigo</li>
+      <li>1/2 copo (americano) de óleo</li>
+      <li>1 copo (americano) de leite</li>
+      <li>1 colher (sopa) de fermento em pó</li>
+    </ul>
+
+    <h2>Modo de preparo</h2>
+    <ol>
+      <li>Em um liquidificador, adicione os ovos, o açúcar, o fubá, a farinha de trigo, o óleo, o leite e o fermento, depois bata até a massa ficar lisa e homogênea.</li>
+      <li>Despeje a massa em uma forma untada e polvilhada.</div>
+      <li>Leve para assar em forno médio 180 °C) preaquecido por 40 minutos.</li>
+    </ol>
+
+  </body>
+</html>
+#+end_export
+
+
+

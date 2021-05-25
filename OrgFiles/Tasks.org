@@ -1,0 +1,88 @@
+* Inbox
+
+** TODO Commit config updates
+  [2020-10-09 Fri 10:05]
+  [[file:~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org::*Inbox][Inbox]]
+
+** TODO Update Journal capture template
+  [2020-10-09 Fri 10:06]
+  [[file:~/Projects/Code/emacs-from-scratch/init.el::"j" "Journal Entries"]]
+
+
+* Active
+
+# ** NEXT Merge the PR                                                  :work:
+# DEADLINE: <2020-10-12 Mon>
+# ** NEXT Reply to John's e-mail                             :note:work:email:
+# :PROPERTIES:
+# :Effort:   3
+# :END:
+# ** NEXT Buy milk
+# :PROPERTIES:
+# :Effort:   20
+# :END:
+
+# ** DONE Finish documentation
+# CLOSED: [2020-10-09 Fri 09:30] SCHEDULED: <2020-10-10 Sat>
+
+** ☛ TODO Learn to use Clojure Hicups
+SCHEDULED: <2021-03-21 Sun>
+*** ☛ TODO 9meme challenge with hicups
+SCHEDULED: <2021-03-22 Mon>
+
+
+
+** NEXT Daily Mandarin Class
+SCHEDULED: <2021-03-17 Wed +1d>
+*** NEXT Class
+SCHEDULED: <2021-03-17 Wed>
+*** NEXT Exercises
+SCHEDULED: <2021-03-17 Wed>
+*** NEXT Anki
+SCHEDULED: <2021-03-17 Wed>
+
+
+
+** ✔ DONE Listar um mês de aniversários importantes 
+CLOSED: [2021-03-17 Wed 09:37 +1d]
+:LOGBOOK:
+- State "✔ DONE"     from "NEXT"       [2021-03-17 Wed 09:37]
+:END:
+<2021-03-17 Wed>
+
+
+
+** ☛ TODO System Crafters
+*** NEXT 6 - Organize Your Life with Org Mode
+:LOGBOOK:
+- State "✔ DONE"     from "NEXT"       [2021-03-17 Wed 09:38]
+:END:
+
+** ☛ TODO Exercício globo 
+<2021-03-19 Fri>
+
+
+* Init customization pile and ideias
+** ☛ TODO Togle evil mode and normal Emacs
+<2021-03-21 Sun>
+;; defun toggle-evilmode ()
+;;   (interactive)
+;;   (if (bound-and-true-p evil-local-mode)
+;;     (progn
+;;       ; go emacs
+;;       (evil-local-mode (or -1 1))
+;;       (undo-tree-mode (or -1 1))
+;;       (set-variable 'cursor-type 'bar)
+;;     )
+;;     (progn
+;;       ; go evil
+;;       (evil-local-mode (or 1 1))
+;;       (set-variable 'cursor-type 'box)
+;;     )
+;;   )
+;; )
+ 
+;; (global-set-key (kbd "M-u") 'toggle-evilmode)
+
+
+* Backlog

@@ -1,0 +1,29 @@
+  \fancyhead[C]{%
+    \begin{NiceTabular}{ccc}[hvlines, cell-space-top-limit=6pt,cell-space-bottom-limit=3pt]
+      \Block{}{\includegraphics[height=1.5cm,width=3cm]{./img/logo.png}}&
+      \Block[l]{}<\bfseries\fontsize{11}{12}\selectfont>{
+        APRECIAÇÃO DE RISCO - INVENTÁRIO DE MÁQUINAS \\
+        NR-12 - Segurança no Trabalho em Máquinas e Equipamentos \\
+        NR-01 - Disposições Gerais - Gerenciamento de Riscos}&  
+      \Block{}<\fontsize{11}{8}> {
+        {\fontsize{12}{4}\textnumero}{\bfseries 210403 NWC 1}
+        \\
+        % \vspace{0.1mm}
+        % Babel e ajustes
+        % \\
+        \hline
+        % \vspace{0.1mm}
+        Data:  \DTMToday}  
+    \end{NiceTabular}%  
+  } % end fancy head
+  \fancyfoot[C]{%     
+    \begin{NiceTabular}{ccc}[hvlines, cell-space-top-limit=6pt,cell-space-bottom-limit=1pt]
+      \Block{}{Data: \DTMToday}&
+      \Block[l]{}<\bfseries\fontsize{11}{12}\selectfont>{Elaborado
+        por: Wagner José Branquinho,  \\
+        Engenheiro Mecânico e de Segurança do Trabalho.  \\
+        \hspace*{\fill} CREA 0601546708\hspace*{\fill}} & 
+      \Block[l]{}<\fontsize{11}{8}\selectfont> {{\bfseries Aprovação}:\\Newcomfort
+        Ind. Com. Calç.\\ CNPJ: 05.505.886/0001-49}  \\ 
+    \end{NiceTabular}%   end fancy foot
+  } 
