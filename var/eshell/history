@@ -1,60 +1,6 @@
-cd ..
-ls
-sh create-dir.sh
-git add .
-git commit -m "Update template com imports"
-git push
-cd ..
-ls
-cd ../ClojureScript/
-ls
-lein new lab-web
-ls
-rm -rf lab-web/
-ls
-lein new luminus lab-web
-ls lab-web/
-ls
-rm -rf ./lab-web
-lein new luminus wants-cider +cljs
-ls
-rm -rf ./lab-web
-ls
-rm -rf ./wants-cider
-ls
-lein new luminus lab-web +cljs +h2
-ls
-lsblk
-clear
-lsblk
-sudo lsblk
-lsblk
-ddrescue
-ddrescue -h
-clear
-lsblk
-sudo mount /dev/sdb1 /mnt
-lsblk
-ls -l /mnt/
-ls -l --file-size=G /mnt/ 
-ls -l --block-size=1G /mnt/ 
-ls -l --block-size=1M /mnt/ 
-ls -l --block-size=1MB /mnt/ 
-ls -sh /mnt/ 
-ls -l --block-size=1MB /mnt/ 
-lsblk
-clear
-lsblk
-ls -l --block-size=1MB /mnt/ 
-sudo ddrescue -d -v /dev/sdc3 /mnt/wagner-uncorrupt.img /mnt/log-backup.logfile
-lsblk
-sudo mount /dev/sdb1 /mnt/
-ls /mnt/
-sudo ddrescue -d -v /dev/sdc3 /mnt/wagner-uncorrupt.img /mnt/log-backup.logfile
 ls -l -size /mnt/
 ls -l --size /mnt/
 ls -l --size --block-size=G /mnt/
-clear
 mkdir /mnt-img/
 sudo mkdir /mnt-img/
 sudo mount /mnt/wagner-uncorrupt.img /mnt-im
@@ -64,7 +10,6 @@ lsblk
 fdisk -l
 sudo fdisk -l /dev/sdc
 sudo testdisk /dev/sdc
-clear
 lsblk
 photorec /mnt/wagner-uncorrupt.img
 mkidr backup/comp-wagner
@@ -122,7 +67,62 @@ rclone help flags
 --fast-list                            Use recursive list if available. Uses more memory but fewer transactions.
 ls Documents-b/
 rclone sync -P ./Documents-b rclone-pc:PC-buddhilw/Documents-b/
-clear
 ls
 ls Documents-b/
 ls Programs/
+cd PP/Scripts/
+ls
+cd sh-scripting/
+sh lupo-setup.sh 
+clear
+cd PP/Scripts/
+ls
+cd test
+cd ..
+cd sh-scripting/
+ls
+sh lupo-setup.sh 
+clear
+clear-scrollback 
+ls
+yay -Sy xf86-video-nouveau
+clear
+clear-scrollback 
+sudo pacman -S nouveau-dri mesa libgl
+yay -Sy nouveau
+yay -Sy nouveau xf86-video-nouveau
+p -Syu nouveau xf86-video-nouveau
+sudo pacman -Syu nouveau xf86-video-nouveau
+yay -S mesa
+sudo pacman -Rdd nvidia nvidia-utils
+sudo pacman -Rdd bumblebee
+sudo pacman -Syu nouveau xf86-video-nouveau libgl
+rmmod nvidia
+modprobe nouveau
+sudo modprobe nouveau
+lsmod | grep nvi
+lsmod | grep nv
+lsmod | grep no
+lsmod | grep nou
+lsmod | grep nouvrau
+lsmod | grep nouveau
+dmesg | grep nouveau
+dmesg | grep nv
+dmesg 
+sudo dmesg 
+sudo dmesg | grep nv
+sudo dmesg | grep nouveau
+arandr
+clear-scrollback 
+mkinitcpio -p kernel26
+sudo mkinitcpio -p kernel26
+sudo reboot
+ls
+cd PP/ClojureScript/todoMVC/
+ls
+npm start
+npm intall
+npm run
+npm start
+sdn
+cd

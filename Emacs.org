@@ -19,9 +19,12 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar efs/default-variable-font-size 180)
 
   ;; Make frame transparency overridable
-  (defvar efs/frame-transparency '(90 . 90))
+  (defvar efs/frame-transparency '(70 . 70))
 
 #+end_src
+
+#+RESULTS:
+: efs/frame-transparency
 
 * Tips for Use
 
@@ -357,10 +360,10 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
 
 #+begin_src emacs-lisp
-
+  
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
+  
   (use-package general
     :after evil
     :config
@@ -368,12 +371,12 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
       :keymaps '(normal insert visual emacs)
       :prefix "SPC"
       :global-prefix "C-SPC")
-
+  
     (efs/leader-keys
       "t"  '(:ignore t :which-key "toggles")
       "tt" '(counsel-load-theme :which-key "choose theme")
       "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
-
+  
   (use-package evil
     :init
     (setq evil-want-integration t)
@@ -384,19 +387,31 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
     (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
+  
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
+  
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
-
+  
   (use-package evil-collection
     :after evil
     :config
     (evil-collection-init))
-
+  
+  ;;   (use-package general
+  ;;   :config
+  ;;   (general-evil-setup t)
+  
+  ;;   (general-create-definer dw/leader-key-def
+  ;;     :keymaps '(normal insert visual emacs)
+  ;;     :prefix "SPC"
+  ;;     :global-prefix "C-SPC")
+  
+  ;;   (general-create-definer dw/ctrl-c-keys
+  ;;     :prefix "C-c"))
+  
 #+end_src
 
 #+RESULTS:
@@ -794,34 +809,34 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
 
 #+end_src
 
-*** Inline Images
+# *** Inline Images
 # #+begin_src emacs-lisp
-  ;; -- Display images in org mode
-  ;; enable image mode first
-  (use-package iimage-mode
-    ;; add the org file link format to the iimage mode regex
-    :init
-    (add-to-list & 'iimage-mode-image-regex-alist
-                 (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]") ))
-    ;;  add a hook so we can display images on load
-    (add-hook & 'org-mode-hook & '(lambda () (org-turn-on-iimage-in-org)))
-    ;; function to setup images for display on load
-    (defun org-turn-on-iimage-in-org ()
-      "display images in your org file"
-      (interactive)
-      (turn-on-iimage-mode)
-      (set-face-underline-p & 'org-link nil))
-    ;; function to toggle images in a org bugger
-    (defun org-toggle-iimage-in-org ()
-      "display images in your org file"
-      (interactive)
-      (if (face-underline-p & 'org-link)
-          (set-face-underline-p & 'org-link nil)
-        (set-face-underline-p & 'org-link t))
-      (call-interactively & 'iimage-mode)))
+#   ;; -- Display images in org mode
+#   ;; enable image mode first
+#   (use-package iimage-mode
+#     ;; add the org file link format to the iimage mode regex
+#     :init
+#     (add-to-list & 'iimage-mode-image-regex-alist
+#                  (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]") ))
+#     ;;  add a hook so we can display images on load
+#     (add-hook & 'org-mode-hook & '(lambda () (org-turn-on-iimage-in-org)))
+#     ;; function to setup images for display on load
+#     (defun org-turn-on-iimage-in-org ()
+#       "display images in your org file"
+#       (interactive)
+#       (turn-on-iimage-mode)
+#       (set-face-underline-p & 'org-link nil))
+#     ;; function to toggle images in a org bugger
+#     (defun org-toggle-iimage-in-org ()
+#       "display images in your org file"
+#       (interactive)
+#       (if (face-underline-p & 'org-link)
+#           (set-face-underline-p & 'org-link nil)
+#         (set-face-underline-p & 'org-link t))
+#       (call-interactively & 'iimage-mode)))
 
-  (define-key org-mode-map (kbd "C-S-a") & 'org-archive-subtree)
-  #+end_src
+#   (define-key org-mode-map (kbd "C-S-a") & 'org-archive-subtree)
+#   #+end_src
 
 #+RESULTS:
 
@@ -859,43 +874,11 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
 #+RESULTS:
 : ((conf-unix . conf-unix) (conf-unix . conf-unix) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
 
-*** COMMENT Clojure(script)
+*** Clojure(script)
 #+begin_src emacs-lisp
   (require 'ob-clojure)
   (setq org-babel-clojure-backend 'cider)
-  (use-package cider
-    :config
-    (setq cider-font-lock-dinamically '(macro core fucntion var))
-    (setq cider-reader-conditional-face t))
 #+end_src
-
-#+RESULTS:
-: t
-
-#+begin_src emacs-lisp
-  (use-package clojure-mode)
-  ;;    (use-package clojure-mode-extra-font-locking
-  ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
-  (use-package sotclojure
-    :hook (clojure-mode . sotclojure-mode))
-  (use-package helm-clojuredocs
-    :hook (clojure-mode . helm-clojuredocs-mode))
-  (use-package ivy-clojuredocs
-    :hook (clojure-mode . ivy-clojuredocs-mode))
-  (use-package flycheck-clojure
-    :hook (clojure-mode . flycheck-mode))
-  (use-package clojure-snippets
-    :hook (clojure-mode . clojure-snippets-mode))
-  (use-package clojure-essential-ref
-    :hook (clojure-mode . clojure-essential-ref-mode))
-  (use-package 4clojure
-    :hook (clojure-mode . 4clojure-mode))
-  ;; (use-package clojure-extra-font-locking
-    ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
-#+end_src
-
-#+RESULTS:
-| clojure-extra-font-locking-mode | 4clojure-mode | clojure-essential-ref-mode | clojure-snippets-mode | flycheck-mode | ivy-clojuredocs-mode | helm-clojuredocs-mode | sotclojure-mode | (lambda nil (set (make-local-variable 'sesman-system) 'CIDER)) | clojure--check-wrong-major-mode | evil-smartparens-mode | smartparens-mode | paredit-mode |
 
 ** Structure Templates
 
@@ -1155,6 +1138,13 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 : css-lookup-symbol
 
 *** Ditaa
+#+begin_src emacs-lisp
+  ;; (use-package artist-mode)
+#+end_src
+
+#+RESULTS:
+: t
+
 *** JavaScript
 **** Indium
 #+begin_src emacs-lisp
@@ -1391,6 +1381,7 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
   (use-package smartparens
     :hook ((emacs-lisp-mode . smartparens-mode)
            (lisp-mode . smartparens-mode)
+           (cider-mode . smartparens-mode)
            (clojure-mode . smartparens-mode)
            (racket-mode . smartparens-mode)))
 #+end_src
@@ -1404,6 +1395,7 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
              (lisp-mode . evil-smartparens-mode)
              (racket-mode . evil-smartparens-mode)
              (racket-mode . evil-smartparens-mode)
+             (cider-mode . evil-smarparens-mode)
              (clojure-mode . evil-smartparens-mode)))
 #+end_src
 
@@ -1435,12 +1427,79 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 
 #+RESULTS:
 | (lambda nil (define-key css-mode-map \230 'slime-js-refresh-css) (define-key css-mode-map  'slime-js-embed-css)) | emmet-mode | web-beautify-css |
-** Indent guide (vertical line)
+*** Clojure(Script)
+**** Cider
 #+begin_src emacs-lisp
-  (use-package indent-guide)
+  (use-package cider
+    ;; :mode "\\.clj[sc]?\\'"
+    :config
+    (evil-collection-cider-setup)
+    (setq cider-font-lock-dinamically '(macro core fucntion var))
+    (setq cider-reader-conditional-face t))
+#+end_src
+**** Clojure mode and hooks
+#+begin_src emacs-lisp
+    (use-package clojure-mode)
+    ;;    (use-package clojure-mode-extra-font-locking
+    ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
+    (use-package sotclojure
+      :hook ((clojure-mode . sotclojure-mode)
+             (cider-mode .sotclojure-mode)))
+    (use-package helm-clojuredocs
+      :hook ((clojure-mode . helm-clojuredocs-mode)
+             (cider-mode .sotclojure-mode)))
+    (use-package ivy-clojuredocs
+      :hook ((clojure-mode . ivy-clojuredocs-mode)
+             (cider-mode .sotclojure-mode)))
+    (use-package flycheck-clojure
+      :hook ((clojure-mode . flycheck-mode)
+             (cider-mode .sotclojure-mode)))
+    (use-package clojure-snippets
+      :hook ((clojure-mode . clojure-snippets-mode)
+             (cider-mode .sotclojure-mode)))
+  ;; (use-package clojure-essential-ref
+  ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
+  ;;          (cider-mode .sotclojure-mode)))
+  (use-package 4clojure
+      :hook ((clojure-mode . 4clojure-mode)
+             (cider-mode .sotclojure-mode)))
+    ;; (use-package clojure-extra-font-locking
+      ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
 #+end_src
 
 #+RESULTS:
+| 4clojure | clojure-essential-ref | clojure-snippets | flycheck-clojure | ivy-clojuredocs | helm-clojuredocs | sotclojure |
+
+** Parinfer
+copy paste from [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org#clojure][dawil]]
+#+begin_src emacs-lisp
+(use-package parinfer
+  :disabled
+  :hook ((clojure-mode . parinfer-mode)
+         (emacs-lisp-mode . parinfer-mode)
+         (common-lisp-mode . parinfer-mode)
+         (scheme-mode . parinfer-mode)
+         (lisp-mode . parinfer-mode))
+  :config
+  (setq parinfer-extensions
+      '(defaults       ; should be included.
+        pretty-parens  ; different paren styles for different modes.
+        evil           ; If you use Evil.
+        smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+        smart-yank)))  ; Yank behavior depend on mode.
+#+end_src
+
+#+RESULTS:
+
+** Indent guide (vertical line)
+#+begin_src emacs-lisp
+  (use-package indent-guide
+    :init (indent-guide-global-mode t)
+    :hook (prog-mode . indent-guide-mode))
+#+end_src
+
+#+RESULTS:
+| indent-guide-mode | rainbow-delimiters-mode | fira-code-mode | prettify-symbols-mode |
 
 ** Company Mode
 
@@ -1587,6 +1646,29 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+RESULTS:
 
 ** Autocomplete
+
+** Fuzzy matchers
+
+*** General fuzzer
+#+begin_src emacs-lisp
+  (use-package company-fuzzy
+    :hook (company-mode . company-fuzzy-mode))
+#+end_src
+
+#+RESULTS:
+| company-fuzzy-mode | company-box-mode | company-mode-set-explicitly |
+
+*** Sophisticated fuzzer
+# #+begin_src emacs-lisp
+#   (use-package company-flx
+#     :hook (company-mode . company-flx)
+#     :config
+# (with-eval-after-load 'company
+#       (company-flx-mode +1)))
+# #+end_src
+
+
+*** 
 
 * Terminals
 ** term-mode

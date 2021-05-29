@@ -6,7 +6,7 @@
 (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(90 . 90))
+(defvar efs/frame-transparency '(70 . 70))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -255,6 +255,18 @@ codepoints starting from codepoint-start."
   :after evil
   :config
   (evil-collection-init))
+
+;;   (use-package general
+;;   :config
+;;   (general-evil-setup t)
+
+;;   (general-create-definer dw/leader-key-def
+;;     :keymaps '(normal insert visual emacs)
+;;     :prefix "SPC"
+;;     :global-prefix "C-SPC")
+
+;;   (general-create-definer dw/ctrl-c-keys
+;;     :prefix "C-c"))
 
 (use-package command-log-mode
   :commands command-log-mode)
@@ -542,6 +554,9 @@ codepoints starting from codepoint-start."
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
+(require 'ob-clojure)
+(setq org-babel-clojure-backend 'cider)
+
 (require 'org-tempo)
 
 ;; System
@@ -660,6 +675,8 @@ codepoints starting from codepoint-start."
 
 (use-package css-mode
   :bind ("C-c m" . css-lookup-symbol))
+
+;; (use-package artist-mode)
 
 (use-package indium
 :hook (js-mode . indium-interaction-mode))
@@ -801,6 +818,7 @@ codepoints starting from codepoint-start."
 (use-package smartparens
   :hook ((emacs-lisp-mode . smartparens-mode)
          (lisp-mode . smartparens-mode)
+         (cider-mode . smartparens-mode)
          (clojure-mode . smartparens-mode)
          (racket-mode . smartparens-mode)))
 
@@ -809,6 +827,7 @@ codepoints starting from codepoint-start."
            (lisp-mode . evil-smartparens-mode)
            (racket-mode . evil-smartparens-mode)
            (racket-mode . evil-smartparens-mode)
+           (cider-mode . evil-smarparens-mode)
            (clojure-mode . evil-smartparens-mode)))
 
 (use-package slime
@@ -827,7 +846,58 @@ codepoints starting from codepoint-start."
             (define-key css-mode-map "\M-\C-x" 'slime-js-refresh-css)
             (define-key css-mode-map "\C-c\C-r" 'slime-js-embed-css)))
 
-(use-package indent-guide)
+(use-package cider
+  ;; :mode "\\.clj[sc]?\\'"
+  :config
+  (evil-collection-cider-setup)
+  (setq cider-font-lock-dinamically '(macro core fucntion var))
+  (setq cider-reader-conditional-face t))
+
+(use-package clojure-mode)
+  ;;    (use-package clojure-mode-extra-font-locking
+  ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
+  (use-package sotclojure
+    :hook ((clojure-mode . sotclojure-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package helm-clojuredocs
+    :hook ((clojure-mode . helm-clojuredocs-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package ivy-clojuredocs
+    :hook ((clojure-mode . ivy-clojuredocs-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package flycheck-clojure
+    :hook ((clojure-mode . flycheck-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package clojure-snippets
+    :hook ((clojure-mode . clojure-snippets-mode)
+           (cider-mode .sotclojure-mode)))
+;; (use-package clojure-essential-ref
+;;   :hook ((clojure-mode . clojure-essential-ref-mode)
+;;          (cider-mode .sotclojure-mode)))
+(use-package 4clojure
+    :hook ((clojure-mode . 4clojure-mode)
+           (cider-mode .sotclojure-mode)))
+  ;; (use-package clojure-extra-font-locking
+    ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+
+(use-package parinfer
+  :disabled
+  :hook ((clojure-mode . parinfer-mode)
+         (emacs-lisp-mode . parinfer-mode)
+         (common-lisp-mode . parinfer-mode)
+         (scheme-mode . parinfer-mode)
+         (lisp-mode . parinfer-mode))
+  :config
+  (setq parinfer-extensions
+      '(defaults       ; should be included.
+        pretty-parens  ; different paren styles for different modes.
+        evil           ; If you use Evil.
+        smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+        smart-yank)))  ; Yank behavior depend on mode.
+
+(use-package indent-guide
+  :init (indent-guide-global-mode t)
+  :hook (prog-mode . indent-guide-mode))
 
 (use-package company
   :after lsp-mode
@@ -903,6 +973,9 @@ codepoints starting from codepoint-start."
 
 (use-package company-tabnine
   :ensure t)
+
+(use-package company-fuzzy
+  :hook (company-mode . company-fuzzy-mode))
 
 (use-package term
   :commands term
