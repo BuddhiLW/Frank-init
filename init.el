@@ -138,33 +138,6 @@
    :config
     (unicode-fonts-setup))
 
-(use-package ligature
-    :load-path "./ligature.el"
-    :config
-    ;; Enable the "www" ligature in every possible major mode
-    ;; (ligature-set-ligatures 't '("www"))
-    ;; Enable traditional ligature support in eww-mode, if the
-    ;; `variable-pitch' face supports it
-    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-    ;; Enable all Cascadia Code ligatures in programming modes
-    (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-					 ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-					 "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-					 "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-					 "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-					 "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-					 "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-					 "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-					 ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-					 "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-					 "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-					 "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-					 "\\\\" "://"))
-    ;; Enables ligature checks globally in all buffers. You can also do it
-    ;; per mode with `ligature-mode'.
-    ;; (global-ligature-mode t)
-    )
-
 (defun my-correct-symbol-bounds (pretty-alist)
   "Prepend a TAB character to each symbol in this alist,
 this way compose-region called by prettify-symbols-mode
@@ -230,8 +203,9 @@ codepoints starting from codepoint-start."
   (emojify-set-emoji-data))
 
 (use-package fira-code-mode
-  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x" "*" "**" "***" ":"))
-  :hook ((prog-mode . prettify-symbols-mode)
+  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x" "*" "**" "***" ":" "::" "www" "->" "->>" "+"))
+  :hook (
+         (prog-mode . prettify-symbols-mode)
          (prog-mode . fira-code-mode)
          (special-mode . prettify-symbols-mode)
          (special-mode . fira-code-mode)
@@ -568,10 +542,6 @@ codepoints starting from codepoint-start."
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
-(require 'ob-clojure)
-(setq org-babel-clojure-backend 'cider)
-(require 'cider)
-
 (require 'org-tempo)
 
 ;; System
@@ -857,6 +827,8 @@ codepoints starting from codepoint-start."
             (define-key css-mode-map "\M-\C-x" 'slime-js-refresh-css)
             (define-key css-mode-map "\C-c\C-r" 'slime-js-embed-css)))
 
+(use-package indent-guide)
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -919,15 +891,15 @@ codepoints starting from codepoint-start."
 
   (global-evil-surround-mode 1))
 
-(use-package company
+(use-package company)
   ;; :hook (prog-mode-hook . company-mode)
   ;; :config (
            ;; (setq company-idle-delay 0)
            ;; (setq company-show-numbers t))
-  )
+
 ;; (add-to-list 'company-backends #'company-tabnine)
   ;; :hook ((prog-mode . company-mode)
-         ;; (text-mode . company-mode)))
+         ;; (text-mode . company-mode))
 
 (use-package company-tabnine
   :ensure t)
