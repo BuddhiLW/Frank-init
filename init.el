@@ -6,7 +6,7 @@
 (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(70 . 70))
+(defvar efs/frame-transparency '(80 . 80))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -46,6 +46,8 @@
   :config
   (auto-package-update-maybe)
   (auto-package-update-at-time "09:00"))
+
+(load-file "~/.emacs.d/desktop.el")
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
 ;; reliably, set `user-emacs-directory` before loading no-littering!
@@ -97,7 +99,7 @@
                     ;; Also handle undocumented (<active> <inactive>) form.
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
-         '(95 . 80) '(100 . 100)))))
+         '(80 . 80) '(90 . 90)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
@@ -974,8 +976,8 @@ codepoints starting from codepoint-start."
 (use-package company-tabnine
   :ensure t)
 
-(use-package company-fuzzy
-  :hook (company-mode . company-fuzzy-mode))
+;;    (use-package company-fuzzy
+;;      :hook (company-mode . company-fuzzy-mode))
 
 (use-package term
   :commands term

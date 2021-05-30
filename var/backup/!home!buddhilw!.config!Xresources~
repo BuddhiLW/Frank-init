@@ -4,15 +4,15 @@
 !! Set a default font and font size as below:
 *.font: monospace:size=20
 
-/* name		dark	light */
-/* black	0	8 */
-/* red		1	9 */
-/* green	2	10 */
-/* yellow	3	11 */
-/* blue		4	12 */
-/* purple	5	13 */
-/* cyan		6	14 */
-/* white	7	15 */
+! /* name		dark	light */
+! /* black	0	8 */
+! /* red		1	9 */
+! /* green	2	10 */
+! /* yellow	3	11 */
+! /* blue		4	12 */
+! /* purple	5	13 */
+! /* cyan		6	14 */
+! /* white	7	15 */
 
 ! /* !! gruvbox: */
 ! /* *.color0: #1d2021 */
