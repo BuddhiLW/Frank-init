@@ -94,7 +94,7 @@ You can also use =M-x auto-package-update-now= to update right now!
 
 * Load Desktop.el and other auxiliaries
 #+begin_src emacs-lisp
-  (load-file "~/.emacs.d/desktop.el")
+ (load-file "~/.emacs.d/desktop.el")
 #+end_src
 
 * Keep Folders Clean
