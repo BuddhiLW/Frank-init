@@ -16,10 +16,10 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
       ;;     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
   
       (defun  efs/set-wallpaper ()
-	(interactive)
-	;; NOTE: You will need to update this to a valid background path!
-	(start-process-shell-command
-	 "feh" nil  "feh --bg-scale ~/Pictures/Wall1/Anatolia/download.jpeg"))
+        (interactive)
+        ;; NOTE: You will need to update this to a valid background path!
+        (start-process-shell-command
+         "feh" nil  "feh --bg-scale ~/Pictures/Wall1/Anatolia/download.jpeg"))
   
       ;; # (defun efs/exwm-init-hook ()
       ;; #     ;; Make workspace 1 be the one where we land at startup
@@ -126,7 +126,7 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
       ;; #     ;; (efs/update-displays)
   
       ;; #     ;; Set the wallpaper after changing the resolution
-      ;; #     (efs/set-wallpaper)
+          (efs/set-wallpaper)
   
       ;; #     ;; NOTE: This is disabled because we now use Polybar!
       ;; #     ;; Load the system tray before exwm-init
@@ -338,23 +338,24 @@ The configuration for our ingeniously named panel, "panel".  Invoke it with =pol
   margin-bottom = 0
   
   [colors]
-  ; background = ${colors.black}
-  ; background-alt = #576075
-  ; foreground = #A6Accd
-  ; ; foreground-alt = #555
-  ; primary = #ffb52a
-  ; secondary = #e60053
-  ; alert = #bd2c40
-  underline-1 = #c79
+  background = ${colors.black}
+  background-alt = #576075
+  foreground = #c03F1F
+  foreground-alt = #555
+  primary = #ffb52a
+  secondary = #e60053
+  alert = #bd2c40
+  underline-1 = #c22F3F
+  underline = #c79
   
   ; pywal polybar
-  background = ${xrdb:color0:#222}
-  background-alt = ${xrdb:color0:#222}
-  foreground = ${xrdb:color7:#222}
-  foreground-alt = ${xrdb:color7:#222}
-  primary = ${xrdb:color1:#222}
-  secondary = ${xrdb:color2:#222}
-  alert = ${xrdb:color3:#222}
+  ; background = ${xrdb:color0:#222}
+  ; background-alt = ${xrdb:color0:#222}
+  ; foreground = ${xrdb:color7:#222}
+  ; foreground-alt = ${xrdb:color7:#222}
+  ; primary = ${xrdb:color1:#222}
+  ; secondary = ${xrdb:color2:#222}
+  ; alert = ${xrdb:color3:#222}
   ; underline-1=${xrdb:color0:#FFF}
   
   [bar/panel]

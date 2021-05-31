@@ -113,7 +113,7 @@
     ;; #     ;; (efs/update-displays)
 
     ;; #     ;; Set the wallpaper after changing the resolution
-    ;; #     (efs/set-wallpaper)
+        (efs/set-wallpaper)
 
     ;; #     ;; NOTE: This is disabled because we now use Polybar!
     ;; #     ;; Load the system tray before exwm-init

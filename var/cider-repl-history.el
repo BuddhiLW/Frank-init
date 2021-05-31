@@ -2,7 +2,12 @@
 ;; Automatically written history of CIDER REPL session
 ;; Edit at your own risk
 
-("(.. A -target)" "(.. A -target -value)" "A" "(assoc 1 new-todo-t)" "new-todo-t" "(assoc (swap! A inc) new-todo-t)" "new-todo-t" "(assoc 2 new-todo-t)" "(def new-todo-t {:id 1, :text \"X\", :done false})" "A" "(swap! A inc)" "(def A (r/atom 3))" "(ns todoMVC.app.core
+("(sin 9)" "(scatter-plot time-data-com B-data-com)" "(length time-data-com)" "(length B-data-com)" "B-data-com" "time-data-com" "B-data-com" "(view (scatter-plot time-data Vs-data
+                    :title \"Experimento sem núcleo\"
+                    :x-label \"Tempo (s)\"
+                    :y-label \"Campo Magnético (B)\"
+                    :legend \"B(t)\"))
+" "(.. A -target)" "(.. A -target -value)" "A" "(assoc 1 new-todo-t)" "new-todo-t" "(assoc (swap! A inc) new-todo-t)" "new-todo-t" "(assoc 2 new-todo-t)" "(def new-todo-t {:id 1, :text \"X\", :done false})" "A" "(swap! A inc)" "(def A (r/atom 3))" "(ns todoMVC.app.core
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]))
 " "(def A (r/atom 3))" "(swap! A inc)" "(def A 3)" "A" "(def A 3)" "initial-todos-sorted" "(ns todoMVC.app.core

@@ -6,7 +6,7 @@
 (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(90 . 90))
+(defvar efs/frame-transparency '(80 . 80))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -46,6 +46,8 @@
   :config
   (auto-package-update-maybe)
   (auto-package-update-at-time "09:00"))
+
+(load-file "~/.emacs.d/desktop.el")
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
 ;; reliably, set `user-emacs-directory` before loading no-littering!
@@ -97,7 +99,7 @@
                     ;; Also handle undocumented (<active> <inactive>) form.
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
-         '(95 . 80) '(100 . 100)))))
+         '(80 . 80) '(90 . 90)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
@@ -137,33 +139,6 @@
    :ensure t
    :config
     (unicode-fonts-setup))
-
-(use-package ligature
-    :load-path "./ligature.el"
-    :config
-    ;; Enable the "www" ligature in every possible major mode
-    ;; (ligature-set-ligatures 't '("www"))
-    ;; Enable traditional ligature support in eww-mode, if the
-    ;; `variable-pitch' face supports it
-    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-    ;; Enable all Cascadia Code ligatures in programming modes
-    (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-					 ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-					 "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-					 "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-					 "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-					 "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-					 "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-					 "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-					 ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-					 "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-					 "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-					 "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-					 "\\\\" "://"))
-    ;; Enables ligature checks globally in all buffers. You can also do it
-    ;; per mode with `ligature-mode'.
-    ;; (global-ligature-mode t)
-    )
 
 (defun my-correct-symbol-bounds (pretty-alist)
   "Prepend a TAB character to each symbol in this alist,
@@ -230,8 +205,9 @@ codepoints starting from codepoint-start."
   (emojify-set-emoji-data))
 
 (use-package fira-code-mode
-  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x" "*" "**" "***" ":"))
-  :hook ((prog-mode . prettify-symbols-mode)
+  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x" "*" "**" "***" ":" "::" "www" "->" "->>" "+"))
+  :hook (
+         (prog-mode . prettify-symbols-mode)
          (prog-mode . fira-code-mode)
          (special-mode . prettify-symbols-mode)
          (special-mode . fira-code-mode)
@@ -282,11 +258,23 @@ codepoints starting from codepoint-start."
   :config
   (evil-collection-init))
 
+;;   (use-package general
+;;   :config
+;;   (general-evil-setup t)
+
+;;   (general-create-definer dw/leader-key-def
+;;     :keymaps '(normal insert visual emacs)
+;;     :prefix "SPC"
+;;     :global-prefix "C-SPC")
+
+;;   (general-create-definer dw/ctrl-c-keys
+;;     :prefix "C-c"))
+
 (use-package command-log-mode
   :commands command-log-mode)
 
 (use-package doom-themes
-  :init (load-theme 'doom-palenight t))
+  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
 
 (use-package all-the-icons)
 
@@ -562,15 +550,27 @@ codepoints starting from codepoint-start."
      (browser . t)
      (ditaa . t)
      (css . t)
-     (lisp . t)))
+     (lisp . t)
+     (clojure . t)
+     (clojurescript . t)))
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
+(require 'ob-clojure)
+(setq org-babel-clojure-backend 'cider)
+
 (require 'org-tempo)
 
+;; System
 (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+
+;; Scientific
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
+(add-to-list 'org-structure-template-alist '("ju" . "src julia"))
+(add-to-list 'org-structure-template-alist '("cl" . "src clojure"))
+
+;; Web
 (add-to-list 'org-structure-template-alist '("c4" . "src css :tangle ../css/.css :mkdirp yes"))
 (add-to-list 'org-structure-template-alist '("js" . "src js :tangle ../js/.js"))
 (add-to-list 'org-structure-template-alist '("h4" . "src html :tangle ../html/index.html :mkdirp yes"))
@@ -584,6 +584,8 @@ codepoints starting from codepoint-start."
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+
+(use-package org-download)
 
 (defun reload-pdf ()
   (interactive
@@ -675,6 +677,8 @@ codepoints starting from codepoint-start."
 
 (use-package css-mode
   :bind ("C-c m" . css-lookup-symbol))
+
+;; (use-package artist-mode)
 
 (use-package indium
 :hook (js-mode . indium-interaction-mode))
@@ -816,6 +820,7 @@ codepoints starting from codepoint-start."
 (use-package smartparens
   :hook ((emacs-lisp-mode . smartparens-mode)
          (lisp-mode . smartparens-mode)
+         (cider-mode . smartparens-mode)
          (clojure-mode . smartparens-mode)
          (racket-mode . smartparens-mode)))
 
@@ -824,6 +829,7 @@ codepoints starting from codepoint-start."
            (lisp-mode . evil-smartparens-mode)
            (racket-mode . evil-smartparens-mode)
            (racket-mode . evil-smartparens-mode)
+           (cider-mode . evil-smarparens-mode)
            (clojure-mode . evil-smartparens-mode)))
 
 (use-package slime
@@ -841,6 +847,59 @@ codepoints starting from codepoint-start."
           (lambda ()
             (define-key css-mode-map "\M-\C-x" 'slime-js-refresh-css)
             (define-key css-mode-map "\C-c\C-r" 'slime-js-embed-css)))
+
+(use-package cider
+  ;; :mode "\\.clj[sc]?\\'"
+  :config
+  (evil-collection-cider-setup)
+  (setq cider-font-lock-dinamically '(macro core fucntion var))
+  (setq cider-reader-conditional-face t))
+
+(use-package clojure-mode)
+  ;;    (use-package clojure-mode-extra-font-locking
+  ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
+  (use-package sotclojure
+    :hook ((clojure-mode . sotclojure-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package helm-clojuredocs
+    :hook ((clojure-mode . helm-clojuredocs-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package ivy-clojuredocs
+    :hook ((clojure-mode . ivy-clojuredocs-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package flycheck-clojure
+    :hook ((clojure-mode . flycheck-mode)
+           (cider-mode .sotclojure-mode)))
+  (use-package clojure-snippets
+    :hook ((clojure-mode . clojure-snippets-mode)
+           (cider-mode .sotclojure-mode)))
+;; (use-package clojure-essential-ref
+;;   :hook ((clojure-mode . clojure-essential-ref-mode)
+;;          (cider-mode .sotclojure-mode)))
+(use-package 4clojure
+    :hook ((clojure-mode . 4clojure-mode)
+           (cider-mode .sotclojure-mode)))
+  ;; (use-package clojure-extra-font-locking
+    ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+
+(use-package parinfer
+  :disabled
+  :hook ((clojure-mode . parinfer-mode)
+         (emacs-lisp-mode . parinfer-mode)
+         (common-lisp-mode . parinfer-mode)
+         (scheme-mode . parinfer-mode)
+         (lisp-mode . parinfer-mode))
+  :config
+  (setq parinfer-extensions
+      '(defaults       ; should be included.
+        pretty-parens  ; different paren styles for different modes.
+        evil           ; If you use Evil.
+        smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+        smart-yank)))  ; Yank behavior depend on mode.
+
+(use-package indent-guide
+  :init (indent-guide-global-mode t)
+  :hook (prog-mode . indent-guide-mode))
 
 (use-package company
   :after lsp-mode
@@ -904,14 +963,21 @@ codepoints starting from codepoint-start."
 
   (global-evil-surround-mode 1))
 
-(use-package company
-  :hook ((prog-mode . company-mode)
-         (text-mode . company-mode)))
+(use-package company)
+  ;; :hook (prog-mode-hook . company-mode)
+  ;; :config (
+           ;; (setq company-idle-delay 0)
+           ;; (setq company-show-numbers t))
+
+;; (add-to-list 'company-backends #'company-tabnine)
+  ;; :hook ((prog-mode . company-mode)
+         ;; (text-mode . company-mode))
 
 (use-package company-tabnine
-  :ensure company-mode
-  :hook ((prog-mode . company-tabnine-mode)
-         (text-mode . company-tabnine-mode)))
+  :ensure t)
+
+;;    (use-package company-fuzzy
+;;      :hook (company-mode . company-fuzzy-mode))
 
 (use-package term
   :commands term
@@ -1093,16 +1159,3 @@ codepoints starting from codepoint-start."
 
 (use-package evil-multiedit
   :hook (web-mode . evil-multiedit-mode))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(company-mode evil-multiedit web-mode company-quickhelp js-react-redux-yasnippets zenity-color-picker yasnippet-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet vterm visual-fill-column use-package unicode-fonts undo-tree tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo org-trello org-noter-pdftools org-inline-pdf org-easy-img-insert org-download org-bullets org-brain ob-latex-as-png ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-ivy lockfile-mode jst jss jsfmt js3-mode js2-highlight-vars js-doc ivy-rich ivy-prescient inf-clojure indium helpful general forge flymake-gjshint flymake-eslint flymake-css flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode edit-indirect doom-modeline dired-single dired-open dired-hide-dotfiles diffpdf dap-mode counsel-projectile counsel-dash counsel-css context-coloring company-ctags company-box command-log-mode cdnjs auto-package-update auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

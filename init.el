@@ -274,7 +274,7 @@ codepoints starting from codepoint-start."
   :commands command-log-mode)
 
 (use-package doom-themes
-  :init (load-theme 'doom-palenight t))
+  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
 
 (use-package all-the-icons)
 
@@ -587,6 +587,18 @@ codepoints starting from codepoint-start."
 
 (use-package org-download)
 
+(use-package org-roam)
+
+(use-package org-ref)
+
+(use-package bibtex-utils)
+(use-package company-bibtex)
+(use-package gscholar-bibtex)
+
+(use-package helm-bibtex)
+
+(use-package org-roam-bibtex)
+
 (defun reload-pdf ()
   (interactive
   (let* ((fname buffer-file-name)
@@ -876,9 +888,9 @@ codepoints starting from codepoint-start."
 ;; (use-package clojure-essential-ref
 ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
 ;;          (cider-mode .sotclojure-mode)))
-(use-package 4clojure
-    :hook ((clojure-mode . 4clojure-mode)
-           (cider-mode .sotclojure-mode)))
+;; (use-package 4clojure
+;;     :hook ((clojure-mode . 4clojure-mode)
+;;            (cider-mode .sotclojure-mode)))
   ;; (use-package clojure-extra-font-locking
     ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
 
@@ -1159,17 +1171,3 @@ codepoints starting from codepoint-start."
 
 (use-package evil-multiedit
   :hook (web-mode . evil-multiedit-mode))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(helm-minibuffer-history-key "M-p")
- '(package-selected-packages
-   '(helm-clojuredocs zenity-color-picker yasnippet-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet vterm visual-fill-column use-package unicode-fonts undo-tree tide tern sudo-edit spaceline sotclojure slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo org-trello org-noter-pdftools org-inline-pdf org-easy-img-insert org-download org-bullets org-brain ob-latex-as-png ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-ivy lockfile-mode jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient ivy-clojuredocs inf-clojure indium indent-guide helpful helm general forge flymake-gjshint flymake-eslint flymake-css flycheck-elm flycheck-clojure flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode edit-indirect doom-modeline dired-single dired-open dired-hide-dotfiles diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring company-tabnine company-quickhelp company-ctags company-box command-log-mode clojure-snippets cdnjs auto-package-update auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider 4clojure)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

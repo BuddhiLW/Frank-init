@@ -441,7 +441,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 #+begin_src emacs-lisp
 
 (use-package doom-themes
-  :init (load-theme 'doom-palenight t))
+  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
 
 #+end_src
 
@@ -931,6 +931,39 @@ This snippet adds a hook to =org-mode= buffers so that =efs/org-babel-tangle-con
 ** Org-download
 #+begin_src emacs-lisp
 (use-package org-download)
+#+end_src
+
+#+RESULTS:
+
+** Org-roam and Bibtex
+It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completion.
+
+#+begin_src emacs-lisp
+(use-package org-roam)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package org-ref)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (use-package bibtex-utils)
+  (use-package company-bibtex)
+  (use-package gscholar-bibtex)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+(use-package helm-bibtex)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+(use-package org-roam-bibtex)
 #+end_src
 
 #+RESULTS:
@@ -1465,9 +1498,9 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
   ;; (use-package clojure-essential-ref
   ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
   ;;          (cider-mode .sotclojure-mode)))
-  (use-package 4clojure
-      :hook ((clojure-mode . 4clojure-mode)
-             (cider-mode .sotclojure-mode)))
+  ;; (use-package 4clojure
+  ;;     :hook ((clojure-mode . 4clojure-mode)
+  ;;            (cider-mode .sotclojure-mode)))
     ;; (use-package clojure-extra-font-locking
       ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
 #+end_src
