@@ -11,6 +11,7 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
 
 #+begin_src emacs-lisp
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   
       ;; (defun efs/run-in-background (command)
       ;;   (let ((command-parts (split-string command "[ ]+")))
@@ -198,6 +199,8 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
 # #+RESULTS:
 # : t
 =======
+=======
+>>>>>>> Stashed changes
   (defun efs/run-in-background (command)
     (let ((command-parts (split-string command "[ ]+")))
       (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
@@ -381,6 +384,9 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
 
 #+RESULTS:
 : t
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 * Desktop Environment

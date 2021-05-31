@@ -1,6 +1,9 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 rclone sync -P ./Documents-b rclone-pc:PC-buddhilw/Documents-b/
 =======
+=======
+>>>>>>> Stashed changes
 sh create-dir.sh
 git add .
 git commit -m "Update template com imports"
@@ -152,4 +155,7 @@ ls Documents-b/
 ls Programs/
 cd 
 rclone sync -P ./backups rclone-pc:PC-buddhilw/backups
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
