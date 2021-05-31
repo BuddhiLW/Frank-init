@@ -888,8 +888,13 @@ codepoints starting from codepoint-start."
 ;;     :hook ((clojure-mode . 4clojure-mode)
 ;;            (cider-mode .sotclojure-mode)))
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   ;; (use-package clojure-extra-font-locking
     ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+=======
+;; (use-package clojure-extra-font-locking)
+;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+>>>>>>> Stashed changes
 =======
 ;; (use-package clojure-extra-font-locking)
 ;; :hook (clojure-mode . clojure-extra-font-locking-mode))

@@ -956,7 +956,11 @@
  (doom-modeline . [(20210527 840) ((emacs (25 1)) (all-the-icons (2 2 0)) (shrink-path (0 2 0)) (dash (2 11 0))) "A minimal and modern mode-line" tar ((:commit . "0e9827115918752ad5ac57c016755b91d551e4aa") (:authors ("Vincent Zhang" . "seagle0128@gmail.com")) (:maintainer "Vincent Zhang" . "seagle0128@gmail.com") (:keywords "faces" "mode-line") (:url . "https://github.com/seagle0128/doom-modeline"))])
  (doom-modeline-now-playing . [(20210202 1948) ((emacs (24 4)) (doom-modeline (3 0 0)) (async (1 9 3))) "Segment for Doom Modeline to show playerctl information" single ((:commit . "bed9e4da626ede148c7d362188b2e7729e2a8a4f") (:authors ("Ellis Kenyő" . "me@elken.dev")) (:maintainer "Ellis Kenyő" . "me@elken.dev") (:url . "https://github.com/elken/doom-modeline-now-playing"))])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  (doom-themes . [(20210531 730) ((emacs (25 1)) (cl-lib (0 5))) "an opinionated pack of modern color-themes" tar ((:commit . "d41435e66adbd63c9a82948e15fcab0a8df4e558") (:authors ("Henrik Lissner <https://github.com/hlissner>")) (:maintainer "Henrik Lissner" . "henrik@lissner.net") (:keywords "custom themes" "faces") (:url . "https://github.com/hlissner/emacs-doom-themes"))])
+=======
+ (doom-themes . [(20210530 1943) ((emacs (25 1)) (cl-lib (0 5))) "an opinionated pack of modern color-themes" tar ((:commit . "05b5159d042fd02ea441d2a276f821480c43aa8b") (:authors ("Henrik Lissner <http://github/hlissner>")) (:maintainer "Henrik Lissner" . "henrik@lissner.net") (:keywords "custom themes" "faces") (:url . "https://github.com/hlissner/emacs-doom-themes"))])
+>>>>>>> Stashed changes
 =======
  (doom-themes . [(20210530 1943) ((emacs (25 1)) (cl-lib (0 5))) "an opinionated pack of modern color-themes" tar ((:commit . "05b5159d042fd02ea441d2a276f821480c43aa8b") (:authors ("Henrik Lissner <http://github/hlissner>")) (:maintainer "Henrik Lissner" . "henrik@lissner.net") (:keywords "custom themes" "faces") (:url . "https://github.com/hlissner/emacs-doom-themes"))])
 >>>>>>> Stashed changes
@@ -3570,7 +3574,11 @@
  (pdb-capf . [(20200419 1237) ((emacs (25 1))) "Completion-at-point function for python debugger" single ((:commit . "2f4099aa1330f87df4e9cd526de057ee9b71de6c") (:authors ("Andrii Kolomoiets" . "andreyk.mad@gmail.com")) (:maintainer "Andrii Kolomoiets" . "andreyk.mad@gmail.com") (:keywords "languages" "abbrev" "convenience") (:url . "https://github.com/muffinmad/emacs-pdb-capf"))])
  (pdb-mode . [(20150128 1751) nil "Major mode for editing Protein Data Bank files" single ((:commit . "855fb18ebb73b5df30c8d7677c2bcd0f361b138a") (:authors (nil . "charles.bond@uwa.edu.au")) (:maintainer nil . "aix.bing@gmail.com") (:keywords "data" "pdb") (:url . "http://bondxray.org/software/pdb-mode/"))])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  (pdf-tools . [(20210531 352) ((emacs (24 3)) (tablist (1 0)) (let-alist (1 0 4))) "Support library for PDF documents" tar ((:commit . "3e1d740dee85c42cc55b1bff552c4e098e2638d3") (:authors ("Andreas Politz" . "politza@fh-trier.de")) (:maintainer "Andreas Politz" . "politza@fh-trier.de") (:keywords "files" "multimedia") (:url . "http://github.com/vedang/pdf-tools/"))])
+=======
+ (pdf-tools . [(20210530 1824) ((emacs (24 3)) (tablist (1 0)) (let-alist (1 0 4))) "Support library for PDF documents" tar ((:commit . "e1ad5b1d0468934aaa11c445cf98303092ac5304") (:authors ("Andreas Politz" . "politza@fh-trier.de")) (:maintainer "Andreas Politz" . "politza@fh-trier.de") (:keywords "files" "multimedia") (:url . "http://github.com/vedang/pdf-tools/"))])
+>>>>>>> Stashed changes
 =======
  (pdf-tools . [(20210530 1824) ((emacs (24 3)) (tablist (1 0)) (let-alist (1 0 4))) "Support library for PDF documents" tar ((:commit . "e1ad5b1d0468934aaa11c445cf98303092ac5304") (:authors ("Andreas Politz" . "politza@fh-trier.de")) (:maintainer "Andreas Politz" . "politza@fh-trier.de") (:keywords "files" "multimedia") (:url . "http://github.com/vedang/pdf-tools/"))])
 >>>>>>> Stashed changes
@@ -3711,7 +3719,11 @@
  (porthole . [(20200404 1454) ((emacs (26)) (web-server (0 1 2)) (f (0 19 0)) (json-rpc-server (0 1 2))) "RPC Servers in Emacs" single ((:commit . "9e68b419acf9245208f8094e10041b7f04511473") (:authors ("GitHub user \"Jcaw\"")) (:maintainer "GitHub user \"Jcaw\"") (:keywords "comm" "rpc" "http" "json") (:url . "https://github.com/jcaw/porthole"))])
  (pos-tip . [(20191227 1356) nil "Show tooltip at point" single ((:commit . "179cc126b363f72ca12fab1e0dc462ce0ee79742") (:authors ("S. Irie")) (:maintainer "S. Irie") (:keywords "tooltip"))])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  (posframe . [(20210531 139) ((emacs (26))) "Pop a posframe (just a frame) at point" single ((:commit . "2e0854bb94a97269af0238c9cf555338402feea1") (:authors ("Feng Shu" . "tumashu@163.com")) (:maintainer "Feng Shu" . "tumashu@163.com") (:keywords "convenience" "tooltip") (:url . "https://github.com/tumashu/posframe"))])
+=======
+ (posframe . [(20210530 2305) ((emacs (26))) "Pop a posframe (just a frame) at point" single ((:commit . "3a7dfbda0375b56d22b3b27b0b68bec118debd56") (:authors ("Feng Shu" . "tumashu@163.com")) (:maintainer "Feng Shu" . "tumashu@163.com") (:keywords "convenience" "tooltip") (:url . "https://github.com/tumashu/posframe"))])
+>>>>>>> Stashed changes
 =======
  (posframe . [(20210530 2305) ((emacs (26))) "Pop a posframe (just a frame) at point" single ((:commit . "3a7dfbda0375b56d22b3b27b0b68bec118debd56") (:authors ("Feng Shu" . "tumashu@163.com")) (:maintainer "Feng Shu" . "tumashu@163.com") (:keywords "convenience" "tooltip") (:url . "https://github.com/tumashu/posframe"))])
 >>>>>>> Stashed changes
@@ -4253,7 +4265,11 @@
  (soft-morning-theme . [(20150918 2041) nil "Emacs24 theme with a light background." single ((:commit . "c0f9c70c97ef2be2a093cf839c4bfe27740a111c") (:authors ("Martin Haesler")) (:maintainer "Martin Haesler") (:url . "http://github.com/mswift42/soft-morning-theme"))])
  (soft-stone-theme . [(20140614 835) ((emacs (24))) "Emacs 24 theme with a light background." single ((:commit . "fb475514cfb02cf30ce358a61c48e46614344d48") (:authors ("Martin Haesler")) (:maintainer "Martin Haesler") (:url . "http://github.com/mswift42/soft-stone-theme"))])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  (solaire-mode . [(20210531 102) ((emacs (25 1)) (cl-lib (0 5))) "make certain buffers grossly incandescent" single ((:commit . "56fccf4c1790a6e643977ce0cab58da6a956a8a9") (:authors ("Henrik Lissner <http://github/hlissner>")) (:maintainer "Henrik Lissner" . "henrik@lissner.net") (:keywords "dim" "bright" "window" "buffer" "faces") (:url . "https://github.com/hlissner/emacs-solaire-mode"))])
+=======
+ (solaire-mode . [(20210531 102) ((emacs (25 1)) (cl-lib (0 5))) "make certain buffers grossly incandescent" single ((:commit . "59efa9c52ec407161f741e67071813c3c1901680") (:authors ("Henrik Lissner <http://github/hlissner>")) (:maintainer "Henrik Lissner" . "henrik@lissner.net") (:keywords "dim" "bright" "window" "buffer" "faces") (:url . "https://github.com/hlissner/emacs-solaire-mode"))])
+>>>>>>> Stashed changes
 =======
  (solaire-mode . [(20210531 102) ((emacs (25 1)) (cl-lib (0 5))) "make certain buffers grossly incandescent" single ((:commit . "59efa9c52ec407161f741e67071813c3c1901680") (:authors ("Henrik Lissner <http://github/hlissner>")) (:maintainer "Henrik Lissner" . "henrik@lissner.net") (:keywords "dim" "bright" "window" "buffer" "faces") (:url . "https://github.com/hlissner/emacs-solaire-mode"))])
 >>>>>>> Stashed changes
