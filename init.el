@@ -6,7 +6,7 @@
 (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(80 . 80))
+(defvar efs/frame-transparency '(90 . 90))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -837,12 +837,14 @@ codepoints starting from codepoint-start."
          (racket-mode . smartparens-mode)))
 
 (use-package evil-smartparens
-    :hook ((emacs-lisp-mode . evil-smartparens-mode)
-           (lisp-mode . evil-smartparens-mode)
-           (racket-mode . evil-smartparens-mode)
-           (racket-mode . evil-smartparens-mode)
-           (cider-mode . evil-smarparens-mode)
-           (clojure-mode . evil-smartparens-mode)))
+  :ensure smartparens
+  :hook (prog-mode . evil-smartparens-mode))
+    ;; :hook ((emacs-lisp-mode . evil-smartparens-mode)
+    ;;        (lisp-mode . evil-smartparens-mode)
+    ;;        (racket-mode . evil-smartparens-mode)
+    ;;        (racket-mode . evil-smartparens-mode)
+    ;;        (cider-mode . evil-smarparens-mode)
+    ;;        (clojure-mode . evil-smartparens-mode)))
 
 (use-package slime
   :config
@@ -868,31 +870,30 @@ codepoints starting from codepoint-start."
   (setq cider-reader-conditional-face t))
 
 (use-package clojure-mode)
-  ;;    (use-package clojure-mode-extra-font-locking
-  ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
-  (use-package sotclojure
-    :hook ((clojure-mode . sotclojure-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package helm-clojuredocs
-    :hook ((clojure-mode . helm-clojuredocs-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package ivy-clojuredocs
-    :hook ((clojure-mode . ivy-clojuredocs-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package flycheck-clojure
-    :hook ((clojure-mode . flycheck-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package clojure-snippets
-    :hook ((clojure-mode . clojure-snippets-mode)
-           (cider-mode .sotclojure-mode)))
-;; (use-package clojure-essential-ref
+;;    (use-package clojure-mode-extra-font-locking
+;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
+(use-package sotclojure)
+(use-package helm-clojuredocs)
+(use-package ivy-clojuredocs)
+(use-package flycheck-clojure)
+;;     :hook ((clojure-mode . flycheck-clojure-mode)
+;;            (cider-mode . flycheck-clojure-mode)))
+(use-package clojure-snippets)
+;;     :hook ((yasnippet-snippets-mode . clojure-snippets-mode)
+;;            (cider-mode . clojure-snippets)))
+(use-package clojure-essential-ref)
 ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
 ;;          (cider-mode .sotclojure-mode)))
 ;; (use-package 4clojure
 ;;     :hook ((clojure-mode . 4clojure-mode)
 ;;            (cider-mode .sotclojure-mode)))
+<<<<<<< Updated upstream
   ;; (use-package clojure-extra-font-locking
     ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+=======
+;; (use-package clojure-extra-font-locking)
+;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+>>>>>>> Stashed changes
 
 (use-package parinfer
   :disabled
@@ -966,6 +967,14 @@ codepoints starting from codepoint-start."
 (use-package emmet-mode
   :hook ((sgml-mode . emmet-mode)
          (css-mode . emmet-mode)))
+
+(use-package yasnippet
+  :init
+  (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+  (yas-global-mode 1))
+
+;;   (use-package yasnippet-snippets
+;;     :hook (yasnippet-mode . yasnippet-snippets-mode))
 
 (use-package org-brain)
 

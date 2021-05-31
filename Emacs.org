@@ -19,7 +19,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar efs/default-variable-font-size 180)
 
   ;; Make frame transparency overridable
-  (defvar efs/frame-transparency '(80 . 80))
+  (defvar efs/frame-transparency '(90 . 90))
 
 #+end_src
 
@@ -1429,16 +1429,18 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 
 #+begin_src emacs-lisp
   (use-package evil-smartparens
-      :hook ((emacs-lisp-mode . evil-smartparens-mode)
-             (lisp-mode . evil-smartparens-mode)
-             (racket-mode . evil-smartparens-mode)
-             (racket-mode . evil-smartparens-mode)
-             (cider-mode . evil-smarparens-mode)
-             (clojure-mode . evil-smartparens-mode)))
+    :ensure smartparens
+    :hook (prog-mode . evil-smartparens-mode))
+      ;; :hook ((emacs-lisp-mode . evil-smartparens-mode)
+      ;;        (lisp-mode . evil-smartparens-mode)
+      ;;        (racket-mode . evil-smartparens-mode)
+      ;;        (racket-mode . evil-smartparens-mode)
+      ;;        (cider-mode . evil-smarparens-mode)
+      ;;        (clojure-mode . evil-smartparens-mode)))
 #+end_src
 
 #+RESULTS:
-| evil-smartparens-mode |
+| evil-smartparens-mode | rainbow-delimiters-mode | indent-guide-mode | fira-code-mode | prettify-symbols-mode |
 *** Common lisp
 #+begin_src emacs-lisp
   (use-package slime
@@ -1475,38 +1477,37 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
     (setq cider-font-lock-dinamically '(macro core fucntion var))
     (setq cider-reader-conditional-face t))
 #+end_src
+
 **** Clojure mode and hooks
 #+begin_src emacs-lisp
-    (use-package clojure-mode)
-    ;;    (use-package clojure-mode-extra-font-locking
-    ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
-    (use-package sotclojure
-      :hook ((clojure-mode . sotclojure-mode)
-             (cider-mode .sotclojure-mode)))
-    (use-package helm-clojuredocs
-      :hook ((clojure-mode . helm-clojuredocs-mode)
-             (cider-mode .sotclojure-mode)))
-    (use-package ivy-clojuredocs
-      :hook ((clojure-mode . ivy-clojuredocs-mode)
-             (cider-mode .sotclojure-mode)))
-    (use-package flycheck-clojure
-      :hook ((clojure-mode . flycheck-mode)
-             (cider-mode .sotclojure-mode)))
-    (use-package clojure-snippets
-      :hook ((clojure-mode . clojure-snippets-mode)
-             (cider-mode .sotclojure-mode)))
-  ;; (use-package clojure-essential-ref
+  (use-package clojure-mode)
+  ;;    (use-package clojure-mode-extra-font-locking
+  ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
+  (use-package sotclojure)
+  (use-package helm-clojuredocs)
+  (use-package ivy-clojuredocs)
+  (use-package flycheck-clojure)
+  ;;     :hook ((clojure-mode . flycheck-clojure-mode)
+  ;;            (cider-mode . flycheck-clojure-mode)))
+  (use-package clojure-snippets)
+  ;;     :hook ((yasnippet-snippets-mode . clojure-snippets-mode)
+  ;;            (cider-mode . clojure-snippets)))
+  (use-package clojure-essential-ref)
   ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
   ;;          (cider-mode .sotclojure-mode)))
   ;; (use-package 4clojure
   ;;     :hook ((clojure-mode . 4clojure-mode)
   ;;            (cider-mode .sotclojure-mode)))
+<<<<<<< Updated upstream
     ;; (use-package clojure-extra-font-locking
       ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+=======
+  ;; (use-package clojure-extra-font-locking)
+  ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+>>>>>>> Stashed changes
 #+end_src
 
 #+RESULTS:
-| 4clojure | clojure-essential-ref | clojure-snippets | flycheck-clojure | ivy-clojuredocs | helm-clojuredocs | sotclojure |
 
 ** Parinfer
 copy paste from [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org#clojure][dawil]]
@@ -1641,6 +1642,25 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+RESULTS:
 | emmet-mode |
+
+** Yasnippets
+#+begin_src emacs-lisp
+  (use-package yasnippet
+    :init
+    (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+    (yas-global-mode 1))
+#+end_src
+
+#+RESULTS:
+
+** Yasnippets-snippets
+#+begin_src emacs-lisp
+  ;;   (use-package yasnippet-snippets
+  ;;     :hook (yasnippet-mode . yasnippet-snippets-mode))
+#+end_src
+
+#+RESULTS:
+| yasnippet-snippets-mode |
 
 ** Org-Brain
 #+begin_src emacs-lisp

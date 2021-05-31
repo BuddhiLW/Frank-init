@@ -1,4 +1,24 @@
+<<<<<<< Updated upstream
 rclone sync -P ./Documents-b rclone-pc:PC-buddhilw/Documents-b/
+=======
+sh create-dir.sh
+git add .
+git commit -m "Update template com imports"
+git push
+cd ..
+ls
+cd ../ClojureScript/
+ls
+lein new lab-web
+ls
+rm -rf lab-web/
+ls
+lein new luminus lab-web
+ls lab-web/
+ls
+rm -rf ./lab-web
+lein new luminus wants-cider +cljs
+>>>>>>> Stashed changes
 ls
 ls Documents-b/
 ls Programs/
@@ -124,5 +144,12 @@ ls
 clear
 clear-scrollback 
 ls
+<<<<<<< Updated upstream
 clear-scrollback 
 xrdb -merge Xresources 
+=======
+ls Documents-b/
+ls Programs/
+cd 
+rclone sync -P ./backups rclone-pc:PC-buddhilw/backups
+>>>>>>> Stashed changes
