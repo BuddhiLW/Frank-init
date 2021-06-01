@@ -1,1 +1,0 @@
-("~/PP/Scripts/" "~/.emacs.d/" "~/Projects/Code/emacs-from-scratch/" "~/" "~/PP/LaTeX/Wagner/" "~/PP/LaTeX/MC-LaTeX/")
