@@ -1,2 +1,0 @@
-;;; Generated package description from /home/buddhilw/.emacs.d/elpa/org-inline-pdf-20210119.529/org-inline-pdf.el  -*- no-byte-compile: t -*-
-(define-package "org-inline-pdf" "20210119.529" "Inline PDF previewing for Org" '((emacs "25.1") (org "9.4")) :commit "f9a3321712626d2f43a8849203ceb089cf8233b1" :authors '(("Shigeaki Nishina")) :maintainer '("Shigeaki Nishina") :keywords '("org" "outlines" "hypermedia") :url "https://github.com/shg/org-inline-pdf.el")

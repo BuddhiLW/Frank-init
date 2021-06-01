@@ -53,25 +53,23 @@ In this document I've added links in many places that lead you to documentation 
 Emacs has a built in package manager but it doesn't make it easy to automatically install packages on a new system the first time you pull down your configuration.  [[https://github.com/jwiegley/use-package][use-package]] is a really helpful package used in this configuration to make it a lot easier to automate the installation and configuration of everything else we use.
 
 #+begin_src emacs-lisp
-
   ;; Initialize package sources
   (require 'package)
-
+  
   (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                            ("org" . "https://orgmode.org/elpa/")
                            ("elpa" . "https://elpa.gnu.org/packages/")))
-
+  
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents))
-
+  
     ;; Initialize use-package on non-Linux platforms
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
-
+  
   (require 'use-package)
   (setq use-package-always-ensure t)
-
 #+end_src
 
 ** Automatic Package Updates
@@ -439,11 +437,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 [[https://github.com/hlissner/emacs-doom-themes][doom-themes]] is a great set of themes with a lot of variety and support for many different Emacs modes.  Taking a look at the [[https://github.com/hlissner/emacs-doom-themes/tree/screenshots][screenshots]] might help you decide which one you like best.  You can also run =M-x counsel-load-theme= to choose between them easily.
 
 #+begin_src emacs-lisp
-
-(use-package doom-themes
-  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
-
+  (use-package doom-themes
+    :init (load-theme 'doom-one)) ;;wildavil's default -> doom-paletnight
 #+end_src
+
+#+RESULTS:
 
 ** Better Modeline
 

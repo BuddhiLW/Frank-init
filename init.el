@@ -274,7 +274,7 @@ codepoints starting from codepoint-start."
   :commands command-log-mode)
 
 (use-package doom-themes
-  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
+  :init (load-theme 'doom-one)) ;;wildavil's default -> doom-paletnight
 
 (use-package all-the-icons)
 
