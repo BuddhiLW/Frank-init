@@ -870,40 +870,12 @@ codepoints starting from codepoint-start."
   (setq cider-reader-conditional-face t))
 
 (use-package clojure-mode)
-;;    (use-package clojure-mode-extra-font-locking
-;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
 (use-package sotclojure)
 (use-package helm-clojuredocs)
 (use-package ivy-clojuredocs)
 (use-package flycheck-clojure)
-;;     :hook ((clojure-mode . flycheck-clojure-mode)
-;;            (cider-mode . flycheck-clojure-mode)))
 (use-package clojure-snippets)
-;;     :hook ((yasnippet-snippets-mode . clojure-snippets-mode)
-;;            (cider-mode . clojure-snippets)))
 (use-package clojure-essential-ref)
-;;   :hook ((clojure-mode . clojure-essential-ref-mode)
-;;          (cider-mode .sotclojure-mode)))
-;; (use-package 4clojure
-;;     :hook ((clojure-mode . 4clojure-mode)
-;;            (cider-mode .sotclojure-mode)))
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  ;; (use-package clojure-extra-font-locking
-    ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
-=======
-;; (use-package clojure-extra-font-locking)
-;; :hook (clojure-mode . clojure-extra-font-locking-mode))
->>>>>>> Stashed changes
-=======
-;; (use-package clojure-extra-font-locking)
-;; :hook (clojure-mode . clojure-extra-font-locking-mode))
->>>>>>> Stashed changes
-=======
-;; (use-package clojure-extra-font-locking)
-;; :hook (clojure-mode . clojure-extra-font-locking-mode))
->>>>>>> Stashed changes
 
 (use-package parinfer
   :disabled
