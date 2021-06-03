@@ -1,13 +1,3 @@
-rclone sync -P ./Documents-b rclone-pc:PC-buddhilw/Documents-b/
-ls
-ls Documents-b/
-ls Programs/
-cd PP/Scripts/
-ls
-cd sh-scripting/
-sh lupo-setup.sh 
-clear
-cd PP/Scripts/
 ls
 cd test
 cd ..
@@ -126,3 +116,13 @@ clear-scrollback
 ls
 clear-scrollback 
 xrdb -merge Xresources 
+ls
+chmod a+x anaconda 
+sudo chmod a+x anaconda 
+chmod 777 anaconda 
+sudo chmod 777 anaconda 
+sudo chmod 777 conda
+sudo chmod a+x conda
+PATH=$PATH:/opt/anaconda/bin/
+export PATH=$PATH:/opt/anaconda/bin/
+ls

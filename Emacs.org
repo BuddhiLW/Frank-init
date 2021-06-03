@@ -856,6 +856,18 @@ Chosing an image's size with :width property
 
 #+RESULTS:
 
+** Extra packages (primerly management-related)
+#+begin_src emacs-lisp
+  ;; (use-package org-plus-contrib)
+  #+end_src
+
+#+begin_src emacs-lisp
+(require 'ox-taskjuggler)
+#+end_src
+
+#+RESULTS:
+: ox-taskjuggler
+  
 ** Configure Babel Languages
 
 To execute or export code in =org-mode= code blocks, you'll need to set up =org-babel-load-languages= for each language you'd like to use.  [[https://orgmode.org/worg/org-contrib/babel/languages.html][This page]] documents all of the languages that you can use with =org-babel=.
@@ -866,18 +878,19 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
      'org-babel-load-languages
      '((emacs-lisp . t)
        (python . t)
+       (ein . t)
        (browser . t)
        (ditaa . t)
        (css . t)
        (lisp . t)
        (clojure . t)
        (clojurescript . t)))
-
+  
     (push '("conf-unix" . conf-unix) org-src-lang-modes))
 #+end_src
 
 #+RESULTS:
-: ((conf-unix . conf-unix) (conf-unix . conf-unix) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+: ((conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (conf-unix . conf-unix) (redis . redis) (php . php) (arduino . arduino) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
 
 *** Clojure(script)
 #+begin_src emacs-lisp
@@ -968,6 +981,13 @@ It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completio
 
 #+RESULTS:
 
+** TaskJuggler
+#+begin_src emacs-lisp
+  (use-package tj3-mode)
+  #+end_src
+
+  #+RESULTS:
+
 * Development
 ** Languages
 
@@ -990,17 +1010,26 @@ It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completio
 
 (global-set-key "\C-x\p" 'reload-pdf)
 #+end_src
+
 **** Auctex
 #+begin_src emacs-lisp
- ;; to use pdfview with auctex
- (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-    TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-    TeX-source-correlate-start-server t) ;; not sure if last line is neccessary
-
- ;; to have the buffer refresh after compilation
- (add-hook 'TeX-after-compilation-finished-functions
-        #'TeX-revert-document-buffer)
+  ;; to use pdfview with auctex
+   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+      TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+      TeX-source-correlate-start-server t) ;; not sure if last line is neccessary
+  
+   ;; to have the buffer refresh after compilation
+   (add-hook 'TeX-after-compilation-finished-functions
+          #'TeX-revert-document-buffer)
 #+end_src
+
+**** Preview (using org-preview)
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c C-x C-l") 'org-latex-preview)
+#+end_src
+
+#+RESULTS:
+: org-latex-preview
 
 *** IDE Features with lsp-mode
 
@@ -1140,20 +1169,23 @@ pip install --user "python-language-server[all]"
 There are a number of other language servers for Python so if you find that =pyls= doesn't work for you, consult the =lsp-mode= [[https://emacs-lsp.github.io/lsp-mode/page/languages/][language configuration documentation]] to try the others!
 
 #+begin_src emacs-lisp
-
+  
   (use-package python-mode
     :ensure t
     :hook (python-mode . lsp-deferred)
     :custom
     ;; NOTE: Set these if Python 3 is called "python3" on your system!
-    ;; (python-shell-interpreter "python3")
-    ;; (dap-python-executable "python3")
+    (python-shell-interpreter "python3")
+    (dap-python-executable "python3")
     (dap-python-debugger 'debugpy)
     :config
     (require 'dap-python))
-
-
+  
+  
 #+end_src
+
+#+RESULTS:
+| lsp-deferred | evil-collection-python-set-evil-shift-width | doom-modeline-env-setup-python |
 
 You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =pyvenv-activate= command should configure Emacs to cause =lsp-mode= and =dap-mode= to use the virtual environment when they are loaded, just select the path to your virtual environment before loading your project.
 
@@ -1165,6 +1197,83 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
     (pyvenv-mode 1))
 
 #+end_src
+
+#+RESULTS:
+
+**** Ein and Ob-ein
+#+begin_src emacs-lisp
+  (use-package ein)
+  ;; (use-package ob-ein)
+#+end_src
+
+#+RESULTS:
+
+***** LaTeX Markdown preview
+#+begin_src emacs-lisp
+  (use-package latex-math-preview)
+  #+end_src
+
+  #+RESULTS:
+
+  # (use-package markdown-preview-mode)
+**** Anaconda-mode and Elpy and Jedi
+
+***** Jedi
+#+begin_src emacs-lisp
+            (use-package jedi
+              :ensure t
+              :init
+              (add-hook 'python-mode-hook 'jedi:setup)
+              (add-hook 'python-mode-hook 'jedi:ac-setup)))
+            (use-package lsp-jedi)
+            (use-package jedi-core)
+            (use-package company-jedi)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+(use-package elpy
+    :init
+    (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+    :bind (:map elpy-mode-map
+	      ("<M-left>" . nil)
+	      ("<M-right>" . nil)
+	      ("<M-S-left>" . elpy-nav-indent-shift-left)
+	      ("<M-S-right>" . elpy-nav-indent-shift-right)
+	      ("M-." . elpy-goto-definition)
+	      ("M-," . pop-tag-mark))
+    :config
+    (setq elpy-rpc-backend "jedi"))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (use-package anaconda-mode)
+  (use-package company-anaconda)
+#+end_src
+
+#+RESULTS:
+
+**** Conda
+The =conda-env-home-directory= and =custom-set-variables= are very specific to your OS install - even among linux package managers. Chances are this setup will work for you, if you used paur (AUR arch repository).
+#+begin_src emacs-lisp
+  (use-package conda)
+  (setq 
+   conda-env-home-directory (expand-file-name "~/.conda/") ;; as in previous example; not required
+  conda-env-subdirectory "envs")
+  (custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+  ;; if you want interactive shell support, include:
+  (conda-env-initialize-interactive-shells)
+  ;; if you want eshell support, include:
+  (conda-env-initialize-eshell)
+  ;; if you want auto-activation (see below for details), include:
+  (conda-env-autoactivate-mode t)
+#+end_src
+
+#+RESULTS:
+: t
 
 *** HTML/CSS
 #+begin_src emacs-lisp
@@ -1259,81 +1368,83 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 
 **** snippet
 #+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t
-  :config
-  (add-hook 'typescript-mode-hook 'flycheck-mode))
- 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
- 
-(use-package company
-  :ensure t
-  :config
-  (setq company-show-numbers t)
-  (setq company-tooltip-align-annotations t)
-  ;; invert the navigation direction if the the completion popup-isearch-match
-  ;; is displayed on top (happens near the bottom of windows)
-  (setq company-tooltip-flip-when-above t)
-  (global-company-mode))
- 
-(use-package company-quickhelp
-  :ensure t
-  :init
-  (company-quickhelp-mode 1)
-  (use-package pos-tip
-    :ensure t))
- 
-(use-package web-mode
-  :ensure t
-  :mode (("\\.html?\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode)
-         ("\\.jsx\\'" . web-mode))
-  :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-block-padding 2
-        web-mode-comment-style 2
- 
-        web-mode-enable-css-colorization t
-        web-mode-enable-auto-pairing t
-        web-mode-enable-comment-keywords t
-        web-mode-enable-current-element-highlight t
-	web-mode-enable-auto-indentation nil
-        )
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-		(setup-tide-mode))))
-  ;; enable typescript-tslint checker
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
- 
-(use-package typescript-mode
-  :ensure t
-  :config
-  (setq typescript-indent-level 2)
-  (add-hook 'typescript-mode #'subword-mode))
- 
-(use-package tide
-  :init
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)))
- 
-(use-package css-mode
-  :config
-(setq css-indent-offset 2))
+    (use-package flycheck
+      :ensure t
+      :config
+      (add-hook 'typescript-mode-hook 'flycheck-mode)
+      :init
+      (global-flycheck-mode t))
+  
+    (defun setup-tide-mode ()
+      (interactive)
+      (tide-setup)
+      (flycheck-mode +1)
+      (setq flycheck-check-syntax-automatically '(save mode-enabled))
+      (eldoc-mode +1)
+      (tide-hl-identifier-mode +1)
+      ;; company is an optional dependency. You have to
+      ;; install it separately via package-install
+      ;; `M-x package-install [ret] company`
+      (company-mode +1))
+  
+    (use-package company
+      :ensure t
+      :config
+      (setq company-show-numbers t)
+      (setq company-tooltip-align-annotations t)
+      ;; invert the navigation direction if the the completion popup-isearch-match
+      ;; is displayed on top (happens near the bottom of windows)
+      (setq company-tooltip-flip-when-above t)
+      (global-company-mode))
+  
+    (use-package company-quickhelp
+      :ensure t
+      :init
+      (company-quickhelp-mode 1)
+      (use-package pos-tip
+        :ensure t))
+  
+    (use-package web-mode
+      :ensure t
+      :mode (("\\.html?\\'" . web-mode)
+             ("\\.tsx\\'" . web-mode)
+             ("\\.jsx\\'" . web-mode))
+      :config
+      (setq web-mode-markup-indent-offset 2
+            web-mode-css-indent-offset 2
+            web-mode-code-indent-offset 2
+            web-mode-block-padding 2
+            web-mode-comment-style 2
+  
+            web-mode-enable-css-colorization t
+            web-mode-enable-auto-pairing t
+            web-mode-enable-comment-keywords t
+            web-mode-enable-current-element-highlight t
+            web-mode-enable-auto-indentation nil
+            )
+      (add-hook 'web-mode-hook
+                (lambda ()
+                  (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                    (setup-tide-mode))))
+      ;; enable typescript-tslint checker
+      (flycheck-add-mode 'typescript-tslint 'web-mode))
+  
+    (use-package typescript-mode
+      :ensure t
+      :config
+      (setq typescript-indent-level 2)
+      (add-hook 'typescript-mode #'subword-mode))
+  
+    (use-package tide
+      :init
+      :ensure t
+      :after (typescript-mode company flycheck)
+      :hook ((typescript-mode . tide-setup)
+             (typescript-mode . tide-hl-identifier-mode)))
+  
+    (use-package css-mode
+      :config
+    (setq css-indent-offset 2))
 #+end_src
 
 #+RESULTS:
@@ -1507,7 +1618,6 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 
 #+RESULTS:
 | 4clojure | clojure-essential-ref | clojure-snippets | flycheck-clojure | ivy-clojuredocs | helm-clojuredocs | sotclojure |
-
 ** Parinfer
 copy paste from [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org#clojure][dawil]]
 #+begin_src emacs-lisp
@@ -1642,12 +1752,12 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+RESULTS:
 | emmet-mode |
 
-** Org-Brain
-#+begin_src emacs-lisp
-(use-package org-brain)
-#+end_src
+# ** Org-Brain
+# #+begin_src emacs-lisp
+# (use-package org-brain)
+# #+end_src
 
-#+RESULTS:
+# #+RESULTS:
 
 ** Evil parents
 #+begin_src emacs-lisp
@@ -1703,6 +1813,15 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 # #+end_src
 
 *** Fuzzy match?
+
+** Snippets
+#+begin_src emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :init
+    (yas-global-mode))
+  (use-package yasnippet-snippets)
+#+end_src
 
 * Terminals
 ** term-mode

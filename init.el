@@ -542,11 +542,16 @@ codepoints starting from codepoint-start."
 
 (setq org-image-actual-width nil)
 
+;; (use-package org-plus-contrib)
+
+(require 'ox-taskjuggler)
+
 (with-eval-after-load 'org
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python . t)
+     (ein . t)
      (browser . t)
      (ditaa . t)
      (css . t)
@@ -598,6 +603,8 @@ codepoints starting from codepoint-start."
 (use-package helm-bibtex)
 
 (use-package org-roam-bibtex)
+
+(use-package tj3-mode)
 
 (defun reload-pdf ()
   (interactive
@@ -676,8 +683,8 @@ codepoints starting from codepoint-start."
   :hook (python-mode . lsp-deferred)
   :custom
   ;; NOTE: Set these if Python 3 is called "python3" on your system!
-  ;; (python-shell-interpreter "python3")
-  ;; (dap-python-executable "python3")
+  (python-shell-interpreter "python3")
+  (dap-python-executable "python3")
   (dap-python-debugger 'debugpy)
   :config
   (require 'dap-python))
@@ -686,6 +693,46 @@ codepoints starting from codepoint-start."
   :after python-mode
   :config
   (pyvenv-mode 1))
+
+(use-package ein)
+;; (use-package ob-ein)
+
+(use-package jedi
+  :ensure t
+  :init
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (add-hook 'python-mode-hook 'jedi:ac-setup)))
+(use-package lsp-jedi)
+(use-package jedi-core)
+(use-package company-jedi)
+
+(use-package elpy
+    :init
+    (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+    :bind (:map elpy-mode-map
+	      ("<M-left>" . nil)
+	      ("<M-right>" . nil)
+	      ("<M-S-left>" . elpy-nav-indent-shift-left)
+	      ("<M-S-right>" . elpy-nav-indent-shift-right)
+	      ("M-." . elpy-goto-definition)
+	      ("M-," . pop-tag-mark))
+    :config
+    (setq elpy-rpc-backend "jedi"))
+
+(use-package anaconda-mode)
+(use-package company-anaconda)
+
+(use-package conda)
+(setq 
+ conda-env-home-directory (expand-file-name "~/.conda/") ;; as in previous example; not required
+conda-env-subdirectory "envs")
+(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+;; if you want interactive shell support, include:
+(conda-env-initialize-interactive-shells)
+;; if you want eshell support, include:
+(conda-env-initialize-eshell)
+;; if you want auto-activation (see below for details), include:
+(conda-env-autoactivate-mode t)
 
 (use-package css-mode
   :bind ("C-c m" . css-lookup-symbol))
@@ -735,8 +782,10 @@ codepoints starting from codepoint-start."
 (use-package flycheck
   :ensure t
   :config
-  (add-hook 'typescript-mode-hook 'flycheck-mode))
- 
+  (add-hook 'typescript-mode-hook 'flycheck-mode)
+  :init
+  (global-flycheck-mode t))
+
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -748,7 +797,7 @@ codepoints starting from codepoint-start."
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
   (company-mode +1))
- 
+
 (use-package company
   :ensure t
   :config
@@ -758,14 +807,14 @@ codepoints starting from codepoint-start."
   ;; is displayed on top (happens near the bottom of windows)
   (setq company-tooltip-flip-when-above t)
   (global-company-mode))
- 
+
 (use-package company-quickhelp
   :ensure t
   :init
   (company-quickhelp-mode 1)
   (use-package pos-tip
     :ensure t))
- 
+
 (use-package web-mode
   :ensure t
   :mode (("\\.html?\\'" . web-mode)
@@ -777,33 +826,33 @@ codepoints starting from codepoint-start."
         web-mode-code-indent-offset 2
         web-mode-block-padding 2
         web-mode-comment-style 2
- 
+
         web-mode-enable-css-colorization t
         web-mode-enable-auto-pairing t
         web-mode-enable-comment-keywords t
         web-mode-enable-current-element-highlight t
-	web-mode-enable-auto-indentation nil
+        web-mode-enable-auto-indentation nil
         )
   (add-hook 'web-mode-hook
             (lambda ()
               (when (string-equal "tsx" (file-name-extension buffer-file-name))
-		(setup-tide-mode))))
+                (setup-tide-mode))))
   ;; enable typescript-tslint checker
   (flycheck-add-mode 'typescript-tslint 'web-mode))
- 
+
 (use-package typescript-mode
   :ensure t
   :config
   (setq typescript-indent-level 2)
   (add-hook 'typescript-mode #'subword-mode))
- 
+
 (use-package tide
   :init
   :ensure t
   :after (typescript-mode company flycheck)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)))
- 
+
 (use-package css-mode
   :config
 (setq css-indent-offset 2))
@@ -967,8 +1016,6 @@ codepoints starting from codepoint-start."
   :hook ((sgml-mode . emmet-mode)
          (css-mode . emmet-mode)))
 
-(use-package org-brain)
-
 (use-package evil-surround
   :ensure t
   :config
@@ -990,6 +1037,12 @@ codepoints starting from codepoint-start."
 
 ;;    (use-package company-fuzzy
 ;;      :hook (company-mode . company-fuzzy-mode))
+
+(use-package yasnippet
+  :ensure t
+  :init
+  (yas-global-mode))
+(use-package yasnippet-snippets)
 
 (use-package term
   :commands term
@@ -1171,17 +1224,3 @@ codepoints starting from codepoint-start."
 
 (use-package evil-multiedit
   :hook (web-mode . evil-multiedit-mode))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(helm-minibuffer-history-key "M-p")
- '(package-selected-packages
-   '(indent-guide clojure-snippets flycheck-clojure ivy-clojuredocs helm-clojuredocs sotclojure org-roam-bibtex gscholar-bibtex company-bibtex bibtex-utils org-ref org-roam desktop-environment zenity-color-picker yasnippet-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet vterm visual-fill-column use-package unicode-fonts undo-tree tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo org-trello org-noter-pdftools org-inline-pdf org-easy-img-insert org-download org-bullets org-brain ob-latex-as-png ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-ivy lockfile-mode jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient inf-clojure indium helpful general forge flymake-gjshint flymake-eslint flymake-css flycheck-elm flycheck-aspell fira-code-mode exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode edit-indirect doom-modeline dired-single dired-open dired-hide-dotfiles diffpdf dap-mode counsel-projectile counsel-dash counsel-css context-coloring company-tabnine company-quickhelp company-ctags company-box command-log-mode cdnjs auto-package-update auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

@@ -6,7 +6,7 @@
       (interactive)
       ;; NOTE: You will need to update this to a valid background path!
       (start-process-shell-command
-       "feh" nil  "feh --bg-scale ~/Pictures/Wall1/Anatolia/download.jpeg"))
+       "feh" nil  "feh --bg-scale ~/wpp/3354772.jpg"))
 
     ;; # (defun efs/exwm-init-hook ()
     ;; #     ;; Make workspace 1 be the one where we land at startup
