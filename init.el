@@ -253,22 +253,24 @@ codepoints starting from codepoint-start."
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-;;   (use-package general
+;; (use-package evil-collection
+;;   :after evil
 ;;   :config
-;;   (general-evil-setup t)
+;;   (evil-collection-init))
 
-;;   (general-create-definer dw/leader-key-def
-;;     :keymaps '(normal insert visual emacs)
-;;     :prefix "SPC"
-;;     :global-prefix "C-SPC")
+;; (use-package general
+;;   :config
+;;   (general-evil-setup t))
+
+;; (general-create-definer dw/leader-key-def
+;;   :keymaps '(normal insert visual emacs)
+;;   :prefix "SPC"
+;;   :global-prefix "C-SPC")
 
 ;;   (general-create-definer dw/ctrl-c-keys
-;;     :prefix "C-c"))
+;;     :prefix "C-c")
+
+(use-package evil-tutor)
 
 (use-package command-log-mode
   :commands command-log-mode)
@@ -550,6 +552,7 @@ codepoints starting from codepoint-start."
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
+     (ipython . t)
      (python . t)
      (ein . t)
      (browser . t)
@@ -563,6 +566,8 @@ codepoints starting from codepoint-start."
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
+
+(use-package ob-ipython)
 
 (require 'org-tempo)
 
@@ -623,13 +628,15 @@ codepoints starting from codepoint-start."
 (global-set-key "\C-x\p" 'reload-pdf)
 
 ;; to use pdfview with auctex
-(setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-   TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-   TeX-source-correlate-start-server t) ;; not sure if last line is neccessary
+ (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+    TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+    TeX-source-correlate-start-server t) ;; not sure if last line is neccessary
 
-;; to have the buffer refresh after compilation
-(add-hook 'TeX-after-compilation-finished-functions
-       #'TeX-revert-document-buffer)
+ ;; to have the buffer refresh after compilation
+ (add-hook 'TeX-after-compilation-finished-functions
+        #'TeX-revert-document-buffer)
+
+(global-set-key (kbd "C-c C-x C-l") 'org-latex-preview)
 
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
@@ -697,11 +704,13 @@ codepoints starting from codepoint-start."
 (use-package ein)
 ;; (use-package ob-ein)
 
+(use-package latex-math-preview)
+
 (use-package jedi
   :ensure t
   :init
   (add-hook 'python-mode-hook 'jedi:setup)
-  (add-hook 'python-mode-hook 'jedi:ac-setup)))
+  (add-hook 'python-mode-hook 'jedi:ac-setup))
 (use-package lsp-jedi)
 (use-package jedi-core)
 (use-package company-jedi)
@@ -917,31 +926,33 @@ conda-env-subdirectory "envs")
   (setq cider-reader-conditional-face t))
 
 (use-package clojure-mode)
-  ;;    (use-package clojure-mode-extra-font-locking
-  ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
-  (use-package sotclojure
-    :hook ((clojure-mode . sotclojure-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package helm-clojuredocs
-    :hook ((clojure-mode . helm-clojuredocs-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package ivy-clojuredocs
-    :hook ((clojure-mode . ivy-clojuredocs-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package flycheck-clojure
-    :hook ((clojure-mode . flycheck-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package clojure-snippets
-    :hook ((clojure-mode . clojure-snippets-mode)
-           (cider-mode .sotclojure-mode)))
-;; (use-package clojure-essential-ref
-;;   :hook ((clojure-mode . clojure-essential-ref-mode)
-;;          (cider-mode .sotclojure-mode)))
-;; (use-package 4clojure
-;;     :hook ((clojure-mode . 4clojure-mode)
-;;            (cider-mode .sotclojure-mode)))
-  ;; (use-package clojure-extra-font-locking
-    ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+;; (put '>defn 'clojure-doc-string-elt 2)
+    ;;    (use-package clojure-mode-extra-font-locking
+    ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
+    ;; (use-package sotclojure
+    ;;   :hook ((clojure-mode . sotclojure-mode)
+    ;; 	     (cider-mode .sotclojure-mode)))
+    ;; (use-package helm-clojuredocs
+    ;;   :hook ((clojure-mode . helm-clojuredocs-mode)
+    ;; 	     (cider-mode .sotclojure-mode)))
+    ;; (use-package ivy-clojuredocs
+    ;;   :hook ((clojure-mode . ivy-clojuredocs-mode)
+    ;; 	     (cider-mode .sotclojure-mode)))
+    ;; (use-package flycheck-clojure
+    ;;   :hook ((clojure-mode . flycheck-mode)
+    ;; 	     (cider-mode .sotclojure-mode)))
+
+  ;;   (use-package clojure-snippets
+  ;;     :hook ((clojure-mode . clojure-snippets-mode)
+  ;;            (cider-mode .sotclojure-mode)))
+  ;; ;; (use-package clojure-essential-ref
+  ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
+  ;;          (cider-mode .sotclojure-mode)))
+  ;; (use-package 4clojure
+  ;;     :hook ((clojure-mode . 4clojure-mode)
+  ;;            (cider-mode .sotclojure-mode)))
+    ;; (use-package clojure-extra-font-locking
+      ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
 
 (use-package parinfer
   :disabled
