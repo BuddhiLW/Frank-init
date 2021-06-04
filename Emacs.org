@@ -19,7 +19,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar efs/default-variable-font-size 180)
 
   ;; Make frame transparency overridable
-  (defvar efs/frame-transparency '(80 . 80))
+  (defvar efs/frame-transparency '(90 . 90))
 
 #+end_src
 
@@ -165,7 +165,7 @@ Toggle transparency
                      ;; Also handle undocumented (<active> <inactive>) form.
                      ((numberp (cadr alpha)) (cadr alpha)))
                100)
-          '(80 . 80) '(90 . 90)))))
+          '(90 . 90) '(100 . 100)))))
  (global-set-key (kbd "C-c t") 'toggle-transparency)
 #+end_src
 
@@ -967,6 +967,42 @@ It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completio
 #+end_src
 
 #+RESULTS:
+
+** Gantt charts
+
+*** Dependencies
+#+begin_src emacs-lisp
+(use-package org-ql)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package ts)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package s)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package dash)
+#+end_src
+
+*** Install
+As it is hand-maiden: https://github.com/legalnonsense/elgantt/,
+
+#+begin_src shell
+  # cd ~/.emacs.d/lisp
+  # git clone https://github.com/legalnonsense/elgantt.git
+#+end_src
+
+#+begin_src emacs-lisp
+  ;; (add-to-list 'load-path (concat user-emacs-directory "lisp/elgantt/test.orgmode")) ;; Or wherever it is located
+  ;; (require 'elgantt)
+  ;; ;; (setq elgantt-agenda-files (concat user-emacs-directory "lisp/elgantt/test.org"))
+#+end_src
+
+#+RESULTS:
+: ~/.emacs.d/lisp/elgantt/test.org
 
 * Development
 ** Languages

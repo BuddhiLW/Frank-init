@@ -6,7 +6,7 @@
 (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(80 . 80))
+(defvar efs/frame-transparency '(90 . 90))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -99,7 +99,7 @@
                     ;; Also handle undocumented (<active> <inactive>) form.
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
-         '(80 . 80) '(90 . 90)))))
+         '(90 . 90) '(100 . 100)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
@@ -598,6 +598,18 @@ codepoints starting from codepoint-start."
 (use-package helm-bibtex)
 
 (use-package org-roam-bibtex)
+
+(use-package org-ql)
+
+(use-package ts)
+
+(use-package s)
+
+(use-package dash)
+
+;; (add-to-list 'load-path (concat user-emacs-directory "lisp/elgantt/test.orgmode")) ;; Or wherever it is located
+;; (require 'elgantt)
+;; ;; (setq elgantt-agenda-files (concat user-emacs-directory "lisp/elgantt/test.org"))
 
 (defun reload-pdf ()
   (interactive

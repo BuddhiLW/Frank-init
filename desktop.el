@@ -6,7 +6,7 @@
       (interactive)
       ;; NOTE: You will need to update this to a valid background path!
       (start-process-shell-command
-       "feh" nil  "feh --bg-scale ~/Pictures/Wall1/Anatolia/download.jpeg"))
+       "feh" nil  "feh --bg-scale ~/.emacs.d/wal/wall1.jpeg"))
 
     ;; # (defun efs/exwm-init-hook ()
     ;; #     ;; Make workspace 1 be the one where we land at startup
@@ -226,3 +226,5 @@
 (defun efs/toggle-desktop-notifications ()
   (interactive)
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\""))
+
+
