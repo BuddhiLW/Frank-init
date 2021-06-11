@@ -1,0 +1,25 @@
+#+AUTHOR: BuddhiLW
+#+STARTUP: latexpreview
+#+LATEX_HEADER: \usepackage{amsmath, physics}
+#+PROPERTY: header-args:clojure :tangle ./src/sicmutils_org/var-mechanics1.clj :mkdirp yes
+
+#+begin_src clojure
+  (ns sicmutils-org.si
+    (:require [uncomplicate.neanderthal
+	       [native :refer [dv dge]]
+	       [core :refer [mv mm nrm2 dot axpy]]] ;; => sicmutils.env conflict with :refer pi
+	      [sicmutils.env :as env]
+	      [uncomplicate.commons.core :refer [with-release]]
+	      [uncomplicate.fluokitten.core :refer [foldmap]]
+	      [uncomplicate.clojurecl.core :as opencl]
+	      [uncomplicate.clojurecuda.core :as cuda]
+	      [uncomplicate.neanderthal
+	       [core :refer [dot copy asum copy! row mv mm rk axpy entry!
+			     subvector trans mm! zero]]
+	       [vect-math :refer [mul]]
+	       [native :refer [dv dge fge]]
+	       [cuda :refer [cuv cuge with-default-engine]]
+	       [opencl :as cl :refer [clv]]
+	       [random :refer [rand-uniform!]]]
+	      [criterium.core :refer :all]))
+#+end_src

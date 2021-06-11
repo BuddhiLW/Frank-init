@@ -1,0 +1,476 @@
+#+AUTHOR: Pedro Gomes Branquinho, N°USP:9843240
+# #+DATE:03/06/2021
+#+LATEX_CLASS: article
+# #+LATEX_CLASS_OPTIONS: 12pt, brazilian
+#+LATEX_HEADER: \maketitle{}
+#+LATEX_HEADER: \usepackage[portuguese]{babel}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage{amsmath}
+
+* Tarefa 1
+  1. Plote o Lugar das Raízes (raízes da malha fechada) indicando as raízes quando $K$ = 0 e quando $K$ = ∞ (polos e zeros da malha aberta).
+  2. Calcule o valor de $K$ que torna o sistema marginalmente estável ($K_{\textrm{marg}}$).
+  3. Use o critério de Rough e compare com o valor de $K_{\textrm{marg}}$ encontrado no item 2.
+  4. Plote o diagram de Nyquist para a malha aberta do sistema com ganhos maiores, iguais e menores que $K_{\textrm{marg}}$.
+  5. Indique se o sistema é estável ou instável de acordo com o número de polos instáveis da malha aberta (Critério de Nyquist).
+
+     $\clearpage$
+     
+** A
+   
+   Foi dada a malha,
+   
+   [[file:pic-selected-210603-1414-20.png][file:resources/A.png]]
+
+*** Considerações
+    1. Seja o Erro, E(s): $E(s) = R(s) - C(s)$
+    2. Seja a função H(s): $H(s)= \dfrac{1}{(s-1)(s+3)}$
+    3. Seja a saída de K: $U(s)$.  
+
+    Temos, do sistema, as seguintes equações:
+    \begin{equation}
+    \label{eq:A}
+      \begin{aligned}
+	\begin{cases}
+	  E(s) &= R(s) - C(s) \\
+	  U(s) &= KE(s)  \\
+    C(s) &= H(s)U(s)
+    \end{cases}
+      \end{aligned}
+    \end{equation}                         
+
+*** Dedução das equações determinantes do sistema.
+    \label{sec:dedução-eq}
+    De onde se sai, por substituição de 1.(II) em 1.(III), ou de U(s) na expressão C(s),
+    $C(s) = H(s)KE(s) \, \implies \, E(s) = \dfrac{C(s)}{KH(s)}$
+
+    Substituindo a expressão encontrada $E(s)$ em 1.(I),
+    $\dfrac{C(s)}{KH(s)} = R(s) - C(s)$
+
+    Encontrando a relação da fração $\dfrac{C(s)}{R(s)}$, como
+    \begin{equation}
+    \label{eq:G}
+    \dfrac{C(s)}{R(s)} = \dfrac{KH(s)}{1+KH(s)} \, \land \, G(s)=\dfrac{C(s)}{R(s)}
+    \end{equation}
+
+    Denominaremos a função transferência como $G(s)=\dfrac{C(s)}{R(s)}$.
+
+    Assim, a equação característica do sistema  é:
+    \begin{equation}
+    \label{eq:característica}
+    1+KH(s)=0
+    \end{equation}
+
+    E, a malha aberta:
+    \begin{equation}
+    \label{eq:aberta}
+    L = KH(s)
+    \end{equation}
+
+*** Função Tranferência: caso A,
+    Dividindo ambos numerador e denominador por H(s), em [[ref:eq:G][ref:eq:G]],
+    $G(s)=\dfrac{K}{(H(s))^{-1} + K} \, \implies \, G(s) = \dfrac{K}{(s-1)(s+3) + K}$
+
+*** Cálculo de polos e zeros da malha
+
+    Assim, temos a *equação característica*:
+
+    $(s-1)(s+3) + K = 0 \, \Leftrightarrow \, s^2 - 2s + (K-3) = 0$
+
+    Assim, os polos dessa malha são:
+
+    $\therefore s =  1 \pm \sqrt{4-K} \implies p_1 = 1 + \sqrt{4-K} \, \land \, p_2 = 1 - \sqrt{4-K}$
+
+    Poderíamos reescrever G(s) como:
+
+    $G(s) = \dfrac{K}{(s-p_1)(s-p_2)}$
+
+
+**** *Casos de K*
+
+     Faremos a análise, caso a caso, da Função Transferência, para
+     todos possíveis valores de K.
+     
+     Podemos ter quatro situações reais, ambas raízes positivas; duas situações
+     com sinais alternados; e um caso com ambas raízes negativas.
+
+     E, ainda temos o caso em que as soluções são imaginárias,
+     analizadas aparte.
+
+***** *Raízes reais*
+
+      Casos em que: $K \leq 4$. Isto é, $s = 1 \pm \sqrt{4-K}$ é real.
+****** *Duas raízes reias positivas*
+
+       Para as raízes reais, 
+       \begin{equation}
+	 \begin{aligned}
+	 \forall K \leq 4 :\: s \geq 0 \, &\Leftrightarrow \, 1
+	 \pm \sqrt{4-K} \geq 0 \\
+	 & \implies \sqrt{4-K} \leq 1 \\
+	 & \Leftrightarrow -1 \leq 4-K  \leq 1 \\
+	 & \Leftrightarrow -5 \leq -K  \leq -3 \\
+	 & \Leftrightarrow 3 \leq K  \leq 5 \\
+
+       \therefore 3 < K < 4
+       \end{aligned}
+       \end{equation}
+
+       I) Observa-se que em $K=3 \, \land \, K=4 \implies p=0$ 
+
+****** *Duas raízes reais negativas*
+
+       \begin{equation}
+		 \begin{aligned}
+		 \forall K \leq 4 :\: s \leq 0 \, &\Leftrightarrow \, 1
+		 \pm \sqrt{4-K} \leq 0 \\
+		 & \Leftrightarrow \pm \sqrt{4-K} \leq -1 \\
+		 & \Leftrightarrow \mp \sqrt{4-K} \geq 1 \\
+		 & \Leftrightarrow | 4-K | \geq 1
+		 % & \implies (1 \leq -(4-K)) \, \lor \, (1 \leq 4-K)\\
+		 % & \Leftrightarrow  (-1 \geq 4-K) \, \lor \, (1 \leq 4-K)\\
+		 % & \Leftrightarrow  (4-K \leq -1) \, \lor \, (1 \leq 4-K)\\
+
+		 % \therefore 3 \leq K \leq 4
+	       \end{aligned}
+	       \end{equation}
+
+       Aqui, temos dois casos, $4-K > 0$ ou $4-K <0$.
+
+       Analisando para, $0 \leq K \leq 4$:
+	      
+       \begin{equation}
+       \begin{aligned}
+	 & 4-K \geq 1 \\
+	 \Leftrightarrow \, & K \leq 3 \\
+	 \therefore \: & 0 < K < 3
+       \end{aligned}
+       \end{equation}
+
+       II) Observa-se que para K=0, p=0.
+	      
+       Analisando para $-\infty<K<0$:
+	      
+       \begin{equation}
+      \begin{aligned}
+	& K-4 \geq 1 \\
+	\Leftrightarrow \: & K \geq 5 \\
+	\therefore \: & \textrm{fora do intervalo analizado}
+      \end{aligned}
+      \end{equation}
+
+****** *Raízes reais com sinais opostos*
+
+       Este será o complemento dos intevalos encontrados, $\therefore K<0$.
+****** *Conclusão para o caso real*
+       
+       - Intervalo com ambas raízes reais: $3<K<4$.
+       - Intervalo com ambas raízes negativas: $0 < K < 3$.
+       - Intervalo com raízes reais e sinais opostos: $K<0$.
+       - Valores para os quais a raízes são zero: $K=0 \, \land \, K=3 \,
+	 \land \, K=4$, vide observações (I) e (II).
+
+***** *Raízes imaginárias*
+      
+      Para as raízes imaginárias, isto é, $\forall K, \: K>4$,
+      \begin{equation}
+      \begin{aligned}
+	s &= 1 \pm \sqrt{4-K} \, \land \, s = \sigma \pm j \omega \\
+	\implies s &= 1 \pm j\sqrt{K-4} \, \land \, s = \sigma \pm j \omega \\
+	\implies \sigma &= 1 \, \land \, \omega = K-4
+      \end{aligned}
+      \end{equation}
+
+****** *Conclusão*
+       Disso, decorre que $\forall K, \: K>4, \: \nexists K \ni \sigma = 1$,
+       pois $\sigma$ independe de $K$. Isto é, não existem raízes imaginárias.
+
+*****  *Conclusão da análises de K, real e imaginária*
+      Os únicos valores de K para o qual o sistema se encontra
+      marginalmente em equilíbrio é: $K = 0 \land K=3 \land K=4$.
+
+      Porém, notamos que quando K=0 temos um /Zero/.
+
+****** *Tipo das raízes*:
+       * Intervalo com ambas raízes reais positivas: $3<K<4$.
+       * Intervalo com ambas raízes reais negativas: $0 < K < 3$.
+       * Intervalo com raízes reais e sinais opostos: $K<0$.
+       * Valores para os quais a raízes são zero: $K=0 \, \land \, K=3 \,
+	 \land \, K=4$, vide observações (I) e (II).
+       * Para qualquer outro valor de K, as raízes são imaginárias e não
+	 nulas, com parte real positiva.
+
+*** Malha aberta
+*** F.T., na forma canônica de Fator de Amortecimento($\xi$) e Frequência natural ($\omega$)
+    A forma canônica é dada por:
+    $G(s) = \dfrac{k_r \omega_n^2}{s^2 + 2 \xi \omega_n s + \omega_n^2}$
+
+    \begin{equation}
+    \label{eq:igualdade-caconica}
+      \begin{aligned}
+	\begin{cases}
+	  k_r \omega_n^2 &= 1\\
+    2 \xi \omega_n &= 2 \\
+    \omega_n^2 &= K-3 \\
+    \end{cases}
+      \end{aligned}
+    \end{equation}
+
+    Que é equivalente a,
+    \begin{equation}
+    \label{eq:igualdade-caconica2}
+      \begin{aligned}
+	\begin{cases}
+	  k_r &= \dfrac{1}{K-3}\\
+    \xi &= \dfrac{1}{\sqrt{K-3}} \\
+    \omega_n^2 &= K-3 \\
+    \end{cases}
+      \end{aligned}
+    \end{equation}
+
+    A qual nos leva a condição de existência: $K \neq 3$.
+
+*** Computação
+    # Usar aula 3, ex4 -> forma canonica
+Chamamos as bibliotecas que iremos utilizar,
+    
+    #+NAME: 29356d0a-a838-4b86-88a6-f3ca559ab164
+    #+begin_src ein
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.signal import lsim
+import control as ctl
+from control import (TransferFunction)
+    #+end_src
+
+    #+RESULTS: 29356d0a-a838-4b86-88a6-f3ca559ab164
+
+    Definimos a função H,
+
+    $H(t)=\dfrac{1}{s^2 - 2s - 3}$
+    
+#+NAME: 3e4182db-e429-4b9f-91aa-d3185ed8fefc
+#+begin_src ein
+  t = np.linspace(0, 20, 2001)
+  H = TransferFunction(1, [1,-2,-3])
+ctl.rlocus(H, kvect=None, xlim=None, ylim=None, plotstr=None, plot=True, PrintGain=None, grid=None)
+#+end_src
+
+#+RESULTS: 3e4182db-e429-4b9f-91aa-d3185ed8fefc
+|                                                                        |
+| (array([[-1.        +0.00000000e+00j,  3.        +0.00000000e+00j],    |
+| [-0.91129831+0.00000000e+00j,  2.91129831+0.00000000e+00j],            |
+| [-0.81827458+0.00000000e+00j,  2.81827458+0.00000000e+00j],            |
+| [-0.7202278 +0.00000000e+00j,  2.7202278 +0.00000000e+00j],            |
+| [-0.61624407+0.00000000e+00j,  2.61624407+0.00000000e+00j],            |
+| [-0.50509339+0.00000000e+00j,  2.50509339+0.00000000e+00j],            |
+| [-0.38505139+0.00000000e+00j,  2.38505139+0.00000000e+00j],            |
+| [-0.25356634+0.00000000e+00j,  2.25356634+0.00000000e+00j],            |
+| [-0.10656667+0.00000000e+00j,  2.10656667+0.00000000e+00j],            |
+| [ 0.04168515+0.00000000e+00j,  1.95831485+0.00000000e+00j],            |
+| [ 0.2175392 +0.00000000e+00j,  1.7824608 +0.00000000e+00j],            |
+| [ 0.26807495+0.00000000e+00j,  1.73192505+0.00000000e+00j],            |
+| [ 0.32236907+0.00000000e+00j,  1.67763093+0.00000000e+00j],            |
+| [ 0.38141043+0.00000000e+00j,  1.61858957+0.00000000e+00j],            |
+| [ 0.44671666+0.00000000e+00j,  1.55328334+0.00000000e+00j],            |
+| [ 0.52084258+0.00000000e+00j,  1.47915742+0.00000000e+00j],            |
+| [ 0.6087696 +0.00000000e+00j,  1.3912304 +0.00000000e+00j],            |
+| [ 0.72335833+0.00000000e+00j,  1.27664167+0.00000000e+00j],            |
+| [ 0.76042129+0.00000000e+00j,  1.23957871+0.00000000e+00j],            |
+| [ 0.8043848 +0.00000000e+00j,  1.1956152 +0.00000000e+00j],            |
+| [ 0.86167917+0.00000000e+00j,  1.13832083+0.00000000e+00j],            |
+| [ 1.        +0.00000000e+00j,  1.        +0.00000000e+00j],            |
+| [ 1.        -1.01015254e-01j,  1.        +1.01015254e-01j],            |
+| [ 1.        -1.42857143e-01j,  1.        +1.42857143e-01j],            |
+| [ 1.        -1.74963553e-01j,  1.        +1.74963553e-01j],            |
+| [ 1.        -2.02030509e-01j,  1.        +2.02030509e-01j],            |
+| [ 1.        -2.85714286e-01j,  1.        +2.85714286e-01j],            |
+| [ 1.        -3.49927106e-01j,  1.        +3.49927106e-01j],            |
+| [ 1.        -4.04061018e-01j,  1.        +4.04061018e-01j],            |
+| [ 1.        -5.00000000e-01j,  1.        +5.00000000e-01j],            |
+| [ 1.        -5.80288457e-01j,  1.        +5.80288457e-01j],            |
+| [ 1.        -6.50745256e-01j,  1.        +6.50745256e-01j],            |
+| [ 1.        -7.14285714e-01j,  1.        +7.14285714e-01j],            |
+| [ 1.        -7.72618130e-01j,  1.        +7.72618130e-01j],            |
+| [ 1.        -8.26845493e-01j,  1.        +8.26845493e-01j],            |
+| [ 1.        -8.77728981e-01j,  1.        +8.77728981e-01j],            |
+| [ 1.        -9.25820100e-01j,  1.        +9.25820100e-01j],            |
+| [ 1.        -1.09730654e+00j,  1.        +1.09730654e+00j],            |
+| [ 1.        -1.24539970e+00j,  1.        +1.24539970e+00j],            |
+| [ 1.        -1.37766439e+00j,  1.        +1.37766439e+00j],            |
+| [ 1.        -1.49829835e+00j,  1.        +1.49829835e+00j],            |
+| [ 1.        -1.60991824e+00j,  1.        +1.60991824e+00j],            |
+| [ 1.        -1.71428571e+00j,  1.        +1.71428571e+00j],            |
+| [ 1.        -1.81265393e+00j,  1.        +1.81265393e+00j],            |
+| [ 1.        -1.90595201e+00j,  1.        +1.90595201e+00j],            |
+| [ 1.        -1.99489143e+00j,  1.        +1.99489143e+00j],            |
+| [ 1.        -2.08003140e+00j,  1.        +2.08003140e+00j],            |
+| [ 1.        -2.16182085e+00j,  1.        +2.16182085e+00j],            |
+| [ 1.        -2.24062673e+00j,  1.        +2.24062673e+00j],            |
+| [ 1.        -2.31675353e+00j,  1.        +2.31675353e+00j],            |
+| [ 1.        -2.39045722e+00j,  1.        +2.39045722e+00j],            |
+| [ 1.        -2.46195542e+00j,  1.        +2.46195542e+00j],            |
+| [ 1.        -2.53143502e+00j,  1.        +2.53143502e+00j],            |
+| [ 1.        -2.59905791e+00j,  1.        +2.59905791e+00j],            |
+| [ 1.        -2.66496544e+00j,  1.        +2.66496544e+00j],            |
+| [ 1.        -2.72928188e+00j,  1.        +2.72928188e+00j],            |
+| [ 1.        -2.79211718e+00j,  1.        +2.79211718e+00j],            |
+| [ 1.        -2.85356919e+00j,  1.        +2.85356919e+00j],            |
+| [ 1.        -2.91372544e+00j,  1.        +2.91372544e+00j],            |
+| [ 1.        -2.97266458e+00j,  1.        +2.97266458e+00j],            |
+| [ 1.        -3.03045763e+00j,  1.        +3.03045763e+00j],            |
+| [ 1.        -3.08716897e+00j,  1.        +3.08716897e+00j],            |
+| [ 1.        -3.14285714e+00j,  1.        +3.14285714e+00j],            |
+| [ 1.        -3.19757561e+00j,  1.        +3.19757561e+00j],            |
+| [ 1.        -3.25137334e+00j,  1.        +3.25137334e+00j],            |
+| [ 1.        -3.30429529e+00j,  1.        +3.30429529e+00j],            |
+| [ 1.        -3.35638289e+00j,  1.        +3.35638289e+00j],            |
+| [ 1.        -3.40767441e+00j,  1.        +3.40767441e+00j],            |
+| [ 1.        -3.45820527e+00j,  1.        +3.45820527e+00j],            |
+| [ 1.        -3.50800833e+00j,  1.        +3.50800833e+00j],            |
+| [ 1.        -3.55711417e+00j,  1.        +3.55711417e+00j],            |
+| [ 1.        -3.74710773e+00j,  1.        +3.74710773e+00j],            |
+| [ 1.        -3.92792202e+00j,  1.        +3.92792202e+00j],            |
+| [ 1.        -4.10077146e+00j,  1.        +4.10077146e+00j],            |
+| [ 1.        -4.26662415e+00j,  1.        +4.26662415e+00j],            |
+| [ 1.        -4.42626668e+00j,  1.        +4.42626668e+00j],            |
+| [ 1.        -4.58034844e+00j,  1.        +4.58034844e+00j],            |
+| [ 1.        -4.72941296e+00j,  1.        +4.72941296e+00j],            |
+| [ 1.        -4.87392060e+00j,  1.        +4.87392060e+00j],            |
+| [ 1.        -5.01426536e+00j,  1.        +5.01426536e+00j],            |
+| [ 1.        -5.15078754e+00j,  1.        +5.15078754e+00j],            |
+| [ 1.        -5.28378343e+00j,  1.        +5.28378343e+00j],            |
+| [ 1.        -5.41351295e+00j,  1.        +5.41351295e+00j],            |
+| [ 1.        -5.54020555e+00j,  1.        +5.54020555e+00j],            |
+| [ 1.        -5.66406503e+00j,  1.        +5.66406503e+00j],            |
+| [ 1.        -5.78527335e+00j,  1.        +5.78527335e+00j],            |
+| [ 1.        -5.90399381e+00j,  1.        +5.90399381e+00j],            |
+| [ 1.        -6.02037357e+00j,  1.        +6.02037357e+00j],            |
+| [ 1.        -6.13454587e+00j,  1.        +6.13454587e+00j],            |
+| [ 1.        -6.24663175e+00j,  1.        +6.24663175e+00j],            |
+| [ 1.        -6.35674156e+00j,  1.        +6.35674156e+00j],            |
+| [ 1.        -6.46497629e+00j,  1.        +6.46497629e+00j],            |
+| [ 1.        -6.57142857e+00j,  1.        +6.57142857e+00j],            |
+| [ 1.        -6.67618368e+00j,  1.        +6.67618368e+00j],            |
+| [ 1.        -6.77932030e+00j,  1.        +6.77932030e+00j],            |
+| [ 1.        -6.88091119e+00j,  1.        +6.88091119e+00j],            |
+| [ 1.        -6.98102384e+00j,  1.        +6.98102384e+00j],            |
+| [ 1.        -7.07972097e+00j,  1.        +7.07972097e+00j],            |
+| [ 1.        -7.17706096e+00j,  1.        +7.17706096e+00j],            |
+| [ 1.        -7.27309832e+00j,  1.        +7.27309832e+00j],            |
+| [ 1.        -7.36788398e+00j,  1.        +7.36788398e+00j],            |
+| [ 1.        -7.46146563e+00j,  1.        +7.46146563e+00j],            |
+| [ 1.        -7.55388804e+00j,  1.        +7.55388804e+00j],            |
+| [ 1.        -7.64519323e+00j,  1.        +7.64519323e+00j],            |
+| [ 1.        -7.73542078e+00j,  1.        +7.73542078e+00j],            |
+| [ 1.        -7.82460796e+00j,  1.        +7.82460796e+00j],            |
+| [ 1.        -7.91278996e+00j,  1.        +7.91278996e+00j],            |
+| [ 1.        -8.00000000e+00j,  1.        +8.00000000e+00j],            |
+| [ 1.        -2.60000000e+01j,  1.        +2.60000000e+01j],            |
+| [ 1.        -8.24378554e+01j,  1.        +8.24378554e+01j],            |
+| [ 1.        -2.60760426e+02j,  1.        +2.60760426e+02j]]),          |
+| array([0.00000000e+00, 3.46938776e-01, 6.93877551e-01, 1.04081633e+00, |
+| 1.38775510e+00, 1.73469388e+00, 2.08163265e+00, 2.42857143e+00,        |
+| 2.77551020e+00, 3.08163265e+00, 3.38775510e+00, 3.46428571e+00,        |
+| 3.54081633e+00, 3.61734694e+00, 3.69387755e+00, 3.77040816e+00,        |
+| 3.84693878e+00, 3.92346939e+00, 3.94260204e+00, 3.96173469e+00,        |
+| 3.98086735e+00, 4.00000000e+00, 4.01020408e+00, 4.02040816e+00,        |
+| 4.03061224e+00, 4.04081633e+00, 4.08163265e+00, 4.12244898e+00,        |
+| 4.16326531e+00, 4.25000000e+00, 4.33673469e+00, 4.42346939e+00,        |
+| 4.51020408e+00, 4.59693878e+00, 4.68367347e+00, 4.77040816e+00,        |
+| 4.85714286e+00, 5.20408163e+00, 5.55102041e+00, 5.89795918e+00,        |
+| 6.24489796e+00, 6.59183673e+00, 6.93877551e+00, 7.28571429e+00,        |
+| 7.63265306e+00, 7.97959184e+00, 8.32653061e+00, 8.67346939e+00,        |
+| 9.02040816e+00, 9.36734694e+00, 9.71428571e+00, 1.00612245e+01,        |
+| 1.04081633e+01, 1.07551020e+01, 1.11020408e+01, 1.14489796e+01,        |
+| 1.17959184e+01, 1.21428571e+01, 1.24897959e+01, 1.28367347e+01,        |
+| 1.31836735e+01, 1.35306122e+01, 1.38775510e+01, 1.42244898e+01,        |
+| 1.45714286e+01, 1.49183673e+01, 1.52653061e+01, 1.56122449e+01,        |
+| 1.59591837e+01, 1.63061224e+01, 1.66530612e+01, 1.80408163e+01,        |
+| 1.94285714e+01, 2.08163265e+01, 2.22040816e+01, 2.35918367e+01,        |
+| 2.49795918e+01, 2.63673469e+01, 2.77551020e+01, 2.91428571e+01,        |
+| 3.05306122e+01, 3.19183673e+01, 3.33061224e+01, 3.46938776e+01,        |
+| 3.60816327e+01, 3.74693878e+01, 3.88571429e+01, 4.02448980e+01,        |
+| 4.16326531e+01, 4.30204082e+01, 4.44081633e+01, 4.57959184e+01,        |
+| 4.71836735e+01, 4.85714286e+01, 4.99591837e+01, 5.13469388e+01,        |
+| 5.27346939e+01, 5.41224490e+01, 5.55102041e+01, 5.68979592e+01,        |
+| 5.82857143e+01, 5.96734694e+01, 6.10612245e+01, 6.24489796e+01,        |
+| 6.38367347e+01, 6.52244898e+01, 6.66122449e+01, 6.80000000e+01,        |
+| 6.80000000e+02, 6.80000000e+03, 6.80000000e+04]))                      |
+| [[file:ein-images/ob-ein-91eb5061fef065e0fadedec612156651.png]]            |
+    
+*** Conclusões sobre o sistema
+    Apenas para os valores de $K$, em que $0<K<3$, existe estabilidade para o
+    sistema. Ademais, para, $K=3 \, \land \, K=4$ existe estabilidade marginal. 
+    
+** B
+   #+caption: Sistema B
+   [[file:resources/B.png][file:resources/B.png]]
+
+*** Considerações
+    1. Seja o Erro, E(s): $E(s) = R(s) - C(s)$
+    2. Seja a função H(s): $H(s)= \dfrac{s + 20}{s(s+2)(s+3)}$
+    3. Seja a saída de K: $U(s)$.  
+
+    Temos, do sistema, as seguintes equações:
+    \begin{equation}
+    \label{eq:A}
+      \begin{aligned}
+	\begin{cases}
+	  E(s) &= R(s) - C(s) \\
+	  U(s) &= KE(s)  \\
+	  C(s) &= H(s)U(s)
+	\end{cases}
+      \end{aligned}
+    \end{equation}                         
+
+*** Dedução das equações determinantes do sistema
+    Analogamente ao caso genericamente deduzido de [[*Dedução das equações determinantes do sistema.][Dedução das
+    equações determinantes do sistema,]] temos:
+
+    \begin{equation}
+   \label{eq:G-B}
+   \dfrac{C(s)}{R(s)} = \dfrac{KH(s)}{1+KH(s)} \, \land \, G(s)=\dfrac{C(s)}{R(s)}
+   \end{equation}
+
+    Dividindo ambos denominador e numerador por H(s), temos:
+
+    $G(s) = \dfrac{K(s+20)}{s(s+2)(s+3) + K(s+20)}$
+
+*** Malha aberta
+A equação da malha aberta é:
+
+$s(s+2)(s+3) + K(s+20)=0$
+
+*** Computação
+
+#+NAME: 25601f48-8aff-4d85-90e0-5e399329289b
+#+begin_src ein
+%matplotlib notebook 
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.signal import lsim
+import control as ctl
+from control import (TransferFunction)
+
+num = np.convolve([1,20]) 
+den = np.convolve([1,0],[1,2],[1,3]) 
+
+H = TransferFunction(num, den)
+out = ctl.rlocus(H, kvect=None, xlim=None, ylim=None, plotstr=None, Plot=True, PrintGain=None, grid=None)
+#+end_src
+
+#+RESULTS: 25601f48-8aff-4d85-90e0-5e399329289b
+|                                                                               |
+| TypeErrorTraceback (most recent call last)                                    |
+| <ipython-input-10-f59f707a08d8> in <module>                                   |
+| 7                                                                             |
+| 8                                                                             |
+| ----> 9 num = np.convolve([1,20])                                             |
+| 10 den = np.convolve([1,0],[1,2],[1,3])                                       |
+| 11                                                                            |
+|                                                                               |
+| <__array_function__ internals> in convolve(*args, **kwargs)                   |
+|                                                                               |
+| TypeError: _convolve_dispatcher() missing 1 required positional argument: 'v' |

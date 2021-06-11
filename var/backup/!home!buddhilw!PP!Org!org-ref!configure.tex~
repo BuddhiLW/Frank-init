@@ -1,0 +1,40 @@
+% Created 2021-06-11 Fri 10:56
+% Intended LaTeX compiler: pdflatex
+\documentclass{abntex2}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[alf]{abntex2cite}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.2 (Org mode 9.4.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+
+
+\chapter{First section}
+\label{sec:org0ec0209}
+lipsum \cite{abntex2012,lamport1994}
+
+
+
+\bibliography{test-1}
+\end{document}

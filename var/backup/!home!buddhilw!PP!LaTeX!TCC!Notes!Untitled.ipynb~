@@ -1,0 +1,96 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "30f03ac0",
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "ename": "LoadError",
+     "evalue": "syntax: unexpected \"=\"",
+     "output_type": "error",
+     "traceback": [
+      "syntax: unexpected \"=\"",
+      "",
+      "Stacktrace:",
+      " [1] top-level scope",
+      "   @ In[11]:7",
+      " [2] eval",
+      "   @ ./boot.jl:360 [inlined]",
+      " [3] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)",
+      "   @ Base ./loading.jl:1094"
+     ]
+    }
+   ],
+   "source": [
+    "using GR\n",
+    "\n",
+    "function hailLength(x::Int)\n",
+    "    n = 0\n",
+    "    while x != 1\n",
+    "        if x % 2 == 0\n",
+    "            = Int(x/2)\n",
+    "        else\n",
+    "            x = 3x +1\n",
+    "        end\n",
+    "        n += 1\n",
+    "    end\n",
+    "    return n\n",
+    "end"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "991ef2cd",
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "ename": "LoadError",
+     "evalue": "UndefVarError: hailLength not defined",
+     "output_type": "error",
+     "traceback": [
+      "UndefVarError: hailLength not defined",
+      "",
+      "Stacktrace:",
+      " [1] top-level scope",
+      "   @ In[7]:1",
+      " [2] eval",
+      "   @ ./boot.jl:360 [inlined]",
+      " [3] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)",
+      "   @ Base ./loading.jl:1094"
+     ]
+    }
+   ],
+   "source": [
+    "lengths = [hailLength(x0) for x0 in 2:10^7]"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "argv": [
+    "/usr/bin/julia",
+    "-i",
+    "--color=yes",
+    "--project=@.",
+    "/home/buddhilw/.julia/packages/IJulia/e8kqU/src/kernel.jl",
+    "{connection_file}"
+   ],
+   "display_name": "Julia 1.6.1",
+   "env": null,
+   "interrupt_mode": "signal",
+   "language": "julia",
+   "metadata": null,
+   "name": "julia-1.6"
+  },
+  "name": "Untitled.ipynb"
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

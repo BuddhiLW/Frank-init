@@ -1,0 +1,14 @@
+#+begin_src emacs-lisp
+  (require 'chart)
+  
+    (chart-bar-quickie
+     'vertical "Favorite Type of Movie"
+     ;; Type & Title
+     '("Comedy" "Action" "Romance" "Drama" "Sci-Fi") "Genre"
+     ;; Keys & Label
+     '(4 5 6 1 4) "People"
+     ;; Values &  Label
+     )
+#+end_src
+
+(chart 'chart-emacs-storage)

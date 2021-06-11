@@ -1,0 +1,39 @@
+;; :reveal {:extra-deps {vlaaad/reveal {:mvn/version "1.3.209"}}
+;;          :ns-default vlaaad.reveal
+;;          :exec-fn repl}
+
+{:deps {org.clojure/clojure {:mvn/version "1.10.1"}
+        cljfx/cljfx {:mvn/version "1.7.12"}
+        cljfx/css {:mvn/version "1.1.0"}
+        org.apache.commons/commons-lang3 {:mvn/version "3.10"}
+        com.vladsch.flexmark/flexmark {:mvn/version "0.62.0"}
+        com.vladsch.flexmark/flexmark-ext-wikilink {:mvn/version "0.62.0"}
+        com.vladsch.flexmark/flexmark-ext-autolink {:mvn/version "0.62.0"}}
+ :aliases {:repl {:main-opts ["-m" "vlaaad.reveal" "repl"]}
+           :server {:exec-fn clojure.core.server/start-server
+                    :exec-args {:name "Reveal"
+                                :port 5555
+                                :accept vlaaad.reveal/repl
+                                :server-daemon false}}
+           :prepl {:main-opts ["-m" "vlaaad.reveal" "io-prepl"]}
+           :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.6.0"}}
+                   :main-opts ["-m" "nrepl.cmdline" "--middleware" "[vlaaad.reveal.nrepl/middleware]"]}
+           :examples {:extra-paths ["examples"]
+                      :extra-deps {integrant/integrant {:mvn/version "0.8.0"}
+                                   ring/ring-jetty-adapter {:mvn/version "1.8.1"}
+                                   ring/ring-core {:mvn/version "1.8.1"}
+                                   aysylu/loom {:mvn/version "1.0.2"}
+                                   clj-http/clj-http {:mvn/version "3.10.1"}
+                                   cheshire/cheshire {:mvn/version "5.10.0"}
+                                   com.taoensso/timbre {:mvn/version "5.1.0"}}}
+           :dev {:extra-paths ["dev"]
+                 :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
+           :windows {:jvm-opts ["-Dfile.encoding=UTF-8"]}
+           :optional {:extra-deps {lambdaisland/deep-diff2 {:mvn/version "2.0.0-93"}
+                                   lambdaisland/deep-diff {:mvn/version "0.0-47"}}}
+           :build {:extra-paths ["build"]
+                   :jvm-opts ["-Dclojure.spec.skip-macros=true"]
+                   :extra-deps {org.clojure/data.xml {:mvn/version "0.2.0-alpha6"}
+                                clj-commons/pomegranate {:mvn/version "1.2.0"}}}
+           :depstar {:extra-deps {seancorfield/depstar {:mvn/version "0.2.1"}}
+                     :main-opts ["-m" "hf.depstar.jar"]}}}

@@ -1,0 +1,133 @@
+#+TITLE: Anotações de Controle e Automação 🙏📚
+#+AUTHOR: Pedro Gomes Branquinho
+
+* Aula 2
++ Função transferência 
++ Próxima aula: sistemas com múltiplas entradas -> Variáveis de estado; Espaço de estado
+
+*Teorema*:
+"Qualquer sistema de grau $N$ pode ser transfomado em um sistema de $N$ equações de primeiro grau (ODE)."
+
+* Aula 3
+Descoberta a função transferência,
+
+=Polos=: são as raízes do denominador
+=Zeros=: são as raízes do numerador
+=Ganho=: fator multiplicativo
+
+
+A equação característica pode equivalentemente ser tratada como o denominador da função transferência. Ou, observando os autovalores da matrix $A$, em que: $\dot{X} = A X + B$.
+
+- *Amortecimento*
+- *Frequências Naturais*
+- *zmaps*
+
+* Aula 4
+Diversas aplicações reais. Estudar mais *FRF* [[https://eomys.com/e-nvh/technical-notes-on-electromagnetically-excited-noise-and-vibrations/article/what-is-a-frf-frequency-response-function][Frequency Response Function]].
+
+* Aula 5
+Espaço de Estado (coordenadas generalizadas).
+Confort curves -> car design.
+Natural ressonantes.
+
+* Aula 6
+Corrente -> derivada temporal da quantidade de cargas no sistema.
+$i = \frac{\partial i}{\partial t}$ 
+Tensão -> derivada temporal do fluxo magnético.
+$e = \frac{\partial \lambda}{\partial t}$
+
+#+caption: Sistema Elétrico - Modelo
+[[file:pic-selected-210602-2346-36.png][file:resources/pic-selected-210602-2346-36.png]]
+
+Função Reposta:
+$G(s) = \frac{V_0(s)}{V_i(s)} = \frac{1}{RCs + 1}$
+
+* Aula 8
+- Robustez: além do que eu não conheço, ainda sim o meu sistema continua estável - bom intervalo de segurança.
+- Feedback: medida do sistema -> tomada de decisão sob o sistema.
+- Feedforward: como calcular uff?
+
+* Aula 9
+
+  
+* Prova
+1 – Plote o Lugar das Raízes (raízes da malha fechada) indicando as raízes quando
+$K$ = 0 e quando $K$ = ∞ (polos e zeros da malha aberta).
+2 – Calcule o valor de $K$ que torna o sistema marginalmente estável ($K_{\textrm{marg}}$).
+
+3 – Use o critério de Rough e compare com o valor de $K_{\textrm{marg}}$ encontrado no item 2.
+4 – Plote o diagram de Nyquist para a malha aberta do sistema com ganhos
+maiores, iguais e menores que $K_{\textrm{marg}}$.
+
+5 – Indique se o sistema é estável ou instável de acordo com o número de polos
+instáveis da malha aberta (Critério de Nyquist).
+
+** A
+#+caption: Sistema A
+[[file:pic-selected-210603-1414-20.png][file:resources/A.png]]
+
+*** Considerações
+1. Seja o Erro, E(s): $E(s) = R(s) - C(s)$
+2. Seja a função H(s): $H(s)= \dfrac{1}{(s-1)(s+3)}$
+3. Seja a saída de K: $U(s)$.  
+
+Temos, do sistema, as seguintes equações:
+\begin{equation}
+\label{eq:A}
+  \begin{aligned}
+    \begin{cases}
+      E(s) &= R(s) - C(s) \\
+      U(s) &= KE(s)  \\
+C(s) &= H(s)U(s)
+\end{cases}
+  \end{aligned}
+\end{equation}                         
+
+*** Dedução das equações determinantes do sistema.
+De onde se sai, por substituição de 1.(II) em 1.(III), ou de U(s) na expressão C(s),
+$C(s) = H(s)KE(s) \, \implies \, E(s) = \dfrac{C(s)}{KH(s)}$
+
+Substituindo a expressão encontrada $E(s)$ em 1.(I),
+$\dfrac{C(s)}{KH(s)} = R(s) - C(s)$
+
+Encontrando a relação da fração $\dfrac{C(s)}{R(s)}$, como
+\begin{equation}
+\label{eq:G}
+\dfrac{C(s)}{R(s)} = \dfrac{KH(s)}{1+KH(s)} \, \land \, G(s)=\dfrac{C(s)}{R(s)}
+\end{equation}
+
+Denominaremos a função transferência como $G(s)=\dfrac{C(s)}{R(s)}$.
+
+Assim, a equação característica do sistema  é:
+\begin{equation}
+\label{eq:característica}
+1+KH(s)=0
+\end{equation}
+
+E, a malha aberta:
+\begin{equation}
+\label{eq:aberta}
+L = KH(s)
+\end{equation}
+
+*** Função Tranferência: caso A,
+Dividindo ambos numerador e denominador por H(s), em [[ref:eq:G][ref:eq:G]],
+$G(s)=\dfrac{K}{(H(s))^{-1} + K} \, \implies \, G(s) = \dfrac{K}{(s-1)(s+3) + K}$
+
+*** Cálculo de polos e zeros da ma
+
+Assim, temos a *equação característica*:
+$(s-1)(s+3) + K = 0 \, \Leftrightarrow \, s^2 - 2s + (K-3) = 0$
+
+Assim, os polos dessa malha são:
+$\therefore s =  1 \pm \sqrt{4-K} \implies p_1 = 1 + \sqrt{4-K} \, \land \, p_2 = 1 - \sqrt{4-K}$
+
+*** F.T., na forma canônica de Fator de Amortecimento($\xi$) e Frequência natural ($\omega$)
+A forma canônica é dada por:
+$G(s) = \dfrac{k_r \omega_n^2}{s^2 + 2 \xi \omega_n s + \omega_n^2}$
+
+
+
+*** Computação
+
+Usar aula 3, ex4 -> forma canonica

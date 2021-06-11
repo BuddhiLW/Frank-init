@@ -1,0 +1,3 @@
+* TaskJuggler integration with org-mode
+** Install
+You only will be able to use [[https://gist.github.com/anoduck/4adf306252f6b8c8759a][ox-taskjuggler]] by downloading from github and "underground" repositories. It's not even in the [[https://orgmode.org/worg/org-contrib/][org-plus-contrib]].

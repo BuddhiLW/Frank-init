@@ -1,0 +1,62 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch desktop
+# Changes to be committed:
+#	modified:   Emacs.org
+#	modified:   init.el
+#
+# Changes not staged for commit:
+#	modified:   var/ac-comphist.el
+#	modified:   var/auto-save/sessions/1246-artixdesk~
+#	deleted:    var/auto-save/sessions/1251-artixdesk~
+#	modified:   var/backup/!home!buddhilw!.config!clojure!deps.edn~
+#	modified:   var/backup/!home!buddhilw!.emacs.d!var!url!configuration!cookies~
+#	modified:   var/cider-repl-history.el
+#	modified:   var/eshell/history
+#	modified:   var/eshell/lastdir
+#	modified:   var/pcache/unicode-fonts
+#	modified:   var/prescient-save.el
+#	modified:   var/request/storage/curl-cookie-jar
+#	modified:   var/url/configuration/cookies
+#
+# Untracked files:
+#	.tutor/
+#	pic-full-210601-1342-37.png
+#	var/anaconda-mode/
+#	var/auto-package-update-last-update-day
+#	var/auto-save/#!home!buddhilw!.emacs.d!Desktop.org#
+#	var/auto-save/#!home!buddhilw!.emacs.d!Emacs.org#
+#	var/auto-save/#!home!buddhilw!PP!Clojure!reveal!deps.edn#
+#	var/auto-save/#!home!buddhilw!PP!ClojureScript!notespace-sicmutils-example!deps.edn#
+#	var/auto-save/#!home!buddhilw!PP!Faculdade!ControleAutomacao!org.org#
+#	var/auto-save/#!home!buddhilw!PP!LaTeX!TCC!Cronograma!taskjuggler.org#
+#	var/auto-save/#!home!buddhilw!PP!Org!EDO-matrices-rule.org#
+#	var/auto-save/#!home!buddhilw!PP!Python!example.py#
+#	var/auto-save/sessions/11268-artixdesk~
+#	var/auto-save/sessions/1243-artixdesk~
+#	var/auto-save/sessions/1259-artixdesk~
+#	var/auto-save/sessions/8383-artixdesk~
+#	var/auto-save/sessions/9678-artixdesk~
+#	var/backup/!home!buddhilw!.emacs.d!.git!COMMIT_EDITMSG~
+#	var/backup/!home!buddhilw!.emacs.d!.tutor!evil-tutor-04062021.txt~
+#	var/backup/!home!buddhilw!.emacs.d!Desktop.org~
+#	var/backup/!home!buddhilw!PP!Clojure!reveal!deps.edn~
+#	var/backup/!home!buddhilw!PP!Clojure!reveal!project.clj~
+#	var/backup/!home!buddhilw!PP!Clojure!reveal!src!reveal!core.clj~
+#	var/backup/!home!buddhilw!PP!Faculdade!ControleAutomacao!Aulas.org~
+#	var/backup/!home!buddhilw!PP!Faculdade!ControleAutomacao!Trabalho1.org~
+#	var/backup/!home!buddhilw!PP!Faculdade!ControleAutomacao!Trabalho1.tex~
+#	var/backup/!home!buddhilw!PP!Faculdade!ControleAutomacao!org2.org~
+#	var/backup/!home!buddhilw!PP!Faculdade!ControleAutomacao!python.py~
+#	var/backup/!home!buddhilw!PP!LaTeX!TCC!Cronograma!gantt.org~
+#	var/backup/!home!buddhilw!PP!LaTeX!TCC!Cronograma!gantt.tjp~
+#	var/backup/!home!buddhilw!PP!LaTeX!TCC!Cronograma!taskjuggler.org~
+#	var/backup/!home!buddhilw!PP!LaTeX!TCC!Notes!ideias.org~
+#	var/company/tabnine-binaries/.active
+#	var/company/tabnine-binaries/3.4.20/
+#	var/dap/breakpoints.el
+#	var/lsp/
+#	var/projectile/
+#

@@ -1,0 +1,407 @@
+% Created 2021-06-03 Thu 22:44
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\maketitle{}
+\usepackage[portuguese, english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\author{Pedro Gomes Branquinho, N°USP:9843240}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Pedro Gomes Branquinho, N°USP:9843240},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.2 (Org mode 9.4.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+
+\section{Tarefa 1}
+\label{sec:org2d9b0e1}
+\begin{enumerate}
+\item Plote o Lugar das Raízes (raízes da malha fechada) indicando as raízes quando \(K\) = 0 e quando \(K\) = ∞ (polos e zeros da malha aberta).
+\item Calcule o valor de \(K\) que torna o sistema marginalmente estável (\(K_{\textrm{marg}}\)).
+\item Use o critério de Rough e compare com o valor de \(K_{\textrm{marg}}\) encontrado no item 2.
+\item Plote o diagram de Nyquist para a malha aberta do sistema com ganhos maiores, iguais e menores que \(K_{\textrm{marg}}\).
+\item Indique se o sistema é estável ou instável de acordo com o número de polos instáveis da malha aberta (Critério de Nyquist).
+
+\(\clearpage\)
+\end{enumerate}
+
+\subsection{A}
+\label{sec:org38aca65}
+
+Foi dada a malha,
+
+\href{pic-selected-210603-1414-20.png}{\includegraphics[width=.9\linewidth]{resources/A.png}}
+
+\subsubsection{Considerações}
+\label{sec:org54209e8}
+\begin{enumerate}
+\item Seja o Erro, E(s): \(E(s) = R(s) - C(s)\)
+\item Seja a função H(s): \(H(s)= \dfrac{1}{(s-1)(s+3)}\)
+\item Seja a saída de K: \(U(s)\).
+\end{enumerate}
+
+Temos, do sistema, as seguintes equações:
+\begin{equation}
+\label{eq:A}
+  \begin{aligned}
+    \begin{cases}
+      E(s) &= R(s) - C(s) \\
+      U(s) &= KE(s)  \\
+C(s) &= H(s)U(s)
+\end{cases}
+  \end{aligned}
+\end{equation}                         
+
+\subsubsection{Dedução das equações determinantes do sistema.}
+\label{sec:org09c0964}
+\label{sec:dedução-eq}
+De onde se sai, por substituição de 1.(II) em 1.(III), ou de U(s) na expressão C(s),
+\(C(s) = H(s)KE(s) \, \implies \, E(s) = \dfrac{C(s)}{KH(s)}\)
+
+Substituindo a expressão encontrada \(E(s)\) em 1.(I),
+\(\dfrac{C(s)}{KH(s)} = R(s) - C(s)\)
+
+Encontrando a relação da fração \(\dfrac{C(s)}{R(s)}\), como
+\begin{equation}
+\label{eq:G}
+\dfrac{C(s)}{R(s)} = \dfrac{KH(s)}{1+KH(s)} \, \land \, G(s)=\dfrac{C(s)}{R(s)}
+\end{equation}
+
+Denominaremos a função transferência como \(G(s)=\dfrac{C(s)}{R(s)}\).
+
+Assim, a equação característica do sistema  é:
+\begin{equation}
+\label{eq:característica}
+1+KH(s)=0
+\end{equation}
+
+E, a malha aberta:
+\begin{equation}
+\label{eq:aberta}
+L = KH(s)
+\end{equation}
+
+\subsubsection{Função Tranferência: caso A,}
+\label{sec:orgb88a305}
+Dividindo ambos numerador e denominador por H(s), em \ref{eq:G},
+\(G(s)=\dfrac{K}{(H(s))^{-1} + K} \, \implies \, G(s) = \dfrac{K}{(s-1)(s+3) + K}\)
+
+\subsubsection{Cálculo de polos e zeros da malha}
+\label{sec:org0407268}
+
+Assim, temos a \textbf{equação característica}:
+
+\((s-1)(s+3) + K = 0 \, \Leftrightarrow \, s^2 - 2s + (K-3) = 0\)
+
+Assim, os polos dessa malha são:
+
+\(\therefore s =  1 \pm \sqrt{4-K} \implies p_1 = 1 + \sqrt{4-K} \, \land \, p_2 = 1 - \sqrt{4-K}\)
+
+Poderíamos reescrever G(s) como:
+
+\(G(s) = \dfrac{K}{(s-p_1)(s-p_2)}\)
+
+
+\begin{enumerate}
+\item \textbf{Casos de K}
+\label{sec:orgd64a544}
+
+Faremos a análise, caso a caso, da Função Transferência, para
+todos possíveis valores de K.
+
+Podemos ter quatro situações reais, ambas raízes positivas; duas situações
+com sinais alternados; e um caso com ambas raízes negativas.
+
+E, ainda temos o caso em que as soluções são imaginárias,
+analizadas aparte.
+
+\begin{enumerate}
+\item \textbf{Raízes reais}
+\label{sec:orge56f44b}
+
+Casos em que: \(K \leq 4\). Isto é, \(s = 1 \pm \sqrt{4-K}\) é real.
+\begin{enumerate}
+\item \textbf{Duas raízes reias positivas}
+\label{sec:org0531e99}
+
+Para as raízes reais, 
+\begin{equation}
+  \begin{aligned}
+  \forall K \leq 4 :\: s \geq 0 \, &\Leftrightarrow \, 1
+  \pm \sqrt{4-K} \geq 0 \\
+  & \implies \sqrt{4-K} \leq 1 \\
+  & \Leftrightarrow -1 \leq 4-K  \leq 1 \\
+  & \Leftrightarrow -5 \leq -K  \leq -3 \\
+  & \Leftrightarrow 3 \leq K  \leq 5 \\
+
+\therefore 3 < K < 4
+\end{aligned}
+\end{equation}
+
+I) Observa-se que em \(K=3 \, \land \, K=4 \implies p=0\) 
+
+\item \textbf{Duas raízes reais negativas}
+\label{sec:org6ceef0b}
+
+\begin{equation}
+	  \begin{aligned}
+	  \forall K \leq 4 :\: s \leq 0 \, &\Leftrightarrow \, 1
+	  \pm \sqrt{4-K} \leq 0 \\
+	  & \Leftrightarrow \pm \sqrt{4-K} \leq -1 \\
+	  & \Leftrightarrow \mp \sqrt{4-K} \geq 1 \\
+	  & \Leftrightarrow | 4-K | \geq 1
+	  % & \implies (1 \leq -(4-K)) \, \lor \, (1 \leq 4-K)\\
+	  % & \Leftrightarrow  (-1 \geq 4-K) \, \lor \, (1 \leq 4-K)\\
+	  % & \Leftrightarrow  (4-K \leq -1) \, \lor \, (1 \leq 4-K)\\
+
+	  % \therefore 3 \leq K \leq 4
+	\end{aligned}
+	\end{equation}
+
+Aqui, temos dois casos, \(4-K > 0\) ou \(4-K <0\).
+
+Analisando para, \(0 \leq K \leq 4\):
+
+\begin{equation}
+\begin{aligned}
+  & 4-K \geq 1 \\
+  \Leftrightarrow \, & K \leq 3 \\
+  \therefore \: & 0 < K < 3
+\end{aligned}
+\end{equation}
+
+II) Observa-se que para K=0, p=0.
+
+Analisando para \(-\infty<K<0\):
+
+ \begin{equation}
+\begin{aligned}
+  & K-4 \geq 1 \\
+  \Leftrightarrow \: & K \geq 5 \\
+  \therefore \: & \textrm{fora do intervalo analizado}
+\end{aligned}
+\end{equation}
+
+\item \textbf{Raízes reais com sinais opostos}
+\label{sec:org2de133f}
+
+Este será o complemento dos intevalos encontrados, \(\therefore K<0\).
+\item \textbf{Conclusão para o caso real}
+\label{sec:org8b42ff5}
+
+\begin{itemize}
+\item Intervalo com ambas raízes reais: \(3<K<4\).
+\item Intervalo com ambas raízes negativas: \(0 < K < 3\).
+\item Intervalo com raízes reais e sinais opostos: \(K<0\).
+\item Valores para os quais a raízes são zero: \(K=0 \, \land \, K=3 \,
+	 \land \, K=4\), vide observações (I) e (II).
+\end{itemize}
+\end{enumerate}
+
+\item \textbf{Raízes imaginárias}
+\label{sec:org7937562}
+
+Para as raízes imaginárias, isto é, \(\forall K, \: K>4\),
+\begin{equation}
+\begin{aligned}
+  s &= 1 \pm \sqrt{4-K} \, \land \, s = \sigma \pm j \omega \\
+  \implies s &= 1 \pm j\sqrt{K-4} \, \land \, s = \sigma \pm j \omega \\
+  \implies \sigma &= 1 \, \land \, \omega = K-4
+\end{aligned}
+\end{equation}
+
+\begin{enumerate}
+\item \textbf{Conclusão}
+\label{sec:org0456ed9}
+Disso, decorre que \(\forall K, \: K>4, \: \nexists K \ni \sigma = 1\),
+pois \(\sigma\) independe de \(K\). Isto é, não existem raízes imaginárias.
+\end{enumerate}
+
+\item \textbf{Conclusão da análises de K, real e imaginária}
+\label{sec:org65728d7}
+Os únicos valores de K para o qual o sistema se encontra
+marginalmente em equilíbrio é: \(K = 0 \land K=3 \land K=4\).
+
+Porém, notamos que quando K=0 temos um \emph{Zero}.
+
+\begin{enumerate}
+\item \textbf{Tipo das raízes}:
+\label{sec:orgddbc85f}
+\begin{itemize}
+\item Intervalo com ambas raízes reais positivas: \(3<K<4\).
+\item Intervalo com ambas raízes reais negativas: \(0 < K < 3\).
+\item Intervalo com raízes reais e sinais opostos: \(K<0\).
+\item Valores para os quais a raízes são zero: \(K=0 \, \land \, K=3 \,
+	 \land \, K=4\), vide observações (I) e (II).
+\item Para qualquer outro valor de K, as raízes são imaginárias e não
+nulas, com parte real positiva.
+\end{itemize}
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Malha aberta}
+\label{sec:orgbfd584b}
+\subsubsection{F.T., na forma canônica de Fator de Amortecimento(\(\xi\)) e Frequência natural (\(\omega\))}
+\label{sec:org05d8a30}
+A forma canônica é dada por:
+\(G(s) = \dfrac{k_r \omega_n^2}{s^2 + 2 \xi \omega_n s + \omega_n^2}\)
+
+\begin{equation}
+\label{eq:igualdade-caconica}
+  \begin{aligned}
+    \begin{cases}
+      k_r \omega_n^2 &= 1\\
+2 \xi \omega_n &= 2 \\
+\omega_n^2 &= K-3 \\
+\end{cases}
+  \end{aligned}
+\end{equation}
+
+Que é equivalente a,
+\begin{equation}
+\label{eq:igualdade-caconica2}
+  \begin{aligned}
+    \begin{cases}
+      k_r &= \dfrac{1}{K-3}\\
+\xi &= \dfrac{1}{\sqrt{K-3}} \\
+\omega_n^2 &= K-3 \\
+\end{cases}
+  \end{aligned}
+\end{equation}
+
+A qual nos leva a condição de existência: \(K \neq 3\).
+
+\subsubsection{Computação}
+\label{sec:org8583068}
+Chamamos as bibliotecas que iremos utilizar,
+
+\begin{verbatim}
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.signal import lsim
+import control as ctl
+from control import (TransferFunction)
+\end{verbatim}
+
+Definimos a função H,
+
+\(H(t)=\dfrac{1}{s^2 - 2s - 3}\)
+
+\begin{enumerate}
+\item Plot Locus
+\label{sec:orgaf93cc0}
+\begin{verbatim}
+%matplotlib inline
+t = np.linspace(0, 20, 2001)
+H = TransferFunction(1, [1,-2,-3])
+ctl.rlocus(H, kvect=None, xlim=None, ylim=None, plotstr=None, plot=True, PrintGain=None, grid=None)
+\end{verbatim}
+
+\begin{center}
+\begin{tabular}{l}
+\begin{center}
+\includegraphics[width=.9\linewidth]{ein-images/ob-ein-91eb5061fef065e0fadedec612156651.png}
+\end{center}\\
+\end{tabular}
+\end{center}
+\end{enumerate}
+
+\subsubsection{Conclusões sobre o sistema}
+\label{sec:org0d1ee71}
+Apenas para os valores de \(K\), em que \(0<K<3\), existe estabilidade para o
+sistema. Ademais, para, \(K=3 \, \land \, K=4\) existe estabilidade marginal. 
+
+\subsection{B}
+\label{sec:org202617e}
+\href{resources/B.png}{\begin{figure}[htbp]
+
+\includegraphics[width=.9\linewidth]{resources/B.png}
+\caption{Sistema B}
+\end{figure}}
+
+\subsubsection{Considerações}
+\label{sec:org6fdd184}
+\begin{enumerate}
+\item Seja o Erro, E(s): \(E(s) = R(s) - C(s)\)
+\item Seja a função H(s): \(H(s)= \dfrac{s + 20}{s(s+2)(s+3)}\)
+\item Seja a saída de K: \(U(s)\).
+\end{enumerate}
+
+Temos, do sistema, as seguintes equações:
+\begin{equation}
+\label{eq:A}
+  \begin{aligned}
+    \begin{cases}
+      E(s) &= R(s) - C(s) \\
+      U(s) &= KE(s)  \\
+      C(s) &= H(s)U(s)
+    \end{cases}
+  \end{aligned}
+\end{equation}                         
+
+\subsubsection{Dedução das equações determinantes do sistema}
+\label{sec:org840f7b5}
+Analogamente ao caso genericamente deduzido de \hyperref[sec:org09c0964]{Dedução das
+equações determinantes do sistema,} temos:
+
+ \begin{equation}
+\label{eq:G-B}
+\dfrac{C(s)}{R(s)} = \dfrac{KH(s)}{1+KH(s)} \, \land \, G(s)=\dfrac{C(s)}{R(s)}
+\end{equation}
+
+Dividindo ambos denominador e numerador por H(s), temos:
+
+\(G(s) = \dfrac{K(s+20)}{s(s+2)(s+3) + K(s+20)}\)
+
+\subsubsection{Malha aberta}
+\label{sec:org12ccda2}
+A equação da malha aberta é:
+
+\(s(s+2)(s+3) + K(s+20)=0\)
+
+\subsubsection{Computação}
+\label{sec:org4d87dca}
+\begin{enumerate}
+\item Plot Locus
+\label{sec:org8541d51}
+\begin{verbatim}
+%matplotlib inline 
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.signal import lsim
+import control as ctl
+from control import (TransferFunction)
+
+# num = np.convolve([1,20]) 
+# den = np.convolve([1,0],[1,2],[1,3]) 
+
+H = TransferFunction([1, 20], [1, 5, 6, 0])
+out = ctl.rlocus(H, kvect=None,
+		 xlim=None, ylim=None,
+		 plotstr=None, plot=True,
+		 print_gain=None, grid=None)
+\end{verbatim}
+\end{enumerate}
+\end{document}

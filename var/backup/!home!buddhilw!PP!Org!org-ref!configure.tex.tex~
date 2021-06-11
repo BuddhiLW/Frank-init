@@ -1,0 +1,72 @@
+% Created 2021-06-11 Fri 08:41
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.2 (Org mode 9.4.6)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\% Created 2021-06-11 Fri 08:40
+\% Intended \LaTeX{} compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[alf]{abntex2cite}
+\date{\today}
+\title{}
+\hypersetup\{
+ pdfauthor=\{\},
+ pdftitle=\{\},
+ pdfkeywords=\{\},
+ pdfsubject=\{\},
+ pdfcreator=\{Emacs 27.2 (Org mode 9.4.6)\}, 
+ pdflang=\{English\}\}
+\begin{document}
+
+\tableofcontents
+
+
+
+\section{First section}
+\label{sec:orgc6dda37}
+lipsum \cite[]], lipsum2 [[cite:hendijani2016intrinsic][]{abntex2012}
+
+\cite{knuth1986}
+
+
+
+\bibliography{test-1}
+\end{document}
+\end{document}

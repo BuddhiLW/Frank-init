@@ -1,0 +1,552 @@
+(ns sicmutils-org.from-notespace
+  (:require [sicmutils.env]
+	    [sicmutils.env :as e]
+	    [aerial.hanami.common :as hanami-common]
+	    [aerial.hanami.templates :as hanami-templates]
+	    [incanter.core :as in]
+	    [incanter.stats :as stats]
+	    [incanter.charts :as charts]))
+
+
+(comment
+
+
+
+
+
+
+
+  (notespace/init)
+
+
+  (notespace/init-with-browser)
+
+
+  (notespace/eval-this-notespace)
+
+
+
+
+
+
+  (notespace/render-static-html))
+
+
+
+(sicmutils.env/bootstrap-repl!)
+
+(require
+
+ '[sicmutils.examples.double-pendulum :as double-pendulum]
+
+ '[notespace.kinds :as kind]
+
+ '[tablecloth.api :as tablecloth]
+
+ '[aerial.hanami.common :as hanami-common]
+ '[aerial.hanami.templates :as hanami-templates]
+
+ '[notespace-sicmutils.hanami-extras :as hanami-extras]
+
+ '[fastmath.core :as fastmath])
+
+["## Step 1: equations"]
+
+((double-pendulum/state-derivative 'm_1 'm_2 'l_1 'l_2 'g)
+ (up 't
+     (up 'θ_0 'φ_0)
+     (up 'θdot_0 'φdot_0)))
+
+["**TODO**: Figure out why sometimes this does not render properly on Github Pages. Locally, it seems ok."]
+
+["## Step 2: simulation"]
+
+(def step 0.01)
+(def horizon 10)
+
+["We are following generateme's [animation example](https://github.com/Clojure2D/clojure2d-examples/blob/master/src/ex28_double_pendulum.clj) in converting the polar coordinates to rectangular ones."]
+
+(defn run! [l1 l2 step horizon]
+  (let [collector (atom
+                   (transient []))]
+    (double-pendulum/evolver
+     {:dt step
+      :t horizon
+      :l1 l1
+      :l2 l2
+      :observe (fn [t state]
+                 (let [q     (nth state 1)
+                       theta (nth q 0)
+                       phi   (nth q 1)
+                       x1 (* l1 (fastmath/sin theta))
+                       y1 (- (* l1 (fastmath/cos theta)))
+                       x2 (+ x1 (* l2 (fastmath/sin phi)))
+                       y2 (- y1 (* l2 (fastmath/cos phi)))
+                       m  {:t t
+                           :phi phi :theta theta
+                           :posx1 x1 :posy1 y1
+                           :posx2 x2 :posy2 y2}]
+                   (swap! collector conj! m)))})
+    (persistent! @collector)))
+
+(def double-pendulum-data
+  (let [l1 0.5
+        l2 0.5]
+    (run! l1 l2 step horizon)))
+
+^kind/dataset
+(-> double-pendulum-data
+    (tablecloth/dataset "double pendulum"))
+
+["## Step 3: data wrangling"]
+
+["Let us reorganize our data so that it is comfortable to visualize the weights of the pendula as points:"]
+
+(def double-pendulum-points-data
+  (->> double-pendulum-data
+       (mapcat (fn [{:keys [t posx1 posy1 posx2 posy2]}]
+                 [{:t  t
+                   :x  posx1
+                   :y  posy1
+                   :id :p1}
+                  {:t  t
+                   :x  posx2
+                   :y  posy2
+                   :id :p2}] ))))
+
+^kind/dataset
+(-> double-pendulum-points-data
+    (tablecloth/dataset "double pendulum points"))
+
+["Let us reorganize our data so that it is comfortable to visualize the pivots of the pendula as secgments:"]
+
+(def double-pendulum-segments-data
+  (->> double-pendulum-data
+       (mapcat (fn [{:keys [t posx1 posy1 posx2 posy2]}]
+                 [{:t  t
+                   :x 0
+                   :y 0
+                   :x2 posx1
+                   :y2 posy1
+                   :id :p1}
+                  {:t  t
+                   :x  posx1
+                   :y  posy1
+                   :x2 posx2
+                   :y2 posy2
+                   :id :p2}]))))
+
+^kind/dataset
+(-> double-pendulum-segments-data
+    (tablecloth/dataset "double pendulum segments"))
+
+["## Step 4: Visualization
+
+[Hanami](https://github.com/jsa-aerial/hanami)'s templates allow us to create a [Vega-Lite](https://vega.github.io/vega-lite/) spec for visualizing our data."]
+
+
+^kind/vega
+(hanami-common/xform
+ hanami-templates/line-chart
+ :DATA double-pendulum-data
+ :X :t
+ :Y :theta)
+
+^kind/vega
+(hanami-common/xform
+ hanami-templates/line-chart
+ :DATA double-pendulum-data
+ :X :t
+ :Y :phi)
+
+^kind/vega
+(hanami-common/xform
+ hanami-templates/point-chart
+ :DATA double-pendulum-data
+ :X :theta
+ :Y :phi
+ :COLOR {:field :t :type :quantitative})
+
+(def animation-spec
+  (hanami-common/xform
+   hanami-templates/layer-chart
+   :LAYER [(hanami-common/xform
+            hanami-templates/point-chart
+            :DATA double-pendulum-points-data
+            :COLOR {:field :id :type :nominal}
+            :SIZE {:condition {:test  "abs(selected_t - datum['t']) < 0.00001"
+                               :value 200}
+                   :value     5}
+            :OPACITY {:condition {:test  "abs(selected_t - datum['t']) < 0.00001"
+                                  :value 1}
+                      :value     0.3}
+            :SELECTION {:selected {:fields [:t]
+                                   :type   :single
+                                   :bind   {:t {:min   step
+                                                :max   (- horizon step)
+                                                :input :range
+                                                :step  step}}}})
+           (hanami-common/xform
+            hanami-extras/rule-chart
+            :DATA double-pendulum-segments-data
+            :COLOR {:field :id :type :nominal}
+            :OPACITY {:condition {:test  "abs(selected_t - datum['t']) < 0.00001"
+                                  :value 1}
+                      :value     0})]))
+
+^kind/vega
+animation-spec
+
+["Let us attach to this animation plot a couple of simpler points, linked by UI."]
+
+^kind/vega
+(hanami-common/xform
+ hanami-templates/vconcat-chart
+ :VCONCAT [(hanami-common/xform
+            hanami-templates/hconcat-chart
+            :HCONCAT [animation-spec
+                      ^kind/vega
+                      (hanami-common/xform
+                       hanami-templates/point-chart
+                       :DATA double-pendulum-data
+                       :X :theta
+                       :Y :phi
+                       :SIZE {:condition {:test  "abs(selected_t - datum['t']) < 0.00001"
+                                          :value 200}
+                              :value     5})])
+           (hanami-common/xform
+            hanami-templates/hconcat-chart
+            :HCONCAT [(hanami-common/xform
+                       hanami-templates/point-chart
+                       :DATA double-pendulum-data
+                       :X :t
+                       :Y :theta
+                       :SIZE {:condition {:test  "abs(selected_t - datum['t']) < 0.00001"
+                                          :value 200}
+                              :value     5})
+                      (hanami-common/xform
+                       hanami-templates/point-chart
+                       :DATA double-pendulum-data
+                       :X :t
+                       :Y :phi
+                       :SIZE {:condition {:test  "abs(selected_t - datum['t']) < 0.00001"
+                                          :value 200}
+                              :value     5})])])
+
+
+["."]
+
+["# Um título"]
+["Uma nota linha"]
+
+["$h(x,y) = x^2 + y^3$"]
+
+["$g(x,y) = \\dfrac{(x^2 + y^3)}{(x+y)}$"]
+
+(defn h [x y]
+  (+ (* x x) (* y y y)))
+
+(defn g [x y]
+  (/ (+ (* x x) (* y y y)) (+ x y)))
+
+(h 'x 'y)
+(h 1 3)
+
+(reduce + ((D h) 'x 'y))
+(reduce + ((D h) 1 3))
+
+((fn [x] (* x x)) 2)
+
+["Seja $x(t) = t$ e $y(t) = t \\, \\implies \\, h(x(t),y(t))=t^3 + t^2$"]
+
+(defn x [t] t)
+(defn y [t] t)
+(h (x 't) (y 't))
+
+(defn x [t] t)
+(defn y [t] (+ (* 2 t) 3))
+(h (x 't) (y 't))
+
+["Applicando a função"]
+
+(map (fn [t] (h (x t) (y t))) (range 0 10 1))
+
+["# 1. Mechanics of a particle"]
+["$\\textbf{v} = \\dfrac{\\textrm{d}\\textbf{r}}{\\textrm{d}t}$"]
+(defn v [r]
+  (D r))
+
+["## Linear momentum"]
+(defn p [v & [m]]
+  (* (or m 1) v))
+
+["$\\textbf{p} = m.\\textbf{v}$"]
+(p 'v 'm)
+
+["## Second Newton's Law of motion"]
+["$\\textbf{F} = \\dfrac{d \\textbf{p}}{dt}$"]
+["There exists a frame, such that the sum of forces F holds the following relationship with the linear momentum."]
+(defn F-p [p]
+  (D p))
+
+["$\\textbf{F}=\\dfrac{d(m \\textbf{v})}{dt}$"]
+(defn F-v [v & [m]]
+  (D (* (or m 1) v)))
+
+["In the most general form, $\\textbf{a}=\\dfrac{d^2 \\textbf{r}}{dt^2}$,"]
+(defn a [r]
+  (D (D r)))
+
+["Which implies, $\\: m\\dfrac{d^2 \\textbf{r}}{dt^2} - \\dfrac{d(m \\textbf{v})}{dt} = 0$"]
+["$m \\dfrac{d^2 \\textbf{r}}{dt^2} - \\dfrac{dm}{dt}\\textbf{v} - m \\dfrac{d\\textbf{v}}{dt} = 0$"]
+
+["This is a second degree equation on $\\textbf{r}$."]
+
+["# Conservation Theorems"]
+["## Linear momentum conservation"]
+["$\\sum{F}=0 \\, \\implies \\, \\dot{\\textbf{p}}=0$"]
+
+["### Angular momentum"]
+["$\\textbf{L}=\\textbf{r}\\times\\textbf{p}$"]
+
+(defn L [r p]
+  (cross-product r p))
+
+["### Moment of Force or Torque"]
+["$\\textbf{N}=\\textbf{r}\\times\\textbf{F}$"]
+
+(defn N [r F]
+  (cross-product r F))
+
+["#### Ex.1. Plot and have fun with the concepts"]
+
+(defn cubic [x] (+ (* x x x) (* 2 x x) (* 2 x) 3))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(defn q [x y z]
+  (up (literal-function 'x)
+      (literal-function 'y)
+      (literal-function 'z)))
+(q 'x 'y 'z)
+(q 't)
+
+(literal-function)
+
+["# Literal Functions"]
+
+["$\\dfrac{f^2(g(x))}{dx} = 2 f(g(x)) \\dfrac{dg(x)}{dx}$"]
+(((D square) (literal-function f)) 'g)
+
+["Representing $\\dfrac{d(x^2)}{dx} = 2x$"]
+((D square) 'x)
+
+["Making it more complex"]
+["$\\dfrac{d(f^2(x))}{dx} = 2f(x)$"]
+(((D square) (literal-function 'f)) 'x)
+(((D square) (literal-function 'f)) (literal-function 'y))
+
+["How about $\\dfrac{df^2(y(x))}{dx} = \\dfrac{df^2(y(x))}{dy(x)}\\dfrac{dy(x)}{dx} \\Leftrightarrow \\dfrac{df^2(y(x))}{dx} = 2f(y) \\dfrac{dy(x)}{dx}$?"]
+
+(((D square) (literal-function 'f)) ((literal-function 'y) 'x))
+
+
+((compose (literal-function 'f) (literal-function 'g)) 'x)
+((D (compose (literal-function 'f) (literal-function 'g))) 'x)
+(simplify ((D (compose (literal-function (square 'f))  (literal-function 'g))) 'x))
+
+((compose (literal-function (square 'f))  (literal-function 'g)) 'x)
+
+(((D square) (literal-function 'f)) 'x)
+
+["Let $f(x) = sin(x) \\,\\land\\, g(x)=x^2 \\: \\implies f(g(x)) = \\sin(x^2)$"] 
+["So, $\\dfrac{f(g(x))}{dx} = 2x\\cos(x^2)$"]
+
+(let [f (sin x)
+      g (square x)]
+  ((D (compose f g)) 'x))
+
+
+
+
+
+
+
+
+
+
+(literal-function 'x)
+((literal-function 'y) 'x)
+
+(defn q [t] (up
+             ((literal-function 'x) 't)
+             ((literal-function 'y) 't)
+             ((literal-function 'z) 't)))
+(q 't)
+
+(defn q2 [t] (up
+             ((literal-function 'x) t)
+             ((literal-function 'y) t)
+             ((literal-function 'z) t)))
+(q2 't)
+(let [x (square 't)
+      y (+ 't 5)
+      z (/ 1 't)]
+  (with-literal-functions q 't))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(def H
+  (literal-function 'H
+                    (-> (UP Real (UP Real Real)
+                            (DOWN Real Real))
+                        Real)))
+
+(def s (up 't (up 'x 'y) (down 'p_x 'p_y)))
+
+(H s)
+
+
+
+((D H) s)
+
+
+(defn q-ch1 [t]
+  (up (literal-function 'x)
+      (literal-function 'y)
+      (literal-function 'z)))
+
+(q-ch1 't)
+((D q2) 't)
+((Gamma q2) 't)
+
+(velocity ((Gamma q2) 't))
+
+(defn L-free-particle [mass]
+  (fn [local]
+    (let [v (velocity local)]
+      (* (/ 1 2) mass (square v)))))
+
+((compose (L-free-particle 'm) (Gamma q2)) 't)
+
+(defn lagrangian-action [L q t1 t2]
+  (definite-integral (compose L (Gamma q)) t1 t2))
+
+(defn test-path [t]
+  (up (+ (* 4 t) 7)
+      (+ (* 3 t) 5)
+      (+ (* 2 t) 1)))
+
+(defn test-path2 [t]
+  (up (+ (* 4 t) 7)
+      (+ (* 3 t) 5)
+      (+ (* 2 (square t)) 1)))
+
+(Lagrangian-action (L-free-particle 3) test-path 0.0 10.0)
+(Lagrangian-action (L-free-particle 3) test-path2 0.0 10.0)

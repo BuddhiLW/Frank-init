@@ -1,0 +1,9 @@
+(def cnvs (canvas w h))
+(def window (show-window cnvs "Wolframca figures 7_1"))
+(draw-rule 122)
+
+(defn renderize-rule [nth-rule]
+  (do
+    (def cnvs (canvas 1000 800))
+    (def window (show-window cnvs (str "rule number " nth-rule)))
+    (draw-rule nth-rule)))

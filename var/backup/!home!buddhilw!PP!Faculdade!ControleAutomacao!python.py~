@@ -1,0 +1,12 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.signal import lsim
+import control as ctl
+from control import (TransferFunction)
+
+
+# num = np.convolve([1,20], [1,4])
+# den = np.convolve([1,0],[1,2],[1,3]) 
+
+H = TransferFunction([1,20], [1,5,6,0])
+out = ctl.rlocus(H, kvect=None, xlim=None, ylim=None, plotstr=None, plot=True, print_gain=None, grid=None)

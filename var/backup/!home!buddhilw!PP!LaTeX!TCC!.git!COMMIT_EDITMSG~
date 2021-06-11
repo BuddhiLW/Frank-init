@@ -1,0 +1,69 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	modified:   Cronograma/Cronograma.pdf
+#	modified:   Cronograma/Cronograma.tex
+#	new file:   Cronograma/calendary/emacs.aux
+#	new file:   Cronograma/calendary/emacs.log
+#	new file:   Cronograma/calendary/emacs.org
+#	new file:   Cronograma/calendary/emacs.out
+#	new file:   Cronograma/calendary/emacs.pdf
+#	new file:   Cronograma/calendary/emacs.tex
+#	new file:   Cronograma/calendary/emacs.toc
+#	new file:   Cronograma/calendary/jun9.pdf
+#	new file:   Cronograma/calendary/pic-full-210609-1807-51.png
+#	new file:   Cronograma/calendary/pic-selected-210609-1806-49.png
+#	new file:   Cronograma/cronograma-tcc-abril-maio.pdf
+#	new file:   Cronograma/cronograma-tcc-abril-maio.tex
+#	new file:   Cronograma/cronograma-tcc-junho.pdf
+#	new file:   Cronograma/cronograma-tcc-junho.tex
+#	new file:   Cronograma/cronograma-tcc.pdf
+#	new file:   Notes/.#ideias.org
+#	new file:   Notes/.ein-julia.ipynb
+#	new file:   Notes/.ipynb_checkpoints/.ein-julia-checkpoint.ipynb
+#	new file:   Notes/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+#	new file:   Notes/.nrepl-port
+#	new file:   Notes/Untitled.ipynb
+#	new file:   Notes/ideias.org
+#	new file:   Notes/julia-plots.jl
+#	new file:   Notes/pic-full-210609-1826-04.png
+#	new file:   Notes/pic-full-210609-1827-20.png
+#	new file:   Notes/pic-full-210609-1828-44.png
+#	new file:   Notes/pic-full-210609-1829-29.png
+#	new file:   Notes/pic-full-210609-1835-14.png
+#	new file:   Notes/pic-selected-210607-1644-14.png
+#	new file:   Notes/pic-selected-210609-1831-23.png
+#	new file:   Notes/pic-window-210609-1825-15.png
+#	new file:   Notes/project.clj
+#	new file:   Notes/target/default/classes/META-INF/maven/demos/demos/pom.properties
+#	new file:   Notes/target/default/repl-port
+#	new file:   Notes/target/default/stale/leiningen.core.classpath.extract-native-dependencies
+#
+# Untracked files:
+#	Cronograma/.#taskjuggler.org
+#	Cronograma/.dir-locals.el
+#	Cronograma/cronograma-tcc-junho.aux
+#	Cronograma/cronograma-tcc-junho.log
+#	Cronograma/cronograma-tcc.aux
+#	Cronograma/cronograma-tcc.log
+#	Cronograma/fonts/
+#	Cronograma/gantt.org
+#	Cronograma/gantt.tjp
+#	Cronograma/pic-selected-210609-2213-38.png
+#	Cronograma/pic-selected-210610-0359-51.png
+#	Cronograma/reports/
+#	Cronograma/taskjuggler.org
+#	Cronograma/test-font.pdf
+#	Cronograma/test-font.tex
+#	Cronograma/texput.log
+#	TCC.toc
+#	pare.log
+#	pic-full-210531-1859-37.png
+#	pic-selected-210531-1856-37.png
+#	pic-selected-210531-1900-01.png
+#

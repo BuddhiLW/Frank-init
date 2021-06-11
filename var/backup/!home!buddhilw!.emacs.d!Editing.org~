@@ -1,0 +1,8 @@
+#+title: Editing capabilities in Emacs
+#+PROPERTY: header-args:emacs-lisp :tangle ./editing.el
+
+* Emacs Functionality
+** Restarting Emacs
+   #+begin_src emacs-lisp
+     (use-package restart-emacs)
+   #+end_src

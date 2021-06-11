@@ -1,0 +1,4 @@
+* IRC
+<sqrtminusone> buddhilw: I think it should be possible to cloak your IP on
+  libera.chat  [15:27]
+<ashraz> It is. Register your nick, join #libera-cloak and send !cloakme

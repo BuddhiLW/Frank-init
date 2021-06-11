@@ -1,0 +1,627 @@
+port module Pages exposing (PathKey, allPages, allImages, internals, images, isValidRoute, pages, builtAt)
+
+import Color exposing (Color)
+import Pages.Internal
+import Head
+import Html exposing (Html)
+import Json.Decode
+import Json.Encode
+import Pages.Platform
+import Pages.Manifest exposing (DisplayMode, Orientation)
+import Pages.Manifest.Category as Category exposing (Category)
+import Url.Parser as Url exposing ((</>), s)
+import Pages.ImagePath as ImagePath exposing (ImagePath)
+import Pages.PagePath as PagePath exposing (PagePath)
+import Pages.Directory as Directory exposing (Directory)
+import Time
+
+
+builtAt : Time.Posix
+builtAt =
+    Time.millisToPosix 1616953513621
+
+
+type PathKey
+    = PathKey
+
+
+buildImage : List String -> ImagePath.Dimensions -> ImagePath PathKey
+buildImage path dimensions =
+    ImagePath.build PathKey ("images" :: path) dimensions
+
+
+buildPage : List String -> PagePath PathKey
+buildPage path =
+    PagePath.build PathKey path
+
+
+directoryWithIndex : List String -> Directory PathKey Directory.WithIndex
+directoryWithIndex path =
+    Directory.withIndex PathKey allPages path
+
+
+directoryWithoutIndex : List String -> Directory PathKey Directory.WithoutIndex
+directoryWithoutIndex path =
+    Directory.withoutIndex PathKey allPages path
+
+
+port toJsPort : Json.Encode.Value -> Cmd msg
+
+port fromJsPort : (Json.Decode.Value -> msg) -> Sub msg
+
+
+internals : Pages.Internal.Internal PathKey
+internals =
+    { applicationType = Pages.Internal.Browser
+    , toJsPort = toJsPort
+    , fromJsPort = fromJsPort identity
+    , content = content
+    , pathKey = PathKey
+    }
+
+
+
+
+allPages : List (PagePath PathKey)
+allPages =
+    [ (buildPage [ "blog", "draft" ])
+    , (buildPage [ "blog" ])
+    , (buildPage [ "blog", "semana1" ])
+    , (buildPage [ "blog", "semana2" ])
+    , (buildPage [  ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "LICENSE" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "2" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "3" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "512x512bb" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "alex-profile" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "aristotle-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "aristotle-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "branquinho" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "dali-1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "dali-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "davinci-1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "davinci-2" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "davinci" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "donatello-1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "donatelo-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "dostoevsky-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "dostoevsky-perfil1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "frida-1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "frida-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "Guernica" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "elip" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-logo" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-logo2" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-text" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-text2" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-text3" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "laotzi-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "laotzi-perfil1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "logo" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "magritte-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "magritte-sonofman" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "memory" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "michelangelo-1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "michelangelo-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "open" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "pablo-perfil3" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "pedrao-cybercodelico" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "pedrao" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "picasso-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "picasso-perfil2" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "raffaello-1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "raffaello-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "rumi-contemporany" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "russell-perfil" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "russell-perfil1" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "starrynight" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "stories_background" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "video" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "video" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "media", "vincent" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "README" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "SegDesafio", "css" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "SegDesafio", "instafake" ])
+    , (buildPage [ "works", "Desafios-Bootcamp", "SegDesafio", "reset" ])
+    ]
+
+pages =
+    { blog =
+        { draft = (buildPage [ "blog", "draft" ])
+        , index = (buildPage [ "blog" ])
+        , semana1 = (buildPage [ "blog", "semana1" ])
+        , semana2 = (buildPage [ "blog", "semana2" ])
+        , directory = directoryWithIndex ["blog"]
+        }
+    , index = (buildPage [  ])
+    , works =
+        { desafiosBootcamp =
+            { lICENSE = (buildPage [ "works", "Desafios-Bootcamp", "LICENSE" ])
+            , media =
+                { 1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "1" ])
+                , 2 = (buildPage [ "works", "Desafios-Bootcamp", "media", "2" ])
+                , 3 = (buildPage [ "works", "Desafios-Bootcamp", "media", "3" ])
+                , 512x512bb = (buildPage [ "works", "Desafios-Bootcamp", "media", "512x512bb" ])
+                , alexProfile = (buildPage [ "works", "Desafios-Bootcamp", "media", "alex-profile" ])
+                , aristotlePerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "aristotle-perfil" ])
+                , branquinho = (buildPage [ "works", "Desafios-Bootcamp", "media", "branquinho" ])
+                , dali1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "dali-1" ])
+                , daliPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "dali-perfil" ])
+                , davinci = (buildPage [ "works", "Desafios-Bootcamp", "media", "davinci" ])
+                , davinci1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "davinci-1" ])
+                , davinci2 = (buildPage [ "works", "Desafios-Bootcamp", "media", "davinci-2" ])
+                , donatello1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "donatello-1" ])
+                , donateloPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "donatelo-perfil" ])
+                , dostoevskyPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "dostoevsky-perfil" ])
+                , dostoevskyPerfil1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "dostoevsky-perfil1" ])
+                , frida1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "frida-1" ])
+                , fridaPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "frida-perfil" ])
+                , guernica = (buildPage [ "works", "Desafios-Bootcamp", "media", "Guernica" ])
+                , icons =
+                    { elip = (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "elip" ])
+                    , instaLogo = (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-logo" ])
+                    , instaLogo2 = (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-logo2" ])
+                    , instaText = (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-text" ])
+                    , instaText2 = (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-text2" ])
+                    , instaText3 = (buildPage [ "works", "Desafios-Bootcamp", "media", "icons", "insta-text3" ])
+                    , directory = directoryWithoutIndex ["works", "desafiosBootcamp", "media", "icons"]
+                    }
+                , laotziPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "laotzi-perfil" ])
+                , laotziPerfil1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "laotzi-perfil1" ])
+                , logo = (buildPage [ "works", "Desafios-Bootcamp", "media", "logo" ])
+                , magrittePerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "magritte-perfil" ])
+                , magritteSonofman = (buildPage [ "works", "Desafios-Bootcamp", "media", "magritte-sonofman" ])
+                , memory = (buildPage [ "works", "Desafios-Bootcamp", "media", "memory" ])
+                , michelangelo1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "michelangelo-1" ])
+                , michelangeloPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "michelangelo-perfil" ])
+                , open = (buildPage [ "works", "Desafios-Bootcamp", "media", "open" ])
+                , pabloPerfil3 = (buildPage [ "works", "Desafios-Bootcamp", "media", "pablo-perfil3" ])
+                , pedrao = (buildPage [ "works", "Desafios-Bootcamp", "media", "pedrao" ])
+                , pedraoCybercodelico = (buildPage [ "works", "Desafios-Bootcamp", "media", "pedrao-cybercodelico" ])
+                , picassoPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "picasso-perfil" ])
+                , picassoPerfil2 = (buildPage [ "works", "Desafios-Bootcamp", "media", "picasso-perfil2" ])
+                , raffaello1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "raffaello-1" ])
+                , raffaelloPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "raffaello-perfil" ])
+                , rumiContemporany = (buildPage [ "works", "Desafios-Bootcamp", "media", "rumi-contemporany" ])
+                , russellPerfil = (buildPage [ "works", "Desafios-Bootcamp", "media", "russell-perfil" ])
+                , russellPerfil1 = (buildPage [ "works", "Desafios-Bootcamp", "media", "russell-perfil1" ])
+                , starrynight = (buildPage [ "works", "Desafios-Bootcamp", "media", "starrynight" ])
+                , stories_background = (buildPage [ "works", "Desafios-Bootcamp", "media", "stories_background" ])
+                , video = (buildPage [ "works", "Desafios-Bootcamp", "media", "video" ])
+                , vincent = (buildPage [ "works", "Desafios-Bootcamp", "media", "vincent" ])
+                , directory = directoryWithoutIndex ["works", "desafiosBootcamp", "media"]
+                }
+            , rEADME = (buildPage [ "works", "Desafios-Bootcamp", "README" ])
+            , segDesafio =
+                { css = (buildPage [ "works", "Desafios-Bootcamp", "SegDesafio", "css" ])
+                , instafake = (buildPage [ "works", "Desafios-Bootcamp", "SegDesafio", "instafake" ])
+                , reset = (buildPage [ "works", "Desafios-Bootcamp", "SegDesafio", "reset" ])
+                , directory = directoryWithoutIndex ["works", "desafiosBootcamp", "segDesafio"]
+                }
+            , directory = directoryWithoutIndex ["works", "desafiosBootcamp"]
+            }
+        , directory = directoryWithoutIndex ["works"]
+        }
+    , directory = directoryWithIndex []
+    }
+
+images =
+    { articleCovers =
+        { doorofperception = (buildImage [ "article-covers", "doorofperception.jpg" ] { width = 1800, height = 1200 })
+        , hello = (buildImage [ "article-covers", "hello.jpg" ] { width = 2000, height = 1561 })
+        , mountains = (buildImage [ "article-covers", "mountains.jpg" ] { width = 2400, height = 1600 })
+        , recursiveDraw = (buildImage [ "article-covers", "recursive-draw.jpg" ] { width = 1920, height = 1200 })
+        , directory = directoryWithoutIndex ["articleCovers"]
+        }
+    , author =
+        { branquinho = (buildImage [ "author", "branquinho.jpg" ] { width = 775, height = 775 })
+        , dillon = (buildImage [ "author", "dillon.jpg" ] { width = 3035, height = 3035 })
+        , directory = directoryWithoutIndex ["author"]
+        }
+    , elmLogo = (buildImage [ "elm-logo.svg" ] { width = 323, height = 323 })
+    , github = (buildImage [ "github.svg" ] { width = 24, height = 24 })
+    , globozil = (buildImage [ "globozil.png" ] { width = 764, height = 768 })
+    , icon = (buildImage [ "icon.svg" ] { width = 50, height = 75 })
+    , iconPng = (buildImage [ "icon-png.png" ] { width = 50, height = 75 })
+    , instafake = (buildImage [ "instafake.png" ] { width = 600, height = 600 })
+    , directory = directoryWithoutIndex []
+    }
+
+
+allImages : List (ImagePath PathKey)
+allImages =
+    [(buildImage [ "article-covers", "doorofperception.jpg" ] { width = 1800, height = 1200 })
+    , (buildImage [ "article-covers", "hello.jpg" ] { width = 2000, height = 1561 })
+    , (buildImage [ "article-covers", "mountains.jpg" ] { width = 2400, height = 1600 })
+    , (buildImage [ "article-covers", "recursive-draw.jpg" ] { width = 1920, height = 1200 })
+    , (buildImage [ "author", "branquinho.jpg" ] { width = 775, height = 775 })
+    , (buildImage [ "author", "dillon.jpg" ] { width = 3035, height = 3035 })
+    , (buildImage [ "elm-logo.svg" ] { width = 323, height = 323 })
+    , (buildImage [ "github.svg" ] { width = 24, height = 24 })
+    , (buildImage [ "globozil.png" ] { width = 764, height = 768 })
+    , (buildImage [ "icon-png.png" ] { width = 50, height = 75 })
+    , (buildImage [ "icon.svg" ] { width = 50, height = 75 })
+    , (buildImage [ "instafake.png" ] { width = 600, height = 600 })
+    ]
+
+
+isValidRoute : String -> Result String ()
+isValidRoute route =
+    let
+        validRoutes =
+            List.map PagePath.toString allPages
+    in
+    if
+        (route |> String.startsWith "http://")
+            || (route |> String.startsWith "https://")
+            || (route |> String.startsWith "#")
+            || (validRoutes |> List.member route)
+    then
+        Ok ()
+
+    else
+        ("Valid routes:\n"
+            ++ String.join "\n\n" validRoutes
+        )
+            |> Err
+
+
+content : List ( List String, { extension: String, frontMatter : String, body : Maybe String } )
+content =
+    [ 
+  ( []
+    , { frontMatter = "{\"title\":\"Little White Blog\",\"type\":\"page\"}"
+    , body = Nothing
+    , extension = "md"
+    } )
+  ,
+  ( ["blog", "draft"]
+    , { frontMatter = "{\"type\":\"blog\",\"author\":\"Dillon Kearns\",\"title\":\"A Draft Blog Post\",\"description\":\"I'm not quite ready to share this post with the world\",\"image\":\"images/article-covers/mountains.jpg\",\"draft\":true,\"published\":\"2019-09-21\"}"
+    , body = Nothing
+    , extension = "md"
+    } )
+  ,
+  ( ["blog"]
+    , { frontMatter = "{\"title\":\"elm-pages blog\",\"type\":\"blog-index\"}"
+    , body = Nothing
+    , extension = "md"
+    } )
+  ,
+  ( ["blog", "semana1"]
+    , { frontMatter = "{\"type\":\"blog\",\"author\":\"Branquinho\",\"title\":\"Primeira semana bootcamp\",\"description\":\"Algumas das minhas anotações de Hardcoding\",\"image\":\"images/article-covers/doorofperception.jpg\",\"published\":\"2021-03-23\",\"draft\":\"true\"}"
+    , body = Nothing
+    , extension = "md"
+    } )
+  ,
+  ( ["blog", "semana2"]
+    , { frontMatter = "{\"type\":\"blog\",\"author\":\"Branquinho\",\"title\":\"Second Bootcamp Week\",\"description\":\"Advances and Org-mode to writting front-end.\",\"image\":\"images/article-covers/recursive-draw.jpg\",\"published\":\"2021-03-27\"}"
+    , body = Nothing
+    , extension = "md"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "README"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "md"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "SegDesafio", "css"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "css"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "SegDesafio", "instafake"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "html"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "SegDesafio", "reset"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "css"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "2"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "3"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "512x512bb"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "Guernica"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "alex-profile"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "aristotle-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "aristotle-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "branquinho"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "dali-1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "dali-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "davinci-1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "davinci-2"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "davinci"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "donatello-1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "donatelo-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "dostoevsky-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "dostoevsky-perfil1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "frida-1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "frida-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "laotzi-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpeg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "laotzi-perfil1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "logo"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "magritte-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpeg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "magritte-sonofman"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "memory"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "michelangelo-1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "michelangelo-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "open"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "svg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "pablo-perfil3"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "pedrao-cybercodelico"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "pedrao"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpeg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "picasso-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "picasso-perfil2"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "raffaello-1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpeg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "raffaello-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "rumi-contemporany"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "russell-perfil"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "russell-perfil1"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "starrynight"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "stories_background"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "video"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "mp4"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "video"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "ogv"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "vincent"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "jpg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "icons", "elip"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "svg"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "icons", "insta-logo"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "icons", "insta-logo2"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "icons", "insta-text"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "icons", "insta-text2"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  ,
+  ( ["works", "Desafios-Bootcamp", "media", "icons", "insta-text3"]
+    , { frontMatter = "{}"
+    , body = Nothing
+    , extension = "png"
+    } )
+  
+    ]

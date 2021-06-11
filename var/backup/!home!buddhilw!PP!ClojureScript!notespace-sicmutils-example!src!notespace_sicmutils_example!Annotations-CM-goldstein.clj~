@@ -1,0 +1,23 @@
+(ns notespace-sicmutils-example.ex1-44
+  (:refer-clojure :exclude [+ - * / compare zero? ref partial run!])
+  (:require [aerial.hanami.common :as hanami-common]
+            [aerial.hanami.templates :as hanami-templates]
+            [notespace-sicmutils.hanami-extras :as hanami-extras]
+            [notespace.api :as notespace]
+            [notespace.kinds :as kind]
+            [notespace-sicmutils.setup]
+            [sicmutils.env :as e]))
+
+^kind/hidden
+(comment
+  ;;  Initialize notespace and open the browser view:
+  (notespace/init-with-browser)
+
+  ;; evaluate all notes in this namespace, and update the browser view:
+  (notespace/eval-this-notespace)
+
+  ;; Rendering current browser view into a static html file (under the `docs` directory):
+  (notespace/render-static-html))
+
+^kind/hidden
+(sicmutils.env/bootstrap-repl!)
