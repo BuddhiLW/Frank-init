@@ -213,7 +213,8 @@
 ;; Update panel indicator when workspace changes
 (add-hook 'exwm-workspace-switch-hook #'efs/send-polybar-exwm-workspace)
 
-;; (setq
+(global-set-key (kbd "s-b") 'efs/start-panel)
+(global-set-key (kbd "C-x s-b") 'efs/kill-panel)
 
 (defun efs/disable-desktop-notifications ()
   (interactive)
@@ -226,3 +227,163 @@
 (defun efs/toggle-desktop-notifications ()
   (interactive)
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\""))
+
+(setq erc-server "irc.libera.chat"
+      erc-nick "buddhilw"
+      src-user-full-name "Litte White"
+      erc-track-shorten-start 8
+      erc-autojoin-channels-alist '(("irc-libera.chat" "#systemcrafters" "#emacs"))
+      erc-kill-buffer-on-part t
+      erc-auto-query 'bury)
+
+;; (use-package mu4e)
+;; (use-package evil-mu4e)
+
+(use-package mu4e
+:ensure nil
+;; :load-path "/usr/share/emacs/site-lisp/mu4e/"
+;; :defer 20 ; Wait until 20 seconds after startup
+:config
+
+;; This is set to 't' to avoid mail syncing issues when using mbsync
+(setq mu4e-change-filenames-when-moving t)
+
+;; Refresh mail using isync every 10 minutes
+(setq mu4e-update-interval (* 10 60))
+(setq mu4e-get-mail-command "mbsync -a")
+(setq mu4e-maildir "~/Mail")
+
+(setq mu4e-drafts-folder "/[Gmail]/Drafts")
+(setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
+(setq mu4e-refile-folder "/[Gmail]/All Mail")
+(setq mu4e-trash-folder  "/[Gmail]/Trash")
+
+(setq mu4e-maildir-shortcuts
+  '((:maildir "/Inbox"    :key ?i)
+    (:maildir "/[Gmail]/Sent Mail" :key ?s)
+    (:maildir "/[Gmail]/Trash"     :key ?t)
+    (:maildir "/[Gmail]/Drafts"    :key ?d)
+    (:maildir "/[Gmail]/All Mail"  :key ?a))))
+
+;; (use-package mu4e-alert)
+
+;; (add-to-list 'load-path "~/yay/")
+;; 
+;; (require 'mu4e)
+
+;; ;; Input method and key binding configuration.
+;; (setq alternative-input-methods
+;;       '(("chinese-tonepy" . [?\œ])
+;;         '("chinese-sisheng"   . [?\¶])))
+
+;; (setq default-input-method
+;;       (caar alternative-input-methods))
+
+;; (defun toggle-alternative-input-method (method &optional arg interactive)
+;;   (if arg
+;;       (toggle-input-method arg interactive)
+;;     (let ((previous-input-method current-input-method))
+;;       (when current-input-method
+;;         (deactivate-input-method))
+;;       (unless (and previous-input-method
+;;                    (string= previous-input-method method))
+;;         (activate-input-method method)))))
+
+;; (defun reload-alternative-input-methods ()
+;;   (dolist (config alternative-input-methods)
+;;     (let ((method (car config)))
+;;       (global-set-key (cdr config)
+;;                       `(lambda (&optional arg interactive)
+;;                          ,(concat "Behaves similar to `toggle-input-method', but uses \""
+;;                                   method "\" instead of `default-input-method'")
+;;                          (interactive "P\np")
+;;                          (toggle-alternative-input-method ,method arg interactive))))))
+
+;; (reload-alternative-input-methods)
+
+(defun efs/exwm-update-class ()
+  (exwm-workspace-rename-buffer exwm-class-name))
+
+(use-package exwm
+  :config
+  ;; Set the default number of workspaces
+  (setq exwm-workspace-number 5)
+
+  ;; When window "class" updates, use it to set the buffer name
+  ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+  ;; These keys should always pass through to Emacs
+  (setq exwm-input-prefix-keys
+        '(?\C-x
+          ?\C-u
+          ?\C-h
+          ?\M-x
+          ?\M-`
+          ?\M-&
+          ?\M-:
+          ?\C-\M-j  ;; Buffer list
+          ?\C-\ ))  ;; Ctrl+Space
+
+  ;; Ctrl+Q will enable the next key to be sent directly
+  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+  ;; Set up global key bindings.  These always work, no matter the input state!
+  ;; Keep in mind that changing this list after EXWM initializes has no effect.
+  (setq exwm-input-global-keys
+        `(
+          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+          ([?\s-r] . exwm-reset)
+
+          ;; Move between windows
+          ([s-left] . windmove-left)
+          ([s-right] . windmove-right)
+          ([s-up] . windmove-up)
+          ([s-down] . windmove-down)
+
+          ;; Launch applications via shell command
+          ([?\s-&] . (lambda (command)
+                       (interactive (list (read-shell-command "$ ")))
+                       (start-process-shell-command command nil command)))
+
+          ;; Switch workspace
+          ([?\s-w] . exwm-workspace-switch)
+
+          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+          ,@(mapcar (lambda (i)
+                      `(,(kbd (format "s-%d" i)) .
+                        (lambda ()
+                          (interactive)
+                          (exwm-workspace-switch-create ,i))))
+                    (number-sequence 0 9))))
+
+  (exwm-enable))
+
+(use-package restart-emacs)
+
+(global-set-key (kbd "s-l") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-x s-b") 'efs/kill-panel)
+
+(use-package evil-multiedit
+  :hook (web-mode . evil-multiedit-mode))
+
+(use-package calendar
+  :config
+  (require 'generic)
+  (define-generic-mode 'fancy-diary-display-mode
+    nil
+    (list "Exception" "Location" "Desc")
+    '(
+      ("\\(.*\\)\n\\(=+\\)"            ;; Day title / separator lines
+       (1 'font-lock-keyword-face) (2 'font-lock-preprocessor-face))
+      ("^\\(todo [^:]*:\\)\\(.*\\)$"   ;; To do entries
+       (1 'font-lock-string-face) (2 'font-lock-reference-face))
+      ("\\(\\[.*\\]\\)"                ;; Category labels
+       1 'font-lock-constant-face)
+      ("^\\(0?\\([1-9][0-9]?:[0-9][0-9]\\)\\([ap]m\\)?\\(-0?\\([1-9][0-9]?:[0-9][0-9]\\)\\([ap]m\\)?\\)?\\)"
+       1 'font-lock-type-face))        ;; Time intervals at start of lines.
+    nil
+    (list
+     (function
+      (lambda ()
+	(turn-on-font-lock))))
+    "Mode for fancy diary display."))

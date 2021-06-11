@@ -54,6 +54,7 @@
 
 (require 'cl-lib)
 (require 'dash)
+(require 's)
 
 (declare-function eshell/pwd "em-dirs" (&rest args))
 (declare-function eshell-printn "esh-io" (object))
@@ -79,6 +80,9 @@
     (simple
      eshell-git-prompt-simple
      eshell-git-prompt-simple-regexp)
+    (buddhilw
+     eshell-git-prompt-buddhilw
+     eshell-git-prompt-buddhilw-regexp)
     (default
       eshell-git-prompt-default-func
       eshell-git-prompt-default-regexp))

@@ -1,1 +1,3 @@
-[buddhilw@artixdesk ~]$ rclone sync -P /mnt/ rclone:wagner-backup/
+# [buddhilw@artixdesk ~]$ rclone sync -P /mnt/ rclone:wagner-backup/
+* Backup 2021-05-24:
+rclone sync -P ./StoreDrive rclone-pc:PC-buddhilw/StoreDrive

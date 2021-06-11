@@ -2,7 +2,29 @@
 ;; Automatically written history of CIDER REPL session
 ;; Edit at your own risk
 
-("(sin 9)" "(scatter-plot time-data-com B-data-com)" "(length time-data-com)" "(length B-data-com)" "B-data-com" "time-data-com" "B-data-com" "(view (scatter-plot time-data Vs-data
+("(str \"oi\" 3 4)" "(and (> 5 4) (> 3 4))" "(and (> 5 4) 5)" "(and (> 3 4) 5)" "(and 4 8)" "(bit-and 4 8)" "(bit-and 4 7)" "(bit-and 4 6)" "(bit-and 4 10)" "(bit-and 4 5)" "(bit-and 4 (> 4 4))" "(bit-and 4 (>= 4 4))" "(bit-and (> 3 4) (>= 4 4))" "(bit-and 4 5)" "(+ 3 2)" "    (ns sicmutils-org.var-mechanics1
+      (:require [uncomplicate.neanderthal
+		 [native :refer [dv dge]]
+		 [core :refer [mv mm nrm2 dot axpy]]] ;; => sicmutils.env conflict with :refer pi
+		[sicmutils.env :as env]))
+  (env/bootstrap-repl!)
+" "(ns notespace-sicmutils-example.double-pendulum
+  (:require [notespace.api :as notespace]
+            [notespace.kinds :as kind]
+            [notespace-sicmutils.setup]
+            [sicmutils.env]
+            [sicmutils.env :as e]
+            [aerial.hanami.common :as hanami-common]
+            [aerial.hanami.templates :as hanami-templates]))" "(ns notespace-sicmutils-example.cm-goldstein1
+  (:refer-clojure :exclude [+ - * / compare zero? ref partial run!])
+  (:require [aerial.hanami.common :as hanami-common]
+            [aerial.hanami.templates :as hanami-templates]
+            [notespace-sicmutils.hanami-extras :as hanami-extras]
+            [notespace.api :as notespace]
+            [notespace.kinds :as kind]
+            [notespace-sicmutils.setup]
+            [sicmutils.env :as e]))
+" "(sin 9)" "(scatter-plot time-data-com B-data-com)" "(length time-data-com)" "(length B-data-com)" "B-data-com" "time-data-com" "B-data-com" "(view (scatter-plot time-data Vs-data
                     :title \"Experimento sem núcleo\"
                     :x-label \"Tempo (s)\"
                     :y-label \"Campo Magnético (B)\"

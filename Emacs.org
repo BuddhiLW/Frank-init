@@ -19,7 +19,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar efs/default-variable-font-size 180)
 
   ;; Make frame transparency overridable
-  (defvar efs/frame-transparency '(80 . 80))
+  (defvar efs/frame-transparency '(93 . 93))
 
 #+end_src
 
@@ -94,8 +94,12 @@ You can also use =M-x auto-package-update-now= to update right now!
 
 * Load Desktop.el and other auxiliaries
 #+begin_src emacs-lisp
- (load-file "~/.emacs.d/desktop.el")
+  (load-file "~/.emacs.d/desktop.el")
+  (load-file "~/.emacs.d/editing.el")
 #+end_src
+
+#+RESULTS:
+: t
 
 * Keep Folders Clean
 
@@ -155,18 +159,18 @@ This section configures basic UI settings that remove unneeded elements to make 
 
 Toggle transparency
 #+begin_src emacs-lisp
- (defun toggle-transparency ()
-   (interactive)
-   (let ((alpha (frame-parameter nil 'alpha)))
-     (set-frame-parameter
-      nil 'alpha
-      (if (eql (cond ((numberp alpha) alpha)
-                     ((numberp (cdr alpha)) (cdr alpha))
-                     ;; Also handle undocumented (<active> <inactive>) form.
-                     ((numberp (cadr alpha)) (cadr alpha)))
-               100)
-          '(80 . 80) '(90 . 90)))))
- (global-set-key (kbd "C-c t") 'toggle-transparency)
+  (defun toggle-transparency ()
+    (interactive)
+    (let ((alpha (frame-parameter nil 'alpha)))
+      (set-frame-parameter
+       nil 'alpha
+       (if (eql (cond ((numberp alpha) alpha)
+		      ((numberp (cdr alpha)) (cdr alpha))
+		      ;; Also handle undocumented (<active> <inactive>) form.
+		      ((numberp (cadr alpha)) (cadr alpha)))
+		100)
+	   '(93 . 93) '(100 . 100)))))
+  (global-set-key (kbd "C-c t") 'toggle-transparency)
 #+end_src
 
 #+RESULTS:
@@ -342,18 +346,16 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
            (prog-mode . fira-code-mode)
            (special-mode . prettify-symbols-mode)
            (special-mode . fira-code-mode)
-           (text-mode . prettify-symbols-mode)
-           ))
+           (text-mode . prettify-symbols-mode)))
   #+end_src
 
 #+RESULTS:
-| prettify-symbols-mode | rainbow-delimiters-mode | nyan-mode | text-mode-hook-identify |
 ** Nyan Cat Mode
 #+begin_src emacs-lisp
-  (use-package nyan-mode
-    :hook ((special-mode . nyan-mode)
-           (text-mode . nyan-mode)
-           (progn-mode . nyan-mode)))
+  ;; (use-package nyan-mode
+  ;;   :hook ((special-mode . nyan-mode)
+  ;;          (text-mode . nyan-mode)
+  ;;          (prog-mode . nyan-mode)))
 #+end_src
 
 * Keybinding Configuration
@@ -376,7 +378,9 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (efs/leader-keys
       "t"  '(:ignore t :which-key "toggles")
       "tt" '(counsel-load-theme :which-key "choose theme")
-      "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
+      "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
+      "h" 'shrink-window-horizontally
+      "l" 'enlarge-window-horizontally))
   
   (use-package evil
     :init
@@ -396,14 +400,16 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
   
-  ;; (use-package evil-collection
-  ;;   :after evil
-  ;;   :config
-  ;;   (evil-collection-init))
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init)
+    (delete 'mu4e evil-collection-mode-list)
+    (delete 'mu4e-conversation evil-collection-mode-list))
   
-  ;; (use-package general
-  ;;   :config
-  ;;   (general-evil-setup t))
+  (use-package general
+    :config
+    (general-evil-setup t))
   
   ;; (general-create-definer dw/leader-key-def
   ;;   :keymaps '(normal insert visual emacs)
@@ -442,10 +448,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 [[https://github.com/hlissner/emacs-doom-themes][doom-themes]] is a great set of themes with a lot of variety and support for many different Emacs modes.  Taking a look at the [[https://github.com/hlissner/emacs-doom-themes/tree/screenshots][screenshots]] might help you decide which one you like best.  You can also run =M-x counsel-load-theme= to choose between them easily.
 
 #+begin_src emacs-lisp
-
-(use-package doom-themes
-  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
-
+  
+  (use-package doom-themes
+    :init (load-theme 'ewal-spacemacs-classic t))
+  ;;wildavil's default -> doom-paletnight
+  
 #+end_src
 
 ** Better Modeline
@@ -593,7 +600,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 #+RESULTS:
 : t
-
+ 
 * Org Mode
 [[https://orgmode.org/][Org Mode]] is one of the hallmark features of Emacs.  It is a rich document editor, project planner, task and time tracker, blogging engine, and literate coding utility all wrapped up in one package.
 
@@ -786,7 +793,6 @@ This section contains the basic configuration for =org-mode= plus the configurat
 #+end_src
 
 #+RESULTS:
-| (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | efs/org-mode-visual-fill | org-bullets-mode | efs/org-mode-setup | (lambda nil (display-line-numbers-mode 0)) |
 
 *** Nicer Heading Bullets
 
@@ -882,6 +888,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
      '((emacs-lisp . t)
        (ipython . t)
        (python . t)
+       ;; (julia . t)
        (ein . t)
        (browser . t)
        (ditaa . t)
@@ -892,6 +899,9 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
   
     (push '("conf-unix" . conf-unix) org-src-lang-modes))
 #+end_src
+
+#+RESULTS:
+: ((conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (ipython . python) (redis . redis) (php . php) (arduino . arduino) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
 
 *** Clojure(script)
 #+begin_src emacs-lisp
@@ -914,22 +924,27 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 #+begin_src emacs-lisp
   (require 'org-tempo)
-
+  
   ;; System
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-
+  
   ;; Scientific
   (add-to-list 'org-structure-template-alist '("py" . "src python"))
   (add-to-list 'org-structure-template-alist '("ju" . "src julia"))
   (add-to-list 'org-structure-template-alist '("cl" . "src clojure"))
-
+  (add-to-list 'org-structure-template-alist '("ej" . "src ein-julia :session localhost"))
+  (add-to-list 'org-structure-template-alist '("ep" . "src ein-python :session localhost"))
+  
   ;; Web
   (add-to-list 'org-structure-template-alist '("c4" . "src css :tangle ../css/.css :mkdirp yes"))
   (add-to-list 'org-structure-template-alist '("js" . "src js :tangle ../js/.js"))
   (add-to-list 'org-structure-template-alist '("h4" . "src html :tangle ../html/index.html :mkdirp yes"))
-
+  
 #+end_src
+
+#+RESULTS:
+: ((ep . src ein-python :session localhost) (ej . src ein-julia :session localhost) (h4 . src html :tangle ../html/index.html :mkdirp yes) (js . src js :tangle ../js/.js) (c4 . src css :tangle ../css/.css :mkdirp yes) (cl . src clojure) (ju . src julia) (py . src python) (el . src emacs-lisp) (sh . src shell) (a . export ascii) (c . center) (C . comment) (e . example) (E . export) (h . export html) (l . export latex) (q . quote) (s . src) (v . verse))
 
 ** Auto-tangle Configuration Files
 
@@ -995,6 +1010,39 @@ It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completio
   #+end_src
 
   #+RESULTS:
+
+** Org-inline-image
+   #+begin_src emacs-lisp
+     ;; (use-package org-inline-image)
+   #+end_src
+
+** Org export config
+   #+begin_src emacs-lisp
+      ;;     (use-package org
+      ;;     :init)
+      ;; (eval-after-load 'ox-latex
+      ;; (add-to-list 'org-export-latex-classes 'abntex2))
+     
+      (with-eval-after-load 'ox-latex
+	(add-to-list 'org-latex-classes
+		     '("abntex2"
+		       "\\documentclass{abntex2}"
+		       
+		       ;; ("\\chapter{%s}" . "\\chapter*{%s}")
+		       ("\\chapter{%s}" . "\\chapter*{%s}")
+		       ("\\subsection{%(setq )}" . "\\section*{%s}")
+		       ("\\subsubsection{%s}" . "\\subsection*{%s}")
+     
+		       )))
+     
+     ;; ("\\chapter{%s}" . "\\chapter*{%s}")
+      ;;		      ("\\section{%s}" . "\\section*{%s}")
+      ;;		      ("\\subsection{%(setq )}" . "\\subsection*{%s}")
+      ;;		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+     #+end_src
+
+     #+RESULTS:
+   
 
 * Development
 ** Languages
@@ -1214,7 +1262,90 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
   ;; (use-package ob-ein)
 #+end_src
 
+#+begin_src emacs-lisp
+    (defun ob-ipython-inline-image (b64-string)
+      "Write the b64-string to a temporary file.
+      Returns an org-link to the file."
+      (let* ((tfile (make-temp-file "ob-ipython-" nil ".png"))
+	     (link (format "[[file:%s]]" tfile)))
+	(ob-ipython--write-base64-string tfile b64-string)
+	link))
+    
+    
+    (defun org-babel-execute:ipython (body params)
+      "Execute a block of IPython code with Babel.
+      This function is called by `org-babel-execute-src-block'."
+      (let* ((file (cdr (assoc :file params)))
+	     (session (cdr (assoc :session params)))
+	     (result-type (cdr (assoc :result-type params))))
+	(org-babel-ipython-initiate-session session params)
+	(-when-let (ret (ob-ipython--eval
+			 (ob-ipython--execute-request
+			  (org-babel-expand-body:generic (encode-coding-string body 'utf-8)
+							 params (org-babel-variable-assignments:python params))
+			  (ob-ipython--normalize-session session))))
+	  (let ((result (cdr (assoc :result ret)))
+		(output (cdr (assoc :output ret))))
+	    (if (eq result-type 'output)
+		(concat
+		 output 
+		 (format "%s"
+			 (mapconcat 'identity
+				    (loop for res in result
+					  if (eq 'image/png (car res))
+					  collect (ob-ipython-inline-image (cdr res)))
+				    "\n")))
+	      (ob-ipython--create-stdout-buffer output)
+	      (cond ((and file (string= (f-ext file) "png"))
+		     (->> result (assoc 'image/png) cdr (ob-ipython--write-base64-string file)))
+		    ((and file (string= (f-ext file) "svg"))
+		     (->> result (assoc 'image/svg+xml) cdr (ob-ipython--write-string-to-file file)))
+		    (file (error "%s is currently an unsupported file extension." (f-ext file)))
+		    (t (->> result (assoc 'text/plain) cdr))))))))
+    
+  ;; #   (defun ob-ijulia-inline-image (b64-string)
+  ;; #     "Write the b64-string to a temporary file.
+  ;; #   Returns an org-link to the file."
+  ;; #     (let* ((tfile (make-temp-file "ob-ijulia-" nil ".png"))
+  ;; # 	   (link (format "[[file:%s]]" tfile)))
+  ;; #       (ob-ijulia--write-base64-string tfile b64-string)
+  ;; #       link))
+    
+    
+  ;; #   (defun org-babel-execute:ijulia (body params)
+  ;; #     "Execute a block of IJulia code with Babel.
+  ;; #   This function is called by `org-babel-execute-src-block'."
+  ;; #     (let* ((file (cdr (assoc :file params)))
+  ;; # 	   (session (cdr (assoc :session params)))
+  ;; # 	   (result-type (cdr (assoc :result-type params))))
+  ;; #       (org-babel-ijulia-initiate-session session params)
+  ;; #       (-when-let (ret (ob-ijulia--eval
+  ;; # 		       (ob-ijulia--execute-request
+  ;; # 			(org-babel-expand-body:generic (encode-coding-string body 'utf-8)
+  ;; # 						       params (org-babel-variable-assignments:julia params))
+  ;; # 			(ob-ijulia--normalize-session session))))
+  ;; # 	(let ((result (cdr (assoc :result ret)))
+  ;; # 	      (output (cdr (assoc :output ret))))
+  ;; # 	  (if (eq result-type 'output)
+  ;; # 	      (concat
+  ;; # 	       output 
+  ;; # 	       (format "%s"
+  ;; # 		       (mapconcat 'identity
+  ;; # 				  (loop for res in result
+  ;; # 					if (eq 'image/png (car res))
+  ;; # 					collect (ob-ijulia-inline-image (cdr res)))
+  ;; # 				  "\n")))
+  ;; # 	    (ob-ijulia--create-stdout-buffer output)
+  ;; # 	    (cond ((and file (string= (f-ext file) "png"))
+  ;; # 		   (->> result (assoc 'image/png) cdr (ob-ijulia--write-base64-string file)))
+  ;; # 		  ((and file (string= (f-ext file) "svg"))
+  ;; # 		   (->> result (assoc 'image/svg+xml) cdr (ob-ijulia--write-string-to-file file)))
+  ;; # 		  (file (error "%s is currently an unsupported file extension." (f-ext file)))
+  ;; # 		  (t (->> result (assoc 'text/plain) cdr))))))))
+#+end_src
+
 #+RESULTS:
+: org-babel-execute:ijulia
 
 ***** LaTeX Markdown preview
 #+begin_src emacs-lisp
@@ -1225,34 +1356,33 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 
   # (use-package markdown-preview-mode)
 **** Anaconda-mode and Elpy and Jedi
-
 ***** Jedi
 #+begin_src emacs-lisp
-            (use-package jedi
-              :ensure t
-              :init
-              (add-hook 'python-mode-hook 'jedi:setup)
-              (add-hook 'python-mode-hook 'jedi:ac-setup))
-            (use-package lsp-jedi)
-            (use-package jedi-core)
-            (use-package company-jedi)
+  (use-package jedi
+    :ensure t
+    :init
+    (add-hook 'python-mode-hook 'jedi:setup)
+    (add-hook 'python-mode-hook 'jedi:ac-setup))
+  (use-package lsp-jedi)
+  (use-package jedi-core)
+  (use-package company-jedi)
 #+end_src
 
 #+RESULTS:
 
 #+begin_src emacs-lisp
-(use-package elpy
-    :init
-    (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-    :bind (:map elpy-mode-map
-	      ("<M-left>" . nil)
-	      ("<M-right>" . nil)
-	      ("<M-S-left>" . elpy-nav-indent-shift-left)
-	      ("<M-S-right>" . elpy-nav-indent-shift-right)
-	      ("M-." . elpy-goto-definition)
-	      ("M-," . pop-tag-mark))
-    :config
-    (setq elpy-rpc-backend "jedi"))
+  (use-package elpy
+      :init
+      (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+      :bind (:map elpy-mode-map
+		("<M-left>" . nil)
+		("<M-right>" . nil)
+		("<M-S-left>" . elpy-nav-indent-shift-left)
+		("<M-S-right>" . elpy-nav-indent-shift-right)
+		("M-." . elpy-goto-definition)
+		("M-," . pop-tag-mark))
+      :config
+      (setq elpy-rpc-backend "jedi"))
 #+end_src
 
 #+RESULTS:
@@ -1260,6 +1390,7 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 #+begin_src emacs-lisp
   (use-package anaconda-mode)
   (use-package company-anaconda)
+  (use-package conda)
 #+end_src
 
 #+RESULTS:
@@ -1523,24 +1654,25 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 **** Paredit
 
 #+begin_src emacs-lisp
-  (use-package paredit
-    :hook ((emacs-lisp-mode . paredit-mode)
-             (lisp-mode . paredit-mode)
-             (racket-mode . paredit-mode)
-             (clojure-mode . paredit-mode)))
+  (use-package paredit)
+    ;; :hook (prog-mode . paredit-mode))
+    ;; :hook (prog-mode . paredit-mode))
+  
+  (use-package evil-paredit)
+    ;; :hook prog-mode)
+    ;; :hook (prog-mode . paredit-mode))
 #+end_src
 
 #+RESULTS:
-| evil-smartparens-mode | smartparens-mode | paredit-mode |
 
 **** Parens
 #+begin_src emacs-lisp
-  (use-package smartparens
-    :hook ((emacs-lisp-mode . smartparens-mode)
-           (lisp-mode . smartparens-mode)
-           (cider-mode . smartparens-mode)
-           (clojure-mode . smartparens-mode)
-           (racket-mode . smartparens-mode)))
+  ;; (use-package smartparens
+  ;;   :hook ((emacs-lisp-mode . smartparens-mode)
+  ;;          (lisp-mode . smartparens-mode)
+  ;;          (cider-mode . smartparens-mode)
+  ;;          (clojure-mode . smartparens-mode)
+  ;;          (racket-mode . smartparens-mode)))
 #+end_src
 
 #+RESULTS:
@@ -1548,16 +1680,13 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 
 #+begin_src emacs-lisp
   (use-package evil-smartparens
-      :hook ((emacs-lisp-mode . evil-smartparens-mode)
-             (lisp-mode . evil-smartparens-mode)
-             (racket-mode . evil-smartparens-mode)
-             (racket-mode . evil-smartparens-mode)
-             (cider-mode . evil-smarparens-mode)
-             (clojure-mode . evil-smartparens-mode)))
+    :hook ((after-init . evil-smartparens-mode)
+	   (prog-mode . evil-smartparens-mode)
+	   (text-mode . evil-smartparens-mode)
+	   (special-mode . evil-smartparens-mode)))
 #+end_src
 
 #+RESULTS:
-| evil-smartparens-mode |
 *** Common lisp
 #+begin_src emacs-lisp
   (use-package slime
@@ -1625,211 +1754,28 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
       ;; (use-package clojure-extra-font-locking
 	;; :hook (clojure-mode . clojure-extra-font-locking-mode))
 #+end_src
+*** Julia
+    #+begin_src emacs-lisp
+(use-package lsp-julia)
+    #+end_src
 
-** Parinfer
-copy paste from [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org#clojure][dawil]]
-#+begin_src emacs-lisp
-(use-package parinfer
-  :disabled
-  :hook ((clojure-mode . parinfer-mode)
-         (emacs-lisp-mode . parinfer-mode)
-         (common-lisp-mode . parinfer-mode)
-         (scheme-mode . parinfer-mode)
-         (lisp-mode . parinfer-mode))
-  :config
-  (setq parinfer-extensions
-      '(defaults       ; should be included.
-        pretty-parens  ; different paren styles for different modes.
-        evil           ; If you use Evil.
-        smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-        smart-yank)))  ; Yank behavior depend on mode.
-#+end_src
+    #+begin_src emacs-lisp
+      (use-package julia-shell)
+      (use-package julia-vterm)
+      (use-package julia-snail)
+      (use-package flycheck-julia)
+      (use-package ob-ess-julia)
+      (use-package ob-julia-vterm)
+      (use-package julia-repl)
+      #+end_src
 
-#+RESULTS:
+      #+RESULTS:
 
-** Indent guide (vertical line)
-#+begin_src emacs-lisp
-  (use-package indent-guide
-    :init (indent-guide-global-mode t)
-    :hook (prog-mode . indent-guide-mode))
-#+end_src
+    #+begin_src julia
+      add "BSON", "Calculus","CategoricalArrays","Clustering", "Combinatorics", "CSV", "DataFrames", "DataStructures", "DecisionTree","DifferentialEquations", "Distributions", "Flux","GLM", "HCubature", "HypothesisTests", "HTTP","IJulia","Images","JSON","KernelDensity","Lasso","LaTeXStrings", "LIBSVM","LightGraphs","Measures", "MLDatasets", "MultivariateStats","NLsolve","Plots","PyCall","PyPlot","QuadGK","RCall","RDatasets","Roots","SpecialFunctions","StatsBase","StatsPlots","TimeSeries","AutoGrad","BayesNets","Bootstrap", "Distances", "FastGaussQuadrature", "Plotly","ScikitLearn"
+    #+end_src
 
-#+RESULTS:
-| indent-guide-mode | rainbow-delimiters-mode | fira-code-mode | prettify-symbols-mode |
-
-** Company Mode
-
-[[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
-
-We also use [[https://github.com/sebastiencs/company-box][company-box]] to further enhance the look of the completions with icons and better overall presentation.
-
-#+begin_src emacs-lisp
-
-  (use-package company
-    :after lsp-mode
-    :hook (lsp-mode . company-mode)
-    :bind (:map company-active-map
-           ("<tab>" . company-complete-selection))
-          (:map lsp-mode-map
-           ("<tab>" . company-indent-or-complete-common))
-    :custom
-    (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0))
-
-  (use-package company-box
-    :hook (company-mode . company-box-mode))
-
-#+end_src
-
-** Projectile
-
-[[https://projectile.mx/][Projectile]] is a project management library for Emacs which makes it a lot easier to navigate around code projects for various languages.  Many packages integrate with Projectile so it's a good idea to have it installed even if you don't use its commands directly.
-
-#+begin_src emacs-lisp
-  (use-package projectile
-    :diminish projectile-mode
-    :config (projectile-mode)
-    :custom ((projectile-completion-system 'ivy))
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :init
-    ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/Projects/Code")
-      (setq projectile-project-search-path '("~/Projects/Code")))
-    (setq projectile-switch-project-action #'projectile-dired))
-
-  (use-package counsel-projectile
-    :after projectile
-    :config (counsel-projectile-mode))
-#+end_src
-
-#+RESULTS:
-
-** Magit
-
-[[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.
-
-#+begin_src emacs-lisp
-
-  (use-package magit
-    :commands magit-status
-    :custom
-    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-  ;; NOTE: Make sure to configure a GitHub token before using this package!
-  ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-  ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-  (use-package forge
-    :after magit)
-
-#+end_src
-
-** Commenting
-
-Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=) doesn't always comment things in the way you might expect so we use [[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] to provide a more familiar behavior.  I've bound it to =M-/= since other editors sometimes use this binding but you could also replace Emacs' =M-;= binding with this command.
-
-#+begin_src emacs-lisp
-
-  (use-package evil-nerd-commenter
-    :bind ("M-/" . evilnc-comment-or-uncomment-lines))
-
-#+end_src
-
-** Rainbow Delimiters
-
-[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is useful in programming modes because it colorizes nested parentheses and brackets according to their nesting depth.  This makes it a lot easier to visually match parentheses in Emacs Lisp code without having to count them yourself.
-
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook ((after-init . rainbow-delimiters-mode)
-           (prog-mode . rainbow-delimiters-mode)
-           (text-mode . rainbow-delimiters-mode)
-           (special-mode . rainbow-delimiters-mode)))
-#+end_src
-
-#+RESULTS:
-| rainbow-delimiters-mode | rainbow-mode | nyan-mode | fira-code-mode | prettify-symbols-mode |
-
-** Emmert // Code Snippets
-#+begin_src emacs-lisp
-  (use-package emmet-mode
-    :hook ((sgml-mode . emmet-mode)
-           (css-mode . emmet-mode)))
-#+end_src
-
-#+RESULTS:
-| emmet-mode |
-
-# ** Org-Brain
-# #+begin_src emacs-lisp
-# (use-package org-brain)
-# #+end_src
-
-# #+RESULTS:
-
-** Evil parents
-#+begin_src emacs-lisp
-  (use-package evil-surround
-    :ensure t
-    :config
-  
-    (global-evil-surround-mode 1))
-#+end_src
-
-#+RESULTS:
-: t
-
-** TabNine
-#+begin_src emacs-lisp
-  (use-package company)
-    ;; :hook (prog-mode-hook . company-mode)
-    ;; :config (
-             ;; (setq company-idle-delay 0)
-             ;; (setq company-show-numbers t))
-  
-  ;; (add-to-list 'company-backends #'company-tabnine)
-    ;; :hook ((prog-mode . company-mode)
-           ;; (text-mode . company-mode))
-  
-#+end_src
-
-#+RESULTS:
-
-#+begin_src emacs-lisp
-    (use-package company-tabnine
-      :ensure t)
-#+end_src
-#+RESULTS:
-
-** Autocomplete
-
-** Fuzzy matchers
-
-*** General fuzzer
-#+begin_src emacs-lisp
-  ;;    (use-package company-fuzzy
-  ;;      :hook (company-mode . company-fuzzy-mode))
-#+end_src
-
-*** Sophisticated fuzzer
-# #+begin_src emacs-lisp
-#   (use-package company-flx
-#     :hook (company-mode . company-flx)
-#     :config
-# (with-eval-after-load 'company
-#       (company-flx-mode +1)))
-# #+end_src
-
-*** Fuzzy match?
-
-** Snippets
-#+begin_src emacs-lisp
-  (use-package yasnippet
-    :ensure t
-    :init
-    (yas-global-mode))
-  (use-package yasnippet-snippets)
-#+end_src
+    #+RESULTS:
 
 * Terminals
 ** term-mode
@@ -1964,6 +1910,12 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 
 
 #+end_src
+
+Import bash alias into eshell
+#+begin_src emacs-lisp
+    (use-package load-bash-alias
+      :hook (eshell-mode . load-bash-alias))
+  #+end_src
 
 * File Management
 
@@ -2148,299 +2100,3 @@ Ace-link provides easy of navigation inside emacs self-hyperlinks or ad-hoc ones
 95  F11
 96  F12
 
-* Font config
-** Fast Input methods
-
-Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to-alternate-two-input-methods-in-emacs][Input Method Alternation]].
-#+begin_src emacs-lisp
-  ;; ;; Input method and key binding configuration.
-  ;; (setq alternative-input-methods
-  ;;       '(("chinese-tonepy" . [?\œ])
-  ;;         '("chinese-sisheng"   . [?\¶])))
-  
-  ;; (setq default-input-method
-  ;;       (caar alternative-input-methods))
-  
-  ;; (defun toggle-alternative-input-method (method &optional arg interactive)
-  ;;   (if arg
-  ;;       (toggle-input-method arg interactive)
-  ;;     (let ((previous-input-method current-input-method))
-  ;;       (when current-input-method
-  ;;         (deactivate-input-method))
-  ;;       (unless (and previous-input-method
-  ;;                    (string= previous-input-method method))
-  ;;         (activate-input-method method)))))
-  
-  ;; (defun reload-alternative-input-methods ()
-  ;;   (dolist (config alternative-input-methods)
-  ;;     (let ((method (car config)))
-  ;;       (global-set-key (cdr config)
-  ;;                       `(lambda (&optional arg interactive)
-  ;;                          ,(concat "Behaves similar to `toggle-input-method', but uses \""
-  ;;                                   method "\" instead of `default-input-method'")
-  ;;                          (interactive "P\np")
-  ;;                          (toggle-alternative-input-method ,method arg interactive))))))
-  
-  ;; (reload-alternative-input-methods)
-#+end_src
-
-#+RESULTS:
-* EXWM setup
-#+begin_src emacs-lisp
-  (defun efs/exwm-update-class ()
-    (exwm-workspace-rename-buffer exwm-class-name))
-
-  (use-package exwm
-    :config
-    ;; Set the default number of workspaces
-    (setq exwm-workspace-number 5)
-
-    ;; When window "class" updates, use it to set the buffer name
-    ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-    ;; These keys should always pass through to Emacs
-    (setq exwm-input-prefix-keys
-          '(?\C-x
-            ?\C-u
-            ?\C-h
-            ?\M-x
-            ?\M-`
-            ?\M-&
-            ?\M-:
-            ?\C-\M-j  ;; Buffer list
-            ?\C-\ ))  ;; Ctrl+Space
-
-    ;; Ctrl+Q will enable the next key to be sent directly
-    (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-    ;; Set up global key bindings.  These always work, no matter the input state!
-    ;; Keep in mind that changing this list after EXWM initializes has no effect.
-    (setq exwm-input-global-keys
-          `(
-            ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-            ([?\s-r] . exwm-reset)
-
-            ;; Move between windows
-            ([s-left] . windmove-left)
-            ([s-right] . windmove-right)
-            ([s-up] . windmove-up)
-            ([s-down] . windmove-down)
-
-            ;; Launch applications via shell command
-            ([?\s-&] . (lambda (command)
-                         (interactive (list (read-shell-command "$ ")))
-                         (start-process-shell-command command nil command)))
-
-            ;; Switch workspace
-            ([?\s-w] . exwm-workspace-switch)
-
-            ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-            ,@(mapcar (lambda (i)
-                        `(,(kbd (format "s-%d" i)) .
-                          (lambda ()
-                            (interactive)
-                            (exwm-workspace-switch-create ,i))))
-                      (number-sequence 0 9))))
-
-    (exwm-enable))
-#+end_src
-
-#+RESULTS:
-: t
-* From LARBS to E-LARBS
-** Bindings
-*** remaps (script)
-#+begin_src shell :tangle ~/.local/bin/remaps
-  #!/bin/sh
-
-  # This script is called on startup to remap keys.
-  # Increase key speed via a rate change
-  xset r rate 300 50
-  # Map the caps lock key to super...
-  setxkbmap -option caps:super
-  # But when it is pressed only once, treat it as escape.
-  killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
-  # Map the menu button to right super as well.
-  xmodmap -e 'keycode 135 = Super_R'
-  # Turn off the caps lock if on since there is no longer a key for it.
-  xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
-
-  # Set right alt as F12, to make dinamic bindings in emacs
-  # clear F12
-  # xmodmap -e 'keycode 108 = F12'
-  # set 105 Control_R as 108 ISO_Level3_Shift
-  # xmodmap -e 
-  # -> put AltGr as meta in emacs
-  # 108 ISO_Level3_Shift
-  # xmodmap -e 'keycode 108 = '
-#+end_src
-** .profile
-#+begin_src shell :tangle ~/.profile
-  #!/bin/zsh
-
-  # profile file. Runs on login. Environmental variables are set here.
-
-  # If you don't plan on reverting to bash, you can remove the link in ~/.profile
-  # to clean up.
-
-  # Adds `~/.local/bin` to $PATH
-  export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-
-  unsetopt PROMPT_SP
-
-  #Default programs:
-  export EDITOR="emacs"
-  export TERMINAL="st"
-  export BROWSER="brave"
-
-  # ~/ Clean-up:
-  export XDG_CONFIG_HOME="$HOME/.config"
-  export XDG_DATA_HOME="$HOME/.local/share"
-  export XDG_CACHE_HOME="$HOME/.cache"
-  export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-  export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-  export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
-  export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
-  export LESSHISTFILE="-"
-  export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
-  export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
-  export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-  #export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-  #export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
-  export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
-  export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
-  export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
-  export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-  export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
-  export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-  export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-  export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
-  export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
-  export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
-  export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
-
-  # Other program settings:
-  export DICS="/usr/share/stardict/dic/"
-  export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
-  export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
-  export LESS=-R
-  export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
-  export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
-  export LESS_TERMCAP_me="$(printf '%b' '[0m')"
-  export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
-  export LESS_TERMCAP_se="$(printf '%b' '[0m')"
-  export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
-  export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
-  export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
-  export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
-  export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
-  export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
-  export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
-
-  # This is the list for lf icons:
-  export LF_ICONS="di=📁:\
-  fi=📃:\
-  tw=🤝:\
-  ow=📂:\
-  ln=⛓:\
-  or=❌:\
-  ex=🎯:\
-  ,*.txt=✍:\
-  ,*.mom=✍:\
-  ,*.me=✍:\
-  ,*.ms=✍:\
-  ,*.png=🖼:\
-  ,*.webp=🖼:\
-  ,*.ico=🖼:\
-  ,*.jpg=📸:\
-  ,*.jpe=📸:\
-  ,*.jpeg=📸:\
-  ,*.gif=🖼:\
-  ,*.svg=🗺:\
-  ,*.tif=🖼:\
-  ,*.tiff=🖼:\
-  ,*.xcf=🖌:\
-  ,*.html=🌎:\
-  ,*.xml=📰:\
-  ,*.gpg=🔒:\
-  ,*.css=🎨:\
-  ,*.pdf=📚:\
-  ,*.djvu=📚:\
-  ,*.epub=📚:\
-  ,*.csv=📓:\
-  ,*.xlsx=📓:\
-  ,*.tex=📜:\
-  ,*.md=📘:\
-  ,*.r=📊:\
-  ,*.R=📊:\
-  ,*.rmd=📊:\
-  ,*.Rmd=📊:\
-  ,*.m=📊:\
-  ,*.mp3=🎵:\
-  ,*.opus=🎵:\
-  ,*.ogg=🎵:\
-  ,*.m4a=🎵:\
-  ,*.flac=🎼:\
-  ,*.wav=🎼:\
-  ,*.mkv=🎥:\
-  ,*.mp4=🎥:\
-  ,*.webm=🎥:\
-  ,*.mpeg=🎥:\
-  ,*.avi=🎥:\
-  ,*.mov=🎥:\
-  ,*.mpg=🎥:\
-  ,*.wmv=🎥:\
-  ,*.m4b=🎥:\
-  ,*.flv=🎥:\
-  ,*.zip=📦:\
-  ,*.rar=📦:\
-  ,*.7z=📦:\
-  ,*.tar.gz=📦:\
-  ,*.z64=🎮:\
-  ,*.v64=🎮:\
-  ,*.n64=🎮:\
-  ,*.gba=🎮:\
-  ,*.nes=🎮:\
-  ,*.gdi=🎮:\
-  ,*.1=ℹ:\
-  ,*.nfo=ℹ:\
-  ,*.info=ℹ:\
-  ,*.log=📙:\
-  ,*.iso=📀:\
-  ,*.img=📀:\
-  ,*.bib=🎓:\
-  ,*.ged=👪:\
-  ,*.part=💔:\
-  ,*.torrent=🔽:\
-  ,*.jar=♨:\
-  ,*.java=♨:\
-  "
-
-  [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
-
-  if pacman -Qs libxft-bgra >/dev/null 2>&1; then
-          # Start graphical server on user's current tty if not already running.
-          [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx
-  else
-          echo "\033[31mIMPORTANT\033[0m: Note that \033[32m\`libxft-bgra\`\033[0m must be installed for this build of dwm.
-  Please run:
-          \033[32myay -S libxft-bgra-git\033[0m
-  and replace \`libxft\`. Afterwards, you may start the graphical server by running \`startx\`."
-  fi
-
-  # Switch escape and caps if tty and no passwd required:
-  sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
-
-#+end_src
-
-#+begin_src emacs-lisp
-  (use-package evil-multiedit
-    :hook (web-mode . evil-multiedit-mode))
-#+end_src
-
-#+RESULTS:
-| evil-multiedit-mode | (lambda nil (when (string-equal tsx (file-name-extension buffer-file-name)) (setup-tide-mode))) |
-
-# evil multiedit
-# multiple-cursors
-** Brazilian Keyboard Layout

@@ -199,10 +199,14 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
 # : t
 
 * Desktop Environment
-
 ** Desktop Key Bindings
 
-We use the [[https://github.com/DamienCassou/desktop-environment][desktop-environment]] package to automatically bind to well-known programs for controlling the volume, screen brightness, media playback, and doing other things like locking the screen and taking screenshots.  Make sure that you install the necessary programs to make this functionality work!  Check the [[https://github.com/DamienCassou/desktop-environment#default-configuration][default programs]] list to know what you need to install.
+We use the [[https://github.com/DamienCassou/desktop-environment][desktop-environment]] package to automatically bind to
+well-known programs for controlling the volume, screen brightness,
+media playback, and doing other things like locking the screen and
+taking screenshots.  Make sure that you install the necessary programs
+to make this functionality work!  Check the [[https://github.com/DamienCassou/desktop-environment#default-configuration][default programs]] list to
+know what you need to install.
 
 #+begin_src emacs-lisp
 
@@ -485,8 +489,13 @@ The configuration for our ingeniously named panel, "panel".  Invoke it with =pol
 
 *** The shortkey 
 #+begin_src emacs-lisp
-  ;; (setq
+   (global-set-key (kbd "s-b") 'efs/start-panel)
+   (global-set-key (kbd "C-x s-b") 'efs/kill-panel)
 #+end_src
+
+#+RESULTS:
+: efs/kill-panel
+
 ** Desktop Notifications with Dunst
 
 We use an application called [[https://dunst-project.org/][Dunst]] to enable the display of desktop notifications from Emacs and other applications running within EXWM.  Consult the [[https://dunst-project.org/documentation/][documentation]] for more details on how to configure this to your liking!
@@ -726,3 +735,432 @@ We can also set up some functions for enabling and disabling notifications at an
     (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\""))
 
 #+end_src
+* Applications
+** IRC / ERC
+  #+begin_src emacs-lisp
+    (setq erc-server "irc.libera.chat"
+	  erc-nick "buddhilw"
+	  src-user-full-name "Litte White"
+	  erc-track-shorten-start 8
+	  erc-autojoin-channels-alist '(("irc-libera.chat" "#systemcrafters" "#emacs"))
+	  erc-kill-buffer-on-part t
+	  erc-auto-query 'bury)
+  #+end_src
+
+  #+RESULTS:
+  : bury
+** mu4e
+#+begin_src emacs-lisp
+  ;; (use-package mu4e)
+  ;; (use-package evil-mu4e)
+#+end_src 
+
+*** Configuration
+#+begin_src conf :tangle ~/.mbsyncrc
+  IMAPAccount gmail
+  Host imap.gmail.com
+  User pedrogbranquinho@gmail.com
+  PassCmd "cat ~/.emacs.d/.oh-no-insecure-password"
+  SSLType IMAPS
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
+  
+  IMAPStore gmail-remote
+  Account gmail
+  
+  MaildirStore gmail-local
+  Subfolders Verbatim
+  Path ~/Mail/
+  Inbox ~/Mail/Inbox
+  
+  Channel gmail
+  Master :gmail-remote:
+  Slave :gmail-local:
+  Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
+  Create Both
+  SyncState *
+#+end_src
+ 
+#+begin_src emacs-lisp
+  (use-package mu4e
+  :ensure nil
+  ;; :load-path "/usr/share/emacs/site-lisp/mu4e/"
+  ;; :defer 20 ; Wait until 20 seconds after startup
+  :config
+  
+  ;; This is set to 't' to avoid mail syncing issues when using mbsync
+  (setq mu4e-change-filenames-when-moving t)
+  
+  ;; Refresh mail using isync every 10 minutes
+  (setq mu4e-update-interval (* 10 60))
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-maildir "~/Mail")
+  
+  (setq mu4e-drafts-folder "/[Gmail]/Drafts")
+  (setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
+  (setq mu4e-refile-folder "/[Gmail]/All Mail")
+  (setq mu4e-trash-folder  "/[Gmail]/Trash")
+  
+  (setq mu4e-maildir-shortcuts
+    '((:maildir "/Inbox"    :key ?i)
+      (:maildir "/[Gmail]/Sent Mail" :key ?s)
+      (:maildir "/[Gmail]/Trash"     :key ?t)
+      (:maildir "/[Gmail]/Drafts"    :key ?d)
+      (:maildir "/[Gmail]/All Mail"  :key ?a))))
+  
+  ;; (use-package mu4e-alert)
+#+end_src
+
+#+RESULTS:
+: t
+
+
+#+begin_src emacs-lisp
+  ;; (add-to-list 'load-path "~/yay/")
+  ;; 
+  ;; (require 'mu4e)
+#+end_src
+
+* Font config
+** Fast Input methods
+
+Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to-alternate-two-input-methods-in-emacs][Input Method Alternation]].
+#+begin_src emacs-lisp
+  ;; ;; Input method and key binding configuration.
+  ;; (setq alternative-input-methods
+  ;;       '(("chinese-tonepy" . [?\œ])
+  ;;         '("chinese-sisheng"   . [?\¶])))
+  
+  ;; (setq default-input-method
+  ;;       (caar alternative-input-methods))
+  
+  ;; (defun toggle-alternative-input-method (method &optional arg interactive)
+  ;;   (if arg
+  ;;       (toggle-input-method arg interactive)
+  ;;     (let ((previous-input-method current-input-method))
+  ;;       (when current-input-method
+  ;;         (deactivate-input-method))
+  ;;       (unless (and previous-input-method
+  ;;                    (string= previous-input-method method))
+  ;;         (activate-input-method method)))))
+  
+  ;; (defun reload-alternative-input-methods ()
+  ;;   (dolist (config alternative-input-methods)
+  ;;     (let ((method (car config)))
+  ;;       (global-set-key (cdr config)
+  ;;                       `(lambda (&optional arg interactive)
+  ;;                          ,(concat "Behaves similar to `toggle-input-method', but uses \""
+  ;;                                   method "\" instead of `default-input-method'")
+  ;;                          (interactive "P\np")
+  ;;                          (toggle-alternative-input-method ,method arg interactive))))))
+  
+  ;; (reload-alternative-input-methods)
+#+end_src
+
+#+RESULTS:
+* EXWM setup
+#+begin_src emacs-lisp
+  (defun efs/exwm-update-class ()
+    (exwm-workspace-rename-buffer exwm-class-name))
+
+  (use-package exwm
+    :config
+    ;; Set the default number of workspaces
+    (setq exwm-workspace-number 5)
+
+    ;; When window "class" updates, use it to set the buffer name
+    ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+    ;; These keys should always pass through to Emacs
+    (setq exwm-input-prefix-keys
+          '(?\C-x
+            ?\C-u
+            ?\C-h
+            ?\M-x
+            ?\M-`
+            ?\M-&
+            ?\M-:
+            ?\C-\M-j  ;; Buffer list
+            ?\C-\ ))  ;; Ctrl+Space
+
+    ;; Ctrl+Q will enable the next key to be sent directly
+    (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+    ;; Set up global key bindings.  These always work, no matter the input state!
+    ;; Keep in mind that changing this list after EXWM initializes has no effect.
+    (setq exwm-input-global-keys
+          `(
+            ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+            ([?\s-r] . exwm-reset)
+
+            ;; Move between windows
+            ([s-left] . windmove-left)
+            ([s-right] . windmove-right)
+            ([s-up] . windmove-up)
+            ([s-down] . windmove-down)
+
+            ;; Launch applications via shell command
+            ([?\s-&] . (lambda (command)
+                         (interactive (list (read-shell-command "$ ")))
+                         (start-process-shell-command command nil command)))
+
+            ;; Switch workspace
+            ([?\s-w] . exwm-workspace-switch)
+
+            ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+            ,@(mapcar (lambda (i)
+                        `(,(kbd (format "s-%d" i)) .
+                          (lambda ()
+                            (interactive)
+                            (exwm-workspace-switch-create ,i))))
+                      (number-sequence 0 9))))
+
+    (exwm-enable))
+#+end_src
+
+#+RESULTS:
+: t
+
+* Emacs Functionality
+** Restarting Emacs
+   #+begin_src emacs-lisp
+     (use-package restart-emacs)
+   #+end_src
+* From LARBS to E-LARBS
+** Bindings
+*** remaps (script)
+    
+    #+begin_src shell :tangle ~/.local/bin/remaps
+      #!/bin/sh
+      
+      # This script is called on startup to remap keys.
+      # Increase key speed via a rate change
+      xset r rate 300 50
+      # Map the caps lock key to super...
+      setxkbmap -option caps:super
+      # But when it is pressed only once, treat it as escape.
+      killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
+      # Map the menu button to right super as well.
+      xmodmap -e 'keycode 135 = Super_R'
+      # Turn off the caps lock if on since there is no longer a key for it.
+      xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
+      
+      # Set right alt as F12, to make dinamic bindings in emacs
+      # clear F12
+      # xmodmap -e 'keycode 108 = F12'
+      # set 105 Control_R as 108 ISO_Level3_Shift
+      # xmodmap -e 
+      # -> put AltGr as meta in emacs
+      # 108 ISO_Level3_Shift
+      # xmodmap -e 'keycode 108 = '
+    #+end_src
+
+*** Window movement
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
+      (global-set-key (kbd "C-x s-b") 'efs/kill-panel)
+    #+end_src
+
+    #+RESULTS:
+    : efs/kill-panel
+
+** .profile
+   #+begin_src shell :tangle ~/.profile
+     #!/bin/zsh
+     
+     # profile file. Runs on login. Environmental variables are set here.
+     
+     # If you don't plan on reverting to bash, you can remove the link in ~/.profile
+     # to clean up.
+     
+     # Adds `~/.local/bin` to $PATH
+     export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+     
+     unsetopt PROMPT_SP
+     
+     #Default programs:
+     export EDITOR="emacs"
+     export TERMINAL="st"
+     export BROWSER="brave"
+     
+     # ~/ Clean-up:
+     export XDG_CONFIG_HOME="$HOME/.config"
+     export XDG_DATA_HOME="$HOME/.local/share"
+     export XDG_CACHE_HOME="$HOME/.cache"
+     export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
+     export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
+     export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
+     export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+     export LESSHISTFILE="-"
+     export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
+     export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
+     export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+     #export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
+     #export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
+     export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
+     export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
+     export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+     export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+     export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
+     export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+     export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+     export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+     export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
+     export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+     export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
+     
+     # Other program settings:
+     export DICS="/usr/share/stardict/dic/"
+     export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+     export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+     export LESS=-R
+     export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
+     export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+     export LESS_TERMCAP_me="$(printf '%b' '[0m')"
+     export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
+     export LESS_TERMCAP_se="$(printf '%b' '[0m')"
+     export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+     export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
+     export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
+     export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
+     export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
+     export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
+     export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
+     
+     # This is the list for lf icons:
+     export LF_ICONS="di=📁:\
+     fi=📃:\
+     tw=🤝:\
+     ow=📂:\
+     ln=⛓:\
+     or=❌:\
+     ex=🎯:\
+     ,*.txt=✍:\
+     ,*.mom=✍:\
+     ,*.me=✍:\
+     ,*.ms=✍:\
+     ,*.png=🖼:\
+     ,*.webp=🖼:\
+     ,*.ico=🖼:\
+     ,*.jpg=📸:\
+     ,*.jpe=📸:\
+     ,*.jpeg=📸:\
+     ,*.gif=🖼:\
+     ,*.svg=🗺:\
+     ,*.tif=🖼:\
+     ,*.tiff=🖼:\
+     ,*.xcf=🖌:\
+     ,*.html=🌎:\
+     ,*.xml=📰:\
+     ,*.gpg=🔒:\
+     ,*.css=🎨:\
+     ,*.pdf=📚:\
+     ,*.djvu=📚:\
+     ,*.epub=📚:\
+     ,*.csv=📓:\
+     ,*.xlsx=📓:\
+     ,*.tex=📜:\
+     ,*.md=📘:\
+     ,*.r=📊:\
+     ,*.R=📊:\
+     ,*.rmd=📊:\
+     ,*.Rmd=📊:\
+     ,*.m=📊:\
+     ,*.mp3=🎵:\
+     ,*.opus=🎵:\
+     ,*.ogg=🎵:\
+     ,*.m4a=🎵:\
+     ,*.flac=🎼:\
+     ,*.wav=🎼:\
+     ,*.mkv=🎥:\
+     ,*.mp4=🎥:\
+     ,*.webm=🎥:\
+     ,*.mpeg=🎥:\
+     ,*.avi=🎥:\
+     ,*.mov=🎥:\
+     ,*.mpg=🎥:\
+     ,*.wmv=🎥:\
+     ,*.m4b=🎥:\
+     ,*.flv=🎥:\
+     ,*.zip=📦:\
+     ,*.rar=📦:\
+     ,*.7z=📦:\
+     ,*.tar.gz=📦:\
+     ,*.z64=🎮:\
+     ,*.v64=🎮:\
+     ,*.n64=🎮:\
+     ,*.gba=🎮:\
+     ,*.nes=🎮:\
+     ,*.gdi=🎮:\
+     ,*.1=ℹ:\
+     ,*.nfo=ℹ:\
+     ,*.info=ℹ:\
+     ,*.log=📙:\
+     ,*.iso=📀:\
+     ,*.img=📀:\
+     ,*.bib=🎓:\
+     ,*.ged=👪:\
+     ,*.part=💔:\
+     ,*.torrent=🔽:\
+     ,*.jar=♨:\
+     ,*.java=♨:\
+     "
+     
+     [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
+     
+     if pacman -Qs libxft-bgra >/dev/null 2>&1; then
+	 # Start graphical server on user's current tty if not already running.
+	 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx
+     else
+	 echo "\033[31mIMPORTANT\033[0m: Note that \033[32m\`libxft-bgra\`\033[0m must be installed for this build of dwm.
+     Please run:
+	     \033[32myay -S libxft-bgra-git\033[0m
+     and replace \`libxft\`. Afterwards, you may start the graphical server by running \`startx\`."
+     fi
+     
+     # Switch escape and caps if tty and no passwd required:
+     sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
+     
+   #+end_src
+
+   #+begin_src emacs-lisp
+     (use-package evil-multiedit
+       :hook (web-mode . evil-multiedit-mode))
+   #+end_src
+
+   #+RESULTS:
+   | evil-multiedit-mode | (lambda nil (when (string-equal tsx (file-name-extension buffer-file-name)) (setup-tide-mode))) |
+
+   # evil multiedit
+   # multiple-cursors
+** Brazilian Keyboard Layout
+** Galery viewing
+   # #+begin_src emacs-lisp
+   #   (use-package )
+   #   #+end_src
+** Calendar
+   #+begin_src emacs-lisp
+     (use-package calendar
+       :config
+       (require 'generic)
+       (define-generic-mode 'fancy-diary-display-mode
+	 nil
+	 (list "Exception" "Location" "Desc")
+	 '(
+	   ("\\(.*\\)\n\\(=+\\)"            ;; Day title / separator lines
+	    (1 'font-lock-keyword-face) (2 'font-lock-preprocessor-face))
+	   ("^\\(todo [^:]*:\\)\\(.*\\)$"   ;; To do entries
+	    (1 'font-lock-string-face) (2 'font-lock-reference-face))
+	   ("\\(\\[.*\\]\\)"                ;; Category labels
+	    1 'font-lock-constant-face)
+	   ("^\\(0?\\([1-9][0-9]?:[0-9][0-9]\\)\\([ap]m\\)?\\(-0?\\([1-9][0-9]?:[0-9][0-9]\\)\\([ap]m\\)?\\)?\\)"
+	    1 'font-lock-type-face))        ;; Time intervals at start of lines.
+	 nil
+	 (list
+	  (function
+	   (lambda ()
+	     (turn-on-font-lock))))
+	 "Mode for fancy diary display."))
+   #+end_src
+
+   #+RESULTS:
+   : t

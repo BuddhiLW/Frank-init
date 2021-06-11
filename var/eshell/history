@@ -1,75 +1,3 @@
-ls
-cd test
-cd ..
-cd sh-scripting/
-ls
-sh lupo-setup.sh 
-clear
-clear-scrollback 
-ls
-yay -Sy xf86-video-nouveau
-clear
-clear-scrollback 
-sudo pacman -S nouveau-dri mesa libgl
-yay -Sy nouveau
-yay -Sy nouveau xf86-video-nouveau
-p -Syu nouveau xf86-video-nouveau
-sudo pacman -Syu nouveau xf86-video-nouveau
-yay -S mesa
-sudo pacman -Rdd nvidia nvidia-utils
-sudo pacman -Rdd bumblebee
-sudo pacman -Syu nouveau xf86-video-nouveau libgl
-rmmod nvidia
-modprobe nouveau
-sudo modprobe nouveau
-lsmod | grep nvi
-lsmod | grep nv
-lsmod | grep no
-lsmod | grep nou
-lsmod | grep nouvrau
-lsmod | grep nouveau
-dmesg | grep nouveau
-dmesg | grep nv
-dmesg 
-sudo dmesg 
-sudo dmesg | grep nv
-sudo dmesg | grep nouveau
-arandr
-clear-scrollback 
-mkinitcpio -p kernel26
-sudo mkinitcpio -p kernel26
-sudo reboot
-ls
-cd PP/ClojureScript/todoMVC/
-ls
-npm start
-npm intall
-npm run
-npm start
-sdn
-cd
-ls
-clear-scrollback 
-lsblk
-mount /dev/sdb1 /mnt/
-sudo mount /dev/sdb1 /mnt/
-ls /mnt/
-ls /mnt/WAGNER\ BRANQUINHO/
-clear
-clear-scrollback 
-ls /mnt/WAGNER\ BRANQUINHO/
-cd /mnt/WAGNER\ BRANQUINHO/Documents/WJB\ ENGENHARIA/CLIENTES/
-ls
-clear-scrollback 
-lf
-cd Lu
-cd Lupo
-cd LUPO/
-ls
-cd ..
-tree -d
-cd 12_LUPO_/
-ls
 mkdir ~/LUPO-WAGNER
 cp 426_1304/ ~/LU
 cp 426_1304/ ~/LUPO-WAGNER/
@@ -126,3 +54,75 @@ sudo chmod a+x conda
 PATH=$PATH:/opt/anaconda/bin/
 export PATH=$PATH:/opt/anaconda/bin/
 ls
+cd Programs/
+ls 
+./balenaEtcher-1.5.120-x64.AppImage 
+sudo ./balenaEtcher-1.5.120-x64.AppImage 
+lspci
+xrandr
+clear
+lscpi | grep "nvidia"
+lscpi | grep "VGA"
+lscpi | grep VGA
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd clojure2d-examples/
+ls
+git init
+git config --global init.defaultBranch development
+git branch -m development
+clear
+git add .
+ls
+cd 
+ls
+rm -rf ./Documents-b
+ls Documents 
+ls Documents-b
+rm -rf ./guix
+clear
+cd PP
+ls
+magit init
+git init
+git add .
+git add . 
+mkdir ~/Temp
+mv clojure2d-examples ~/Temp/
+mv ./Clojure/clojure2d-examples ~/Temp/
+ls Clojure/
+clear
+clear-scrollback 
+ls
+git add .
+git commit -m "first commit"git branch -M maingit remote add origin https://github.com/BuddhiLW/ProgrammingProjects.gitgit push -u origin main
+cd
+ls
+clear-scrollback 
+use-theme
+p -Sy
+p: command not found
+clear
+clear-scrollback 
+hwclock 
+sudo hwclock 
+sudo hwclock --systohc
+ sv check dbus >/dev/null || exit 1
+.
+ls /etc/local.d/
+ls /etc/locatime
+sudo ln -sf /usr/share/zoneinfo/Brazil/East 
+sudo ln -sf /usr/share/zoneinfo/Brazil/East /etc/localtime
+ls /etc/
+ls /etc/localtime
+ls -a /etc/localtime
+ls -as /etc/localtime
+ls -af /etc/localtime
+hwclock --systohc
+sudo hwclock --systohc
+clear-scrollback 

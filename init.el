@@ -6,7 +6,7 @@
 (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(80 . 80))
+(defvar efs/frame-transparency '(93 . 93))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -48,6 +48,7 @@
   (auto-package-update-at-time "09:00"))
 
 (load-file "~/.emacs.d/desktop.el")
+(load-file "~/.emacs.d/editing.el")
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
 ;; reliably, set `user-emacs-directory` before loading no-littering!
@@ -95,11 +96,11 @@
     (set-frame-parameter
      nil 'alpha
      (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '(80 . 80) '(90 . 90)))))
+		    ((numberp (cdr alpha)) (cdr alpha))
+		    ;; Also handle undocumented (<active> <inactive>) form.
+		    ((numberp (cadr alpha)) (cadr alpha)))
+	      100)
+	 '(93 . 93) '(100 . 100)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
@@ -211,13 +212,12 @@ codepoints starting from codepoint-start."
          (prog-mode . fira-code-mode)
          (special-mode . prettify-symbols-mode)
          (special-mode . fira-code-mode)
-         (text-mode . prettify-symbols-mode)
-         ))
+         (text-mode . prettify-symbols-mode)))
 
-(use-package nyan-mode
-  :hook ((special-mode . nyan-mode)
-         (text-mode . nyan-mode)
-         (progn-mode . nyan-mode)))
+;; (use-package nyan-mode
+;;   :hook ((special-mode . nyan-mode)
+;;          (text-mode . nyan-mode)
+;;          (prog-mode . nyan-mode)))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -233,7 +233,9 @@ codepoints starting from codepoint-start."
   (efs/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
+    "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
+    "h" 'shrink-window-horizontally
+    "l" 'enlarge-window-horizontally))
 
 (use-package evil
   :init
@@ -253,14 +255,16 @@ codepoints starting from codepoint-start."
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
-;; (use-package evil-collection
-;;   :after evil
-;;   :config
-;;   (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init)
+  (delete 'mu4e evil-collection-mode-list)
+  (delete 'mu4e-conversation evil-collection-mode-list))
 
-;; (use-package general
-;;   :config
-;;   (general-evil-setup t))
+(use-package general
+  :config
+  (general-evil-setup t))
 
 ;; (general-create-definer dw/leader-key-def
 ;;   :keymaps '(normal insert visual emacs)
@@ -276,7 +280,8 @@ codepoints starting from codepoint-start."
   :commands command-log-mode)
 
 (use-package doom-themes
-  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
+  :init (load-theme 'ewal-spacemacs-classic t))
+;;wildavil's default -> doom-paletnight
 
 (use-package all-the-icons)
 
@@ -554,6 +559,7 @@ codepoints starting from codepoint-start."
    '((emacs-lisp . t)
      (ipython . t)
      (python . t)
+     ;; (julia . t)
      (ein . t)
      (browser . t)
      (ditaa . t)
@@ -579,6 +585,8 @@ codepoints starting from codepoint-start."
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
 (add-to-list 'org-structure-template-alist '("ju" . "src julia"))
 (add-to-list 'org-structure-template-alist '("cl" . "src clojure"))
+(add-to-list 'org-structure-template-alist '("ej" . "src ein-julia :session localhost"))
+(add-to-list 'org-structure-template-alist '("ep" . "src ein-python :session localhost"))
 
 ;; Web
 (add-to-list 'org-structure-template-alist '("c4" . "src css :tangle ../css/.css :mkdirp yes"))
@@ -610,6 +618,30 @@ codepoints starting from codepoint-start."
 (use-package org-roam-bibtex)
 
 (use-package tj3-mode)
+
+;; (use-package org-inline-image)
+
+;;     (use-package org
+ ;;     :init)
+ ;; (eval-after-load 'ox-latex
+ ;; (add-to-list 'org-export-latex-classes 'abntex2))
+
+ (with-eval-after-load 'ox-latex
+   (add-to-list 'org-latex-classes
+		'("abntex2"
+		  "\\documentclass{abntex2}"
+
+		  ;; ("\\chapter{%s}" . "\\chapter*{%s}")
+		  ("\\chapter{%s}" . "\\chapter*{%s}")
+		  ("\\subsection{%(setq )}" . "\\section*{%s}")
+		  ("\\subsubsection{%s}" . "\\subsection*{%s}")
+
+		  )))
+
+;; ("\\chapter{%s}" . "\\chapter*{%s}")
+ ;;		      ("\\section{%s}" . "\\section*{%s}")
+ ;;		      ("\\subsection{%(setq )}" . "\\subsection*{%s}")
+ ;;		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 
 (defun reload-pdf ()
   (interactive
@@ -704,6 +736,86 @@ codepoints starting from codepoint-start."
 (use-package ein)
 ;; (use-package ob-ein)
 
+(defun ob-ipython-inline-image (b64-string)
+    "Write the b64-string to a temporary file.
+    Returns an org-link to the file."
+    (let* ((tfile (make-temp-file "ob-ipython-" nil ".png"))
+	   (link (format "[[file:%s]]" tfile)))
+      (ob-ipython--write-base64-string tfile b64-string)
+      link))
+
+
+  (defun org-babel-execute:ipython (body params)
+    "Execute a block of IPython code with Babel.
+    This function is called by `org-babel-execute-src-block'."
+    (let* ((file (cdr (assoc :file params)))
+	   (session (cdr (assoc :session params)))
+	   (result-type (cdr (assoc :result-type params))))
+      (org-babel-ipython-initiate-session session params)
+      (-when-let (ret (ob-ipython--eval
+		       (ob-ipython--execute-request
+			(org-babel-expand-body:generic (encode-coding-string body 'utf-8)
+						       params (org-babel-variable-assignments:python params))
+			(ob-ipython--normalize-session session))))
+	(let ((result (cdr (assoc :result ret)))
+	      (output (cdr (assoc :output ret))))
+	  (if (eq result-type 'output)
+	      (concat
+	       output 
+	       (format "%s"
+		       (mapconcat 'identity
+				  (loop for res in result
+					if (eq 'image/png (car res))
+					collect (ob-ipython-inline-image (cdr res)))
+				  "\n")))
+	    (ob-ipython--create-stdout-buffer output)
+	    (cond ((and file (string= (f-ext file) "png"))
+		   (->> result (assoc 'image/png) cdr (ob-ipython--write-base64-string file)))
+		  ((and file (string= (f-ext file) "svg"))
+		   (->> result (assoc 'image/svg+xml) cdr (ob-ipython--write-string-to-file file)))
+		  (file (error "%s is currently an unsupported file extension." (f-ext file)))
+		  (t (->> result (assoc 'text/plain) cdr))))))))
+
+;; #   (defun ob-ijulia-inline-image (b64-string)
+;; #     "Write the b64-string to a temporary file.
+;; #   Returns an org-link to the file."
+;; #     (let* ((tfile (make-temp-file "ob-ijulia-" nil ".png"))
+;; # 	   (link (format "[[file:%s]]" tfile)))
+;; #       (ob-ijulia--write-base64-string tfile b64-string)
+;; #       link))
+
+
+;; #   (defun org-babel-execute:ijulia (body params)
+;; #     "Execute a block of IJulia code with Babel.
+;; #   This function is called by `org-babel-execute-src-block'."
+;; #     (let* ((file (cdr (assoc :file params)))
+;; # 	   (session (cdr (assoc :session params)))
+;; # 	   (result-type (cdr (assoc :result-type params))))
+;; #       (org-babel-ijulia-initiate-session session params)
+;; #       (-when-let (ret (ob-ijulia--eval
+;; # 		       (ob-ijulia--execute-request
+;; # 			(org-babel-expand-body:generic (encode-coding-string body 'utf-8)
+;; # 						       params (org-babel-variable-assignments:julia params))
+;; # 			(ob-ijulia--normalize-session session))))
+;; # 	(let ((result (cdr (assoc :result ret)))
+;; # 	      (output (cdr (assoc :output ret))))
+;; # 	  (if (eq result-type 'output)
+;; # 	      (concat
+;; # 	       output 
+;; # 	       (format "%s"
+;; # 		       (mapconcat 'identity
+;; # 				  (loop for res in result
+;; # 					if (eq 'image/png (car res))
+;; # 					collect (ob-ijulia-inline-image (cdr res)))
+;; # 				  "\n")))
+;; # 	    (ob-ijulia--create-stdout-buffer output)
+;; # 	    (cond ((and file (string= (f-ext file) "png"))
+;; # 		   (->> result (assoc 'image/png) cdr (ob-ijulia--write-base64-string file)))
+;; # 		  ((and file (string= (f-ext file) "svg"))
+;; # 		   (->> result (assoc 'image/svg+xml) cdr (ob-ijulia--write-string-to-file file)))
+;; # 		  (file (error "%s is currently an unsupported file extension." (f-ext file)))
+;; # 		  (t (->> result (assoc 'text/plain) cdr))))))))
+
 (use-package latex-math-preview)
 
 (use-package jedi
@@ -730,6 +842,7 @@ codepoints starting from codepoint-start."
 
 (use-package anaconda-mode)
 (use-package company-anaconda)
+(use-package conda)
 
 (use-package conda)
 (setq 
@@ -881,26 +994,26 @@ conda-env-subdirectory "envs")
   (when (racket-mode)
     (exec-path-from-shell-initialize)))
 
-(use-package paredit
-  :hook ((emacs-lisp-mode . paredit-mode)
-           (lisp-mode . paredit-mode)
-           (racket-mode . paredit-mode)
-           (clojure-mode . paredit-mode)))
+(use-package paredit)
+  ;; :hook (prog-mode . paredit-mode))
+  ;; :hook (prog-mode . paredit-mode))
 
-(use-package smartparens
-  :hook ((emacs-lisp-mode . smartparens-mode)
-         (lisp-mode . smartparens-mode)
-         (cider-mode . smartparens-mode)
-         (clojure-mode . smartparens-mode)
-         (racket-mode . smartparens-mode)))
+(use-package evil-paredit)
+  ;; :hook prog-mode)
+  ;; :hook (prog-mode . paredit-mode))
+
+;; (use-package smartparens
+;;   :hook ((emacs-lisp-mode . smartparens-mode)
+;;          (lisp-mode . smartparens-mode)
+;;          (cider-mode . smartparens-mode)
+;;          (clojure-mode . smartparens-mode)
+;;          (racket-mode . smartparens-mode)))
 
 (use-package evil-smartparens
-    :hook ((emacs-lisp-mode . evil-smartparens-mode)
-           (lisp-mode . evil-smartparens-mode)
-           (racket-mode . evil-smartparens-mode)
-           (racket-mode . evil-smartparens-mode)
-           (cider-mode . evil-smarparens-mode)
-           (clojure-mode . evil-smartparens-mode)))
+  :hook ((after-init . evil-smartparens-mode)
+	 (prog-mode . evil-smartparens-mode)
+	 (text-mode . evil-smartparens-mode)
+	 (special-mode . evil-smartparens-mode)))
 
 (use-package slime
   :config
@@ -954,106 +1067,15 @@ conda-env-subdirectory "envs")
     ;; (use-package clojure-extra-font-locking
       ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
 
-(use-package parinfer
-  :disabled
-  :hook ((clojure-mode . parinfer-mode)
-         (emacs-lisp-mode . parinfer-mode)
-         (common-lisp-mode . parinfer-mode)
-         (scheme-mode . parinfer-mode)
-         (lisp-mode . parinfer-mode))
-  :config
-  (setq parinfer-extensions
-      '(defaults       ; should be included.
-        pretty-parens  ; different paren styles for different modes.
-        evil           ; If you use Evil.
-        smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-        smart-yank)))  ; Yank behavior depend on mode.
+(use-package lsp-julia)
 
-(use-package indent-guide
-  :init (indent-guide-global-mode t)
-  :hook (prog-mode . indent-guide-mode))
-
-(use-package company
-  :after lsp-mode
-  :hook (lsp-mode . company-mode)
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map lsp-mode-map
-         ("<tab>" . company-indent-or-complete-common))
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
-
-(use-package company-box
-  :hook (company-mode . company-box-mode))
-
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-(use-package counsel-projectile
-  :after projectile
-  :config (counsel-projectile-mode))
-
-(use-package magit
-  :commands magit-status
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-;; NOTE: Make sure to configure a GitHub token before using this package!
-;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-(use-package forge
-  :after magit)
-
-(use-package evil-nerd-commenter
-  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
-
-(use-package rainbow-delimiters
-  :hook ((after-init . rainbow-delimiters-mode)
-         (prog-mode . rainbow-delimiters-mode)
-         (text-mode . rainbow-delimiters-mode)
-         (special-mode . rainbow-delimiters-mode)))
-
-(use-package emmet-mode
-  :hook ((sgml-mode . emmet-mode)
-         (css-mode . emmet-mode)))
-
-(use-package evil-surround
-  :ensure t
-  :config
-
-  (global-evil-surround-mode 1))
-
-(use-package company)
-  ;; :hook (prog-mode-hook . company-mode)
-  ;; :config (
-           ;; (setq company-idle-delay 0)
-           ;; (setq company-show-numbers t))
-
-;; (add-to-list 'company-backends #'company-tabnine)
-  ;; :hook ((prog-mode . company-mode)
-         ;; (text-mode . company-mode))
-
-(use-package company-tabnine
-  :ensure t)
-
-;;    (use-package company-fuzzy
-;;      :hook (company-mode . company-fuzzy-mode))
-
-(use-package yasnippet
-  :ensure t
-  :init
-  (yas-global-mode))
-(use-package yasnippet-snippets)
+(use-package julia-shell)
+(use-package julia-vterm)
+(use-package julia-snail)
+(use-package flycheck-julia)
+(use-package ob-ess-julia)
+(use-package ob-julia-vterm)
+(use-package julia-repl)
 
 (use-package term
   :commands term
@@ -1108,6 +1130,9 @@ conda-env-subdirectory "envs")
 
   (eshell-git-prompt-use-theme 'powerline))
 
+(use-package load-bash-alias
+  :hook (eshell-mode . load-bash-alias))
+
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
@@ -1145,93 +1170,3 @@ conda-env-subdirectory "envs")
 (ace-link-setup-default)
 
 (define-key org-mode-map (kbd "ö") 'ace-link-org)
-
-;; ;; Input method and key binding configuration.
-;; (setq alternative-input-methods
-;;       '(("chinese-tonepy" . [?\œ])
-;;         '("chinese-sisheng"   . [?\¶])))
-
-;; (setq default-input-method
-;;       (caar alternative-input-methods))
-
-;; (defun toggle-alternative-input-method (method &optional arg interactive)
-;;   (if arg
-;;       (toggle-input-method arg interactive)
-;;     (let ((previous-input-method current-input-method))
-;;       (when current-input-method
-;;         (deactivate-input-method))
-;;       (unless (and previous-input-method
-;;                    (string= previous-input-method method))
-;;         (activate-input-method method)))))
-
-;; (defun reload-alternative-input-methods ()
-;;   (dolist (config alternative-input-methods)
-;;     (let ((method (car config)))
-;;       (global-set-key (cdr config)
-;;                       `(lambda (&optional arg interactive)
-;;                          ,(concat "Behaves similar to `toggle-input-method', but uses \""
-;;                                   method "\" instead of `default-input-method'")
-;;                          (interactive "P\np")
-;;                          (toggle-alternative-input-method ,method arg interactive))))))
-
-;; (reload-alternative-input-methods)
-
-(defun efs/exwm-update-class ()
-  (exwm-workspace-rename-buffer exwm-class-name))
-
-(use-package exwm
-  :config
-  ;; Set the default number of workspaces
-  (setq exwm-workspace-number 5)
-
-  ;; When window "class" updates, use it to set the buffer name
-  ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-  ;; These keys should always pass through to Emacs
-  (setq exwm-input-prefix-keys
-        '(?\C-x
-          ?\C-u
-          ?\C-h
-          ?\M-x
-          ?\M-`
-          ?\M-&
-          ?\M-:
-          ?\C-\M-j  ;; Buffer list
-          ?\C-\ ))  ;; Ctrl+Space
-
-  ;; Ctrl+Q will enable the next key to be sent directly
-  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-  ;; Set up global key bindings.  These always work, no matter the input state!
-  ;; Keep in mind that changing this list after EXWM initializes has no effect.
-  (setq exwm-input-global-keys
-        `(
-          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-          ([?\s-r] . exwm-reset)
-
-          ;; Move between windows
-          ([s-left] . windmove-left)
-          ([s-right] . windmove-right)
-          ([s-up] . windmove-up)
-          ([s-down] . windmove-down)
-
-          ;; Launch applications via shell command
-          ([?\s-&] . (lambda (command)
-                       (interactive (list (read-shell-command "$ ")))
-                       (start-process-shell-command command nil command)))
-
-          ;; Switch workspace
-          ([?\s-w] . exwm-workspace-switch)
-
-          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-          ,@(mapcar (lambda (i)
-                      `(,(kbd (format "s-%d" i)) .
-                        (lambda ()
-                          (interactive)
-                          (exwm-workspace-switch-create ,i))))
-                    (number-sequence 0 9))))
-
-  (exwm-enable))
-
-(use-package evil-multiedit
-  :hook (web-mode . evil-multiedit-mode))
