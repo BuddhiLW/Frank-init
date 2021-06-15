@@ -694,10 +694,16 @@ codepoints starting from codepoint-start."
   :config
   (require 'dap-python))
 
-(use-package pyvenv
-  :after python-mode
-  :config
-  (pyvenv-mode 1))
+(use-package conda)
+(use-package anaconda-mode)
+(use-package company-anaconda)
+
+(setq conda-env-home-directory (expand-file-name "~/.conda/")
+      conda-env-subdirectory "envs")
+(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+(conda-env-initialize-interactive-shells)
+(conda-env-initialize-eshell)
+(conda-env-autoactivate-mode t)
 
 (use-package css-mode
   :bind ("C-c m" . css-lookup-symbol))
@@ -894,10 +900,10 @@ codepoints starting from codepoint-start."
   (use-package flycheck-clojure
     :hook ((clojure-mode . flycheck-mode)
            (cider-mode .sotclojure-mode)))
-  (use-package clojure-snippets
-    :hook ((clojure-mode . clojure-snippets-mode)
-           (cider-mode .sotclojure-mode)))
-;; (use-package clojure-essential-ref
+;;   (use-package clojure-snippets
+;;     :hook ((clojure-mode . clojure-snippets-mode)
+;;            (cider-mode .sotclojure-mode)))
+;; ;; (use-package clojure-essential-ref
 ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
 ;;          (cider-mode .sotclojure-mode)))
 ;; (use-package 4clojure
@@ -905,6 +911,10 @@ codepoints starting from codepoint-start."
 ;;            (cider-mode .sotclojure-mode)))
   ;; (use-package clojure-extra-font-locking
     ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
+
+(use-package julia-snail)
+(use-package ob-ess-julia)
+(use-package ob-julia-vterm)
 
 (use-package parinfer
   :disabled
@@ -938,6 +948,8 @@ codepoints starting from codepoint-start."
 
 (use-package company-box
   :hook (company-mode . company-box-mode))
+
+(use-package ein)
 
 (use-package projectile
   :diminish projectile-mode

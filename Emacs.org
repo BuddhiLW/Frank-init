@@ -1193,13 +1193,20 @@ There are a number of other language servers for Python so if you find that =pyl
 
 You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =pyvenv-activate= command should configure Emacs to cause =lsp-mode= and =dap-mode= to use the virtual environment when they are loaded, just select the path to your virtual environment before loading your project.
 
+
 #+begin_src emacs-lisp
+(use-package conda)
+(use-package anaconda-mode)
+(use-package company-anaconda)
+#+end_src
 
-  (use-package pyvenv
-    :after python-mode
-    :config
-    (pyvenv-mode 1))
-
+#+begin_src emacs-lisp
+  (setq conda-env-home-directory (expand-file-name "~/.conda/")
+        conda-env-subdirectory "envs")
+  (custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell)
+  (conda-env-autoactivate-mode t)
 #+end_src
 
 *** HTML/CSS
@@ -1528,10 +1535,10 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
     (use-package flycheck-clojure
       :hook ((clojure-mode . flycheck-mode)
              (cider-mode .sotclojure-mode)))
-    (use-package clojure-snippets
-      :hook ((clojure-mode . clojure-snippets-mode)
-             (cider-mode .sotclojure-mode)))
-  ;; (use-package clojure-essential-ref
+  ;;   (use-package clojure-snippets
+  ;;     :hook ((clojure-mode . clojure-snippets-mode)
+  ;;            (cider-mode .sotclojure-mode)))
+  ;; ;; (use-package clojure-essential-ref
   ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
   ;;          (cider-mode .sotclojure-mode)))
   ;; (use-package 4clojure
@@ -1543,6 +1550,14 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 
 #+RESULTS:
 | 4clojure | clojure-essential-ref | clojure-snippets | flycheck-clojure | ivy-clojuredocs | helm-clojuredocs | sotclojure |
+*** Julia
+#+begin_src emacs-lisp
+  (use-package julia-snail)
+  (use-package ob-ess-julia)
+  (use-package ob-julia-vterm)
+#+end_src
+
+#+RESULTS:
 
 ** Parinfer
 copy paste from [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org#clojure][dawil]]
@@ -1598,6 +1613,13 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     :hook (company-mode . company-box-mode))
 
 #+end_src
+
+** Ein
+#+begin_src emacs-lisp
+(use-package ein)
+#+end_src
+
+#+RESULTS:
 
 ** Projectile
 
