@@ -700,7 +700,15 @@ codepoints starting from codepoint-start."
 
 (setq conda-env-home-directory (expand-file-name "~/.conda/")
       conda-env-subdirectory "envs")
-(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(conda-anaconda-home "/opt/anaconda/")
+ '(helm-minibuffer-history-key "M-p")
+ '(org-agenda-files
+   '("/home/buddhilw/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org")))
 (conda-env-initialize-interactive-shells)
 (conda-env-initialize-eshell)
 (conda-env-autoactivate-mode t)
@@ -1195,3 +1203,9 @@ codepoints starting from codepoint-start."
 
 (use-package evil-multiedit
   :hook (web-mode . evil-multiedit-mode))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
