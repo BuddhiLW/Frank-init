@@ -508,6 +508,9 @@ It looks like:
 
 (defvar eshell-git-prompt-current-theme nil)
 
+;; 
+
+
 ;;;###autoload
 (defun eshell-git-prompt-use-theme (theme)
   "Pick up a Eshell prompt theme from `eshell-git-prompt-themes' to use."
@@ -554,10 +557,13 @@ It looks like:
     (when (numberp theme)
       (setq theme (number-to-string theme)))
     (setq theme (intern theme))
-    (-if-let (func-regexp (assoc-default theme eshell-git-prompt-themes))
+    (-if-let (func-regexp
+	      (assoc-default theme eshell-git-prompt-themes))
         (progn
-          (setq eshell-prompt-function (symbol-function (car func-regexp))
-                eshell-prompt-regexp (symbol-value (cadr func-regexp)))
+          (setq eshell-prompt-function
+		(symbol-function (car func-regexp))
+                eshell-prompt-regexp
+		(symbol-value (cadr func-regexp)))
           (setq eshell-git-prompt-current-theme theme)
           (eshell-printn ""))
       (error

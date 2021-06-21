@@ -176,45 +176,63 @@ Toggle transparency
 #+RESULTS:
 : toggle-transparency
 
+** Font utilities
+#+begin_src emacs-lisp
+  (use-package font-utils)
+  (use-package ucs-utils)
+  (use-package list-utils)
+  ;; (use-package unicode-fonts)
+  #+end_src
+
+  #+RESULTS:
+
 ** Font Configuration
 
 I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://fonts.google.com/specimen/Cantarell][Cantarell]] fonts for this configuration which will more than likely need to be installed on your machine.  Both can usually be found in the various Linux distro package managers or downloaded from the links above.
 
 #+begin_src emacs-lisp
-
-    (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
-
-    ;; Set the fixed pitch face
-    (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height efs/default-font-size)
-
-    ;; Set the variable pitch face
-    (set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular)
-
-
-    (defun init-my-font ()
-      (set-face-font
-       'default
-       (font-spec
-        :family "Fira Code Retina"
-        :height efs/default-font-size
-        :slant 'normal))
-      (set-face-attribute 'default nil :height 103)
-      ;; emoji font
-      (set-fontset-font
-       t 'symbol
-       (font-spec :family "Noto Color Emoji"
-                  :height efs/default-variable-font-size
-                  :weight 'normal
-                  :width 'normal
-                  :slant 'normal))
-      ;; fallback font
-      (set-fontset-font
-       t nil
-       (font-spec
-        :family "DejaVu Sans Mono"
-        :height efs/default-font-size
-        :slant 'normal)))
-
+  
+  (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
+  
+  ;; Set the fixed pitch face
+  (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height efs/default-font-size)
+  
+  ;; Set the variable pitch face
+  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular)
+  
+  
+  (defun init-my-font ()
+    (set-face-font
+     'default
+     (font-spec
+      :family "Fira Code Retina"
+      :height efs/default-font-size
+      :slant 'normal))
+    (set-face-attribute 'default nil :height 103)
+    ;; emoji font
+    (set-fontset-font
+     t 'symbol
+     (font-spec :family "Noto Color Emoji"
+                :height efs/default-variable-font-size
+                :weight 'normal
+                :width 'normal
+                :slant 'normal))
+    ;; Creative Commons Symbols
+    (set-fontset-font
+     t 'symbol
+     (font-spec :family "CCSymbols"
+                :height efs/default-variable-font-size
+                :weight 'normal
+                :width 'normal
+                :slant 'normal))
+    ;; fallback font
+    (set-fontset-font
+     t nil
+     (font-spec
+      :family "DejaVu Sans Mono"
+      :height efs/default-font-size
+      :slant 'normal)))
+  
 #+end_src
 
 #+RESULTS:
@@ -319,18 +337,20 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
 ** Emojify
 #+begin_src emacs-lisp
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+  (use-package emojify)
+    ;; :hook (prog-mode . global-emojify-mode))
 #+end_src
+
+#+RESULTS:
 
 
 #+begin_src emacs-lisp
   (setq emojify-user-emojis '((":emacs:" . (("name" . "Emacs")
-                                                ("image" . "~/.emacs.d/emoji/emacs.svg")
-                                                ("style" . "github")))
+                                            ("image" . "~/.emacs.d/emoji/emacs.svg")
+                                            ("style" . "github")))
                               (":lambda:" . (("name" . "Lambda")
-                                                ("image" . "~/.emacs.d/emoji/lambda.jpg")
-                                                ("style" . "github")))))
+                                             ("image" . "~/.emacs.d/emoji/lambda.jpg")
+                                             ("style" . "github")))))
   ;; If emojify is already loaded refresh emoji data
   (when (featurep 'emojify)
     (emojify-set-emoji-data))
@@ -379,8 +399,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
       "t"  '(:ignore t :which-key "toggles")
       "tt" '(counsel-load-theme :which-key "choose theme")
       "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
-      "h" 'shrink-window-horizontally
-      "l" 'enlarge-window-horizontally))
+      "j" 'enlarge-window
+      "l" 'shrink-window-horizontally
+      "h" 'enlarge-window-horizontally
+      "a" 'org-agenda
+      ))
   
   (use-package evil
     :init
@@ -653,143 +676,144 @@ The =efs/org-font-setup= function configures various text faces to tweak the siz
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
 
 #+begin_src emacs-lisp
-
+  
   (defun efs/org-mode-setup ()
     (org-indent-mode)
     (variable-pitch-mode 1)
     (visual-line-mode 1))
-
+  
   (use-package org
     :pin org
     :commands (org-capture org-agenda)
     :hook (org-mode . efs/org-mode-setup)
     :config
     (setq org-ellipsis " ▾")
-
+  
     (setq org-agenda-start-with-log-mode t)
     (setq org-log-done 'time)
     (setq org-log-into-drawer t)
-
+  
     (setq org-agenda-files
-          '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Monday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Tuesday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Wendnesday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Thrusday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Friday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Saturday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Sunday.org"))
-
+	  '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
+	    "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Monday.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Tuesday.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Wendnesday.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Thrusday.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Friday.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Saturday.org"
+	    ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Sunday.org"
+	    ))
+  
     (require 'org-habit)
     (add-to-list 'org-modules 'org-habit)
     (setq org-habit-graph-column 60)
-
+  
     (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-        (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
-
+	(sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+  
     (setq org-refile-targets
       '(("Archive.org" :maxlevel . 1)
-        ("Tasks.org" :maxlevel . 1)))
-
+	("Tasks.org" :maxlevel . 1)))
+  
     ;; Save Org buffers after refiling!
     (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
+  
     (setq org-tag-alist
       '((:startgroup)
-         ; Put mutually exclusive tags here
-         (:endgroup)
-         ("@errand" . ?E)
-         ("@home" . ?H)
-         ("@work" . ?W)
-         ("agenda" . ?a)
-         ("planning" . ?p)
-         ("publish" . ?P)
-         ("batch" . ?b)
-         ("note" . ?n)
-         ("idea" . ?i)))
-
+	 ; Put mutually exclusive tags here
+	 (:endgroup)
+	 ("@errand" . ?E)
+	 ("@home" . ?H)
+	 ("@work" . ?W)
+	 ("agenda" . ?a)
+	 ("planning" . ?p)
+	 ("publish" . ?P)
+	 ("batch" . ?b)
+	 ("note" . ?n)
+	 ("idea" . ?i)))
+  
     ;; Configure custom agenda views
     (setq org-agenda-custom-commands
      '(("d" "Dashboard"
        ((agenda "" ((org-deadline-warning-days 7)))
-        (todo "NEXT"
-          ((org-agenda-overriding-header "Next Tasks")))
-        (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
-
+	(todo "NEXT"
+	  ((org-agenda-overriding-header "Next Tasks")))
+	(tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+  
       ("n" "Next Tasks"
        ((todo "NEXT"
-          ((org-agenda-overriding-header "Next Tasks")))))
-
+	  ((org-agenda-overriding-header "Next Tasks")))))
+  
       ("W" "Work Tasks" tags-todo "+work-email")
-
+  
       ;; Low-effort next actions
       ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
        ((org-agenda-overriding-header "Low Effort Tasks")
-        (org-agenda-max-todos 20)
-        (org-agenda-files org-agenda-files)))
-
+	(org-agenda-max-todos 20)
+	(org-agenda-files org-agenda-files)))
+  
       ("w" "Workflow Status"
        ((todo "WAIT"
-              ((org-agenda-overriding-header "Waiting on External")
-               (org-agenda-files org-agenda-files)))
-        (todo "REVIEW"
-              ((org-agenda-overriding-header "In Review")
-               (org-agenda-files org-agenda-files)))
-        (todo "PLAN"
-              ((org-agenda-overriding-header "In Planning")
-               (org-agenda-todo-list-sublevels nil)
-               (org-agenda-files org-agenda-files)))
-        (todo "BACKLOG"
-              ((org-agenda-overriding-header "Project Backlog")
-               (org-agenda-todo-list-sublevels nil)
-               (org-agenda-files org-agenda-files)))
-        (todo "READY"
-              ((org-agenda-overriding-header "Ready for Work")
-               (org-agenda-files org-agenda-files)))
-        (todo "ACTIVE"
-              ((org-agenda-overriding-header "Active Projects")
-               (org-agenda-files org-agenda-files)))
-        (todo "COMPLETED"
-              ((org-agenda-overriding-header "Completed Projects")
-               (org-agenda-files org-agenda-files)))
-        (todo "CANC"
-              ((org-agenda-overriding-header "Cancelled Projects")
-               (org-agenda-files org-agenda-files)))))))
-
+	      ((org-agenda-overriding-header "Waiting on External")
+	       (org-agenda-files org-agenda-files)))
+	(todo "REVIEW"
+	      ((org-agenda-overriding-header "In Review")
+	       (org-agenda-files org-agenda-files)))
+	(todo "PLAN"
+	      ((org-agenda-overriding-header "In Planning")
+	       (org-agenda-todo-list-sublevels nil)
+	       (org-agenda-files org-agenda-files)))
+	(todo "BACKLOG"
+	      ((org-agenda-overriding-header "Project Backlog")
+	       (org-agenda-todo-list-sublevels nil)
+	       (org-agenda-files org-agenda-files)))
+	(todo "READY"
+	      ((org-agenda-overriding-header "Ready for Work")
+	       (org-agenda-files org-agenda-files)))
+	(todo "ACTIVE"
+	      ((org-agenda-overriding-header "Active Projects")
+	       (org-agenda-files org-agenda-files)))
+	(todo "COMPLETED"
+	      ((org-agenda-overriding-header "Completed Projects")
+	       (org-agenda-files org-agenda-files)))
+	(todo "CANC"
+	      ((org-agenda-overriding-header "Cancelled Projects")
+	       (org-agenda-files org-agenda-files)))))))
+  
     (setq org-capture-templates
       `(("t" "Tasks / Projects")
-        ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
-             "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-
-        ("j" "Journal Entries")
-        ("jj" "Journal" entry
-             (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-             "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-             ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-             :clock-in :clock-resume
-             :empty-lines 1)
-        ("jm" "Meeting" entry
-             (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-             "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-             :clock-in :clock-resume
-             :empty-lines 1)
-
-        ("w" "Workflows")
-        ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-             "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
-
-        ("m" "Metrics Capture")
-        ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
-         "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
-
+	("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
+	     "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+  
+	("j" "Journal Entries")
+	("jj" "Journal" entry
+	     (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+	     "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+	     ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+	     :clock-in :clock-resume
+	     :empty-lines 1)
+	("jm" "Meeting" entry
+	     (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+	     "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+	     :clock-in :clock-resume
+	     :empty-lines 1)
+  
+	("w" "Workflows")
+	("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+	     "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+  
+	("m" "Metrics Capture")
+	("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
+	 "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
+  
     (define-key global-map (kbd "C-c j")
       (lambda () (interactive) (org-capture nil "jj")))
-
+  
     (efs/org-font-setup))
-
+  
 #+end_src
 
 #+RESULTS:
@@ -799,13 +823,17 @@ This section contains the basic configuration for =org-mode= plus the configurat
 [[https://github.com/sabof/org-bullets][org-bullets]] replaces the heading stars in =org-mode= buffers with nicer looking characters that you can control.  Another option for this is [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]] which we may cover in a later video.
 
 #+begin_src emacs-lisp
-
+  
   (use-package org-bullets
+    :after org-mode
+    :ensure t
     :hook (org-mode . org-bullets-mode)
     :custom
-    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
+    (org-bullets-bullet-list '("☯" "◉" "●" "○" "✜" "○" "●")))
+  
 #+end_src
+
+#+RESULTS:
 
 *** Center Org Buffers
 
@@ -822,6 +850,8 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
     :hook (org-mode . efs/org-mode-visual-fill))
 
 #+end_src
+
+#+RESULTS:
 
 # *** Inline Images
 # #+begin_src emacs-lisp
@@ -862,8 +892,6 @@ Chosing an image's size with :width property
 #+begin_src emacs-lisp
   (setq org-image-actual-width nil)
 #+end_src
-
-#+RESULTS:
 
 ** Extra packages (primerly management-related)
 #+begin_src emacs-lisp
@@ -1027,11 +1055,10 @@ It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completio
 	(add-to-list 'org-latex-classes
 		     '("abntex2"
 		       "\\documentclass{abntex2}"
-		       
-		       ;; ("\\chapter{%s}" . "\\chapter*{%s}")
 		       ("\\chapter{%s}" . "\\chapter*{%s}")
-		       ("\\subsection{%(setq )}" . "\\section*{%s}")
-		       ("\\subsubsection{%s}" . "\\subsection*{%s}")
+		       ("\\section{%s}" . "\\section*{%s}")
+		       ("\\subsection{%(setq )}" . "\\subsection*{%s}")
+		       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
      
 		       )))
      
@@ -1042,7 +1069,16 @@ It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completio
      #+end_src
 
      #+RESULTS:
-   
+     
+#+RESULTS:
+** Org for slide presentation
+   #+begin_src emacs-lisp
+     (use-package org-tree-slide
+       :custom
+       (org-image-actual-width nil))
+     #+end_src
+
+     #+RESULTS:
 
 * Development
 ** Languages
@@ -1434,12 +1470,9 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 *** JavaScript
 **** Indium
 #+begin_src emacs-lisp
-  (use-package indium
-  :hook (js-mode . indium-interaction-mode))
+  ;; (use-package indium)
+   ;; :hook (js-mode . indium-interaction-mode))
 #+end_src
-
-#+RESULTS:
-| indium-interaction-mode | js2-minor-mode |
 
 **** Beautify
 
@@ -1450,19 +1483,16 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
            (html-mode . web-beautify-html)))
 #+end_src
 
-#+RESULTS:
-| web-beautify-html |
-
 **** Json
 #+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 #+end_src
 
 **** js2-mode
 #+begin_src emacs-lisp
-  (use-package js2-mode
-    :hook ((js-mode . js2-minor-mode)
-           (js2-mode . ac-js2-mode)))
+  ;; (use-package js2-mode
+  ;;   :hook ((js-mode . js2-minor-mode)
+  ;;          (js2-mode . ac-js2-mode)))
 #+end_src
 
 #+RESULTS:
@@ -1470,13 +1500,13 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 
 **** Tern
 #+begin_src emacs-lisp
-  (use-package tern
-    :load-path "~/.emacs.d/tern/"
-    :after ((js-mode)
-            (js2-mode))
-    :hook ((js-mode . tern-mode)
-           (js2-mode . tern-mode))
-    :config (autoload 'tern-mode "tern.el" nil t))
+  ;; (use-package tern
+  ;;   :load-path "~/.emacs.d/tern/"
+  ;;   :after ((js-mode)
+  ;;           (js2-mode))
+  ;;   :hook ((js-mode . tern-mode)
+  ;;          (js2-mode . tern-mode))
+  ;;   :config (autoload 'tern-mode "tern.el" nil t))
 #+end_src
 
 #+RESULTS:
@@ -1507,94 +1537,92 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 
 **** snippet
 #+begin_src emacs-lisp
-    (use-package flycheck
-      :ensure t
-      :config
-      (add-hook 'typescript-mode-hook 'flycheck-mode)
-      :init
-      (global-flycheck-mode t))
+  (use-package flycheck
+    :ensure t
+    ;; :config
+    ;; (add-hook 'typescript-mode-hook 'flycheck-mode)
+    :init
+    (global-flycheck-mode t))
   
-    (defun setup-tide-mode ()
-      (interactive)
-      (tide-setup)
-      (flycheck-mode +1)
-      (setq flycheck-check-syntax-automatically '(save mode-enabled))
-      (eldoc-mode +1)
-      (tide-hl-identifier-mode +1)
-      ;; company is an optional dependency. You have to
-      ;; install it separately via package-install
-      ;; `M-x package-install [ret] company`
-      (company-mode +1))
+  ;; (defun setup-tide-mode ()
+  ;;   (interactive)
+  ;;   (tide-setup)
+  ;;   (flycheck-mode +1)
+  ;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  ;;   (eldoc-mode +1)
+  ;;   (tide-hl-identifier-mode +1)
+  ;;   ;; company is an optional dependency. You have to
+  ;;   ;; install it separately via package-install
+  ;;   ;; `M-x package-install [ret] company`
+  ;;   (company-mode +1))
   
-    (use-package company
-      :ensure t
-      :config
-      (setq company-show-numbers t)
-      (setq company-tooltip-align-annotations t)
-      ;; invert the navigation direction if the the completion popup-isearch-match
-      ;; is displayed on top (happens near the bottom of windows)
-      (setq company-tooltip-flip-when-above t)
-      (global-company-mode))
+  (use-package company
+    :ensure t
+    :config
+    (setq company-show-numbers t)
+    (setq company-tooltip-align-annotations t)
+    ;; invert the navigation direction if the the completion popup-isearch-match
+    ;; is displayed on top (happens near the bottom of windows)
+    (setq company-tooltip-flip-when-above t)
+    (global-company-mode))
   
-    (use-package company-quickhelp
-      :ensure t
-      :init
-      (company-quickhelp-mode 1)
-      (use-package pos-tip
-        :ensure t))
+  (use-package company-quickhelp
+    :ensure t
+    :init
+    (company-quickhelp-mode 1)
+    (use-package pos-tip
+      :ensure t))
   
-    (use-package web-mode
-      :ensure t
-      :mode (("\\.html?\\'" . web-mode)
-             ("\\.tsx\\'" . web-mode)
-             ("\\.jsx\\'" . web-mode))
-      :config
-      (setq web-mode-markup-indent-offset 2
-            web-mode-css-indent-offset 2
-            web-mode-code-indent-offset 2
-            web-mode-block-padding 2
-            web-mode-comment-style 2
+  ;; (use-package web-mode
+  ;;   :ensure t
+  ;;   :mode (("\\.html?\\'" . web-mode)
+  ;;          ("\\.tsx\\'" . web-mode)
+  ;;          ("\\.jsx\\'" . web-mode))
+  ;;   :config
+  ;;   (setq web-mode-markup-indent-offset 2
+  ;;         web-mode-css-indent-offset 2
+  ;;         web-mode-code-indent-offset 2
+  ;;         web-mode-block-padding 2
+  ;;         web-mode-comment-style 2
   
-            web-mode-enable-css-colorization t
-            web-mode-enable-auto-pairing t
-            web-mode-enable-comment-keywords t
-            web-mode-enable-current-element-highlight t
-            web-mode-enable-auto-indentation nil
-            )
-      (add-hook 'web-mode-hook
-                (lambda ()
-                  (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                    (setup-tide-mode))))
-      ;; enable typescript-tslint checker
-      (flycheck-add-mode 'typescript-tslint 'web-mode))
+  ;;         web-mode-enable-css-colorization t
+  ;;         web-mode-enable-auto-pairing t
+  ;;         web-mode-enable-comment-keywords t
+  ;;         web-mode-enable-current-element-highlight t
+  ;;         web-mode-enable-auto-indentation nil
+  ;;         )
+  ;;   (add-hook 'web-mode-hook
+  ;;             (lambda ()
+  ;;               (when (string-equal "tsx" (file-name-extension buffer-file-name))
+  ;;                 (setup-tide-mode))))
+  ;;   ;; enable typescript-tslint checker
+  ;;   (flycheck-add-mode 'typescript-tslint 'web-mode))
   
-    (use-package typescript-mode
-      :ensure t
-      :config
-      (setq typescript-indent-level 2)
-      (add-hook 'typescript-mode #'subword-mode))
+  ;; (use-package typescript-mode
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq typescript-indent-level 2)
+  ;;   (add-hook 'typescript-mode #'subword-mode))
   
-    (use-package tide
-      :init
-      :ensure t
-      :after (typescript-mode company flycheck)
-      :hook ((typescript-mode . tide-setup)
-             (typescript-mode . tide-hl-identifier-mode)))
+  ;; (use-package tide
+  ;;   :init
+  ;;   :ensure t
+  ;;   :after (typescript-mode company flycheck)
+  ;;   :hook ((typescript-mode . tide-setup)
+  ;;          (typescript-mode . tide-hl-identifier-mode)))
   
-    (use-package css-mode
-      :config
-    (setq css-indent-offset 2))
+  (use-package css-mode
+    :config
+  (setq css-indent-offset 2))
 #+end_src
 
-#+RESULTS:
-: t
 
 *** Prettier
 #+begin_src emacs-lisp
-  (use-package prettier-js
-  :ensure t
-  :after (rjsx-mode)
-  :hook (rjsx-mode . prettier-js-mode))
+  ;; (use-package prettier-js
+  ;; :ensure t
+  ;; :after (rjsx-mode)
+  ;; :hook (rjsx-mode . prettier-js-mode))
 #+end_src
 
 *** Racket
@@ -1645,12 +1673,15 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 
 **** Racket mode
 #+begin_src emacs-lisp
-  (use-package racket-mode
-    :bind ("C-c l" . racket-insert-lambda)
-    :config
-    (when (racket-mode)
-      (exec-path-from-shell-initialize)))
+  (use-package racket-mode)
+    ;; :bind ("C-c l" . racket-insert-lambda))
+    ;; :config
+    ;; (when (racket-mode)
+    ;;   (exec-path-from-shell-initialize)))
 #+end_src
+
+#+RESULTS:
+
 **** Paredit
 
 #+begin_src emacs-lisp
@@ -1667,8 +1698,8 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 
 **** Parens
 #+begin_src emacs-lisp
-  ;; (use-package smartparens
-  ;;   :hook ((emacs-lisp-mode . smartparens-mode)
+  (use-package smartparens
+    :hook (prog-mode . smartparens-mode))
   ;;          (lisp-mode . smartparens-mode)
   ;;          (cider-mode . smartparens-mode)
   ;;          (clojure-mode . smartparens-mode)
@@ -1676,7 +1707,6 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
 #+end_src
 
 #+RESULTS:
-| smartparens-mode | paredit-mode | evil-smartparens-mode |
 
 #+begin_src emacs-lisp
   (use-package evil-smartparens
@@ -1776,6 +1806,21 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
     #+end_src
 
     #+RESULTS:
+*** LaTeX
+    #+begin_src emacs-lisp
+      (use-package company-auctex)
+      (use-package auto-complete-auctex)
+      #+end_src
+
+      #+RESULTS:
+
+      #+begin_src emacs-lisp
+	(add-hook 'TeX-mode-hook (lambda ()
+				     (TeX-fold-mode 3)))
+	(add-hook 'TeX-mode-hook 'outline-minor-mode)
+      #+end_src
+
+      #+RESULTS:
 
 * Terminals
 ** term-mode
@@ -1877,39 +1922,120 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 - https://ambrevar.xyz/emacs-eshell-versus-shell/index.html
 
 #+begin_src emacs-lisp
-
   (defun efs/configure-eshell ()
+    (require 'dash)
+    (require 's)
     ;; Save command history when commands are entered
     (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
-
+  
     ;; Truncate buffer for performance
     (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
-
+  
     ;; Bind some useful keys for evil-mode
     (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
     (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
     (evil-normalize-keymaps)
-
+  
     (setq eshell-history-size         10000
-          eshell-buffer-maximum-lines 10000
-          eshell-hist-ignoredups t
-          eshell-scroll-to-bottom-on-input t))
-
+	  eshell-buffer-maximum-lines 10000
+	  eshell-hist-ignoredups t
+	  eshell-scroll-to-bottom-on-input t))
+  
   (use-package eshell-git-prompt
     :after eshell)
-
+  
   (use-package eshell
     :hook (eshell-first-time-mode . efs/configure-eshell)
     :config
-
+  
     (with-eval-after-load 'esh-opt
       (setq eshell-destroy-buffer-when-process-dies t)
       (setq eshell-visual-commands '("htop" "zsh" "vim")))
-
-    (eshell-git-prompt-use-theme 'powerline))
-
-
+  
+    (eshell-git-prompt-use-theme 'robbyrussell)
+  
+    )
+  
+    ;; ;; Custom config
+    ;; (defmacro with-face (STR &rest PROPS)
+    ;;   "Return STR propertized with PROPS."
+    ;;   `(propertize ,STR 'face (list ,@PROPS)))
+  
+    ;; (defmacro esh-section (NAME ICON FORM &rest PROPS)
+    ;;   "Build eshell section NAME with ICON prepended to evaled FORM with PROPS."
+    ;;   `(setq ,NAME
+    ;; 	   (lambda () (when ,FORM
+    ;; 		   (-> ,ICON
+    ;; 		     (concat esh-section-delim ,FORM)
+    ;; 		     (with-face ,@PROPS))))))
+  
+    ;; (defun esh-acc (acc x)
+    ;;   "Accumulator for evaluating and concatenating esh-sections."
+    ;;   (--if-let (funcall x)
+    ;; 	(if (s-blank? acc)
+    ;; 	  it
+    ;; 	(concat acc esh-sep it))
+    ;;     acc))
+  
+    ;; (defun esh-prompt-func ()
+    ;;   "Build `eshell-prompt-function'"
+    ;;   (concat esh-header
+    ;; 	  (-reduce-from 'esh-acc "" eshell-funcs)
+    ;; 	  "\n"
+    ;; 	  eshell-prompt-string))
+  
+    ;; (esh-section esh-dir
+    ;; 	       "\xf07c"  ;  (faicon folder)
+    ;; 	       (abbreviate-file-name (eshell/pwd))
+    ;; 	       '(:foreground "gold" :bold ultra-bold :underline t))
+  
+    ;; (esh-section esh-git
+    ;; 	       "\xe907"  ;  (git icon)
+    ;; 	       (magit-get-current-branch)
+    ;; 	       '(:foreground "pink"))
+  
+    ;; (esh-section esh-python
+    ;; 	       "\xe928"  ;  (python icon)
+    ;; 	       pyvenv-virtual-env-name)
+  
+    ;; (esh-section esh-clock
+    ;; 	       "\xf017"  ;  (clock icon)
+    ;; 	       (format-time-string "%H:%M" (current-time))
+    ;; 	       '(:foreground "forest green"))
+  
+    ;; ;; Below I implement a "prompt number" section
+    ;; (setq esh-prompt-num 0)
+    ;; (add-hook 'eshell-exit-hook (lambda () (setq esh-prompt-num 0)))
+    ;; (advice-add 'eshell-send-input :before
+    ;; 	      (lambda (&rest args) (setq esh-prompt-num (incf esh-prompt-num))))
+  
+    ;; (esh-section esh-num
+    ;; 	       "\xf0c9"  ;  (list icon)
+    ;; 	       (number-to-string esh-prompt-num)
+    ;; 	       '(:foreground "brown"))
+  
+    ;; ;; Separator between esh-sections
+    ;; (setq esh-sep "  ")  ; or " | "
+  
+    ;; ;; Separator between an esh-section icon and form
+    ;; (setq esh-section-delim " ")
+  
+    ;; ;; Eshell prompt header
+    ;; (setq esh-header "\n ")  ; or "\n┌─"
+  
+    ;; ;; Eshell prompt regexp and string. Unless you are varying the prompt by eg.
+    ;; ;; your login, these can be the same.
+    ;; (setq eshell-prompt-regexp " ")   ; or "└─> "
+    ;; (setq eshell-prompt-string " ")   ; or "└─> "
+  
+    ;; ;; Choose which eshell-funcs to enable
+    ;; (setq eshell-funcs (list esh-dir esh-git esh-python esh-clock esh-num))
+  
+    ;; ;; Enable the new eshell prompt
+    ;; (setq eshell-prompt-function 'esh-prompt-func)
 #+end_src
+
+#+RESULTS:
 
 Import bash alias into eshell
 #+begin_src emacs-lisp
@@ -2067,24 +2193,20 @@ Ace-link provides easy of navigation inside emacs self-hyperlinks or ad-hoc ones
 : ace-link-org
 
 - ö = (AltGr-p)
+** Keybinds
+Change ISO_Level3_Shift for <f2> <=> 96  F12
+Change 134 Super_R for Meta
 
+keycode 133 = Super_L NoSymbol Super_L => Emacs's Meta
 
-
-
-# ** Keybinds
-# Change ISO_Level3_Shift for <f2> <=> 96  F12
-# Change 134 Super_R for Meta
-
-# keycode 133 = Super_L NoSymbol Super_L => Emacs's Meta
-
-# 108 ISO_Level3_Shift
-# 134 Super_R
-# 135 Super_R
-# 105 Control_R
-# 62  Shift_R
-# keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
-# keycode 134 = Super_R NoSymbol Super_R
-# keycode 135 = Super_R NoSymbol Super_R
+108 ISO_Level3_Shift
+134 Super_R
+135 Super_R
+105 Control_R
+62  Shift_R
+keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keycode 134 = Super_R NoSymbol Super_R
+keycode 135 = Super_R NoSymbol Super_R
 
 *** Fs
 67  F1
@@ -2099,4 +2221,22 @@ Ace-link provides easy of navigation inside emacs self-hyperlinks or ad-hoc ones
 76  F10
 95  F11
 96  F12
+
+* Web APIs
+** Stack Exchange layer
+  #+begin_src emacs-lisp
+    (use-package sx)
+    #+end_src
+** Reddit layer
+** Mu4e layer (e-mail)
+* Presentations
+** Demo-it
+  #+begin_src emacs-lisp
+    (use-package demo-it)
+    #+end_src
+
+** Fancy Narrow
+    #+begin_src emacs-lisp
+      (use-package fancy-narrow)
+    #+end_src
 

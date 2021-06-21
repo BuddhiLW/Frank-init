@@ -67,3 +67,81 @@
    #+begin_src emacs-lisp
      (global-set-key [f6] 'cycle-ispell-languages)
    #+end_src
+
+* Rainbow-mode
+  #+begin_src emacs-lisp
+    (use-package rainbow-delimiters
+      :hook ((special-mode . rainbow-delimiters-mode)
+	     (text-mode . rainbow-delimiters-mode)
+	     (prog-mode . rainbow-delimiters-mode)))
+  #+end_src
+
+    #+RESULTS:
+
+* TODO Parenthesis
+  DEADLINE: <2021-06-20 Sun> SCHEDULED: <2021-06-17 Thu>
+Move configuration on Emacs.org to here.
+
+* Indent Guide
+  #+begin_src emacs-lisp
+    (use-package indent-guide
+      :init (indent-guide-global-mode t)
+      :hook (prog-mode . indent-guide-mode))
+  #+end_src
+
+    #+RESULTS:
+
+* Autocomplete
+  #+begin_src emacs-lisp
+    (use-package auto-complete
+      :hook ((  )
+	     (prog-mode . auto-complete-mode)))
+    
+    #+end_src
+
+* Yasnippets
+  #+begin_src emacs-lisp
+    (use-package yasnippets)
+    #+end_src
+
+* Language-specific
+** LaTeX
+*** AUCTeX
+   #+begin_src emacs-lisp
+     (use-package auctex
+       :ensure tex-mode
+       :hook (tex-mode . auctex-mode))
+     #+end_src
+
+     #+RESULTS:
+*** LaTeX Extra features for editing
+    #+begin_src emacs-lisp
+      (use-package latex-extra)
+      #+end_src
+
+      #+RESULTS:
+* Outshine - Org-folding for non-Org buffers
+#+begin_src emacs-lisp
+  (use-package outshine
+    :hook ((outline-minor-mode-hook . outshine-mode)
+	   (prog-mode . outshine-mode)))
+  #+end_src
+
+  #+RESULTS:
+* Org-roam
+** Requeriments for smooth run
+*** org-ref, bibtex related pkgs.
+    #+begin_src emacs-lisp
+      (use-package org-ref)
+      (use-package bibtex-utils)
+      (use-package company-bibtex)
+      (use-package gscholar-bibtex)
+      (use-package helm-bibtex)
+      (use-package org-roam-bibtex)
+    #+end_src
+    
+  #+begin_src emacs-lisp
+    (use-package org-roam
+      :init
+      (add-hook 'after-init-hook 'org-roam-mode))
+    #+end_src

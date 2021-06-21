@@ -1,5 +1,26 @@
-* Weight
-|                        |     |                                        |
-|------------------------+-----+----------------------------------------|
-| [2020-10-09 Fri 10:10] | 160 | Ate 3 hamburgers today.  I feel great! |
-| [2020-10-09 Fri 10:11] | 165 | Shouldn't have eaten those burgers...  |
+* Pomodoro
+*** Jun 19th 2021
+  | Clojure(Script)       | Reading               | TCC | Emacs | Blogging              |
+  |-----------------------+-----------------------+-----+-------+-----------------------|
+  | 09:59 -- 10:17 - 0:18 | 20:10 -- 20:33 - 0:23 |     |       | 21:03 -- 21:53 - 0:50 |
+  | 17:54 -- 19:05 - 1:11 |                       |     |       |                       |
+  
+** Clojure(Script)
+*** Clocks
+    CLOCK: [2021-06-19 Sat 09:59]--[2021-06-19 Sat 10:17] =>  0:18
+    CLOCK: [2021-06-19 Sat 17:54]--[2021-06-19 Sat 19:05] =>  1:11
+** Reading
+   :LOGBOOK:
+   - State "DONE"       from "NEXT"       [2021-06-19 Sat 20:35]
+   CLOCK: [2021-06-19 Sat 20:10]--[2021-06-19 Sat 20:33] =>  0:23
+   :END:
+** TCC
+** Emacs
+** Blogging
+   :LOGBOOK:
+   - State "DONE"       from "NEXT"       [2021-06-19 Sat 21:56]
+   :END:
+*** Clocks
+   CLOCK: [2021-06-19 Sat 21:03]--[2021-06-19 Sat 21:53] =>  0:50
+   
+   

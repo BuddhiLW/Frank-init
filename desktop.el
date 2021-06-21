@@ -4,15 +4,15 @@
 
     (defun  efs/set-wallpaper ()
       (interactive)
-      ;; NOTE: You will need to update this to a valid background path!
+      ;; note: you will need to update this to a valid background path!
       (start-process-shell-command
        "feh" nil  "feh --bg-scale ~/wpp/3354772.jpg"))
 
     ;; # (defun efs/exwm-init-hook ()
-    ;; #     ;; Make workspace 1 be the one where we land at startup
+    ;; #     ;; make workspace 1 be the one where we land at startup
     ;; #     (exwm-workspace-switch-create 1)
 
-    ;; #     ;; Open eshell by default
+    ;; #     ;; open eshell by default
     ;; #     ;;(eshell)
 
     ;; #     ;; NOTE: The next two are disabled because we now use Polybar!
@@ -113,7 +113,7 @@
     ;; #     ;; (efs/update-displays)
 
     ;; #     ;; Set the wallpaper after changing the resolution
-        (efs/set-wallpaper)
+	(efs/set-wallpaper)
 
     ;; #     ;; NOTE: This is disabled because we now use Polybar!
     ;; #     ;; Load the system tray before exwm-init
@@ -140,40 +140,44 @@
 ;;             ?\C-\M-j  Buffer list
 ;;             ?\C-\ )) ;; Ctrl+Space
 
-;; ;; Ctrl+Q will enable the next key to be sent directly
-;;     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+;; Ctrl+Q will enable the next key to be sent directly
+;; (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
 ;;     ;; Set up global key bindings.  These always work, no matter the input state!
 ;;     ;; Keep in mind that changing this list after EXWM initializes has no effect.
-;;     (setq exwm-input-global-keys
-;;           `(
-;;             Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-;;             ([?\s-r] . exwm-reset)
+(setq exwm-input-global-keys
+      `(
+	;;             Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+	([?\s-r] . exwm-reset)
 
-;;             Move between windows
-;;             ([s-left] . windmove-left)
-;;             ([s-right] . windmove-right)
-;;             ([s-up] . windmove-up)
-;;             ([s-down] . windmove-down)
+	;;             Move between windows
+	([s-left] . windmove-left)
+	;; ([s-j] . windmove-left)
+	([s-right] . windmove-right)
+	;; ([s-left] . windmove-left)
+	([?\s-k] . windmove-up)
+	([s-up] . windmove-up)
+	([?\s-j] . windmove-down)
+	([s-down] . windmove-down)
 
 ;;             ;; Launch applications via shell command
-;;             ([?\s-&] . (lambda (command)
-;;                          (interactive (list (read-shell-command "$ ")))
-;;                          (start-process-shell-command command nil command)))
+	([?\s-&] . (lambda (command)
+		     (interactive (list (read-shell-command "$ ")))
+		     (start-process-shell-command command nil command)))
 
 ;;             ;; Switch workspace
-;;             ([?\s-w] . exwm-workspace-switch)
-;;             ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+	([?\s-w] . exwm-workspace-switch)
+	([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
 
 ;;             ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-;;             ,@(mapcar (lambda (i)
-;;                         `(,(kbd (format "s-%d" i)) .
-;;                           (lambda ()
-;;                             (interactive)
-;;                             (exwm-workspace-switch-create ,i))))
-;;                       (number-sequence 0 9))))
+      ,@(mapcar (lambda (i)
+		  `(,(kbd (format "s-%d" i)) .
+		    (lambda ()
+		      (interactive)
+		      (exwm-workspace-switch-create ,i))))
+		(number-sequence 0 9))))
 
-;;     (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
+;; (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
 
 ;;     (exwm-enable))
 
@@ -360,7 +364,7 @@
 
 (use-package restart-emacs)
 
-(global-set-key (kbd "s-l") 'enlarge-window-horizontally)
+;; (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-x s-b") 'efs/kill-panel)
 
 (use-package evil-multiedit
@@ -387,3 +391,19 @@
       (lambda ()
 	(turn-on-font-lock))))
     "Mode for fancy diary display."))
+
+(use-package unicode-fonts
+   :ensure t
+   :config
+    (unicode-fonts-setup))
+
+(use-package dynamic-fonts)
+
+(use-package ucs-utils)
+
+;; (use-package powerline
+  ;; :ensure
+  ;; :init
+  ;; (powerline-evil-theme))
+(require 'powerline)
+(powerline-center-evil-theme)

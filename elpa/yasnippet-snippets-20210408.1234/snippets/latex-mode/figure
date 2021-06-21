@@ -4,6 +4,9 @@
 # --
 \begin{figure}[ht]
   \centering
-  \includegraphics[${1:options}]{figures/${2:path.pdf}}
-  \caption{\label{fig:${3:label}} $0}
+  \caption{\label{fig:${1:label}} $0}
+  \includegraphics[${2:width=\linewidth}]{${3:path.pdf}}
+  \legend{Fonte: ${3:legend}}
 \end{figure}
+
+

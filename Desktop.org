@@ -1,13 +1,13 @@
-#+title: Emacs Desktop Environment
-#+PROPERTY: header-args:emacs-lisp :tangle ./desktop.el
+#+title: emacs desktop environment
+#+property: header-args:emacs-lisp :tangle ./desktop.el
 
 * Window Management
 
-** EXWM Configuration
+** exwm configuration
 
-We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basis for our Emacs Desktop Environment.  The [[https://github.com/ch11ng/exwm/wiki][EXWM Wiki]] is a great place to find tips about how to configure everything!
+we use the excellent [[https://github.com/ch11ng/exwm][exwm]] module as the basis for our emacs desktop environment.  the [[https://github.com/ch11ng/exwm/wiki][exwm wiki]] is a great place to find tips about how to configure everything!
 
-*NOTE:* Make sure you've installed =nm-applet=, =pasystray= and =blueman= for the system tray apps to work!
+*note:* make sure you've installed =nm-applet=, =pasystray= and =blueman= for the system tray apps to work!
 
 #+begin_src emacs-lisp
   
@@ -16,16 +16,16 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
       ;;     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
   
       (defun  efs/set-wallpaper ()
-        (interactive)
-        ;; NOTE: You will need to update this to a valid background path!
-        (start-process-shell-command
-         "feh" nil  "feh --bg-scale ~/wpp/3354772.jpg"))
+	(interactive)
+	;; note: you will need to update this to a valid background path!
+	(start-process-shell-command
+	 "feh" nil  "feh --bg-scale ~/wpp/3354772.jpg"))
   
       ;; # (defun efs/exwm-init-hook ()
-      ;; #     ;; Make workspace 1 be the one where we land at startup
+      ;; #     ;; make workspace 1 be the one where we land at startup
       ;; #     (exwm-workspace-switch-create 1)
   
-      ;; #     ;; Open eshell by default
+      ;; #     ;; open eshell by default
       ;; #     ;;(eshell)
   
       ;; #     ;; NOTE: The next two are disabled because we now use Polybar!
@@ -126,7 +126,7 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
       ;; #     ;; (efs/update-displays)
   
       ;; #     ;; Set the wallpaper after changing the resolution
-          (efs/set-wallpaper)
+	  (efs/set-wallpaper)
   
       ;; #     ;; NOTE: This is disabled because we now use Polybar!
       ;; #     ;; Load the system tray before exwm-init
@@ -153,47 +153,51 @@ We use the excellent [[https://github.com/ch11ng/exwm][EXWM]] module as the basi
   ;;             ?\C-\M-j  Buffer list
   ;;             ?\C-\ )) ;; Ctrl+Space
   
-  ;; ;; Ctrl+Q will enable the next key to be sent directly
-  ;;     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+  ;; Ctrl+Q will enable the next key to be sent directly
+  ;; (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
   
   ;;     ;; Set up global key bindings.  These always work, no matter the input state!
   ;;     ;; Keep in mind that changing this list after EXWM initializes has no effect.
-  ;;     (setq exwm-input-global-keys
-  ;;           `(
-  ;;             Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-  ;;             ([?\s-r] . exwm-reset)
+  (setq exwm-input-global-keys
+	`(
+	  ;;             Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+	  ([?\s-r] . exwm-reset)
   
-  ;;             Move between windows
-  ;;             ([s-left] . windmove-left)
-  ;;             ([s-right] . windmove-right)
-  ;;             ([s-up] . windmove-up)
-  ;;             ([s-down] . windmove-down)
+	  ;;             Move between windows
+	  ([s-left] . windmove-left)
+	  ;; ([s-j] . windmove-left)
+	  ([s-right] . windmove-right)
+	  ;; ([s-left] . windmove-left)
+	  ([?\s-k] . windmove-up)
+	  ([s-up] . windmove-up)
+	  ([?\s-j] . windmove-down)
+	  ([s-down] . windmove-down)
   
   ;;             ;; Launch applications via shell command
-  ;;             ([?\s-&] . (lambda (command)
-  ;;                          (interactive (list (read-shell-command "$ ")))
-  ;;                          (start-process-shell-command command nil command)))
+	  ([?\s-&] . (lambda (command)
+		       (interactive (list (read-shell-command "$ ")))
+		       (start-process-shell-command command nil command)))
   
   ;;             ;; Switch workspace
-  ;;             ([?\s-w] . exwm-workspace-switch)
-  ;;             ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+	  ([?\s-w] . exwm-workspace-switch)
+	  ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
   
   ;;             ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-  ;;             ,@(mapcar (lambda (i)
-  ;;                         `(,(kbd (format "s-%d" i)) .
-  ;;                           (lambda ()
-  ;;                             (interactive)
-  ;;                             (exwm-workspace-switch-create ,i))))
-  ;;                       (number-sequence 0 9))))
+	,@(mapcar (lambda (i)
+		    `(,(kbd (format "s-%d" i)) .
+		      (lambda ()
+			(interactive)
+			(exwm-workspace-switch-create ,i))))
+		  (number-sequence 0 9))))
   
-  ;;     (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
+  ;; (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
   
   ;;     (exwm-enable))
   
 #+end_src
 
 #+RESULTS:
-: #<process feh>
+: (([8388722] . exwm-reset) ([s-left] . windmove-left) ([s-right] . windmove-right) ([8388715] . windmove-up) ([s-up] . windmove-up) ([8388714] . windmove-down) ([s-down] . windmove-down) ([8388646] lambda (command) (interactive (list (read-shell-command $ ))) (start-process-shell-command command nil command)) ([8388727] . exwm-workspace-switch) ([8388704] lambda nil (interactive) (exwm-workspace-switch-create 0)) ([8388656] lambda nil (interactive) (exwm-workspace-switch-create 0)) ([8388657] lambda nil (interactive) (exwm-workspace-switch-create 1)) ([8388658] lambda nil (interactive) (exwm-workspace-switch-create 2)) ([8388659] lambda nil (interactive) (exwm-workspace-switch-create 3)) ([8388660] lambda nil (interactive) (exwm-workspace-switch-create 4)) ([8388661] lambda nil (interactive) (exwm-workspace-switch-create 5)) ([8388662] lambda nil (interactive) (exwm-workspace-switch-create 6)) ([8388663] lambda nil (interactive) (exwm-workspace-switch-create 7)) ([8388664] lambda nil (interactive) (exwm-workspace-switch-create 8)) ([8388665] lambda nil (interactive) (exwm-workspace-switch-create 9)))
 
 # #+RESULTS:
 # : t
@@ -922,9 +926,11 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
 * Emacs Functionality
 ** Restarting Emacs
+
    #+begin_src emacs-lisp
      (use-package restart-emacs)
    #+end_src
+
 * From LARBS to E-LARBS
 ** Bindings
 *** remaps (script)
@@ -956,12 +962,9 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
 *** Window movement
     #+begin_src emacs-lisp
-      (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
+      ;; (global-set-key (kbd "s-l") 'enlarge-window-horizontally)
       (global-set-key (kbd "C-x s-b") 'efs/kill-panel)
     #+end_src
-
-    #+RESULTS:
-    : efs/kill-panel
 
 ** .profile
    #+begin_src shell :tangle ~/.profile
@@ -1127,12 +1130,13 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
        :hook (web-mode . evil-multiedit-mode))
    #+end_src
 
-   #+RESULTS:
-   | evil-multiedit-mode | (lambda nil (when (string-equal tsx (file-name-extension buffer-file-name)) (setup-tide-mode))) |
-
    # evil multiedit
    # multiple-cursors
 ** Brazilian Keyboard Layout
+In Artix (runit)
+#+begin_src conf :tangle "/sudo::/etc/vconsole.conf"
+KEYMAP=br-latin1-us
+#+end_src
 ** Galery viewing
    # #+begin_src emacs-lisp
    #   (use-package )
@@ -1164,3 +1168,114 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
    #+RESULTS:
    : t
+** Zsh config
+#+begin_src conf :tangle ~/.config/zsh/.zshrc
+  # Buddhi's config for the ZSH. pedrogbranquinho@gmail.com 
+      # 🅭🅯🄏 🅭 
+  
+  # Enable colors and change prompt:
+  autoload -U colors && colors	# Load colors
+  PS1="%B%{$fg[blue]%}(%{$fg[yellow]%}%n %B%{$fg[red]%}'(%{$fg[magenta]%}%~%{$fg[red]%})%{$fg[blue]%})%{$fg[cyan]%} λ%b "
+  setopt autocd		# Automatically cd into typed directory.
+  stty stop undef		# Disable ctrl-s to freeze terminal.
+  setopt interactive_comments
+  
+  # History in cache directory:
+  HISTSIZE=10000000
+  SAVEHIST=10000000
+  HISTFILE=~/.cache/zsh/history
+  
+  # Load aliases and shortcuts if existent.
+  [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
+  [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
+  [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
+  
+  # Basic auto/tab complete:
+  autoload -U compinit
+  zstyle ':completion:*' menu select
+  zmodload zsh/complist
+  compinit
+  _comp_options+=(globdots)		# Include hidden files.
+  
+  # vi mode
+  bindkey -v
+  export KEYTIMEOUT=1
+  
+  # Use vim keys in tab complete menu:
+  bindkey -M menuselect 'h' vi-backward-char
+  bindkey -M menuselect 'k' vi-up-line-or-history
+  bindkey -M menuselect 'l' vi-forward-char
+  bindkey -M menuselect 'j' vi-down-line-or-history
+  bindkey -v '^?' backward-delete-char
+  
+  # Change cursor shape for different vi modes.
+  function zle-keymap-select () {
+      case $KEYMAP in
+          vicmd) echo -ne '\e[1 q';;      # block
+          viins|main) echo -ne '\e[5 q';; # beam
+      esac
+  }
+  zle -N zle-keymap-select
+  zle-line-init() {
+      zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+      echo -ne "\e[5 q"
+  }
+  zle -N zle-line-init
+  echo -ne '\e[5 q' # Use beam shape cursor on startup.
+  preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+  
+  # Use lf to switch directories and bind it to ctrl-o
+  lfcd () {
+      tmp="$(mktemp)"
+      lf -last-dir-path="$tmp" "$@"
+      if [ -f "$tmp" ]; then
+          dir="$(cat "$tmp")"
+          rm -f "$tmp" >/dev/null
+          [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+      fi
+  }
+  bindkey -s '^o' 'lfcd\n'
+  
+  bindkey -s '^a' 'bc -lq\n'
+  
+  bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+  
+  bindkey '^[[P' delete-char
+  
+  # Edit line in vim with ctrl-e:
+  autoload edit-command-line; zle -N edit-command-line
+  bindkey '^e' edit-command-line
+  
+  # Load syntax highlighting; should be last.
+  source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+#+end_src
+** Unicode characters
+#+begin_src emacs-lisp
+(use-package unicode-fonts
+   :ensure t
+   :config
+    (unicode-fonts-setup))
+    #+end_src
+
+#+begin_src emacs-lisp
+ (use-package dynamic-fonts)
+  #+end_src
+
+  #+RESULTS:
+
+  #+begin_src emacs-lisp
+    (use-package ucs-utils)
+    #+end_src
+
+    #+RESULTS:
+  
+* Powerline
+  #+begin_src emacs-lisp
+    ;; (use-package powerline
+      ;; :ensure
+      ;; :init
+      ;; (powerline-evil-theme))
+    (require 'powerline)
+    (powerline-center-evil-theme)
+    #+end_src
+

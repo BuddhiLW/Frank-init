@@ -1,118 +1,3 @@
-mkdir ~/LUPO-WAGNER
-cp 426_1304/ ~/LU
-cp 426_1304/ ~/LUPO-WAGNER/
-cp -r ./426_1304/ ~/LUPO-WAGNER/
-ls ~/LUPO-WAGNER
-cp -r ./427_1404/ ~/LUPO-WAGNER/
-cp -r ./428_1504/ ~/LUPO-WAGNER/
-cp -r ./429_1604/ ~/LUPO-WAGNER/
-sudo umount /mnt/
-sudo umount /dev/sdb1
-sudo umount /mnt/
-cd 
-sudo umount /mnt/
-sudo umount /dev/sdb1
-sudo umount /dev/sdb
-sudo umount /dev/sdb1
-clear
-lsblk
-sudo umount /mnt/
-cd
-ls
-cd LUPO-WAGNER
-ls
-clear-scrollback 
-cd 
-cd PP/LaT
-cd PP/LaTeX
-cd Wagner
-ls
-cd fotos-lupo-mogrify
-ls
-cd 3dia
-cd 3dia-pedro
-ls
-mkdir mono15
-mv mono15-parte1 mono15/
-mv ./mono15-parte2 mono15/
-mv ./organizar-mono15-resto mono15/
-mv ./maquinas-diferentes-mono15 mono15/
-ls
-7z a mono15.zip mono15
-clear
-clear-scrollback 
-ls
-clear-scrollback 
-xrdb -merge Xresources 
-ls
-chmod a+x anaconda 
-sudo chmod a+x anaconda 
-chmod 777 anaconda 
-sudo chmod 777 anaconda 
-sudo chmod 777 conda
-sudo chmod a+x conda
-PATH=$PATH:/opt/anaconda/bin/
-export PATH=$PATH:/opt/anaconda/bin/
-ls
-cd Programs/
-ls 
-./balenaEtcher-1.5.120-x64.AppImage 
-sudo ./balenaEtcher-1.5.120-x64.AppImage 
-lspci
-xrandr
-clear
-lscpi | grep "nvidia"
-lscpi | grep "VGA"
-lscpi | grep VGA
-ls
-cd ..
-ls
-cd ..
-ls
-cd ..
-ls
-cd clojure2d-examples/
-ls
-git init
-git config --global init.defaultBranch development
-git branch -m development
-clear
-git add .
-ls
-cd 
-ls
-rm -rf ./Documents-b
-ls Documents 
-ls Documents-b
-rm -rf ./guix
-clear
-cd PP
-ls
-magit init
-git init
-git add .
-git add . 
-mkdir ~/Temp
-mv clojure2d-examples ~/Temp/
-mv ./Clojure/clojure2d-examples ~/Temp/
-ls Clojure/
-clear
-clear-scrollback 
-ls
-git add .
-git commit -m "first commit"git branch -M maingit remote add origin https://github.com/BuddhiLW/ProgrammingProjects.gitgit push -u origin main
-cd
-ls
-clear-scrollback 
-use-theme
-p -Sy
-p: command not found
-clear
-clear-scrollback 
-hwclock 
-sudo hwclock 
-sudo hwclock --systohc
- sv check dbus >/dev/null || exit 1
 .
 ls /etc/local.d/
 ls /etc/locatime
@@ -126,3 +11,118 @@ ls -af /etc/localtime
 hwclock --systohc
 sudo hwclock --systohc
 clear-scrollback 
+cd
+ls
+clear
+clear-scrollback 
+paru 
+yay -Syu
+clear-scrollback 
+hwclock --show
+sudo hwclock --show
+sudo hwclock --systohc
+sudo ln -sf /usr/share/zoneinfo/Brazil/East /etc/localtime
+hwclock --systohc --debug
+sudo hwclock --systohc --debug
+sudo hwclock --systohc --verbose
+ls
+ls
+exit
+clear-scrollback 
+ls
+clear-scrollback 
+cd 
+cd PP/
+git init
+git add Org/
+git commit -m "Org files"
+git push
+git branch -M maingit remote add origin https://github.com/BuddhiLW/ProgrammingProjects.gitgit push -u origin main
+ls
+git add rclone.org 
+git commit -m "start"
+git add Julia/
+git commit -m "Start repo"
+git push
+git push --set-upstream origin main
+git init
+git add Org/Notes/
+git add Org/CV/
+git add Org/Org-spec-web/
+git add Org/Transcriptions/
+git add Org/TradeBot/
+git commit -m "Org notes"
+git commit -M "notes"
+git push
+git push --set-upstream origin main
+ls
+git add LaTeX/
+git commit -m "LaTeX"
+git push
+git push --set-upstream origin main
+clear
+ls
+cd ClojureScript
+cd ReagentTodo/
+lein run
+lein start
+lein 
+npm install
+npm start
+git add .
+git commit -m "Complete editing-functionality"
+git push
+clear
+git branch
+git branch -b
+ls
+cd PP/ClojureScript/
+ls
+cd Blobing/
+clear
+git add .
+git commit -m "test new webpage"
+git push
+git add .
+git commit -m "test new webpage"
+git push
+npm install -g sass
+sudo npm install -g sass
+cd ..
+ls
+cd lotus
+cd lotus-blog/
+lein run
+lein serve
+cd ..
+ls
+cd Blobing/
+lein run
+lein serve
+lein build
+lein run
+lein serve
+lein run
+git add .
+git push
+clear
+git add .
+git commit -m "Functional Web Projects"
+git push
+lein serve
+git add .
+git commit -m "change author-image size"
+git push
+sdn
+pavucontrol
+runsv run 
+runsv
+runsv start
+sv up pavucontrol
+ls /run/runit/service/
+sv up alsa
+sudo sv down alsa
+sudo sv up alsa
+sudo sv status alsa
+pavucontrol
+yay -S pavucontrol

@@ -103,6 +103,11 @@
 	 '(93 . 93) '(100 . 100)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
+(use-package font-utils)
+(use-package ucs-utils)
+(use-package list-utils)
+;; (use-package unicode-fonts)
+
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
 
 ;; Set the fixed pitch face
@@ -124,6 +129,14 @@
   (set-fontset-font
    t 'symbol
    (font-spec :family "Noto Color Emoji"
+              :height efs/default-variable-font-size
+              :weight 'normal
+              :width 'normal
+              :slant 'normal))
+  ;; Creative Commons Symbols
+  (set-fontset-font
+   t 'symbol
+   (font-spec :family "CCSymbols"
               :height efs/default-variable-font-size
               :weight 'normal
               :width 'normal
@@ -192,15 +205,15 @@ codepoints starting from codepoint-start."
                 "x" ":" "+" "+" "*")))
     (my-correct-symbol-bounds (my-ligature-list ligs #Xe100))))
 
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+(use-package emojify)
+  ;; :hook (prog-mode . global-emojify-mode))
 
 (setq emojify-user-emojis '((":emacs:" . (("name" . "Emacs")
-                                              ("image" . "~/.emacs.d/emoji/emacs.svg")
-                                              ("style" . "github")))
+                                          ("image" . "~/.emacs.d/emoji/emacs.svg")
+                                          ("style" . "github")))
                             (":lambda:" . (("name" . "Lambda")
-                                              ("image" . "~/.emacs.d/emoji/lambda.jpg")
-                                              ("style" . "github")))))
+                                           ("image" . "~/.emacs.d/emoji/lambda.jpg")
+                                           ("style" . "github")))))
 ;; If emojify is already loaded refresh emoji data
 (when (featurep 'emojify)
   (emojify-set-emoji-data))
@@ -234,8 +247,11 @@ codepoints starting from codepoint-start."
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
     "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
-    "h" 'shrink-window-horizontally
-    "l" 'enlarge-window-horizontally))
+    "j" 'enlarge-window
+    "l" 'shrink-window-horizontally
+    "h" 'enlarge-window-horizontally
+    "a" 'org-agenda
+    ))
 
 (use-package evil
   :init
@@ -415,16 +431,17 @@ codepoints starting from codepoint-start."
   (setq org-log-into-drawer t)
 
   (setq org-agenda-files
-        '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Monday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Tuesday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Wendnesday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Thrusday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Friday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Saturday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Sunday.org"))
+	'("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
+	  "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Monday.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Tuesday.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Wendnesday.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Thrusday.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Friday.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Saturday.org"
+	  ;; "~/Projects/Code/emacs-from-scratch/OrgFiles/Sunday.org"
+	  ))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
@@ -460,12 +477,12 @@ codepoints starting from codepoint-start."
    '(("d" "Dashboard"
      ((agenda "" ((org-deadline-warning-days 7)))
       (todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))
+	((org-agenda-overriding-header "Next Tasks")))
       (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
     ("n" "Next Tasks"
      ((todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))))
+	((org-agenda-overriding-header "Next Tasks")))))
 
     ("W" "Work Tasks" tags-todo "+work-email")
 
@@ -477,53 +494,53 @@ codepoints starting from codepoint-start."
 
     ("w" "Workflow Status"
      ((todo "WAIT"
-            ((org-agenda-overriding-header "Waiting on External")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Waiting on External")
+	     (org-agenda-files org-agenda-files)))
       (todo "REVIEW"
-            ((org-agenda-overriding-header "In Review")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "In Review")
+	     (org-agenda-files org-agenda-files)))
       (todo "PLAN"
-            ((org-agenda-overriding-header "In Planning")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "In Planning")
+	     (org-agenda-todo-list-sublevels nil)
+	     (org-agenda-files org-agenda-files)))
       (todo "BACKLOG"
-            ((org-agenda-overriding-header "Project Backlog")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Project Backlog")
+	     (org-agenda-todo-list-sublevels nil)
+	     (org-agenda-files org-agenda-files)))
       (todo "READY"
-            ((org-agenda-overriding-header "Ready for Work")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Ready for Work")
+	     (org-agenda-files org-agenda-files)))
       (todo "ACTIVE"
-            ((org-agenda-overriding-header "Active Projects")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Active Projects")
+	     (org-agenda-files org-agenda-files)))
       (todo "COMPLETED"
-            ((org-agenda-overriding-header "Completed Projects")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Completed Projects")
+	     (org-agenda-files org-agenda-files)))
       (todo "CANC"
-            ((org-agenda-overriding-header "Cancelled Projects")
-             (org-agenda-files org-agenda-files)))))))
+	    ((org-agenda-overriding-header "Cancelled Projects")
+	     (org-agenda-files org-agenda-files)))))))
 
   (setq org-capture-templates
     `(("t" "Tasks / Projects")
       ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+	   "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
       ("j" "Journal Entries")
       ("jj" "Journal" entry
-           (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-           :clock-in :clock-resume
-           :empty-lines 1)
+	   (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+	   "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+	   ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+	   :clock-in :clock-resume
+	   :empty-lines 1)
       ("jm" "Meeting" entry
-           (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :clock-in :clock-resume
-           :empty-lines 1)
+	   (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+	   "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+	   :clock-in :clock-resume
+	   :empty-lines 1)
 
       ("w" "Workflows")
       ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+	   "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
 
       ("m" "Metrics Capture")
       ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
@@ -535,9 +552,11 @@ codepoints starting from codepoint-start."
   (efs/org-font-setup))
 
 (use-package org-bullets
+  :after org-mode
+  :ensure t
   :hook (org-mode . org-bullets-mode)
   :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+  (org-bullets-bullet-list '("☯" "◉" "●" "○" "✜" "○" "●")))
 
 (defun efs/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
@@ -630,11 +649,10 @@ codepoints starting from codepoint-start."
    (add-to-list 'org-latex-classes
 		'("abntex2"
 		  "\\documentclass{abntex2}"
-
-		  ;; ("\\chapter{%s}" . "\\chapter*{%s}")
 		  ("\\chapter{%s}" . "\\chapter*{%s}")
-		  ("\\subsection{%(setq )}" . "\\section*{%s}")
-		  ("\\subsubsection{%s}" . "\\subsection*{%s}")
+		  ("\\section{%s}" . "\\section*{%s}")
+		  ("\\subsection{%(setq )}" . "\\subsection*{%s}")
+		  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 
 		  )))
 
@@ -642,6 +660,10 @@ codepoints starting from codepoint-start."
  ;;		      ("\\section{%s}" . "\\section*{%s}")
  ;;		      ("\\subsection{%(setq )}" . "\\subsection*{%s}")
  ;;		      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil))
 
 (defun reload-pdf ()
   (interactive
@@ -848,7 +870,15 @@ codepoints starting from codepoint-start."
 (setq 
  conda-env-home-directory (expand-file-name "~/.conda/") ;; as in previous example; not required
 conda-env-subdirectory "envs")
-(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(conda-anaconda-home "/opt/anaconda/")
+ '(helm-minibuffer-history-key "M-p")
+ '(package-selected-packages
+   '(yasnippets zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts undo-tree tj3-mode tide tern sx sudo-edit spaceline sotclojure slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode restart-emacs rainbow-mode rainbow-delimiters racket-mode python-mode pomodoro pnpm-mode pdf-view-restore ox-hugo outshine org-trello org-tree-slide org-roam-server org-roam-bibtex org-pomodoro org-plus-contrib org-noter-pdftools org-latex-impatient org-inline-pdf org-easy-img-insert org-download org-bullets ob-latex-as-png ob-julia-vterm ob-ipython ob-html-chrome ob-ess-julia ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode multiple-cursors mu4e-views mu4e-alert markdown-preview-mode makey lsp-ui lsp-julia lsp-jedi lsp-ivy lockfile-mode load-bash-alias latex-math-preview latex-extra julia-snail julia-shell julia-repl jedi ivy-rich ivy-prescient ivy-clojuredocs inf-clojure indent-guide impatient-mode helpful helm-clojuredocs gscholar-bibtex general gameoflife forge flymake-eslint flymake-css flymake-aspell flycheck-julia flycheck-elm flycheck-clojure flycheck-aspell fira-code-mode fancy-narrow exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-tutor evil-surround evil-smartparens evil-paredit evil-nerd-commenter evil-multiedit evil-mu4e evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elpy elm-yasnippets elm-mode ein edit-indirect dynamic-fonts doom-modeline dired-single dired-open dired-hide-dotfiles diffpdf desktop-environment demo-it dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-tabnine company-quickhelp company-jedi company-ctags company-box company-bibtex company-auctex company-anaconda command-log-mode clojure-mode-extra-font-locking bibtex-utils auto-package-update auto-complete-auctex all-the-icons-dired ag ace-link ac-slime ac-ispell ac-cider)))
 ;; if you want interactive shell support, include:
 (conda-env-initialize-interactive-shells)
 ;; if you want eshell support, include:
@@ -861,27 +891,27 @@ conda-env-subdirectory "envs")
 
 ;; (use-package artist-mode)
 
-(use-package indium
-:hook (js-mode . indium-interaction-mode))
+;; (use-package indium)
+ ;; :hook (js-mode . indium-interaction-mode))
 
 (use-package web-beautify
   :hook ((css-mode . web-beautify-css)
          ;; (js-mode . web-beautify-js)
          (html-mode . web-beautify-html)))
 
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+;; (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
-(use-package js2-mode
-  :hook ((js-mode . js2-minor-mode)
-         (js2-mode . ac-js2-mode)))
+;; (use-package js2-mode
+;;   :hook ((js-mode . js2-minor-mode)
+;;          (js2-mode . ac-js2-mode)))
 
-(use-package tern
-  :load-path "~/.emacs.d/tern/"
-  :after ((js-mode)
-          (js2-mode))
-  :hook ((js-mode . tern-mode)
-         (js2-mode . tern-mode))
-  :config (autoload 'tern-mode "tern.el" nil t))
+;; (use-package tern
+;;   :load-path "~/.emacs.d/tern/"
+;;   :after ((js-mode)
+;;           (js2-mode))
+;;   :hook ((js-mode . tern-mode)
+;;          (js2-mode . tern-mode))
+;;   :config (autoload 'tern-mode "tern.el" nil t))
 
 (use-package rjsx-mode
   :ensure t
@@ -903,22 +933,22 @@ conda-env-subdirectory "envs")
 
 (use-package flycheck
   :ensure t
-  :config
-  (add-hook 'typescript-mode-hook 'flycheck-mode)
+  ;; :config
+  ;; (add-hook 'typescript-mode-hook 'flycheck-mode)
   :init
   (global-flycheck-mode t))
 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (eldoc-mode +1)
+;;   (tide-hl-identifier-mode +1)
+;;   ;; company is an optional dependency. You have to
+;;   ;; install it separately via package-install
+;;   ;; `M-x package-install [ret] company`
+;;   (company-mode +1))
 
 (use-package company
   :ensure t
@@ -937,62 +967,62 @@ conda-env-subdirectory "envs")
   (use-package pos-tip
     :ensure t))
 
-(use-package web-mode
-  :ensure t
-  :mode (("\\.html?\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode)
-         ("\\.jsx\\'" . web-mode))
-  :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-block-padding 2
-        web-mode-comment-style 2
+;; (use-package web-mode
+;;   :ensure t
+;;   :mode (("\\.html?\\'" . web-mode)
+;;          ("\\.tsx\\'" . web-mode)
+;;          ("\\.jsx\\'" . web-mode))
+;;   :config
+;;   (setq web-mode-markup-indent-offset 2
+;;         web-mode-css-indent-offset 2
+;;         web-mode-code-indent-offset 2
+;;         web-mode-block-padding 2
+;;         web-mode-comment-style 2
 
-        web-mode-enable-css-colorization t
-        web-mode-enable-auto-pairing t
-        web-mode-enable-comment-keywords t
-        web-mode-enable-current-element-highlight t
-        web-mode-enable-auto-indentation nil
-        )
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                (setup-tide-mode))))
-  ;; enable typescript-tslint checker
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
+;;         web-mode-enable-css-colorization t
+;;         web-mode-enable-auto-pairing t
+;;         web-mode-enable-comment-keywords t
+;;         web-mode-enable-current-element-highlight t
+;;         web-mode-enable-auto-indentation nil
+;;         )
+;;   (add-hook 'web-mode-hook
+;;             (lambda ()
+;;               (when (string-equal "tsx" (file-name-extension buffer-file-name))
+;;                 (setup-tide-mode))))
+;;   ;; enable typescript-tslint checker
+;;   (flycheck-add-mode 'typescript-tslint 'web-mode))
 
-(use-package typescript-mode
-  :ensure t
-  :config
-  (setq typescript-indent-level 2)
-  (add-hook 'typescript-mode #'subword-mode))
+;; (use-package typescript-mode
+;;   :ensure t
+;;   :config
+;;   (setq typescript-indent-level 2)
+;;   (add-hook 'typescript-mode #'subword-mode))
 
-(use-package tide
-  :init
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)))
+;; (use-package tide
+;;   :init
+;;   :ensure t
+;;   :after (typescript-mode company flycheck)
+;;   :hook ((typescript-mode . tide-setup)
+;;          (typescript-mode . tide-hl-identifier-mode)))
 
 (use-package css-mode
   :config
 (setq css-indent-offset 2))
 
-(use-package prettier-js
-:ensure t
-:after (rjsx-mode)
-:hook (rjsx-mode . prettier-js-mode))
+;; (use-package prettier-js
+;; :ensure t
+;; :after (rjsx-mode)
+;; :hook (rjsx-mode . prettier-js-mode))
 
 ;; (use-package geiser
   ;; :after racket-mode
   ;; :hook (racket-mode . geiser-mode))
 
-(use-package racket-mode
-  :bind ("C-c l" . racket-insert-lambda)
-  :config
-  (when (racket-mode)
-    (exec-path-from-shell-initialize)))
+(use-package racket-mode)
+  ;; :bind ("C-c l" . racket-insert-lambda))
+  ;; :config
+  ;; (when (racket-mode)
+  ;;   (exec-path-from-shell-initialize)))
 
 (use-package paredit)
   ;; :hook (prog-mode . paredit-mode))
@@ -1002,8 +1032,8 @@ conda-env-subdirectory "envs")
   ;; :hook prog-mode)
   ;; :hook (prog-mode . paredit-mode))
 
-;; (use-package smartparens
-;;   :hook ((emacs-lisp-mode . smartparens-mode)
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
 ;;          (lisp-mode . smartparens-mode)
 ;;          (cider-mode . smartparens-mode)
 ;;          (clojure-mode . smartparens-mode)
@@ -1077,6 +1107,13 @@ conda-env-subdirectory "envs")
 (use-package ob-julia-vterm)
 (use-package julia-repl)
 
+(use-package company-auctex)
+(use-package auto-complete-auctex)
+
+(add-hook 'TeX-mode-hook (lambda ()
+			     (TeX-fold-mode 3)))
+(add-hook 'TeX-mode-hook 'outline-minor-mode)
+
 (use-package term
   :commands term
   :config
@@ -1101,6 +1138,8 @@ conda-env-subdirectory "envs")
   (setq explicit-powershell.exe-args '()))
 
 (defun efs/configure-eshell ()
+  (require 'dash)
+  (require 's)
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
 
@@ -1113,9 +1152,9 @@ conda-env-subdirectory "envs")
   (evil-normalize-keymaps)
 
   (setq eshell-history-size         10000
-        eshell-buffer-maximum-lines 10000
-        eshell-hist-ignoredups t
-        eshell-scroll-to-bottom-on-input t))
+	eshell-buffer-maximum-lines 10000
+	eshell-hist-ignoredups t
+	eshell-scroll-to-bottom-on-input t))
 
 (use-package eshell-git-prompt
   :after eshell)
@@ -1128,7 +1167,87 @@ conda-env-subdirectory "envs")
     (setq eshell-destroy-buffer-when-process-dies t)
     (setq eshell-visual-commands '("htop" "zsh" "vim")))
 
-  (eshell-git-prompt-use-theme 'powerline))
+  (eshell-git-prompt-use-theme 'robbyrussell)
+
+  )
+
+  ;; ;; Custom config
+  ;; (defmacro with-face (STR &rest PROPS)
+  ;;   "Return STR propertized with PROPS."
+  ;;   `(propertize ,STR 'face (list ,@PROPS)))
+
+  ;; (defmacro esh-section (NAME ICON FORM &rest PROPS)
+  ;;   "Build eshell section NAME with ICON prepended to evaled FORM with PROPS."
+  ;;   `(setq ,NAME
+  ;; 	   (lambda () (when ,FORM
+  ;; 		   (-> ,ICON
+  ;; 		     (concat esh-section-delim ,FORM)
+  ;; 		     (with-face ,@PROPS))))))
+
+  ;; (defun esh-acc (acc x)
+  ;;   "Accumulator for evaluating and concatenating esh-sections."
+  ;;   (--if-let (funcall x)
+  ;; 	(if (s-blank? acc)
+  ;; 	  it
+  ;; 	(concat acc esh-sep it))
+  ;;     acc))
+
+  ;; (defun esh-prompt-func ()
+  ;;   "Build `eshell-prompt-function'"
+  ;;   (concat esh-header
+  ;; 	  (-reduce-from 'esh-acc "" eshell-funcs)
+  ;; 	  "\n"
+  ;; 	  eshell-prompt-string))
+
+  ;; (esh-section esh-dir
+  ;; 	       "\xf07c"  ;  (faicon folder)
+  ;; 	       (abbreviate-file-name (eshell/pwd))
+  ;; 	       '(:foreground "gold" :bold ultra-bold :underline t))
+
+  ;; (esh-section esh-git
+  ;; 	       "\xe907"  ;  (git icon)
+  ;; 	       (magit-get-current-branch)
+  ;; 	       '(:foreground "pink"))
+
+  ;; (esh-section esh-python
+  ;; 	       "\xe928"  ;  (python icon)
+  ;; 	       pyvenv-virtual-env-name)
+
+  ;; (esh-section esh-clock
+  ;; 	       "\xf017"  ;  (clock icon)
+  ;; 	       (format-time-string "%H:%M" (current-time))
+  ;; 	       '(:foreground "forest green"))
+
+  ;; ;; Below I implement a "prompt number" section
+  ;; (setq esh-prompt-num 0)
+  ;; (add-hook 'eshell-exit-hook (lambda () (setq esh-prompt-num 0)))
+  ;; (advice-add 'eshell-send-input :before
+  ;; 	      (lambda (&rest args) (setq esh-prompt-num (incf esh-prompt-num))))
+
+  ;; (esh-section esh-num
+  ;; 	       "\xf0c9"  ;  (list icon)
+  ;; 	       (number-to-string esh-prompt-num)
+  ;; 	       '(:foreground "brown"))
+
+  ;; ;; Separator between esh-sections
+  ;; (setq esh-sep "  ")  ; or " | "
+
+  ;; ;; Separator between an esh-section icon and form
+  ;; (setq esh-section-delim " ")
+
+  ;; ;; Eshell prompt header
+  ;; (setq esh-header "\n ")  ; or "\n┌─"
+
+  ;; ;; Eshell prompt regexp and string. Unless you are varying the prompt by eg.
+  ;; ;; your login, these can be the same.
+  ;; (setq eshell-prompt-regexp " ")   ; or "└─> "
+  ;; (setq eshell-prompt-string " ")   ; or "└─> "
+
+  ;; ;; Choose which eshell-funcs to enable
+  ;; (setq eshell-funcs (list esh-dir esh-git esh-python esh-clock esh-num))
+
+  ;; ;; Enable the new eshell prompt
+  ;; (setq eshell-prompt-function 'esh-prompt-func)
 
 (use-package load-bash-alias
   :hook (eshell-mode . load-bash-alias))
@@ -1170,3 +1289,15 @@ conda-env-subdirectory "envs")
 (ace-link-setup-default)
 
 (define-key org-mode-map (kbd "ö") 'ace-link-org)
+
+(use-package sx)
+
+(use-package demo-it)
+
+(use-package fancy-narrow)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

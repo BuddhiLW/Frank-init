@@ -1,11 +1,49 @@
 **Let's hack in Emacs :emacs:, as if it is 1976**
 
 * Faculdade
-** TODO Prova Direito
-DEADLINE: <2021-06-10 Thu> SCHEDULED: <2021-06-09 Wed>
-** NEXT Calendário Wei-Liang 
-DEADLINE: <2021-06-09 Wed> SCHEDULED: <2021-06-09 Wed>
+** DONE Prova Direito
+CLOSED: [2021-06-11 Fri 06:37] DEADLINE: <2021-06-10 Thu> SCHEDULED: <2021-06-09 Wed>
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-06-11 Fri 06:37]
+:END:
+** DONE Calendário Wei-Liang 
+   CLOSED: [2021-06-11 Fri 06:37] DEADLINE: <2021-06-09 Wed> SCHEDULED: <2021-06-09 Wed>
+   :LOGBOOK:
+   - State "DONE"       from "NEXT"       [2021-06-11 Fri 06:37]
+   :END:
 
-** TCC
-DEADLINE: <2021-07-14 Mon>
+** TODO [[file:~/PP/LaTeX/TCC/TCC.tex][TCC]]
+   DEADLINE: <2021-07-14 Mon>
+
+*** NEXT Monograph writting 5.0
+    DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-07-09 Fri>
+    Next e-mail, anexed with the TCC.pdf. The monograph has to contain
+    all topics at least half completed.
+**** NEXT Revise bibliography section
+     DEADLINE: <2021-06-11 Fri> SCHEDULED: <2021-06-11 Fri>
+     Move anything that is not in relation to [[file:~/PP/LaTeX/TCC/Notes/ideias.org::+AUTHOR: Pedro G. Branquinho][ideas notes]] or [[https://mail.google.com/mail/u/1/#inbox/QgrcJHsHsHNxXdtNgTSbwfrlwFqVCmPSxcB][message 12,]]
+
+     #+begin_quote
+     Há algumas demonstrações que quero colocar no documento, as
+     quais possivelmente usarei durante a apresentação, contendo
+     simulações estatísticas, usando Julia. Algumas transformações de
+     sinais gráficos, com Python. E, a biblioteca SICMUtils,
+     resolvendo algumas lagrangeanas, tanto simbolicamente, quanto
+     numericamente.
+     #+end_quote
+
+
+     
+**** TODO Integrate notes on TCC
+     DEADLINE: <2021-06-11 Fri> SCHEDULED: <2021-06-11 Fri>
+**** TODO Material and Methods
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
+**** TODO Results and Discussion
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
+**** TODO Conclusion
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
+**** TODO Finish Introduction  and Resume
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
+*** TODO Monograph writting 6.0
+    DEADLINE: <2021-06-18 Sat> SCHEDULED: <2021-07-21 Fri>
 

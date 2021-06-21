@@ -2,7 +2,11 @@
 ;; Automatically written history of CIDER REPL session
 ;; Edit at your own risk
 
-("(str \"oi\" 3 4)" "(and (> 5 4) (> 3 4))" "(and (> 5 4) 5)" "(and (> 3 4) 5)" "(and 4 8)" "(bit-and 4 8)" "(bit-and 4 7)" "(bit-and 4 6)" "(bit-and 4 10)" "(bit-and 4 5)" "(bit-and 4 (> 4 4))" "(bit-and 4 (>= 4 4))" "(bit-and (> 3 4) (>= 4 4))" "(bit-and 4 5)" "(+ 3 2)" "    (ns sicmutils-org.var-mechanics1
+("(defn toggle-done
+   \"Utility which enables toggling boolean state of a task, on the data-map.\"
+   [id]
+   (swap! todos update-in [id :done] not))
+" "(toggle-done 3)" "(str \"oi\" 3 4)" "(and (> 5 4) (> 3 4))" "(and (> 5 4) 5)" "(and (> 3 4) 5)" "(and 4 8)" "(bit-and 4 8)" "(bit-and 4 7)" "(bit-and 4 6)" "(bit-and 4 10)" "(bit-and 4 5)" "(bit-and 4 (> 4 4))" "(bit-and 4 (>= 4 4))" "(bit-and (> 3 4) (>= 4 4))" "(bit-and 4 5)" "(+ 3 2)" "    (ns sicmutils-org.var-mechanics1
       (:require [uncomplicate.neanderthal
 		 [native :refer [dv dge]]
 		 [core :refer [mv mm nrm2 dot axpy]]] ;; => sicmutils.env conflict with :refer pi
