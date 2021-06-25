@@ -2,7 +2,10 @@
 ;; Automatically written history of CIDER REPL session
 ;; Edit at your own risk
 
-("(defn toggle-done
+("(get-in @state/orders [:gig-03])" "(get-in @state/orders :gig-03)" "@state/state" "(get-in @state/state :gig-03)" "(get-in @state/state [:gig-03])" "(get-in @state/gigs [:gig-03 :price])" "(get-in @state/gigs [:gig :price])" "(get-in @state/gigs [:price])" "(get-in @state/orders)" "(get-in @state/orders :gig-03)" "@state/orders" "(dec-id :gig-03)" "(defn dec-id [id] (dec (id @state/orders)))" "(:gig-03 @state/orders)" "@state/orders" "(dec 1)" "@state/orders" "((fn [x] (+ x 3)) 3)" "(fn [x] (+ x 3))" "(ns giggin.components.gigs
+  (:require [giggin.state :as state]))" "(do (require '[shadow.cljs.devtools.api :as shadow]) (shadow/node-repl))
+" "(shadow.cljs.devtools.api/nrepl-select :app)" "(ns user)" "ns" "(shadow.cljs.devtools.api/nrepl-select :app)" "*ns*" "clear" "(swap! @gigs-atom assoc :one 1)" "(ns giggin.state
+  (:require [reagent.core :as r]))" "(swap! @gigs-atom assoc :one 1)" "(type gigs-atom)" "@gigs-atom" "clear" "(swap! @gigs-atom assoc :one 1)" "@gigs-atom" "clear" "(assoc gigs-atom :one 1)" "(deref gigs-atom)" "(def gigs-atom (atom {}))" "gigs" "(assoc gigs :one 1)" "(assoc gig :one 1)" "gigs" "(def gigs {})" "(defn toggle-done
    \"Utility which enables toggling boolean state of a task, on the data-map.\"
    [id]
    (swap! todos update-in [id :done] not))

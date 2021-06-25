@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <21/06/20 23:36:16 /home/buddhilw/.emacs.d/var/tramp/persistency.el>
+;; -*- emacs-lisp -*- <21/06/25 08:42:23 /home/buddhilw/.emacs.d/var/tramp/persistency.el>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
@@ -25,17 +25,4 @@
   ("git" "\\git")
   ("hg" nil))
  ((tramp-file-name "sudo" "root" nil "artixdesk" nil nil nil)
-  ("uname" "Linux 5.12.10-artix1-1")
-  ("locale" "LC_ALL=en_US.utf8")
-  ("test" "test")
-  ("remote-path"
-   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
-  ("pipe-buf" 4096)
-  ("remote-shell" "/bin/sh")
-  ("file-exists" "test -e")
-  ("stat" "env QUOTING_STYLE=locale \\stat")
-  ("id" "/bin/id")
-  ("uid-integer" 0)
-  ("gid-integer" 0)
-  ("gid-string" "root")
-  ("readlink" "\\readlink")))
+  nil))

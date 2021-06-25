@@ -15,12 +15,18 @@ CLOSED: [2021-06-11 Fri 06:37] DEADLINE: <2021-06-10 Thu> SCHEDULED: <2021-06-09
 ** TODO [[file:~/PP/LaTeX/TCC/TCC.tex][TCC]]
    DEADLINE: <2021-07-14 Mon>
 
-*** NEXT Monograph writting 5.0
-    DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-07-09 Fri>
+*** DONE Monograph writting 5.0
+    CLOSED: [2021-06-17 Thu 03:16] DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-07-09 Fri>
+    :LOGBOOK:
+    - State "DONE"       from "NEXT"       [2021-06-17 Thu 03:16]
+    :END:
     Next e-mail, anexed with the TCC.pdf. The monograph has to contain
     all topics at least half completed.
-**** NEXT Revise bibliography section
-     DEADLINE: <2021-06-11 Fri> SCHEDULED: <2021-06-11 Fri>
+**** DONE Revise bibliography section
+     CLOSED: [2021-06-17 Thu 03:10] DEADLINE: <2021-06-11 Fri> SCHEDULED: <2021-06-11 Fri>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2021-06-17 Thu 03:10]
+     :END:
      Move anything that is not in relation to [[file:~/PP/LaTeX/TCC/Notes/ideias.org::+AUTHOR: Pedro G. Branquinho][ideas notes]] or [[https://mail.google.com/mail/u/1/#inbox/QgrcJHsHsHNxXdtNgTSbwfrlwFqVCmPSxcB][message 12,]]
 
      #+begin_quote
@@ -34,16 +40,31 @@ CLOSED: [2021-06-11 Fri 06:37] DEADLINE: <2021-06-10 Thu> SCHEDULED: <2021-06-09
 
 
      
-**** TODO Integrate notes on TCC
-     DEADLINE: <2021-06-11 Fri> SCHEDULED: <2021-06-11 Fri>
-**** TODO Material and Methods
-     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
-**** TODO Results and Discussion
-     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
-**** TODO Conclusion
-     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
-**** TODO Finish Introduction  and Resume
-     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-11 Fri>
-*** TODO Monograph writting 6.0
+**** DONE Integrate notes on TCC
+     CLOSED: [2021-06-17 Thu 03:12] DEADLINE: <2021-06-11 Fri> SCHEDULED: <2021-06-17 Thu>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2021-06-17 Thu 03:12]
+     - State "DONE"       from "NEXT"       [2021-06-17 Thu 03:11]
+     :END:
+*** NEXT Monograph writting 6.0
     DEADLINE: <2021-06-18 Sat> SCHEDULED: <2021-07-21 Fri>
+**** NEXT Material and Methods
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-18 Fri>
+     :LOGBOOK:
+     - State "DONE"       from "BACKLOG"    [2021-06-17 Thu 03:11]
+     - State "DONE"       from "NEXT"       [2021-06-17 Thu 03:11]
+     :END:
+**** TODO Results and Discussion
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-17 Thu>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2021-06-17 Thu 03:11]
+     :END:
+**** TODO Conclusion
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-18 Fri>
+**** TODO Finish Introduction  and Resume
+     DEADLINE: <2021-06-12 Sat> SCHEDULED: <2021-06-18 Fri>
 
+* Emacs
+
+** TODO Org-bullet mode as default
+** TODO Autocompletion system

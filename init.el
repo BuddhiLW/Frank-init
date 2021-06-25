@@ -149,6 +149,29 @@
     :height efs/default-font-size
     :slant 'normal)))
 
+;; "CCSymbol"  U+1F16D - U+1F10F
+  (set-fontset-font "fontset-default"
+                    (cons (decode-char 'ucs #x1F10D)
+                          (decode-char 'ucs #x1F10f))
+                    "CC Symbols")
+
+    (set-fontset-font "fontset-default"
+                    (cons (decode-char 'ucs #x1F16D)
+                          (decode-char 'ucs #x1F16f))
+                    "CC Symbols")
+
+;; CCSymbols:style=Regular:fullname CC Symbols
+
+;; See it render
+;;   | Code  | Symbol | Name                                        |
+;; |-------+--------+---------------------------------------------|
+;; | 1F16D | 🅭      | Circled CC                                  |
+;; | 1F16E | 🅮      | Circled C With Overlaid Backslash           |
+;; | 1F16F | 🅯      | Circled Human Figure                        |
+;; | 1F10D | 🄍      | Circled Zero with Slash                     |
+;; | 1F10E | 🄎      | Circled Anticlockwise Arrow                 |
+;; | 1F10F | 🄏      | Circled Dollar Sign With Overlaid Backslash |
+
 (use-package unicode-fonts
    :ensure t
    :config
@@ -304,6 +327,7 @@ codepoints starting from codepoint-start."
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
 
 (use-package which-key
   :defer 0
@@ -552,11 +576,15 @@ codepoints starting from codepoint-start."
   (efs/org-font-setup))
 
 (use-package org-bullets
-  :after org-mode
-  :ensure t
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("☯" "◉" "●" "○" "✜" "○" "●")))
+    ;; :after org-mode
+    :ensure t
+    :hook (org-mode . org-bullets-mode)
+    :custom
+    (org-bullets-bullet-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")))
+;;✜
+;;§¶Øא֍֎߷
+;;ॐ༻༒࿊࿋࿌
+;;҈፠҉
 
 (defun efs/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
@@ -578,7 +606,7 @@ codepoints starting from codepoint-start."
    '((emacs-lisp . t)
      (ipython . t)
      (python . t)
-     ;; (julia . t)
+     (julia . t)
      (ein . t)
      (browser . t)
      (ditaa . t)
@@ -870,15 +898,7 @@ codepoints starting from codepoint-start."
 (setq 
  conda-env-home-directory (expand-file-name "~/.conda/") ;; as in previous example; not required
 conda-env-subdirectory "envs")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(conda-anaconda-home "/opt/anaconda/")
- '(helm-minibuffer-history-key "M-p")
- '(package-selected-packages
-   '(yasnippets zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts undo-tree tj3-mode tide tern sx sudo-edit spaceline sotclojure slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode restart-emacs rainbow-mode rainbow-delimiters racket-mode python-mode pomodoro pnpm-mode pdf-view-restore ox-hugo outshine org-trello org-tree-slide org-roam-server org-roam-bibtex org-pomodoro org-plus-contrib org-noter-pdftools org-latex-impatient org-inline-pdf org-easy-img-insert org-download org-bullets ob-latex-as-png ob-julia-vterm ob-ipython ob-html-chrome ob-ess-julia ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode multiple-cursors mu4e-views mu4e-alert markdown-preview-mode makey lsp-ui lsp-julia lsp-jedi lsp-ivy lockfile-mode load-bash-alias latex-math-preview latex-extra julia-snail julia-shell julia-repl jedi ivy-rich ivy-prescient ivy-clojuredocs inf-clojure indent-guide impatient-mode helpful helm-clojuredocs gscholar-bibtex general gameoflife forge flymake-eslint flymake-css flymake-aspell flycheck-julia flycheck-elm flycheck-clojure flycheck-aspell fira-code-mode fancy-narrow exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-tutor evil-surround evil-smartparens evil-paredit evil-nerd-commenter evil-multiedit evil-mu4e evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elpy elm-yasnippets elm-mode ein edit-indirect dynamic-fonts doom-modeline dired-single dired-open dired-hide-dotfiles diffpdf desktop-environment demo-it dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-tabnine company-quickhelp company-jedi company-ctags company-box company-bibtex company-auctex company-anaconda command-log-mode clojure-mode-extra-font-locking bibtex-utils auto-package-update auto-complete-auctex all-the-icons-dired ag ace-link ac-slime ac-ispell ac-cider)))
+(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
 ;; if you want interactive shell support, include:
 (conda-env-initialize-interactive-shells)
 ;; if you want eshell support, include:
@@ -1107,6 +1127,10 @@ conda-env-subdirectory "envs")
 (use-package ob-julia-vterm)
 (use-package julia-repl)
 
+;; (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)   
+(add-hook 'org-mode-hook 'org-display-inline-images)
+
 (use-package company-auctex)
 (use-package auto-complete-auctex)
 
@@ -1295,9 +1319,17 @@ conda-env-subdirectory "envs")
 (use-package demo-it)
 
 (use-package fancy-narrow)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(defun lw/org-pomodoro-time ()
+  "Return the remaining pomodoro time"
+  (if (org-pomodoro-active-p)
+      (cl-case org-pomodoro-state
+        (:pomodoro
+           (format "Pomo: %d minutes - %s" (/ (org-pomodoro-remaining-seconds) 60) org-clock-heading))
+        (:short-break
+         (format "Short break time: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+        (:long-break
+         (format "Long break time: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+        (:overtime
+         (format "Overtime! %d minutes" (/ (org-pomodoro-remaining-seconds) 60))))
+    "No active pomo"))

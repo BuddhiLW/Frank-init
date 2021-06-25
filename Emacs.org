@@ -185,7 +185,7 @@ Toggle transparency
   #+end_src
 
   #+RESULTS:
-
+  
 ** Font Configuration
 
 I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://fonts.google.com/specimen/Cantarell][Cantarell]] fonts for this configuration which will more than likely need to be installed on your machine.  Both can usually be found in the various Linux distro package managers or downloaded from the links above.
@@ -237,6 +237,36 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
 #+RESULTS:
 : init-my-font
+
+Also, we will use CC Symbols especially for CC's (Commons License) Unicode.
+
+#+begin_src emacs-lisp
+    ;; "CCSymbol"  U+1F16D - U+1F10F
+    (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x1F10D)
+                            (decode-char 'ucs #x1F10f))
+                      "CC Symbols")
+  
+      (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x1F16D)
+                            (decode-char 'ucs #x1F16f))
+                      "CC Symbols")
+  
+  ;; CCSymbols:style=Regular:fullname CC Symbols
+  
+  ;; See it render
+  ;;   | Code  | Symbol | Name                                        |
+  ;; |-------+--------+---------------------------------------------|
+  ;; | 1F16D | 🅭      | Circled CC                                  |
+  ;; | 1F16E | 🅮      | Circled C With Overlaid Backslash           |
+  ;; | 1F16F | 🅯      | Circled Human Figure                        |
+  ;; | 1F10D | 🄍      | Circled Zero with Slash                     |
+  ;; | 1F10E | 🄎      | Circled Anticlockwise Arrow                 |
+  ;; | 1F10F | 🄏      | Circled Dollar Sign With Overlaid Backslash |
+#+end_src
+
+#+RESULTS:
+
 ** Emojis and Ligatures
 #+begin_src emacs-lisp
   (use-package unicode-fonts
@@ -491,8 +521,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
-
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
 #+end_src
+
+#+RESULTS:
+: relative-to-project
 
 ** Which Key
 
@@ -824,16 +857,17 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
   
-  (use-package org-bullets
-    :after org-mode
-    :ensure t
-    :hook (org-mode . org-bullets-mode)
-    :custom
-    (org-bullets-bullet-list '("☯" "◉" "●" "○" "✜" "○" "●")))
-  
+    (use-package org-bullets
+      ;; :after org-mode
+      :ensure t
+      :hook (org-mode . org-bullets-mode)
+      :custom
+      (org-bullets-bullet-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")))
+  ;;✜
+  ;;§¶Øא֍֎߷
+  ;;ॐ༻༒࿊࿋࿌
+  ;;҈፠҉
 #+end_src
-
-#+RESULTS:
 
 *** Center Org Buffers
 
@@ -916,7 +950,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
      '((emacs-lisp . t)
        (ipython . t)
        (python . t)
-       ;; (julia . t)
+       (julia . t)
        (ein . t)
        (browser . t)
        (ditaa . t)
@@ -929,7 +963,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
 #+end_src
 
 #+RESULTS:
-: ((conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (ipython . python) (redis . redis) (php . php) (arduino . arduino) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+: ((conf-unix . conf-unix) (jupyter-python . python) (jupyter-julia . julia) (julia-vterm . julia) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (ipython . python) (redis . redis) (php . php) (arduino . arduino) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
 
 *** Clojure(script)
 #+begin_src emacs-lisp
@@ -971,8 +1005,6 @@ You can add more =src= block templates below by copying one of the lines and cha
   
 #+end_src
 
-#+RESULTS:
-: ((ep . src ein-python :session localhost) (ej . src ein-julia :session localhost) (h4 . src html :tangle ../html/index.html :mkdirp yes) (js . src js :tangle ../js/.js) (c4 . src css :tangle ../css/.css :mkdirp yes) (cl . src clojure) (ju . src julia) (py . src python) (el . src emacs-lisp) (sh . src shell) (a . export ascii) (c . center) (C . comment) (e . example) (E . export) (h . export html) (l . export latex) (q . quote) (s . src) (v . verse))
 
 ** Auto-tangle Configuration Files
 
@@ -1616,7 +1648,6 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
   (setq css-indent-offset 2))
 #+end_src
 
-
 *** Prettier
 #+begin_src emacs-lisp
   ;; (use-package prettier-js
@@ -1806,6 +1837,12 @@ The =conda-env-home-directory= and =custom-set-variables= are very specific to y
     #+end_src
 
     #+RESULTS:
+    #+begin_src emacs-lisp
+      ;; (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+      (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)   
+      (add-hook 'org-mode-hook 'org-display-inline-images)
+    #+end_src
+
 *** LaTeX
     #+begin_src emacs-lisp
       (use-package company-auctex)
@@ -2239,4 +2276,26 @@ keycode 135 = Super_R NoSymbol Super_R
     #+begin_src emacs-lisp
       (use-package fancy-narrow)
     #+end_src
+
+* Pomodoro
+From [[https://colekillian.com/posts/org-pomodoro-and-polybar/][colekillian.com]] - org-pomodoro and polybar.
+
+#+begin_src emacs-lisp
+(defun lw/org-pomodoro-time ()
+  "Return the remaining pomodoro time"
+  (if (org-pomodoro-active-p)
+      (cl-case org-pomodoro-state
+        (:pomodoro
+           (format "Pomo: %d minutes - %s" (/ (org-pomodoro-remaining-seconds) 60) org-clock-heading))
+        (:short-break
+         (format "Short break time: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+        (:long-break
+         (format "Long break time: %d minutes" (/ (org-pomodoro-remaining-seconds) 60)))
+        (:overtime
+         (format "Overtime! %d minutes" (/ (org-pomodoro-remaining-seconds) 60))))
+    "No active pomo"))
+#+end_src
+
+#+RESULTS:
+: lw/org-pomodoro-time
 

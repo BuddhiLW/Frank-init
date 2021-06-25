@@ -35,6 +35,19 @@
 	 (text-mode . rainbow-delimiters-mode)
 	 (prog-mode . rainbow-delimiters-mode)))
 
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
+;;          (lisp-mode . smartparens-mode)
+;;          (cider-mode . smartparens-mode)
+;;          (clojure-mode . smartparens-mode)
+;;          (racket-mode . smartparens-mode)))
+
+(use-package evil-smartparens
+  :hook ((after-init . evil-smartparens-mode)
+	 (prog-mode . evil-smartparens-mode)
+	 (text-mode . evil-smartparens-mode)
+	 (special-mode . evil-smartparens-mode)))
+
 (use-package indent-guide
   :init (indent-guide-global-mode t)
   :hook (prog-mode . indent-guide-mode))
@@ -43,7 +56,12 @@
   :hook ((  )
 	 (prog-mode . auto-complete-mode)))
 
-(use-package yasnippets)
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+(use-package yasnippet-snippets)
+(use-package yasnippet-classic-snippets)
 
 (use-package auctex
   :ensure tex-mode
@@ -65,3 +83,10 @@
 (use-package org-roam
   :init
   (add-hook 'after-init-hook 'org-roam-mode))
+
+;; (define-key key-translation-map (kbd "<tab> p") (kbd "φ"))
+(define-key key-translation-map (kbd "<f9> x") (kbd "ξ"))
+(define-key key-translation-map (kbd "<f9> i") (kbd "∞"))
+(define-key key-translation-map (kbd "<f9> <right>") (kbd "→"))
+
+(use-package org-evil)

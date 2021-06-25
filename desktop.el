@@ -20,26 +20,27 @@
     ;; #     ;; Show battery status in the mode line
     ;; #     ;;(display-battery-mode 1)
 
-    ;; #     ;; Show the time and date in modeline
-    ;; #     ;;(setq display-time-day-and-date t)
-    ;; #     ;;(display-time-mode 1)
-    ;; #     ;; Also take a look at display-time-format and format-time-string
+;; Show the time and date in modeline
+(setq display-time-day-and-date t)
+(display-time-mode 0)
+;; #     ;; Also take a look at display-time-format and format-time-string
 
-    ;; #     ;; Start the Polybar panel
-    ;; #     (efs/start-panel)
+;; Start the Polybar panel
+;; (efs/start-panel)
 
-    ;; #     ;; Launch apps that will run in the background
-    ;; #     (efs/run-in-background "dunst")
+;; Launch apps that will run in the background
+;; (efs/run-in-background "dunst")
     ;; #     ;; (efs/run-in-background "nm-applet")
     ;; #     (efs/run-in-background "pasystray"i))
     ;; #     ;; (efs/run-in-background "blueman-applet"))
 
-    ;; #   (defun efs/exwm-update-class ()
-    ;; #     (exwm-workspace-rename-buffer exwm-class-name))
+(defun efs/exwm-update-class ()
+  (exwm-workspace-rename-buffer exwm-class-name))
 
-    ;; #   (defun efs/exwm-update-title ()
-    ;; #     (pcase exwm-class-name
-    ;; #       ("Firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))))
+       (defun efs/exwm-update-title ()
+	 (pcase exwm-class-name
+	   ("Brave" (exwm-workspace-rename-buffer (format "Brave: %s" exwm-title)))
+	   ("Nyxt" (exwm-workspace-rename-buffer (format "Nyxt: %s" exwm-title)))))
 
     ;; #   ;; This function isn't currently used, only serves as an example how to
     ;; #   ;; position a window
@@ -92,7 +93,7 @@
     ;; #     ;; (setq exwm-layout-show-all-buffers t)
 
     ;; #     ;; Display all EXWM buffers in every workspace buffer list
-    ;; #     ;; (setq exwm-workspace-show-all-buffers t)
+   (setq exwm-workspace-show-all-buffers t)
 
     ;; #     ;; NOTE: Uncomment this option if you want to detach the minibuffer!
     ;; #     ;; Detach the minibuffer (show it with exwm-workspace-toggle-minibuffer)
@@ -407,3 +408,9 @@
   ;; (powerline-evil-theme))
 (require 'powerline)
 (powerline-center-evil-theme)
+
+(setq frame-title-format
+      '(buffer-file-name "%b - %f" ; File buffer
+        (dired-directory dired-directory ; Dired buffer
+         (revert-buffer-function "%b" ; Buffer Menu
+          ("%b - Dir: " default-directory)))))

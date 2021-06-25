@@ -1,3 +1,4 @@
+# O PC
 * Inbox
 
 ** TODO Commit config updates
@@ -7,7 +8,6 @@
 ** TODO Update Journal capture template
   [2020-10-09 Fri 10:06]
   [[file:~/Projects/Code/emacs-from-scratch/init.el::"j" "Journal Entries"]]
-
 
 * Active
 
@@ -61,7 +61,6 @@ CLOSED: [2021-03-17 Wed 09:37 +1d]
 ** ☛ TODO Exercício globo 
 <2021-03-19 Fri>
 
-
 * Init customization pile and ideias
 ** ☛ TODO Togle evil mode and normal Emacs
 <2021-03-21 Sun>
@@ -84,5 +83,42 @@ CLOSED: [2021-03-17 Wed 09:37 +1d]
  
 ;; (global-set-key (kbd "M-u") 'toggle-evilmode)
 
-
 * Backlog
+
+
+
+# Faculdade
+* TODO Wei-Liang TCC
+SCHEDULED: <2021-06-22 Tue>
+Hi, Pedro,
+
+Thanks for the progress, few comments below
+
+** TODO Abstract
+I am not sure about the rules, but probably you will need an English version abstract.
+Also, I am actually a bit slow to think of the organization of a paper/monograph when things are in Portuguese, but I will try.
+** DONE Introduction  - How pieces fit together
+CLOSED: [2021-06-22 Tue 01:01]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-06-22 Tue 01:01]
+:END:
+In the introduction section, you will need a place to explain how each section of your monograph is about.
+By enumerating the content of the entire writing, you need to explain the logic and relation between different parts of the monograph.
+It seems still missing from the present version.
+
+** TODO Smoother Progression - Bibliography (Why EXWM?)
+The current content seems still a bit wild, you start from some very general concepts or notions (open source, and Linux) to some very specific applications.
+Maybe, this can be somehow alleviated by adding some discussions about the general types/categories of open source software/operational systems.
+Then mention that due to personal experience, we will only address a few specific ones of them.
+(A more general argument will be to give a motivation about why you choose them, it is not necessary as it is just a monograph not a rigorous scientific research paper, so you will be forgiven).
+
+
+# Profissional
+* Clojure(Script)
+** TODO Swap!
+
+Understand the syntax and functionality
+
+#+begin_src clojure
+  (swap! state/orders update id inc)
+#+end_src

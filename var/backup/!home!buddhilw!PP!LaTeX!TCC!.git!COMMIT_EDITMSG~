@@ -6,9 +6,15 @@
 # Your branch is up to date with 'origin/main'.
 #
 # Changes to be committed:
-#	new file:   Imagens/server-client-fq_4.png
-#	renamed:    TCC.pdf -> TCC-17-jun.pdf
+#	new file:   "Apresenta\303\247\303\243o/slides-tcc.org"
+#	new file:   Imagens/linux-window-wireless.png
+#	new file:   Imagens/pic-selected-210621-0211-34.png
+#	new file:   Imagens/torres.png
+#	new file:   Imagens/torres2.png
+#	new file:   Imagens/tower-os.png
+#	new file:   TCC.pdf
 #	modified:   TCC.tex
+#	modified:   bib.bib
 #
 # Untracked files:
 #	Cronograma/.dir-locals.el
@@ -22,11 +28,4 @@
 #	Cronograma/test-font.pdf
 #	Cronograma/test-font.tex
 #	Notes/Ditaa/
-#	TCC.bbl
-#	TCC.blg
-#	TCC.brf
-#	TCC.idx
-#	TCC.ilg
-#	TCC.ind
-#	TCC.lof
 #

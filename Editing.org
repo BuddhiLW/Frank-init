@@ -78,10 +78,34 @@
 
     #+RESULTS:
 
-* TODO Parenthesis
-  DEADLINE: <2021-06-20 Sun> SCHEDULED: <2021-06-17 Thu>
+* DONE Parenthesis
+  CLOSED: [2021-06-22 Tue 15:21] DEADLINE: <2021-06-20 Sun> SCHEDULED: <2021-06-17 Thu>
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-06-22 Tue 15:21]
+:END:
 Move configuration on Emacs.org to here.
 
+**** Parens
+#+begin_src emacs-lisp
+  (use-package smartparens
+    :hook (prog-mode . smartparens-mode))
+  ;;          (lisp-mode . smartparens-mode)
+  ;;          (cider-mode . smartparens-mode)
+  ;;          (clojure-mode . smartparens-mode)
+  ;;          (racket-mode . smartparens-mode)))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (use-package evil-smartparens
+    :hook ((after-init . evil-smartparens-mode)
+	   (prog-mode . evil-smartparens-mode)
+	   (text-mode . evil-smartparens-mode)
+	   (special-mode . evil-smartparens-mode)))
+#+end_src
+
+#+RESULTS:
 * Indent Guide
   #+begin_src emacs-lisp
     (use-package indent-guide
@@ -101,8 +125,15 @@ Move configuration on Emacs.org to here.
 
 * Yasnippets
   #+begin_src emacs-lisp
-    (use-package yasnippets)
+    (use-package yasnippet
+      :ensure t
+      :config
+      (yas-global-mode 1))
+    (use-package yasnippet-snippets)
+    (use-package yasnippet-classic-snippets)
     #+end_src
+
+    #+RESULTS:
 
 * Language-specific
 ** LaTeX
@@ -145,3 +176,21 @@ Move configuration on Emacs.org to here.
       :init
       (add-hook 'after-init-hook 'org-roam-mode))
     #+end_src
+* TODO Unicode abreviation alias and setup
+SCHEDULED: <2021-06-25 Fri>
+#+begin_src emacs-lisp
+;; (define-key key-translation-map (kbd "<tab> p") (kbd "φ"))
+(define-key key-translation-map (kbd "<f9> x") (kbd "ξ"))
+(define-key key-translation-map (kbd "<f9> i") (kbd "∞"))
+(define-key key-translation-map (kbd "<f9> <right>") (kbd "→"))
+#+end_src
+
+#+RESULTS:
+: [8594]
+* Evil-mode related
+** Evil-org
+#+begin_src emacs-lisp
+  (use-package org-evil)
+  #+end_src
+
+  #+RESULTS:
