@@ -1,0 +1,22 @@
+#+AUTHOR: Bernhard Schmitz
+#+TITLE: Manual for org-gantt \linebreak v0.1
+
+#+LATEX_HEADER: \usepackage[usenames,dvipsnames]{xcolor}
+#+LATEX_HEADER: \usepackage{pgfgantt}
+#+LATEX_HEADER: \usepackage[margin=3.0cm]{geometry}
+
+* org-gantt-todo
+   :PROPERTIES:
+   :ID:       todo-deadlines-schedules
+   :END:
+** Important stuff
+*** Write manual
+      SCHEDULED: <2015-05-25 Mo> DEADLINE: <2015-05-28 Do>
+*** Fix bugs
+     SCHEDULED: <2015-05-27 Mi> DEADLINE: <2015-05-30 Sa>
+** Other stuff
+     SCHEDULED: <2015-05-20 Mi> DEADLINE: <2015-05-28 Do>
+*** Add features
+      SCHEDULED: <2015-05-22 Fr> DEADLINE: <2015-05-26 Di>
+*** Add missing docstrings
+      DEADLINE: <2015-05-27 Mi> SCHEDULED: <2015-05-24 So>

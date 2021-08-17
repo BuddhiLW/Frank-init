@@ -1,5 +1,5 @@
 #+title: Emacs From Scratch Configuration
-#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el
 
 * Welcome!
 
@@ -24,6 +24,13 @@ The following variables are used to tweak some of the configuration pieces for u
 
 #+RESULTS:
 : efs/frame-transparency
+
+#+begin_src emacs-lisp
+(setq org-roam-v2-ack t)
+#+end_src
+
+#+RESULTS:
+: t
 
 * Tips for Use
 
@@ -91,10 +98,6 @@ You can also use =M-x auto-package-update-now= to update right now!
 
 #+end_src
 
-* Load Desktop.el and other auxiliaries
-#+begin_src emacs-lisp
- (load-file "~/.emacs.d/desktop.el")
-#+end_src
 
 * Keep Folders Clean
 
@@ -120,37 +123,38 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.  If you're just getting started in Emacs, the menu bar might be helpful so you can remove the =(menu-bar-mode -1)= line if you'd like to still see that.
 
 #+begin_src emacs-lisp
-
   (setq inhibit-startup-message t)
-
+  
   (scroll-bar-mode -1)        ; Disable visible scrollbar
   (tool-bar-mode -1)          ; Disable the toolbar
   (tooltip-mode -1)           ; Disable tooltips
   (set-fringe-mode 10)        ; Give some breathing room
-
+  
   (menu-bar-mode -1)            ; Disable the menu bar
-
+  
   ;; Set up the visible bell
   (setq visible-bell t)
-
+  
   (column-number-mode)
-  (global-display-line-numbers-mode t)
-
+  ;; (global-display-line-numbers-mode t)
+  
   ;; Set frame transparency
   (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
   (add-to-list 'default-frame-alist `(alpha . ,efs/frame-transparency))
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
+  
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
-                  term-mode-hook
-                  shell-mode-hook
-                  treemacs-mode-hook
-                  eshell-mode-hook))
+		  term-mode-hook
+		  shell-mode-hook
+		  treemacs-mode-hook
+		  eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
+  
 #+end_src
+
+#+RESULTS:
 
 Toggle transparency
 #+begin_src emacs-lisp
@@ -214,6 +218,30 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
 #+RESULTS:
 : init-my-font
+
+#+begin_src emacs-lisp
+    ;; "CCSymbol"  U+1F16D - U+1F10F
+    (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x1F10D)
+                            (decode-char 'ucs #x1F10f))
+                      "CC Symbols")
+  
+      (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x1F16D)
+                            (decode-char 'ucs #x1F16f))
+                      "CC Symbols")
+    (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x05B0)
+                            (decode-char 'ucs #x05F4))
+                      "Noto Serif Hebrew")
+ 
+       ;; (set-fontset-font "fontset-default"
+       ;;                   (cons (decode-char 'ucs #x05D0))
+       ;;                   "Noto Serif Hebew")
+#+end_src
+
+#+RESULTS:
+
 ** Emojis and Ligatures
 #+begin_src emacs-lisp
   (use-package unicode-fonts
@@ -353,10 +381,10 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 | prettify-symbols-mode | rainbow-delimiters-mode | nyan-mode | text-mode-hook-identify |
 ** Nyan Cat Mode
 #+begin_src emacs-lisp
-  (use-package nyan-mode
-    :hook ((special-mode . nyan-mode)
-           (text-mode . nyan-mode)
-           (progn-mode . nyan-mode)))
+  ;; (use-package nyan-mode
+  ;;   :hook ((special-mode . nyan-mode)
+  ;;          (text-mode . nyan-mode)
+  ;;          (progn-mode . nyan-mode)))
 #+end_src
 
 * Keybinding Configuration
@@ -383,8 +411,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   
   (use-package evil
     :init
-    (setq evil-want-integration t)
     (setq evil-want-keybinding nil)
+    (setq evil-want-integration t)
     (setq evil-want-C-u-scroll t)
     (setq evil-want-C-i-jump nil)
     :config
@@ -401,6 +429,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   
   (use-package evil-collection
     :after evil
+    :init
+    (setq evil-want-keybinding nil)
     :config
     (evil-collection-init))
   
@@ -457,8 +487,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
-
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
 #+end_src
+
+#+RESULTS:
+: truncate-with-project
 
 ** Which Key
 
@@ -630,12 +663,22 @@ The =efs/org-font-setup= function configures various text faces to tweak the siz
     (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
     ;; (set-face-attribute 'org-format-latex-options nil :inherit 'fixed-pitch)
     ;; ;
-    (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)))
+    (setq org-format-latex-options (plist-put org-format-latex-options :scale 3.0)))
 
 #+end_src
 
 #+RESULTS:
 : efs/org-font-setup
+
+** Org-auto-tangle
+   #+begin_src emacs-lisp
+(use-package org-auto-tangle
+  :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode))
+   #+end_src
+
+   #+RESULTS:
 
 ** Basic Config
 
@@ -784,18 +827,75 @@ This section contains the basic configuration for =org-mode= plus the configurat
 #+RESULTS:
 | (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | efs/org-mode-visual-fill | org-bullets-mode | efs/org-mode-setup | (lambda nil (display-line-numbers-mode 0)) |
 
-*** Nicer Heading Bullets
+*** Nicer Heading Bullets 
 
 [[https://github.com/sabof/org-bullets][org-bullets]] replaces the heading stars in =org-mode= buffers with nicer looking characters that you can control.  Another option for this is [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]] which we may cover in a later video.
 
-#+begin_src emacs-lisp
-
+#+begin_src emacs-lisp  
   (use-package org-bullets
-    :hook (org-mode . org-bullets-mode)
+    :after org
+    ;; :hook (org-mode . org-bullets)
     :custom
-    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
+    ;; (org-superstar-remove-leading-stars t)
+    (org-bullets-bullet-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈"))) 
 #+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+
+#+RESULTS:
+
+# #+begin_src emacs-lisp  
+#     (use-package org-superstar
+#     ;; :if (not dw/is-termux)
+#     :after org
+#     :hook (org-mode . org-superstar-mode)
+#     :custom
+#     (org-superstar-remove-leading-stars t)
+#     (org-superstar-headline-bullets-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")))  
+# #+end_src
+
+ #+RESULTS:
+
+*** Some (font) configs
+    #+begin_src emacs-lisp
+	;; Increase the size of various headings
+     ;; Noto Serif CJK TC
+      (set-face-attribute 'org-document-title nil :font "Bitstream Vera Serif" :weight 'bold :height 1.3)
+      (dolist (face '((org-level-1 . 1.2)
+		      (org-level-2 . 1.1)
+		      (org-level-3 . 1.05)
+		      (org-level-4 . 1.0)
+		      (org-level-5 . 1.1)
+		      (org-level-6 . 1.1)
+		      (org-level-7 . 1.1)
+		      (org-level-8 . 1.1)))
+	(set-face-attribute (car face) nil :font "Bitstream Vera Serif" :weight 'medium :height (cdr face)))
+      
+      ;; Make sure org-indent face is available
+      (require 'org-indent)
+      
+      ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+      (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+      (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+      (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+      
+      ;; Get rid of the background on column views
+      (set-face-attribute 'org-column nil :background nil)
+      (set-face-attribute 'org-column-title nil :background nil)
+    #+end_src
+
+    #+RESULTS:
 
 *** Center Org Buffers
 
@@ -866,17 +966,31 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
      '((emacs-lisp . t)
        (python . t)
        (browser . t)
+       ;; (ipython . t)
+       (ein . t)
        (ditaa . t)
        (css . t)
        (lisp . t)
+       (latex . t)
        (clojure . t)
        (clojurescript . t)))
-
+  
     (push '("conf-unix" . conf-unix) org-src-lang-modes))
 #+end_src
 
 #+RESULTS:
-: ((conf-unix . conf-unix) (conf-unix . conf-unix) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+: ((conf-unix . conf-unix) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (ipython . python) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(ob-ein-languages
+    '(("ein-python" . python)
+      ("ein-R" . R)
+      ("ein-r" . R)
+      ("ein-julia" . julia))))
+#+end_src
+
+#+RESULTS:
 
 *** Clojure(script)
 #+begin_src emacs-lisp
@@ -1003,763 +1117,20 @@ As it is hand-maiden: https://github.com/legalnonsense/elgantt/,
 #+RESULTS:
 : ~/.emacs.d/lisp/elgantt/test.org
 
-* Development
-** Languages
-
-*** LaTeX
-**** Reload/update-view "C-x p"
-#+begin_src emacs-lisp
-(defun reload-pdf ()
-  (interactive
-  (let* ((fname buffer-file-name)
-        (fname-no-ext (substring fname 0 -4))
-        (pdf-file (concat fname-no-ext ".pdf"))
-        (cmd (format "pdflatex %s" fname)))
-    (delete-other-windows)
-    (split-window-horizontally)
-    (split-window-vertically)
-    (shell-command cmd)
-    (other-window 2)
-    (find-file pdf-file)
-    (balance-windows))))
-
-(global-set-key "\C-x\p" 'reload-pdf)
-#+end_src
-**** Auctex
-#+begin_src emacs-lisp
- ;; to use pdfview with auctex
- (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-    TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-    TeX-source-correlate-start-server t) ;; not sure if last line is neccessary
-
- ;; to have the buffer refresh after compilation
- (add-hook 'TeX-after-compilation-finished-functions
-        #'TeX-revert-document-buffer)
-#+end_src
-
-*** IDE Features with lsp-mode
-
-**** lsp-mode
-
-We use the excellent [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]] to enable IDE-like functionality for many different programming languages via "language servers" that speak the [[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]].  Before trying to set up =lsp-mode= for a particular language, check out the [[https://emacs-lsp.github.io/lsp-mode/page/languages/][documentation for your language]] so that you can learn which language servers are available and how to install them.
-
-The =lsp-keymap-prefix= setting enables you to define a prefix for where =lsp-mode='s default keybindings will be added.  I *highly recommend* using the prefix to find out what you can do with =lsp-mode= in a buffer.
-
-The =which-key= integration adds helpful descriptions of the various keys so you should be able to learn a lot just by pressing =C-c l= in a =lsp-mode= buffer and trying different things that you find there.
-
-#+begin_src emacs-lisp
-
-  (defun efs/lsp-mode-setup ()
-    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-    (lsp-headerline-breadcrumb-mode))
-
-  (use-package lsp-mode
-    :commands (lsp lsp-deferred)
-    :hook (lsp-mode . efs/lsp-mode-setup)
-    :init
-    (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
-    :config
-    (lsp-enable-which-key-integration t))
-
-#+end_src
-
-**** lsp-ui
-
-[[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] is a set of UI enhancements built on top of =lsp-mode= which make Emacs feel even more like an IDE.  Check out the screenshots on the =lsp-ui= homepage (linked at the beginning of this paragraph) to see examples of what it can do.
-
-#+begin_src emacs-lisp
-
-  (use-package lsp-ui
-    :hook (lsp-mode . lsp-ui-mode)
-    :custom
-    (lsp-ui-doc-position 'bottom))
-
-#+end_src
-
-**** lsp-treemacs
-
-[[https://github.com/emacs-lsp/lsp-treemacs][lsp-treemacs]] provides nice tree views for different aspects of your code like symbols in a file, references of a symbol, or diagnostic messages (errors and warnings) that are found in your code.
-
-Try these commands with =M-x=:
-
-- =lsp-treemacs-symbols= - Show a tree view of the symbols in the current file
-- =lsp-treemacs-references= - Show a tree view for the references of the symbol under the cursor
-- =lsp-treemacs-error-list= - Show a tree view for the diagnostic messages in the project
-
-This package is built on the [[https://github.com/Alexander-Miller/treemacs][treemacs]] package which might be of some interest to you if you like to have a file browser at the left side of your screen in your editor.
-
-#+begin_src emacs-lisp
-
-  (use-package lsp-treemacs
-    :after lsp)
-
-#+end_src
-
-**** lsp-ivy
-
-[[https://github.com/emacs-lsp/lsp-ivy][lsp-ivy]] integrates Ivy with =lsp-mode= to make it easy to search for things by name in your code.  When you run these commands, a prompt will appear in the minibuffer allowing you to type part of the name of a symbol in your code.  Results will be populated in the minibuffer so that you can find what you're looking for and jump to that location in the code upon selecting the result.
-
-Try these commands with =M-x=:
-
-- =lsp-ivy-workspace-symbol= - Search for a symbol name in the current project workspace
-- =lsp-ivy-global-workspace-symbol= - Search for a symbol name in all active project workspaces
-
-#+begin_src emacs-lisp
-
-  (use-package lsp-ivy
-    :after lsp)
-
-#+end_src
-
-*** Debugging with dap-mode
-
-[[https://emacs-lsp.github.io/dap-mode/][dap-mode]] is an excellent package for bringing rich debugging capabilities to Emacs via the [[https://microsoft.github.io/debug-adapter-protocol/][Debug Adapter Protocol]].  You should check out the [[https://emacs-lsp.github.io/dap-mode/page/configuration/][configuration docs]] to learn how to configure the debugger for your language.  Also make sure to check out the documentation for the debug adapter to see what configuration parameters are available to use for your debug templates!
-
-#+begin_src emacs-lisp
-
-  (use-package dap-mode
-    ;; Uncomment the config below if you want all UI panes to be hidden by default!
-    ;; :custom
-    ;; (lsp-enable-dap-auto-configure nil)
-    ;; :config
-    ;; (dap-ui-mode 1)
-    :commands dap-debug
-    :config
-    ;; Set up Node debugging
-    (require 'dap-node)
-    (dap-node-setup) ;; Automatically installs Node debug adapter if needed
-
-    ;; Bind `C-c l d` to `dap-hydra` for easy access
-    (general-define-key
-      :keymaps 'lsp-mode-map
-      :prefix lsp-keymap-prefix
-      "d" '(dap-hydra t :wk "debugger")))
-
-#+end_src
-
-*** TypeScript
-
-This is a basic configuration for the TypeScript language so that =.ts= files activate =typescript-mode= when opened.  We're also adding a hook to =typescript-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit TypeScript code.
-
-#+begin_src emacs-lisp
-
-  (use-package typescript-mode
-    :mode "\\.ts\\'"
-    :hook (typescript-mode . lsp-deferred)
-    :config
-    (setq typescript-indent-level 2))
-
-#+end_src
-
-*Important note!*  For =lsp-mode= to work with TypeScript (and JavaScript) you will need to install a language server on your machine.  If you have Node.js installed, the easiest way to do that is by running the following command:
-
-#+begin_src shell :tangle no
-
-npm install -g typescript-language-server typescript
-
-#+end_src
-
-This will install the [[https://github.com/theia-ide/typescript-language-server][typescript-language-server]] and the TypeScript compiler package.
-*** Python
-
-We use =lsp-mode= and =dap-mode= to provide a more complete development environment for Python in Emacs.  Check out [[https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/][the =pyls= configuration]] in the =lsp-mode= documentation for more details.
-
-Make sure you have the =pyls= language server installed before trying =lsp-mode=!
-
-#+begin_src sh :tangle no
-
-pip install --user "python-language-server[all]"
-
-#+end_src
-
-There are a number of other language servers for Python so if you find that =pyls= doesn't work for you, consult the =lsp-mode= [[https://emacs-lsp.github.io/lsp-mode/page/languages/][language configuration documentation]] to try the others!
-
-#+begin_src emacs-lisp
-
-  (use-package python-mode
-    :ensure t
-    :hook (python-mode . lsp-deferred)
-    :custom
-    ;; NOTE: Set these if Python 3 is called "python3" on your system!
-    ;; (python-shell-interpreter "python3")
-    ;; (dap-python-executable "python3")
-    (dap-python-debugger 'debugpy)
-    :config
-    (require 'dap-python))
-
-
-#+end_src
-
-You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =pyvenv-activate= command should configure Emacs to cause =lsp-mode= and =dap-mode= to use the virtual environment when they are loaded, just select the path to your virtual environment before loading your project.
-
-
-#+begin_src emacs-lisp
-(use-package conda)
-(use-package anaconda-mode)
-(use-package company-anaconda)
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq conda-env-home-directory (expand-file-name "~/.conda/")
-        conda-env-subdirectory "envs")
-  (custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
-  (conda-env-initialize-interactive-shells)
-  (conda-env-initialize-eshell)
-  (conda-env-autoactivate-mode t)
-#+end_src
-
-*** HTML/CSS
-#+begin_src emacs-lisp
-  (use-package css-mode
-    :bind ("C-c m" . css-lookup-symbol))
-#+end_src
-
-#+RESULTS:
-: css-lookup-symbol
-
-*** Ditaa
-#+begin_src emacs-lisp
-  ;; (use-package artist-mode)
-#+end_src
-
-#+RESULTS:
-: t
-
-*** JavaScript
-**** Indium
-#+begin_src emacs-lisp
-  (use-package indium
-  :hook (js-mode . indium-interaction-mode))
-#+end_src
-
-#+RESULTS:
-| indium-interaction-mode | js2-minor-mode |
-
-**** Beautify
-
-#+begin_src emacs-lisp
-  (use-package web-beautify
-    :hook ((css-mode . web-beautify-css)
-           ;; (js-mode . web-beautify-js)
-           (html-mode . web-beautify-html)))
-#+end_src
-
-#+RESULTS:
-| web-beautify-html |
-
-**** Json
-#+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-#+end_src
-
-**** js2-mode
-#+begin_src emacs-lisp
-  (use-package js2-mode
-    :hook ((js-mode . js2-minor-mode)
-           (js2-mode . ac-js2-mode)))
-#+end_src
-
-#+RESULTS:
-| ac-js2-mode | web-beautify-js | evil-collection-js2-set-evil-shift-width |
-
-**** Tern
-#+begin_src emacs-lisp
-  (use-package tern
-    :load-path "~/.emacs.d/tern/"
-    :after ((js-mode)
-            (js2-mode))
-    :hook ((js-mode . tern-mode)
-           (js2-mode . tern-mode))
-    :config (autoload 'tern-mode "tern.el" nil t))
-#+end_src
-
-#+RESULTS:
-
-**** RJSX mode
-#+begin_src emacs-lisp
-  (use-package rjsx-mode
-    :ensure t
-    :mode "\\.js\\'")
-#+end_src
-
-**** Tide
-#+begin_src emacs-lisp
-  (defun setup-tide-node()
-    "Setup function for tide."
-    (interactive)
-    (tide-setup)
-    (flycheck-mode +1)
-    (setq flycheck-check-syntax-automatically '(save-mode-enabled))
-    (tide-hl-identifier-mode +1)
-    (company-mode +1))
-
-  (use-package tide
-    :ensure t
-    :after (rjsx-mode company flycheck)
-    :hook (rjsx-mode . setup-tide-mode))
-#+end_src
-
-**** snippet
-#+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t
-  :config
-  (add-hook 'typescript-mode-hook 'flycheck-mode))
- 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
- 
-(use-package company
-  :ensure t
-  :config
-  (setq company-show-numbers t)
-  (setq company-tooltip-align-annotations t)
-  ;; invert the navigation direction if the the completion popup-isearch-match
-  ;; is displayed on top (happens near the bottom of windows)
-  (setq company-tooltip-flip-when-above t)
-  (global-company-mode))
- 
-(use-package company-quickhelp
-  :ensure t
-  :init
-  (company-quickhelp-mode 1)
-  (use-package pos-tip
-    :ensure t))
- 
-(use-package web-mode
-  :ensure t
-  :mode (("\\.html?\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode)
-         ("\\.jsx\\'" . web-mode))
-  :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-block-padding 2
-        web-mode-comment-style 2
- 
-        web-mode-enable-css-colorization t
-        web-mode-enable-auto-pairing t
-        web-mode-enable-comment-keywords t
-        web-mode-enable-current-element-highlight t
-	web-mode-enable-auto-indentation nil
-        )
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-		(setup-tide-mode))))
-  ;; enable typescript-tslint checker
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
- 
-(use-package typescript-mode
-  :ensure t
-  :config
-  (setq typescript-indent-level 2)
-  (add-hook 'typescript-mode #'subword-mode))
- 
-(use-package tide
-  :init
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)))
- 
-(use-package css-mode
-  :config
-(setq css-indent-offset 2))
-#+end_src
-
-#+RESULTS:
-: t
-
-*** Prettier
-#+begin_src emacs-lisp
-  (use-package prettier-js
-  :ensure t
-  :after (rjsx-mode)
-  :hook (rjsx-mode . prettier-js-mode))
-#+end_src
-
-*** Racket
-
-#+RESULTS:
-: racket-insert-lambda
-# **** Scheme default
-# #+begin_src emacs-lisp
-# (setq scheme-program-name "guile")
-#+end_src
-
-# #+RESULTS:
-# : guile
-
-# **** Quack
-# #+RESULTS:
-# #+begin_src emacs-lisp
-#   (use-package quack
-#     :after racket-mode
-#     :hook (racket-mode . quack-mode))
-# #+end_src
-
-# #+RESULTS:
-# | quack-mode | paredit-mode |
-
-#+RESULTS:
-| evil-smartparens-mode | smartparens-mode | scribble-mode | geiser-mode | paredit-mode | quack-mode |
-
-# **** Geiser
-#+begin_src emacs-lisp
-  ;; (use-package geiser
-    ;; :after racket-mode
-    ;; :hook (racket-mode . geiser-mode))
-#+end_src
-
-#+RESULTS:
-# | geiser-mode | paredit-mode | quack-mode |
-
-# **** Scribble Mode
-# #+begin_src emacs-lisp
-# (use-package scribble-mode
-#     :after racket-mode
-#     :hook (racket-mode . scribble-mode))
-# #+end_src
-
-#+RESULTS:
-# | scribble-mode | geiser-mode | paredit-mode | quack-mode |
-
-**** Racket mode
-#+begin_src emacs-lisp
-  (use-package racket-mode
-    :bind ("C-c l" . racket-insert-lambda)
-    :config
-    (when (racket-mode)
-      (exec-path-from-shell-initialize)))
-#+end_src
-**** Paredit
-
-#+begin_src emacs-lisp
-  (use-package paredit
-    :hook ((emacs-lisp-mode . paredit-mode)
-             (lisp-mode . paredit-mode)
-             (racket-mode . paredit-mode)
-             (clojure-mode . paredit-mode)))
-#+end_src
-
-#+RESULTS:
-| evil-smartparens-mode | smartparens-mode | paredit-mode |
-
-**** Parens
-#+begin_src emacs-lisp
-  (use-package smartparens
-    :hook ((emacs-lisp-mode . smartparens-mode)
-           (lisp-mode . smartparens-mode)
-           (cider-mode . smartparens-mode)
-           (clojure-mode . smartparens-mode)
-           (racket-mode . smartparens-mode)))
-#+end_src
-
-#+RESULTS:
-| smartparens-mode | paredit-mode | evil-smartparens-mode |
-
-#+begin_src emacs-lisp
-  (use-package evil-smartparens
-      :hook ((emacs-lisp-mode . evil-smartparens-mode)
-             (lisp-mode . evil-smartparens-mode)
-             (racket-mode . evil-smartparens-mode)
-             (racket-mode . evil-smartparens-mode)
-             (cider-mode . evil-smarparens-mode)
-             (clojure-mode . evil-smartparens-mode)))
-#+end_src
-
-#+RESULTS:
-| evil-smartparens-mode |
-*** Common lisp
-#+begin_src emacs-lisp
-  (use-package slime
-    :config
-    (setq inferior-lisp-program "sbcl"))
-  (use-package ac-slime)
-  (use-package slime-company)
-#+end_src
-
-#+RESULTS:
-
-# *** swank-js
-#+begin_src emacs-lisp
-  (global-set-key [f5] 'slime-js-reload)
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (slime-js-minor-mode 1)))
-
- (add-hook 'css-mode-hook
-           (lambda ()
-             (define-key css-mode-map "\M-\C-x" 'slime-js-refresh-css)
-             (define-key css-mode-map "\C-c\C-r" 'slime-js-embed-css)))
-#+end_src
-
-#+RESULTS:
-| (lambda nil (define-key css-mode-map \230 'slime-js-refresh-css) (define-key css-mode-map  'slime-js-embed-css)) | emmet-mode | web-beautify-css |
-*** Clojure(Script)
-**** Cider
-#+begin_src emacs-lisp
-  (use-package cider
-    ;; :mode "\\.clj[sc]?\\'"
-    :config
-    (evil-collection-cider-setup)
-    (setq cider-font-lock-dinamically '(macro core fucntion var))
-    (setq cider-reader-conditional-face t))
-#+end_src
-**** Clojure mode and hooks
-#+begin_src emacs-lisp
-    (use-package clojure-mode)
-    ;;    (use-package clojure-mode-extra-font-locking
-    ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
-    (use-package sotclojure
-      :hook ((clojure-mode . sotclojure-mode)
-             (cider-mode .sotclojure-mode)))
-    (use-package helm-clojuredocs
-      :hook ((clojure-mode . helm-clojuredocs-mode)
-             (cider-mode .sotclojure-mode)))
-    (use-package ivy-clojuredocs
-      :hook ((clojure-mode . ivy-clojuredocs-mode)
-             (cider-mode .sotclojure-mode)))
-    (use-package flycheck-clojure
-      :hook ((clojure-mode . flycheck-mode)
-             (cider-mode .sotclojure-mode)))
-  ;;   (use-package clojure-snippets
-  ;;     :hook ((clojure-mode . clojure-snippets-mode)
-  ;;            (cider-mode .sotclojure-mode)))
-  ;; ;; (use-package clojure-essential-ref
-  ;;   :hook ((clojure-mode . clojure-essential-ref-mode)
-  ;;          (cider-mode .sotclojure-mode)))
-  ;; (use-package 4clojure
-  ;;     :hook ((clojure-mode . 4clojure-mode)
-  ;;            (cider-mode .sotclojure-mode)))
-    ;; (use-package clojure-extra-font-locking
-      ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
-#+end_src
-
-#+RESULTS:
-| 4clojure | clojure-essential-ref | clojure-snippets | flycheck-clojure | ivy-clojuredocs | helm-clojuredocs | sotclojure |
-*** Julia
-#+begin_src emacs-lisp
-  (use-package julia-snail)
-  (use-package ob-ess-julia)
-  (use-package ob-julia-vterm)
-#+end_src
-
-#+RESULTS:
-
-** Parinfer
-copy paste from [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org#clojure][dawil]]
-#+begin_src emacs-lisp
-(use-package parinfer
-  :disabled
-  :hook ((clojure-mode . parinfer-mode)
-         (emacs-lisp-mode . parinfer-mode)
-         (common-lisp-mode . parinfer-mode)
-         (scheme-mode . parinfer-mode)
-         (lisp-mode . parinfer-mode))
-  :config
-  (setq parinfer-extensions
-      '(defaults       ; should be included.
-        pretty-parens  ; different paren styles for different modes.
-        evil           ; If you use Evil.
-        smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-        smart-yank)))  ; Yank behavior depend on mode.
-#+end_src
-
-#+RESULTS:
-
-** Indent guide (vertical line)
-#+begin_src emacs-lisp
-  (use-package indent-guide
-    :init (indent-guide-global-mode t)
-    :hook (prog-mode . indent-guide-mode))
-#+end_src
-
-#+RESULTS:
-| indent-guide-mode | rainbow-delimiters-mode | fira-code-mode | prettify-symbols-mode |
-
-** Company Mode
-
-[[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
-
-We also use [[https://github.com/sebastiencs/company-box][company-box]] to further enhance the look of the completions with icons and better overall presentation.
-
-#+begin_src emacs-lisp
-
-  (use-package company
-    :after lsp-mode
-    :hook (lsp-mode . company-mode)
-    :bind (:map company-active-map
-           ("<tab>" . company-complete-selection))
-          (:map lsp-mode-map
-           ("<tab>" . company-indent-or-complete-common))
-    :custom
-    (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0))
-
-  (use-package company-box
-    :hook (company-mode . company-box-mode))
-
-#+end_src
-
-** Ein
-#+begin_src emacs-lisp
-(use-package ein)
-#+end_src
-
-#+RESULTS:
-
-** Projectile
-
-[[https://projectile.mx/][Projectile]] is a project management library for Emacs which makes it a lot easier to navigate around code projects for various languages.  Many packages integrate with Projectile so it's a good idea to have it installed even if you don't use its commands directly.
-
-#+begin_src emacs-lisp
-  (use-package projectile
-    :diminish projectile-mode
-    :config (projectile-mode)
-    :custom ((projectile-completion-system 'ivy))
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :init
-    ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/Projects/Code")
-      (setq projectile-project-search-path '("~/Projects/Code")))
-    (setq projectile-switch-project-action #'projectile-dired))
-
-  (use-package counsel-projectile
-    :after projectile
-    :config (counsel-projectile-mode))
-#+end_src
-
-#+RESULTS:
-
-** Magit
-
-[[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.
-
-#+begin_src emacs-lisp
-
-  (use-package magit
-    :commands magit-status
-    :custom
-    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-  ;; NOTE: Make sure to configure a GitHub token before using this package!
-  ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-  ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-  (use-package forge
-    :after magit)
-
-#+end_src
-
-** Commenting
-
-Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=) doesn't always comment things in the way you might expect so we use [[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] to provide a more familiar behavior.  I've bound it to =M-/= since other editors sometimes use this binding but you could also replace Emacs' =M-;= binding with this command.
-
-#+begin_src emacs-lisp
-
-  (use-package evil-nerd-commenter
-    :bind ("M-/" . evilnc-comment-or-uncomment-lines))
-
-#+end_src
-
-** Rainbow Delimiters
-
-[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is useful in programming modes because it colorizes nested parentheses and brackets according to their nesting depth.  This makes it a lot easier to visually match parentheses in Emacs Lisp code without having to count them yourself.
-
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook ((after-init . rainbow-delimiters-mode)
-           (prog-mode . rainbow-delimiters-mode)
-           (text-mode . rainbow-delimiters-mode)
-           (special-mode . rainbow-delimiters-mode)))
-#+end_src
-
-#+RESULTS:
-| rainbow-delimiters-mode | rainbow-mode | nyan-mode | fira-code-mode | prettify-symbols-mode |
-
-** Emmert // Code Snippets
-#+begin_src emacs-lisp
-  (use-package emmet-mode
-    :hook ((sgml-mode . emmet-mode)
-           (css-mode . emmet-mode)))
-#+end_src
-
-#+RESULTS:
-| emmet-mode |
-
-** Org-Brain
-#+begin_src emacs-lisp
-(use-package org-brain)
-#+end_src
-
-#+RESULTS:
-
-** Evil parents
-#+begin_src emacs-lisp
-  (use-package evil-surround
-    :ensure t
-    :config
-  
-    (global-evil-surround-mode 1))
-#+end_src
-
-#+RESULTS:
-: t
-
-** TabNine
-#+begin_src emacs-lisp
-  (use-package company)
-    ;; :hook (prog-mode-hook . company-mode)
-    ;; :config (
-             ;; (setq company-idle-delay 0)
-             ;; (setq company-show-numbers t))
-  
-  ;; (add-to-list 'company-backends #'company-tabnine)
-    ;; :hook ((prog-mode . company-mode)
-           ;; (text-mode . company-mode))
-  
-#+end_src
-
-#+RESULTS:
-
-#+begin_src emacs-lisp
-    (use-package company-tabnine
-      :ensure t)
-#+end_src
-#+RESULTS:
-
-** Autocomplete
-
-** Fuzzy matchers
-
-*** General fuzzer
-#+begin_src emacs-lisp
-  ;;    (use-package company-fuzzy
-  ;;      :hook (company-mode . company-fuzzy-mode))
-#+end_src
-
-*** Sophisticated fuzzer
-# #+begin_src emacs-lisp
-#   (use-package company-flx
-#     :hook (company-mode . company-flx)
-#     :config
-# (with-eval-after-load 'company
-#       (company-flx-mode +1)))
-# #+end_src
-
-*** Fuzzy match?
+** Anaconda
+   #+begin_src emacs-lisp
+     (use-package conda)
+     (setq
+     conda-env-home-directory (expand-file-name "~/.conda/")
+     conda-env-subdirectory "envs")
+     (custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+     (conda-env-initialize-interactive-shells)
+     (conda-env-initialize-eshell)
+     (conda-env-autoactivate-mode t)
+   #+end_src
+
+   #+RESULTS:
+   : t
 
 * Terminals
 ** term-mode
@@ -1902,10 +1273,9 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 Dired is a built-in file manager for Emacs that does some pretty amazing things!  Here are some key bindings you should try out:
 
 *** Key Bindings
-
 **** Navigation
 
-*Emacs* / *Evil*
+     *Emacs* / *Evil*
 - =n= / =j= - next line
 - =p= / =k= - previous line
 - =j= / =J= - jump to file in buffer
@@ -1962,7 +1332,6 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 *** Configuration
 
 #+begin_src emacs-lisp
-
   (use-package dired
     :ensure nil
     :commands (dired dired-jump)
@@ -1972,28 +1341,73 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     (evil-collection-define-key 'normal 'dired-mode-map
       "h" 'dired-single-up-directory
       "l" 'dired-single-buffer))
-
+  
   (use-package dired-single
     :commands (dired dired-jump))
-
+  
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
-
+  
   (use-package dired-open
     :commands (dired dired-jump)
     :config
     ;; Doesn't work as expected!
     ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
     (setq dired-open-extensions '(("png" . "feh")
-                                  ("mkv" . "mpv"))))
-
+				  ("mkv" . "mpv"))))
+  
   (use-package dired-hide-dotfiles
     :hook (dired-mode . dired-hide-dotfiles-mode)
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "H" 'dired-hide-dotfiles-mode))
-
+  
+  ;; (use-package dired-details) 
+  
+  (use-package dired-rainbow
+    :defer 2
+    :config
+    (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+    (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
+    (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
+    (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
+    (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
+    (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
+    (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
+    (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
+    (dired-rainbow-define log "#c17d11" ("log"))
+    (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
+    (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
+    (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
+    (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
+    (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
+    (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
+    (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
+    (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
+    (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
+    (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
+    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
+  
+  (use-package dired-single
+    :defer t)
+  
+  (use-package dired-ranger
+    :defer t)
+  
+  (use-package dired-collapse
+    :defer t)
+  
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "H" 'dired-omit-mode
+    "l" 'dired-single-buffer
+    "y" 'dired-ranger-copy
+    "X" 'dired-ranger-move
+    "p" 'dired-ranger-paste)
+  
 #+end_src
+
+#+RESULTS:
 
 * Applications
 
@@ -2117,66 +1531,65 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 #+RESULTS:
 * EXWM setup
 #+begin_src emacs-lisp
-  (defun efs/exwm-update-class ()
-    (exwm-workspace-rename-buffer exwm-class-name))
-
-  (use-package exwm
-    :config
-    ;; Set the default number of workspaces
-    (setq exwm-workspace-number 5)
-
-    ;; When window "class" updates, use it to set the buffer name
-    ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-    ;; These keys should always pass through to Emacs
-    (setq exwm-input-prefix-keys
-          '(?\C-x
-            ?\C-u
-            ?\C-h
-            ?\M-x
-            ?\M-`
-            ?\M-&
-            ?\M-:
-            ?\C-\M-j  ;; Buffer list
-            ?\C-\ ))  ;; Ctrl+Space
-
-    ;; Ctrl+Q will enable the next key to be sent directly
-    (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-    ;; Set up global key bindings.  These always work, no matter the input state!
-    ;; Keep in mind that changing this list after EXWM initializes has no effect.
-    (setq exwm-input-global-keys
-          `(
-            ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-            ([?\s-r] . exwm-reset)
-
-            ;; Move between windows
-            ([s-left] . windmove-left)
-            ([s-right] . windmove-right)
-            ([s-up] . windmove-up)
-            ([s-down] . windmove-down)
-
-            ;; Launch applications via shell command
-            ([?\s-&] . (lambda (command)
-                         (interactive (list (read-shell-command "$ ")))
-                         (start-process-shell-command command nil command)))
-
-            ;; Switch workspace
-            ([?\s-w] . exwm-workspace-switch)
-
-            ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-            ,@(mapcar (lambda (i)
-                        `(,(kbd (format "s-%d" i)) .
-                          (lambda ()
-                            (interactive)
-                            (exwm-workspace-switch-create ,i))))
-                      (number-sequence 0 9))))
-
-    (exwm-enable))
+  ;; (defun efs/exwm-update-class ()
+  ;;   (exwm-workspace-rename-buffer exwm-class-name))
+  
+  ;; (use-package exwm
+  ;;   :config
+  ;;   ;; Set the default number of workspaces
+  ;;   (setq exwm-workspace-number 5)
+  
+  ;;   ;; When window "class" updates, use it to set the buffer name
+  ;;   ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+  
+  ;;   ;; These keys should always pass through to Emacs
+  ;;   (setq exwm-input-prefix-keys
+  ;;         '(?\C-x
+  ;;           ?\C-u
+  ;;           ?\C-h
+  ;;           ?\M-x
+  ;;           ?\M-`
+  ;;           ?\M-&
+  ;;           ?\M-:
+  ;;           ?\C-\M-j  ;; Buffer list
+  ;;           ?\C-\ ))  ;; Ctrl+Space
+  
+  ;;   ;; Ctrl+Q will enable the next key to be sent directly
+  ;;   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+  
+  ;;   ;; Set up global key bindings.  These always work, no matter the input state!
+  ;;   ;; Keep in mind that changing this list after EXWM initializes has no effect.
+  ;;   (setq exwm-input-global-keys
+  ;;         `(
+  ;;           ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+  ;;           ([?\s-r] . exwm-reset)
+  
+  ;;           ;; Move between windows
+  ;;           ([s-left] . windmove-left)
+  ;;           ([s-right] . windmove-right)
+  ;;           ([s-up] . windmove-up)
+  ;;           ([s-down] . windmove-down)
+  
+  ;;           ;; Launch applications via shell command
+  ;;           ([?\s-&] . (lambda (command)
+  ;;                        (interactive (list (read-shell-command "$ ")))
+  ;;                        (start-process-shell-command command nil command)))
+  
+  ;;           ;; Switch workspace
+  ;;           ([?\s-w] . exwm-workspace-switch)
+  
+  ;;           ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+  ;;           ,@(mapcar (lambda (i)
+  ;;                       `(,(kbd (format "s-%d" i)) .
+  ;;                         (lambda ()
+  ;;                           (interactive)
+  ;;                           (exwm-workspace-switch-create ,i))))
+  ;;                     (number-sequence 0 9))))
+  
+  ;;   (exwm-enable))
 #+end_src
 
 #+RESULTS:
-: t
 * From LARBS to E-LARBS
 ** Bindings
 *** remaps (script)
@@ -2373,4 +1786,48 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
 # evil multiedit
 # multiple-cursors
-** Brazilian Keyboard Layout
+** Brazilian Keyboard Layout 
+* Animated images (gif)
+#+begin_src emacs-lisp
+  ;; Copyright (C) 2014 Matus Goljer <matus.goljer@gmail.com>
+  ;; Package-requires: ((dash "2.5.0"))
+  (defun org-inline-image--get-current-image ()
+    "Return the overlay associated with the image under point."
+    (car (--select (eq (overlay-get it 'org-image-overlay) t) (overlays-at (point)))))
+  
+  (defun org-inline-image--get (prop)
+    "Return the value of property PROP for image under point."
+    (let ((image (org-inline-image--get-current-image)))
+      (when image
+        (overlay-get image prop))))
+  
+  (defun org-inline-image-animate ()
+    "Animate the image if it's possible."
+    (interactive)
+    (let ((image-props (org-inline-image--get 'display)))
+      (when (image-multi-frame-p image-props)
+        (image-animate image-props))))
+  
+  (defun org-inline-image-animate-auto ()
+    (interactive)
+    (when (eq 'org-mode major-mode)
+      (while-no-input 
+        (run-with-idle-timer 0.3 nil 'org-inline-image-animate))))
+  
+  (setq org-inline-image--get-current-image (byte-compile 'org-inline-image--get-current-image))
+  (setq org-inline-image-animate  (byte-compile 'org-inline-image-animate ))
+  (add-hook 'post-command-hook 'org-inline-image-animate-auto)
+#+end_src
+
+#+RESULTS:
+
+* Load Desktop.el and other auxiliaries
+#+begin_src emacs-lisp
+  (load "~/.emacs.d/editing.el")
+  (load "~/.emacs.d/desktop.el")
+#+end_src
+
+#+RESULTS:
+: t
+
+

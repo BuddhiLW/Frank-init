@@ -1,3 +1,4 @@
+# O PC
 * Inbox
 
 ** TODO Commit config updates
@@ -7,7 +8,6 @@
 ** TODO Update Journal capture template
   [2020-10-09 Fri 10:06]
   [[file:~/Projects/Code/emacs-from-scratch/init.el::"j" "Journal Entries"]]
-
 
 * Active
 
@@ -61,7 +61,6 @@ CLOSED: [2021-03-17 Wed 09:37 +1d]
 ** ☛ TODO Exercício globo 
 <2021-03-19 Fri>
 
-
 * Init customization pile and ideias
 ** ☛ TODO Togle evil mode and normal Emacs
 <2021-03-21 Sun>
@@ -84,5 +83,92 @@ CLOSED: [2021-03-17 Wed 09:37 +1d]
  
 ;; (global-set-key (kbd "M-u") 'toggle-evilmode)
 
-
 * Backlog
+
+
+
+# Faculdade
+* Clojure(Script)
+** TODO Swap!
+
+Understand the syntax and functionality
+
+#+begin_src clojure
+  (swap! state/orders update id inc)
+#+end_src
+
+* John's input
+[[junyu zhan]] : https://www.facebook.com/photo/?fbid=10157640361747303&set=gm.953073631938385
+https://anagora.org/the-future-of-note-taking
+
+
+* TODO Today
+** NEXT Polish TCC-en
+** TODO Read papers on Traffic
+** TODO Website post
+** TODO Terminate subscription to Statistics Monitor program
+
+* DONE DONE 
+** DONE Flow challenge 
+CLOSED: [2021-07-06 Tue 09:31] SCHEDULED: <2021-06-25 Fri> DEADLINE: <2021-06-28 Mon>
+:LOGBOOK:
+- State "DONE"       from "BACKLOG"    [2021-07-06 Tue 09:31]
+- State "DONE"       from "BACKLOG"    [2021-07-06 Tue 09:31]
+- State "DONE"       from "NEXT"       [2021-06-30 Wed 12:37]
+CLOCK: [2021-06-25 Fri 17:41]--[2021-06-25 Fri 17:41] =>  0:00
+:END:
+** Clocks
+CLOCK: [2021-06-25 Fri 17:10]--[2021-06-25 Fri 17:35] =>  0:25
+
+** DONE Anna's Statistics Work
+CLOSED: [2021-08-11 Wed 14:07]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-08-11 Wed 14:07]
+:END:
+*** Notes
+** DONE Wei-Liang [[file:Metrics.org::*\[\[file:Tasks.org::*Wei-Liang TCC\]\[TCC\]\]][TCC]]
+CLOSED: [2021-08-11 Wed 14:08] SCHEDULED: <2021-06-22 Tue>
+:LOGBOOK:
+- State "DONE"       from "BACKLOG"    [2021-08-11 Wed 14:08]
+- State "DONE"       from "NEXT"       [2021-08-11 Wed 14:08]
+:END:
+Hi, Pedro,
+
+Thanks for the progress, few comments below
+
+*** Abstract
+I am not sure about the rules, but probably you will need an English version abstract.
+Also, I am actually a bit slow to think of the organization of a paper/monograph when things are in Portuguese, but I will try.
+*** DONE Introduction  - How pieces fit together
+CLOSED: [2021-06-22 Tue 01:01]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-06-22 Tue 01:01]
+:END:
+In the introduction section, you will need a place to explain how each section of your monograph is about.
+By enumerating the content of the entire writing, you need to explain the logic and relation between different parts of the monograph.
+It seems still missing from the present version.
+
+*** DONE Smoother Progression - Bibliography (Why EXWM?)
+CLOSED: [2021-06-30 Wed 12:50]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-06-30 Wed 12:50]
+:END:
+The current content seems still a bit wild, you start from some very general concepts or notions (open source, and Linux) to some very specific applications.
+Maybe, this can be somehow alleviated by adding some discussions about the general types/categories of open source software/operational systems.
+Then mention that due to personal experience, we will only address a few specific ones of them.
+(A more general argument will be to give a motivation about why you choose them, it is not necessary as it is just a monograph not a rigorous scientific research paper, so you will be forgiven).
+
+
+# Profissional
+*** 30 Jun
+**** Results
+**** Presentation
+** [[file:Tasks.org::*Wei-Liang TCC][TCC]]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-08-11 Wed 14:07]
+CLOCK: [2021-07-09 Fri 11:30]--[2021-07-09 Fri 11:30] =>  0:00
+:END:
+*** Clocks 
+CLOCK: [2021-07-03 Sat 20:20]--[2021-07-03 Sat 20:45] =>  0:25
+CLOCK: [2021-07-06 Tue  05:00]--[2021-07-06 Tue 06:30] =>  1:30
+CLOCK: [2021-07-06 Tue 09:28]--[2021-07-06 Tue 09:53] =>  0:25

@@ -8,6 +8,8 @@
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
 
+(setq org-roam-v2-ack t)
+
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
 
@@ -47,8 +49,6 @@
   (auto-package-update-maybe)
   (auto-package-update-at-time "09:00"))
 
-(load-file "~/.emacs.d/desktop.el")
-
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
 ;; reliably, set `user-emacs-directory` before loading no-littering!
 ;(setq user-emacs-directory "~/.cache/emacs")
@@ -73,7 +73,7 @@
 (setq visible-bell t)
 
 (column-number-mode)
-(global-display-line-numbers-mode t)
+;; (global-display-line-numbers-mode t)
 
 ;; Set frame transparency
 (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
@@ -83,10 +83,10 @@
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
-                term-mode-hook
-                shell-mode-hook
-                treemacs-mode-hook
-                eshell-mode-hook))
+		term-mode-hook
+		shell-mode-hook
+		treemacs-mode-hook
+		eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (defun toggle-transparency ()
@@ -134,6 +134,25 @@
     :family "DejaVu Sans Mono"
     :height efs/default-font-size
     :slant 'normal)))
+
+;; "CCSymbol"  U+1F16D - U+1F10F
+(set-fontset-font "fontset-default"
+                  (cons (decode-char 'ucs #x1F10D)
+                        (decode-char 'ucs #x1F10f))
+                  "CC Symbols")
+
+  (set-fontset-font "fontset-default"
+                  (cons (decode-char 'ucs #x1F16D)
+                        (decode-char 'ucs #x1F16f))
+                  "CC Symbols")
+(set-fontset-font "fontset-default"
+                  (cons (decode-char 'ucs #x05B0)
+                        (decode-char 'ucs #x05F4))
+                  "Noto Serif Hebrew")
+
+   ;; (set-fontset-font "fontset-default"
+   ;;                   (cons (decode-char 'ucs #x05D0))
+   ;;                   "Noto Serif Hebew")
 
 (use-package unicode-fonts
    :ensure t
@@ -214,10 +233,10 @@ codepoints starting from codepoint-start."
          (text-mode . prettify-symbols-mode)
          ))
 
-(use-package nyan-mode
-  :hook ((special-mode . nyan-mode)
-         (text-mode . nyan-mode)
-         (progn-mode . nyan-mode)))
+;; (use-package nyan-mode
+;;   :hook ((special-mode . nyan-mode)
+;;          (text-mode . nyan-mode)
+;;          (progn-mode . nyan-mode)))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -237,8 +256,8 @@ codepoints starting from codepoint-start."
 
 (use-package evil
   :init
-  (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  (setq evil-want-integration t)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
   :config
@@ -255,6 +274,8 @@ codepoints starting from codepoint-start."
 
 (use-package evil-collection
   :after evil
+  :init
+  (setq evil-want-keybinding nil)
   :config
   (evil-collection-init))
 
@@ -281,6 +302,7 @@ codepoints starting from codepoint-start."
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
+(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
 
 (use-package which-key
   :defer 0
@@ -389,7 +411,12 @@ codepoints starting from codepoint-start."
   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
   ;; (set-face-attribute 'org-format-latex-options nil :inherit 'fixed-pitch)
   ;; ;
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 3.0)))
+
+(use-package org-auto-tangle
+  :load-path "site-lisp/org-auto-tangle/"    ;; this line is necessary only if you cloned the repo in your site-lisp directory 
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode))
 
 (defun efs/org-mode-setup ()
   (org-indent-mode)
@@ -528,9 +555,45 @@ codepoints starting from codepoint-start."
   (efs/org-font-setup))
 
 (use-package org-bullets
-  :hook (org-mode . org-bullets-mode)
+  :after org
+  ;; :hook (org-mode . org-bullets)
   :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+  ;; (org-superstar-remove-leading-stars t)
+  (org-bullets-bullet-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")))
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+;; Increase the size of various headings
+;; Noto Serif CJK TC
+ (set-face-attribute 'org-document-title nil :font "Bitstream Vera Serif" :weight 'bold :height 1.3)
+ (dolist (face '((org-level-1 . 1.2)
+		 (org-level-2 . 1.1)
+		 (org-level-3 . 1.05)
+		 (org-level-4 . 1.0)
+		 (org-level-5 . 1.1)
+		 (org-level-6 . 1.1)
+		 (org-level-7 . 1.1)
+		 (org-level-8 . 1.1)))
+   (set-face-attribute (car face) nil :font "Bitstream Vera Serif" :weight 'medium :height (cdr face)))
+
+ ;; Make sure org-indent face is available
+ (require 'org-indent)
+
+ ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+ (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+ (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+ (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+ (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+ (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+ (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+ (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+ (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+ (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+ ;; Get rid of the background on column views
+ (set-face-attribute 'org-column nil :background nil)
+ (set-face-attribute 'org-column-title nil :background nil)
 
 (defun efs/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
@@ -548,13 +611,31 @@ codepoints starting from codepoint-start."
    '((emacs-lisp . t)
      (python . t)
      (browser . t)
+     ;; (ipython . t)
+     (ein . t)
      (ditaa . t)
      (css . t)
      (lisp . t)
+     (latex . t)
      (clojure . t)
      (clojurescript . t)))
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(conda-anaconda-home "/opt/anaconda/")
+ '(helm-minibuffer-history-key "M-p")
+ '(ob-ein-languages
+   '(("ein-python" . python)
+     ("ein-R" . R)
+     ("ein-r" . R)
+     ("ein-julia" . julia)))
+ '(package-selected-packages
+   '(zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree treemacs-icons-dired tide tern sxiv sudo-edit spaceline sotclojure slime-company skeletor scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit pandoc-mode pandoc ox-pandoc ox-hugo outshine org-trello org-tree-slide org-superstar org-roam-bibtex org-ql org-pomodoro org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain ob-latex-as-png ob-julia-vterm ob-ipython ob-html-chrome ob-ess-julia ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode monitor lsp-ui lsp-latex lsp-ivy lsp-grammarly lockfile-mode latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient ivy-clojuredocs inf-clojure indium indent-guide image-dired+ helpful helm-clojuredocs gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-clojure flycheck-aspell fira-code-mode ffmpeg-player exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode emacsql-sqlite3 elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-ctags company-box company-bibtex company-anaconda command-log-mode clojure-essential-ref cdnjs bibtex-utils babel auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -611,417 +692,14 @@ codepoints starting from codepoint-start."
 ;; (require 'elgantt)
 ;; ;; (setq elgantt-agenda-files (concat user-emacs-directory "lisp/elgantt/test.org"))
 
-(defun reload-pdf ()
-  (interactive
-  (let* ((fname buffer-file-name)
-        (fname-no-ext (substring fname 0 -4))
-        (pdf-file (concat fname-no-ext ".pdf"))
-        (cmd (format "pdflatex %s" fname)))
-    (delete-other-windows)
-    (split-window-horizontally)
-    (split-window-vertically)
-    (shell-command cmd)
-    (other-window 2)
-    (find-file pdf-file)
-    (balance-windows))))
-
-(global-set-key "\C-x\p" 'reload-pdf)
-
-;; to use pdfview with auctex
-(setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-   TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-   TeX-source-correlate-start-server t) ;; not sure if last line is neccessary
-
-;; to have the buffer refresh after compilation
-(add-hook 'TeX-after-compilation-finished-functions
-       #'TeX-revert-document-buffer)
-
-(defun efs/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
-
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :hook (lsp-mode . efs/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
-  :config
-  (lsp-enable-which-key-integration t))
-
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
-
-(use-package lsp-treemacs
-  :after lsp)
-
-(use-package lsp-ivy
-  :after lsp)
-
-(use-package dap-mode
-  ;; Uncomment the config below if you want all UI panes to be hidden by default!
-  ;; :custom
-  ;; (lsp-enable-dap-auto-configure nil)
-  ;; :config
-  ;; (dap-ui-mode 1)
-  :commands dap-debug
-  :config
-  ;; Set up Node debugging
-  (require 'dap-node)
-  (dap-node-setup) ;; Automatically installs Node debug adapter if needed
-
-  ;; Bind `C-c l d` to `dap-hydra` for easy access
-  (general-define-key
-    :keymaps 'lsp-mode-map
-    :prefix lsp-keymap-prefix
-    "d" '(dap-hydra t :wk "debugger")))
-
-(use-package typescript-mode
-  :mode "\\.ts\\'"
-  :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-indent-level 2))
-
-(use-package python-mode
-  :ensure t
-  :hook (python-mode . lsp-deferred)
-  :custom
-  ;; NOTE: Set these if Python 3 is called "python3" on your system!
-  ;; (python-shell-interpreter "python3")
-  ;; (dap-python-executable "python3")
-  (dap-python-debugger 'debugpy)
-  :config
-  (require 'dap-python))
-
 (use-package conda)
-(use-package anaconda-mode)
-(use-package company-anaconda)
+(setq
+conda-env-home-directory (expand-file-name "~/.conda/")
+conda-env-subdirectory "envs")
 
-(setq conda-env-home-directory (expand-file-name "~/.conda/")
-      conda-env-subdirectory "envs")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(conda-anaconda-home "/opt/anaconda/")
- '(helm-minibuffer-history-key "M-p")
- '(org-agenda-files
-   '("/home/buddhilw/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org")))
 (conda-env-initialize-interactive-shells)
 (conda-env-initialize-eshell)
 (conda-env-autoactivate-mode t)
-
-(use-package css-mode
-  :bind ("C-c m" . css-lookup-symbol))
-
-;; (use-package artist-mode)
-
-(use-package indium
-:hook (js-mode . indium-interaction-mode))
-
-(use-package web-beautify
-  :hook ((css-mode . web-beautify-css)
-         ;; (js-mode . web-beautify-js)
-         (html-mode . web-beautify-html)))
-
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-
-(use-package js2-mode
-  :hook ((js-mode . js2-minor-mode)
-         (js2-mode . ac-js2-mode)))
-
-(use-package tern
-  :load-path "~/.emacs.d/tern/"
-  :after ((js-mode)
-          (js2-mode))
-  :hook ((js-mode . tern-mode)
-         (js2-mode . tern-mode))
-  :config (autoload 'tern-mode "tern.el" nil t))
-
-(use-package rjsx-mode
-  :ensure t
-  :mode "\\.js\\'")
-
-(defun setup-tide-node()
-  "Setup function for tide."
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save-mode-enabled))
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
-
-(use-package tide
-  :ensure t
-  :after (rjsx-mode company flycheck)
-  :hook (rjsx-mode . setup-tide-mode))
-
-(use-package flycheck
-  :ensure t
-  :config
-  (add-hook 'typescript-mode-hook 'flycheck-mode))
- 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
- 
-(use-package company
-  :ensure t
-  :config
-  (setq company-show-numbers t)
-  (setq company-tooltip-align-annotations t)
-  ;; invert the navigation direction if the the completion popup-isearch-match
-  ;; is displayed on top (happens near the bottom of windows)
-  (setq company-tooltip-flip-when-above t)
-  (global-company-mode))
- 
-(use-package company-quickhelp
-  :ensure t
-  :init
-  (company-quickhelp-mode 1)
-  (use-package pos-tip
-    :ensure t))
- 
-(use-package web-mode
-  :ensure t
-  :mode (("\\.html?\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode)
-         ("\\.jsx\\'" . web-mode))
-  :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-block-padding 2
-        web-mode-comment-style 2
- 
-        web-mode-enable-css-colorization t
-        web-mode-enable-auto-pairing t
-        web-mode-enable-comment-keywords t
-        web-mode-enable-current-element-highlight t
-	web-mode-enable-auto-indentation nil
-        )
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-		(setup-tide-mode))))
-  ;; enable typescript-tslint checker
-  (flycheck-add-mode 'typescript-tslint 'web-mode))
- 
-(use-package typescript-mode
-  :ensure t
-  :config
-  (setq typescript-indent-level 2)
-  (add-hook 'typescript-mode #'subword-mode))
- 
-(use-package tide
-  :init
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)))
- 
-(use-package css-mode
-  :config
-(setq css-indent-offset 2))
-
-(use-package prettier-js
-:ensure t
-:after (rjsx-mode)
-:hook (rjsx-mode . prettier-js-mode))
-
-;; (use-package geiser
-  ;; :after racket-mode
-  ;; :hook (racket-mode . geiser-mode))
-
-(use-package racket-mode
-  :bind ("C-c l" . racket-insert-lambda)
-  :config
-  (when (racket-mode)
-    (exec-path-from-shell-initialize)))
-
-(use-package paredit
-  :hook ((emacs-lisp-mode . paredit-mode)
-           (lisp-mode . paredit-mode)
-           (racket-mode . paredit-mode)
-           (clojure-mode . paredit-mode)))
-
-(use-package smartparens
-  :hook ((emacs-lisp-mode . smartparens-mode)
-         (lisp-mode . smartparens-mode)
-         (cider-mode . smartparens-mode)
-         (clojure-mode . smartparens-mode)
-         (racket-mode . smartparens-mode)))
-
-(use-package evil-smartparens
-    :hook ((emacs-lisp-mode . evil-smartparens-mode)
-           (lisp-mode . evil-smartparens-mode)
-           (racket-mode . evil-smartparens-mode)
-           (racket-mode . evil-smartparens-mode)
-           (cider-mode . evil-smarparens-mode)
-           (clojure-mode . evil-smartparens-mode)))
-
-(use-package slime
-  :config
-  (setq inferior-lisp-program "sbcl"))
-(use-package ac-slime)
-(use-package slime-company)
-
-(global-set-key [f5] 'slime-js-reload)
- (add-hook 'js2-mode-hook
-           (lambda ()
-             (slime-js-minor-mode 1)))
-
-(add-hook 'css-mode-hook
-          (lambda ()
-            (define-key css-mode-map "\M-\C-x" 'slime-js-refresh-css)
-            (define-key css-mode-map "\C-c\C-r" 'slime-js-embed-css)))
-
-(use-package cider
-  ;; :mode "\\.clj[sc]?\\'"
-  :config
-  (evil-collection-cider-setup)
-  (setq cider-font-lock-dinamically '(macro core fucntion var))
-  (setq cider-reader-conditional-face t))
-
-(use-package clojure-mode)
-  ;;    (use-package clojure-mode-extra-font-locking
-  ;;      :hook (clojure-mode . clojure-mode-extra-font-locking))
-  (use-package sotclojure
-    :hook ((clojure-mode . sotclojure-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package helm-clojuredocs
-    :hook ((clojure-mode . helm-clojuredocs-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package ivy-clojuredocs
-    :hook ((clojure-mode . ivy-clojuredocs-mode)
-           (cider-mode .sotclojure-mode)))
-  (use-package flycheck-clojure
-    :hook ((clojure-mode . flycheck-mode)
-           (cider-mode .sotclojure-mode)))
-;;   (use-package clojure-snippets
-;;     :hook ((clojure-mode . clojure-snippets-mode)
-;;            (cider-mode .sotclojure-mode)))
-;; ;; (use-package clojure-essential-ref
-;;   :hook ((clojure-mode . clojure-essential-ref-mode)
-;;          (cider-mode .sotclojure-mode)))
-;; (use-package 4clojure
-;;     :hook ((clojure-mode . 4clojure-mode)
-;;            (cider-mode .sotclojure-mode)))
-  ;; (use-package clojure-extra-font-locking
-    ;; :hook (clojure-mode . clojure-extra-font-locking-mode))
-
-(use-package julia-snail)
-(use-package ob-ess-julia)
-(use-package ob-julia-vterm)
-
-(use-package parinfer
-  :disabled
-  :hook ((clojure-mode . parinfer-mode)
-         (emacs-lisp-mode . parinfer-mode)
-         (common-lisp-mode . parinfer-mode)
-         (scheme-mode . parinfer-mode)
-         (lisp-mode . parinfer-mode))
-  :config
-  (setq parinfer-extensions
-      '(defaults       ; should be included.
-        pretty-parens  ; different paren styles for different modes.
-        evil           ; If you use Evil.
-        smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-        smart-yank)))  ; Yank behavior depend on mode.
-
-(use-package indent-guide
-  :init (indent-guide-global-mode t)
-  :hook (prog-mode . indent-guide-mode))
-
-(use-package company
-  :after lsp-mode
-  :hook (lsp-mode . company-mode)
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map lsp-mode-map
-         ("<tab>" . company-indent-or-complete-common))
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
-
-(use-package company-box
-  :hook (company-mode . company-box-mode))
-
-(use-package ein)
-
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-(use-package counsel-projectile
-  :after projectile
-  :config (counsel-projectile-mode))
-
-(use-package magit
-  :commands magit-status
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-;; NOTE: Make sure to configure a GitHub token before using this package!
-;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-(use-package forge
-  :after magit)
-
-(use-package evil-nerd-commenter
-  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
-
-(use-package rainbow-delimiters
-  :hook ((after-init . rainbow-delimiters-mode)
-         (prog-mode . rainbow-delimiters-mode)
-         (text-mode . rainbow-delimiters-mode)
-         (special-mode . rainbow-delimiters-mode)))
-
-(use-package emmet-mode
-  :hook ((sgml-mode . emmet-mode)
-         (css-mode . emmet-mode)))
-
-(use-package org-brain)
-
-(use-package evil-surround
-  :ensure t
-  :config
-
-  (global-evil-surround-mode 1))
-
-(use-package company)
-  ;; :hook (prog-mode-hook . company-mode)
-  ;; :config (
-           ;; (setq company-idle-delay 0)
-           ;; (setq company-show-numbers t))
-
-;; (add-to-list 'company-backends #'company-tabnine)
-  ;; :hook ((prog-mode . company-mode)
-         ;; (text-mode . company-mode))
-
-(use-package company-tabnine
-  :ensure t)
-
-;;    (use-package company-fuzzy
-;;      :hook (company-mode . company-fuzzy-mode))
 
 (use-package term
   :commands term
@@ -1098,13 +776,56 @@ codepoints starting from codepoint-start."
   ;; Doesn't work as expected!
   ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
   (setq dired-open-extensions '(("png" . "feh")
-                                ("mkv" . "mpv"))))
+				("mkv" . "mpv"))))
 
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
+
+;; (use-package dired-details) 
+
+(use-package dired-rainbow
+  :defer 2
+  :config
+  (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+  (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
+  (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
+  (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
+  (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
+  (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
+  (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
+  (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
+  (dired-rainbow-define log "#c17d11" ("log"))
+  (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
+  (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
+  (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
+  (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
+  (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
+  (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
+  (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
+  (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
+  (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
+  (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
+  (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
+
+(use-package dired-single
+  :defer t)
+
+(use-package dired-ranger
+  :defer t)
+
+(use-package dired-collapse
+  :defer t)
+
+(evil-collection-define-key 'normal 'dired-mode-map
+  "h" 'dired-single-up-directory
+  "H" 'dired-omit-mode
+  "l" 'dired-single-buffer
+  "y" 'dired-ranger-copy
+  "X" 'dired-ranger-move
+  "p" 'dired-ranger-paste)
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
@@ -1144,65 +865,97 @@ codepoints starting from codepoint-start."
 
 ;; (reload-alternative-input-methods)
 
-(defun efs/exwm-update-class ()
-  (exwm-workspace-rename-buffer exwm-class-name))
+;; (defun efs/exwm-update-class ()
+;;   (exwm-workspace-rename-buffer exwm-class-name))
 
-(use-package exwm
-  :config
-  ;; Set the default number of workspaces
-  (setq exwm-workspace-number 5)
+;; (use-package exwm
+;;   :config
+;;   ;; Set the default number of workspaces
+;;   (setq exwm-workspace-number 5)
 
-  ;; When window "class" updates, use it to set the buffer name
-  ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+;;   ;; When window "class" updates, use it to set the buffer name
+;;   ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
 
-  ;; These keys should always pass through to Emacs
-  (setq exwm-input-prefix-keys
-        '(?\C-x
-          ?\C-u
-          ?\C-h
-          ?\M-x
-          ?\M-`
-          ?\M-&
-          ?\M-:
-          ?\C-\M-j  ;; Buffer list
-          ?\C-\ ))  ;; Ctrl+Space
+;;   ;; These keys should always pass through to Emacs
+;;   (setq exwm-input-prefix-keys
+;;         '(?\C-x
+;;           ?\C-u
+;;           ?\C-h
+;;           ?\M-x
+;;           ?\M-`
+;;           ?\M-&
+;;           ?\M-:
+;;           ?\C-\M-j  ;; Buffer list
+;;           ?\C-\ ))  ;; Ctrl+Space
 
-  ;; Ctrl+Q will enable the next key to be sent directly
-  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+;;   ;; Ctrl+Q will enable the next key to be sent directly
+;;   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
-  ;; Set up global key bindings.  These always work, no matter the input state!
-  ;; Keep in mind that changing this list after EXWM initializes has no effect.
-  (setq exwm-input-global-keys
-        `(
-          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-          ([?\s-r] . exwm-reset)
+;;   ;; Set up global key bindings.  These always work, no matter the input state!
+;;   ;; Keep in mind that changing this list after EXWM initializes has no effect.
+;;   (setq exwm-input-global-keys
+;;         `(
+;;           ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+;;           ([?\s-r] . exwm-reset)
 
-          ;; Move between windows
-          ([s-left] . windmove-left)
-          ([s-right] . windmove-right)
-          ([s-up] . windmove-up)
-          ([s-down] . windmove-down)
+;;           ;; Move between windows
+;;           ([s-left] . windmove-left)
+;;           ([s-right] . windmove-right)
+;;           ([s-up] . windmove-up)
+;;           ([s-down] . windmove-down)
 
-          ;; Launch applications via shell command
-          ([?\s-&] . (lambda (command)
-                       (interactive (list (read-shell-command "$ ")))
-                       (start-process-shell-command command nil command)))
+;;           ;; Launch applications via shell command
+;;           ([?\s-&] . (lambda (command)
+;;                        (interactive (list (read-shell-command "$ ")))
+;;                        (start-process-shell-command command nil command)))
 
-          ;; Switch workspace
-          ([?\s-w] . exwm-workspace-switch)
+;;           ;; Switch workspace
+;;           ([?\s-w] . exwm-workspace-switch)
 
-          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-          ,@(mapcar (lambda (i)
-                      `(,(kbd (format "s-%d" i)) .
-                        (lambda ()
-                          (interactive)
-                          (exwm-workspace-switch-create ,i))))
-                    (number-sequence 0 9))))
+;;           ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+;;           ,@(mapcar (lambda (i)
+;;                       `(,(kbd (format "s-%d" i)) .
+;;                         (lambda ()
+;;                           (interactive)
+;;                           (exwm-workspace-switch-create ,i))))
+;;                     (number-sequence 0 9))))
 
-  (exwm-enable))
+;;   (exwm-enable))
 
 (use-package evil-multiedit
   :hook (web-mode . evil-multiedit-mode))
+
+;; Copyright (C) 2014 Matus Goljer <matus.goljer@gmail.com>
+;; Package-requires: ((dash "2.5.0"))
+(defun org-inline-image--get-current-image ()
+  "Return the overlay associated with the image under point."
+  (car (--select (eq (overlay-get it 'org-image-overlay) t) (overlays-at (point)))))
+
+(defun org-inline-image--get (prop)
+  "Return the value of property PROP for image under point."
+  (let ((image (org-inline-image--get-current-image)))
+    (when image
+      (overlay-get image prop))))
+
+(defun org-inline-image-animate ()
+  "Animate the image if it's possible."
+  (interactive)
+  (let ((image-props (org-inline-image--get 'display)))
+    (when (image-multi-frame-p image-props)
+      (image-animate image-props))))
+
+(defun org-inline-image-animate-auto ()
+  (interactive)
+  (when (eq 'org-mode major-mode)
+    (while-no-input 
+      (run-with-idle-timer 0.3 nil 'org-inline-image-animate))))
+
+(setq org-inline-image--get-current-image (byte-compile 'org-inline-image--get-current-image))
+(setq org-inline-image-animate  (byte-compile 'org-inline-image-animate ))
+(add-hook 'post-command-hook 'org-inline-image-animate-auto)
+
+(load "~/.emacs.d/editing.el")
+(load "~/.emacs.d/desktop.el")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

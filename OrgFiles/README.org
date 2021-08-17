@@ -1,0 +1,15 @@
+* TGD - To Get Done; TODO-NEXT-DONE; Pomodoro; Appoitments; Habits; etc.
+
+As aways, [[http://creativecommons.org/licenses/by-sa/4.0/][https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg]]
+
+This repo is influenced by [[https://github.com/daviwil][Daviwil]]. Check his tips on [[https://www.youtube.com/watch?v=PNE-mgkZ6HM][how to orgize your life with orgmode]].
+
+
+
+If you like my content, check out my website: [[www.buddhilw.com][www.buddhilw.com]]. 
+
+This work is licensed under a
+[[http://creativecommons.org/licenses/by-sa/4.0/][Creative Commons
+Attribution-ShareAlike 4.0 International License]].
+
+[[http://creativecommons.org/licenses/by-sa/4.0/][https://licensebuttons.net/l/by-sa/4.0/88x31.png]]

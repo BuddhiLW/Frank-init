@@ -2,7 +2,7 @@
 ;; Automatically written history of CIDER REPL session
 ;; Edit at your own risk
 
-("(sin 9)" "(scatter-plot time-data-com B-data-com)" "(length time-data-com)" "(length B-data-com)" "B-data-com" "time-data-com" "B-data-com" "(view (scatter-plot time-data Vs-data
+("(exit)" "(sin 9)" "(scatter-plot time-data-com B-data-com)" "(length time-data-com)" "(length B-data-com)" "B-data-com" "time-data-com" "B-data-com" "(view (scatter-plot time-data Vs-data
                     :title \"Experimento sem núcleo\"
                     :x-label \"Tempo (s)\"
                     :y-label \"Campo Magnético (B)\"

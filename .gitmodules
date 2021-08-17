@@ -1,0 +1,3 @@
+[submodule "lisp/elgantt"]
+	path = lisp/elgantt
+	url = https://github.com/legalnonsense/elgantt.git
