@@ -1,6 +1,7 @@
 #+title: Emacs From Scratch Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el
 
+
 * Welcome!
 
 This is the configuration we've been building in the *Emacs From Scratch* series, now written as an Org Mode document.  This file generates [[file:init.el][init.el]] which can be loaded by Emacs at startup.
@@ -97,7 +98,6 @@ You can also use =M-x auto-package-update-now= to update right now!
     (auto-package-update-at-time "09:00"))
 
 #+end_src
-
 
 * Keep Folders Clean
 
@@ -230,17 +230,20 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
                       (cons (decode-char 'ucs #x1F16D)
                             (decode-char 'ucs #x1F16f))
                       "CC Symbols")
-    (set-fontset-font "fontset-default"
-                      (cons (decode-char 'ucs #x05B0)
-                            (decode-char 'ucs #x05F4))
-                      "Noto Serif Hebrew")
- 
        ;; (set-fontset-font "fontset-default"
        ;;                   (cons (decode-char 'ucs #x05D0))
        ;;                   "Noto Serif Hebew")
 #+end_src
 
 #+RESULTS:
+
+#+begin_src emacs-lisp
+  (set-fontset-font "fontset-default"
+                    (cons (decode-char 'ucs #x05B0)
+                          (decode-char 'ucs #x05F4))
+                    "Noto Serif Hebrew")
+  
+#+end_src
 
 ** Emojis and Ligatures
 #+begin_src emacs-lisp
@@ -623,6 +626,28 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 #+RESULTS:
 : t
 
+* Languages
+** Julia
+#+begin_src emacs-lisp
+   (setq  inferior-julia-program-name "julia")
+#+end_src
+
+#+RESULTS:
+: julia
+
+#+begin_src emacs-lisp
+   (package-install-file "~/.emacs.d/ob-julia-vterm.el/ob-julia-vterm.el")  
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+(defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
+#+end_src
+
+#+RESULTS:
+: org-babel-execute:julia
+
 * Org Mode
 [[https://orgmode.org/][Org Mode]] is one of the hallmark features of Emacs.  It is a rich document editor, project planner, task and time tracker, blogging engine, and literate coding utility all wrapped up in one package.
 
@@ -957,6 +982,19 @@ Chosing an image's size with :width property
 
 ** Configure Babel Languages
 
+#+begin_src emacs-lisp
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)   
+  (add-hook 'org-mode-hook 'org-display-inline-images)
+#+end_src
+
+- Ob-julia unofficial
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/ob-julia")
+#+end_src
+
+#+RESULTS:
+
 To execute or export code in =org-mode= code blocks, you'll need to set up =org-babel-load-languages= for each language you'd like to use.  [[https://orgmode.org/worg/org-contrib/babel/languages.html][This page]] documents all of the languages that you can use with =org-babel=.
 
 #+begin_src emacs-lisp
@@ -967,6 +1005,8 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
        (python . t)
        (browser . t)
        ;; (ipython . t)
+       (julia-vterm . t)
+       ;; (julia . t)
        (ein . t)
        (ditaa . t)
        (css . t)
@@ -979,7 +1019,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
 #+end_src
 
 #+RESULTS:
-: ((conf-unix . conf-unix) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (ipython . python) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+: ((conf-unix . conf-unix) (conf-unix . conf-unix) (julia-vterm . julia) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
 
 #+begin_src emacs-lisp
   (custom-set-variables
@@ -1049,11 +1089,29 @@ This snippet adds a hook to =org-mode= buffers so that =efs/org-babel-tangle-con
 #+RESULTS:
 
 ** Org-roam and Bibtex
-It's a requirement, for org-roam-bibtex,  org-roam, org-ref and bibtex-completion.
+It's a requirement for org-roam-bibtex,  org-roam, org-ref and bibtex-completion.
+#+begin_src emacs-lisp
+(use-package org-auto-tangle)
+#+end_src
+
+#+RESULTS:
 
 #+begin_src emacs-lisp
-(use-package org-roam)
+  (use-package org-roam
+    :ensure t
+    :init
+    (setq org-roam-v2-ack t)
+    :custom
+    (org-roam-directory "~/org-roam")
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert))
+    :config
+    (org-roam-setup))
 #+end_src
+
+#+RESULTS:
+: org-roam-node-insert
 
 #+begin_src emacs-lisp
 (use-package org-ref)

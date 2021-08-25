@@ -1,3 +1,9 @@
 [submodule "lisp/elgantt"]
 	path = lisp/elgantt
 	url = https://github.com/legalnonsense/elgantt.git
+[submodule "ob-julia"]
+	path = ob-julia
+	url = https://github.com/BuddhiLW/ob-julia.git
+[submodule "ob-julia-vterm.el"]
+	path = ob-julia-vterm.el
+	url = https://github.com/shg/ob-julia-vterm.el.git

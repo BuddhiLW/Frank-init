@@ -145,14 +145,14 @@
                   (cons (decode-char 'ucs #x1F16D)
                         (decode-char 'ucs #x1F16f))
                   "CC Symbols")
+   ;; (set-fontset-font "fontset-default"
+   ;;                   (cons (decode-char 'ucs #x05D0))
+   ;;                   "Noto Serif Hebew")
+
 (set-fontset-font "fontset-default"
                   (cons (decode-char 'ucs #x05B0)
                         (decode-char 'ucs #x05F4))
                   "Noto Serif Hebrew")
-
-   ;; (set-fontset-font "fontset-default"
-   ;;                   (cons (decode-char 'ucs #x05D0))
-   ;;                   "Noto Serif Hebew")
 
 (use-package unicode-fonts
    :ensure t
@@ -380,6 +380,12 @@ codepoints starting from codepoint-start."
   :config
   (pdf-loader-install))
 
+(setq  inferior-julia-program-name "julia")
+
+(package-install-file "~/.emacs.d/ob-julia-vterm.el/ob-julia-vterm.el")
+
+(defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
+
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
@@ -605,6 +611,11 @@ codepoints starting from codepoint-start."
 
 (setq org-image-actual-width nil)
 
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)   
+(add-hook 'org-mode-hook 'org-display-inline-images)
+
+(add-to-list 'load-path "~/.emacs.d/ob-julia")
+
 (with-eval-after-load 'org
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -612,6 +623,8 @@ codepoints starting from codepoint-start."
      (python . t)
      (browser . t)
      ;; (ipython . t)
+     (julia-vterm . t)
+     ;; (julia . t)
      (ein . t)
      (ditaa . t)
      (css . t)
@@ -635,7 +648,7 @@ codepoints starting from codepoint-start."
      ("ein-r" . R)
      ("ein-julia" . julia)))
  '(package-selected-packages
-   '(zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree treemacs-icons-dired tide tern sxiv sudo-edit spaceline sotclojure slime-company skeletor scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit pandoc-mode pandoc ox-pandoc ox-hugo outshine org-trello org-tree-slide org-superstar org-roam-bibtex org-ql org-pomodoro org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain ob-latex-as-png ob-julia-vterm ob-ipython ob-html-chrome ob-ess-julia ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode monitor lsp-ui lsp-latex lsp-ivy lsp-grammarly lockfile-mode latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient ivy-clojuredocs inf-clojure indium indent-guide image-dired+ helpful helm-clojuredocs gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-clojure flycheck-aspell fira-code-mode ffmpeg-player exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode emacsql-sqlite3 elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-ctags company-box company-bibtex company-anaconda command-log-mode clojure-essential-ref cdnjs bibtex-utils babel auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
+   '(zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree treemacs-icons-dired tide tern sxiv sudo-edit spaceline sotclojure slime-company skeletor scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit pandoc-mode pandoc ox-pandoc ox-hugo outshine org-trello org-tree-slide org-superstar org-roam-bibtex org-ql org-pomodoro org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-ipython ob-html-chrome ob-ess-julia ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode monitor lsp-ui lsp-latex lsp-julia lsp-ivy lsp-grammarly lockfile-mode latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient ivy-clojuredocs inf-clojure indium indent-guide image-dired+ helpful helm-clojuredocs gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-clojure flycheck-aspell fira-code-mode ffmpeg-player exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode emacsql-sqlite3 elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-ctags company-box company-bibtex company-anaconda command-log-mode clojure-essential-ref cdnjs bibtex-utils babel auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -668,7 +681,19 @@ codepoints starting from codepoint-start."
 
 (use-package org-download)
 
-(use-package org-roam)
+(use-package org-auto-tangle)
+
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/org-roam")
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
 
 (use-package org-ref)
 

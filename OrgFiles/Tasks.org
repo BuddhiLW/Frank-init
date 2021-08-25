@@ -103,11 +103,9 @@ https://anagora.org/the-future-of-note-taking
 
 
 * TODO Today
-** NEXT Polish TCC-en
-** TODO Read papers on Traffic
+** NEXT Insert new summary and send Luiz Heleno
+** TODO Read Chap 19, Numerical Recipes
 ** TODO Website post
-** TODO Terminate subscription to Statistics Monitor program
-
 * DONE DONE 
 ** DONE Flow challenge 
 CLOSED: [2021-07-06 Tue 09:31] SCHEDULED: <2021-06-25 Fri> DEADLINE: <2021-06-28 Mon>
@@ -117,9 +115,6 @@ CLOSED: [2021-07-06 Tue 09:31] SCHEDULED: <2021-06-25 Fri> DEADLINE: <2021-06-28
 - State "DONE"       from "NEXT"       [2021-06-30 Wed 12:37]
 CLOCK: [2021-06-25 Fri 17:41]--[2021-06-25 Fri 17:41] =>  0:00
 :END:
-** Clocks
-CLOCK: [2021-06-25 Fri 17:10]--[2021-06-25 Fri 17:35] =>  0:25
-
 ** DONE Anna's Statistics Work
 CLOSED: [2021-08-11 Wed 14:07]
 :LOGBOOK:
@@ -163,8 +158,10 @@ Then mention that due to personal experience, we will only address a few specifi
 *** 30 Jun
 **** Results
 **** Presentation
-** [[file:Tasks.org::*Wei-Liang TCC][TCC]]
+** DONE [[file:Tasks.org::*Wei-Liang TCC][TCC]]
+CLOSED: [2021-08-20 Fri 13:57]
 :LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-08-20 Fri 13:57]
 - State "DONE"       from "NEXT"       [2021-08-11 Wed 14:07]
 CLOCK: [2021-07-09 Fri 11:30]--[2021-07-09 Fri 11:30] =>  0:00
 :END:
@@ -172,3 +169,21 @@ CLOCK: [2021-07-09 Fri 11:30]--[2021-07-09 Fri 11:30] =>  0:00
 CLOCK: [2021-07-03 Sat 20:20]--[2021-07-03 Sat 20:45] =>  0:25
 CLOCK: [2021-07-06 Tue  05:00]--[2021-07-06 Tue 06:30] =>  1:30
 CLOCK: [2021-07-06 Tue 09:28]--[2021-07-06 Tue 09:53] =>  0:25
+
+** DONE Terminate subscription to Statistics Monitor program
+CLOSED: [2021-08-20 Fri 13:57]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-08-20 Fri 13:57]
+:END:
+
+** DONE Read papers on Traffic
+CLOSED: [2021-08-20 Fri 13:57]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-08-20 Fri 13:57]
+:END:
+
+** DONE Polish TCC-en
+CLOSED: [2021-08-20 Fri 13:58]
+:LOGBOOK:
+- State "DONE"       from "NEXT"       [2021-08-20 Fri 13:58]
+:END:

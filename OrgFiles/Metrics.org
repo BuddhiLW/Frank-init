@@ -2,7 +2,7 @@
 #+STARTUP: align
 
 * Pomodoro
-** Reading
+** TODO Reading
 :LOGBOOK:
 - State "DONE"       from "NEXT"       [2021-06-30 Wed 10:05]
 :END:
@@ -23,7 +23,7 @@ CLOCK: [2021-06-30 Wed 08:19]--[2021-06-30 Wed 08:44] =>  0:25
 CLOCK: [2021-06-30 Wed 09:37]--[2021-06-30 Wed 10:02] =>  0:25
 CLOCK: [2021-07-11 Sun 15:51]--[2021-07-11 Sun 16:16] =>  0:25
 
-** TODO General Research 
+** General Research 
 :LOGBOOK:
 - State "DONE"       from "NEXT"       [2021-07-05 Mon 14:08]
 :END:
@@ -59,7 +59,7 @@ CLOCK: [2021-07-09 Fri 15:58]--[2021-07-09 Fri 16:23] =>  0:25
 :END:
 *** Clock
 CLOCK: [2021-08-11 Wed 14:10]--[2021-08-11 Wed 14:35] =>  0:25
-** TODO University
+** University
 :LOGBOOK:
 CLOCK: [2021-08-14 Sat 13:45]--[2021-08-14 Sat 14:10] =>  0:25
 CLOCK: [2021-08-05 Thu 15:57]--[2021-08-05 Thu 15:57] =>  0:00
@@ -150,6 +150,12 @@ CLOCK: [2021-06-24 Thu 10:45]--[2021-06-24 Thu 11:10] =>  0:25
 *** Clocks
 CLOCK: [2021-06-23 Wed 04:20]--[2021-06-23 Wed 04:45] =>  0:25
 CLOCK: [2021-07-07 Wed 08:28]--[2021-07-07 Wed 08:53] =>  0:25
+** TODO Research with Wei-Liang Qian
+:LOGBOOK:
+CLOCK: [2021-08-20 Fri 17:42]
+CLOCK: [2021-08-20 Fri 16:30]--[2021-08-20 Fri 16:55] =>  0:25
+CLOCK: [2021-08-20 Fri 14:00]--[2021-08-20 Fri 14:25] =>  0:25
+:END:
 
 * Pomodoro Days Table
 ** Jun 19th 2021

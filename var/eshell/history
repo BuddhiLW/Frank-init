@@ -1,6 +1,3 @@
-ls
-ls Documents-b/
-ls Programs/
 cd PP/Scripts/
 ls
 cd sh-scripting/
@@ -126,3 +123,6 @@ ls
 clear-scrollback 
 xrdb -merge Xresources 
 closh
+cd ..
+cd LaTeX/TCC/
+tree .
