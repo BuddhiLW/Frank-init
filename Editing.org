@@ -171,7 +171,6 @@ Move configuration on Emacs.org to here.
 #             TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
 # #+end_src
 
-#+RESULTS:
 
  #+name: setup-minted
  #+begin_src emacs-lisp :exports both :results silent

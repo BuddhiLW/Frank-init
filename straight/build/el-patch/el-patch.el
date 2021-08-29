@@ -1,1 +1,0 @@
-/home/buddhilw/.emacs.d/straight/repos/el-patch/el-patch.el
