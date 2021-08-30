@@ -1877,7 +1877,14 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
   (add-hook 'post-command-hook 'org-inline-image-animate-auto)
 #+end_src
 
-#+RESULTS:
+* Prerequisites 
+#+begin_src emacs-lisp :tangle yes
+  (use-package esxml)
+  (use-package prescient)
+  (use-package company-prescient)
+  (use-package xelb)
+  (use-package cider)
+#+end_src
 
 * Load Desktop.el and other auxiliaries
 #+begin_src emacs-lisp
