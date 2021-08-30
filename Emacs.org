@@ -1879,6 +1879,18 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
 #+RESULTS:
 
+* Some general requirements left
+#+begin_src emacs-lisp
+;;  (use-package versuri)
+  (use-package esxml)
+  (use-package prescient)
+  (use-package company-prescient)
+  (use-package xelb)
+  (use-package cider)
+#+end_src
+
+#+RESULTS:
+
 * Load Desktop.el and other auxiliaries
 #+begin_src emacs-lisp
   (load "~/.emacs.d/editing.el")
