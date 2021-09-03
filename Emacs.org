@@ -628,18 +628,34 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 * Languages
 ** Julia
+
+*** Major mode
+
 #+begin_src emacs-lisp
-   (setq  inferior-julia-program-name "julia")
+(use-package julia-mode)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+(use-package julia-snail)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+   (setq inferior-julia-program-name "julia")
 #+end_src
 
 #+RESULTS:
 : julia
 
 #+begin_src emacs-lisp
-   (package-install-file "~/.emacs.d/ob-julia-vterm.el/ob-julia-vterm.el")  
+   (package-install-file "~/.emacs.d/ob-julia-vterm/ob-julia-vterm.el")  
 #+end_src
 
 #+RESULTS:
+: #s(package-desc ob-julia-vterm (0 2) "Babel Functions for Julia in VTerm" ((emacs (26 1)) (julia-vterm (0 10))) single nil nil ((:authors ("Shigeaki Nishina")) (:maintainer "Shigeaki Nishina") (:keywords "julia" "org" "outlines" "literate programming" "reproducible research") (:url . "https://github.com/shg/ob-julia-vterm.el")) nil)
 
 #+begin_src emacs-lisp
 (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
@@ -993,8 +1009,6 @@ Chosing an image's size with :width property
 (add-to-list 'load-path "~/.emacs.d/ob-julia")
 #+end_src
 
-#+RESULTS:
-
 To execute or export code in =org-mode= code blocks, you'll need to set up =org-babel-load-languages= for each language you'd like to use.  [[https://orgmode.org/worg/org-contrib/babel/languages.html][This page]] documents all of the languages that you can use with =org-babel=.
 
 #+begin_src emacs-lisp
@@ -1014,12 +1028,12 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
        (latex . t)
        (clojure . t)
        (clojurescript . t)))
-  
+
     (push '("conf-unix" . conf-unix) org-src-lang-modes))
 #+end_src
 
 #+RESULTS:
-: ((conf-unix . conf-unix) (conf-unix . conf-unix) (julia-vterm . julia) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+: ((conf-unix . conf-unix) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (julia-vterm . julia) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
 
 #+begin_src emacs-lisp
   (custom-set-variables
@@ -1876,15 +1890,24 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
   (setq org-inline-image-animate  (byte-compile 'org-inline-image-animate ))
   (add-hook 'post-command-hook 'org-inline-image-animate-auto)
 #+end_src
+* Presentation setup
+#+begin_src emacs-lisp
+(use-package org-present)
+#+end_src
+
+#+RESULTS:
 
 * Prerequisites 
 #+begin_src emacs-lisp :tangle yes
+  (use-package ein)
   (use-package esxml)
   (use-package prescient)
   (use-package company-prescient)
   (use-package xelb)
   (use-package cider)
 #+end_src
+
+#+RESULTS:
 
 * Load Desktop.el and other auxiliaries
 #+begin_src emacs-lisp

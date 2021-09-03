@@ -380,9 +380,13 @@ codepoints starting from codepoint-start."
   :config
   (pdf-loader-install))
 
-(setq  inferior-julia-program-name "julia")
+(use-package julia-mode)
 
-(package-install-file "~/.emacs.d/ob-julia-vterm.el/ob-julia-vterm.el")
+(use-package julia-snail)
+
+(setq inferior-julia-program-name "julia")
+
+(package-install-file "~/.emacs.d/ob-julia-vterm/ob-julia-vterm.el")
 
 (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
 
@@ -648,7 +652,7 @@ codepoints starting from codepoint-start."
      ("ein-r" . R)
      ("ein-julia" . julia)))
  '(package-selected-packages
-   '(zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree treemacs-icons-dired tide tern sxiv sudo-edit spaceline sotclojure slime-company skeletor scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit pandoc-mode pandoc ox-pandoc ox-hugo outshine org-trello org-tree-slide org-superstar org-roam-bibtex org-ql org-pomodoro org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-ipython ob-html-chrome ob-ess-julia ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode monitor lsp-ui lsp-latex lsp-julia lsp-ivy lsp-grammarly lockfile-mode latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient ivy-clojuredocs inf-clojure indium indent-guide image-dired+ helpful helm-clojuredocs gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-clojure flycheck-aspell fira-code-mode ffmpeg-player exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode emacsql-sqlite3 elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-ctags company-box company-bibtex company-anaconda command-log-mode clojure-essential-ref cdnjs bibtex-utils babel auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
+   '(org-tree-slide latex-pretty-symbols latex-preview-pane org-pomodoro zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-roam-bibtex org-ql org-present org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-ivy lsp-grammarly lockfile-mode latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide helpful gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex command-log-mode cdnjs bibtex-utils auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -979,6 +983,8 @@ conda-env-subdirectory "envs")
 (setq org-inline-image-animate  (byte-compile 'org-inline-image-animate ))
 (add-hook 'post-command-hook 'org-inline-image-animate-auto)
 
+(use-package org-present)
+
 (load "~/.emacs.d/editing.el")
 (load "~/.emacs.d/desktop.el")
 (custom-set-faces
@@ -986,4 +992,4 @@ conda-env-subdirectory "envs")
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-table ((t (:inherit fixed-pitch :background "#0f0f0d" :foreground "#c5c3c4" :height 1.5)))))

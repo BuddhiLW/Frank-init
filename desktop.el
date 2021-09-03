@@ -228,3 +228,9 @@
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\""))
 
 
+
+(use-package org-pomodoro)
+
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil))

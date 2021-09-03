@@ -731,3 +731,18 @@ We can also set up some functions for enabling and disabling notifications at an
 #+begin_src emacs-lisp
 
 #+end_src
+
+* Pomorodo
+#+begin_src emacs-lisp
+(use-package org-pomodoro)
+#+end_src
+
+#+RESULTS:
+
+* Org-tree-slide
+#+begin_src emacs-lisp
+    (use-package org-tree-slide
+      :custom
+      (org-image-actual-width nil))
+#+end_src
+

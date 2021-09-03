@@ -2,7 +2,7 @@
 #+STARTUP: align
 
 * Pomodoro
-** TODO Reading
+** Reading
 :LOGBOOK:
 - State "DONE"       from "NEXT"       [2021-06-30 Wed 10:05]
 :END:
@@ -60,51 +60,6 @@ CLOCK: [2021-07-09 Fri 15:58]--[2021-07-09 Fri 16:23] =>  0:25
 *** Clock
 CLOCK: [2021-08-11 Wed 14:10]--[2021-08-11 Wed 14:35] =>  0:25
 ** University
-:LOGBOOK:
-CLOCK: [2021-08-14 Sat 13:45]--[2021-08-14 Sat 14:10] =>  0:25
-CLOCK: [2021-08-05 Thu 15:57]--[2021-08-05 Thu 15:57] =>  0:00
-- State "DONE"       from "NEXT"       [2021-07-09 Fri 11:30]
-CLOCK: [2021-07-07 Wed 17:58]--[2021-07-07 Wed 17:58] =>  0:00
-CLOCK: [2021-07-07 Wed 17:09]--[2021-07-07 Wed 17:34] =>  0:25
-:END:
-*** DONE LOM3203 - Controle e Automação
-CLOSED: [2021-07-09 Fri 16:44] SCHEDULED: <2021-06-28 Mon> DEADLINE: <2021-07-08 Thu>
-:LOGBOOK:
-- State "DONE"       from "NEXT"       [2021-07-09 Fri 16:44]
-- State "DONE"       from "NEXT"       [2021-07-05 Mon 09:50]
-:END:
-3 aulas por dia
-**** Clock
-CLOCK: [2021-07-06 Tue 05:12]--[2021-07-06 Tue 05:37] =>  0:25
-
-*** DONE LOM3213 - Fenômenos de Transporte
-CLOSED: [2021-06-30 Wed 12:33]
-:LOGBOOK:
-- State "DONE"       from "NEXT"       [2021-06-30 Wed 12:33]
-:END:
-- Aula 2: se cair é uma questão de múltipla escolha,
-- Aula 3:  não vai cobrar teoria,
-- Aula 4: exercícios sobre a aula 3, pode cair algum exercício desse. Exemplo: caixa de gelo, determinar o tempo do derretimento. Usar a *equação da condução, convecção ou radiação*.
-- Aula 5: Não vai cobrar teoria, só exercício. 1 ou 2 exercícios de *regime transiente*. 1 ou 2 *exercícios de parede*.
-**** Clock
-*** DONE LOM 3230 - MEFIV
-CLOSED: [2021-06-30 Wed 12:33]
-:LOGBOOK:
-- State "DONE"       from "NEXT"       [2021-06-30 Wed 12:33]
-:END:
-**** Clocks
-CLOCK: [2021-06-28 Mon 14:14]--[2021-06-28 Mon 14:39] =>  0:25
-CLOCK: [2021-06-28 Mon 14:57]--[2021-06-28 Mon 15:22] =>  0:25
-CLOCK: [2021-06-28 Mon 16:53]--[2021-06-28 Mon 17:18] =>  0:25
-CLOCK: [2021-06-28 Mon 16:07]--[2021-06-28 Mon 16:32] =>  0:25
-*** DONE LOM XXXX - Processos de Fabricação  
-CLOSED: [2021-07-05 Mon 09:50]
-:LOGBOOK:
-- State "DONE"       from "NEXT"       [2021-07-05 Mon 09:50]
-:END:
-*** Clocks
-CLOCK: [2021-06-28 Mon 13:32]--[2021-06-28 Mon 13:57] =>  0:25
-CLOCK: [2021-07-06 Tue 05:12]--[2021-07-06 Tue 05:37] =>  0:25
 ** Work
 DEADLINE: <2021-07-09 Fri> SCHEDULED: <2021-07-07 22:00 Wed>
 :LOGBOOK:
@@ -152,7 +107,7 @@ CLOCK: [2021-06-23 Wed 04:20]--[2021-06-23 Wed 04:45] =>  0:25
 CLOCK: [2021-07-07 Wed 08:28]--[2021-07-07 Wed 08:53] =>  0:25
 ** TODO Research with Wei-Liang Qian
 :LOGBOOK:
-CLOCK: [2021-08-20 Fri 17:42]
+CLOCK: [2021-09-01 Wed 13:43]--[2021-09-01 Wed 14:08] =>  0:25
 CLOCK: [2021-08-20 Fri 16:30]--[2021-08-20 Fri 16:55] =>  0:25
 CLOCK: [2021-08-20 Fri 14:00]--[2021-08-20 Fri 14:25] =>  0:25
 :END:
@@ -382,5 +337,11 @@ CLOCK: [2021-08-12 Thu 17:57]--[2021-08-12 Thu 18:22] =>  0:25
 
 *** Statistics
 
-** Aug 14th 2021
+** 2021 Sep 01
 
+|------------------------------------------------+------|
+| General Reseach                                | Time |
+|------------------------------------------------+------|
+| [2021-08-12 Thu 17:20]--[2021-08-12 Thu 17:45] | 0:25 |
+| [2021-08-12 Thu 17:57]--[2021-08-12 Thu 18:22] | 0:25 |
+|------------------------------------------------+------|
