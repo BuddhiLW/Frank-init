@@ -1,0 +1,33 @@
+* Classes
+#+NAME: 85fa7a3c-bd21-4d49-8d48-3bb1b806be43
+#+begin_src ein-python :session localhost :results output
+  class student:
+
+    def __init__(self, name, grad_course, ideal_semester):
+      pass
+
+    def grade_input(self, grades_list):
+      self.grades = grades
+
+    def average_grade(self):
+      self.media=sum(self.notas)/len(self.notas)
+
+    def compute_tiredness(self):
+      pass
+        #+end_src
+
+        #+RESULTS: 85fa7a3c-bd21-4d49-8d48-3bb1b806be43
+
+        #+NAME: d07df763-5921-417d-8f60-10a36e819f77
+        #+begin_src ein-python :session localhost :results output
+          ale.student('nome', 'EF', '4')
+        #+end_src
+
+        #+RESULTS: d07df763-5921-417d-8f60-10a36e819f77
+        : 
+        : NameErrorTraceback (most recent call last)
+        : <ipython-input-10-7a1177df5223> in <module>
+        : ----> 1 ale.student('nome', 'EF', '4')
+        : 
+        : NameError: name 'ale' is not defined
+        

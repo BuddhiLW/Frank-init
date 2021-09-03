@@ -13,6 +13,11 @@ alias \
 	yta="yt -x -f bestaudio/best" \
 	ffmpeg="ffmpeg -hide_banner"
 
+## project directory folders under PP
+alias \
+    csh1="~PP/ClojureScript/boot-html/html-cljs-first/"
+    
+
 # Colorize commands when possible.
 alias \
 	ls="ls -hN --color=auto --group-directories-first" \
@@ -42,3 +47,5 @@ alias \
 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
         sconda="source /opt/anaconda/bin/activate" \
+
+	

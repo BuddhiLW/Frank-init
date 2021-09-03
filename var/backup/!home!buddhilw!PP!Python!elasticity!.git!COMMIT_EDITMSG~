@@ -1,0 +1,28 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch Branquinho
+# Changes to be committed:
+#	modified:   README.md
+#	renamed:    elasticity.py -> library/elasticity.py
+#	renamed:    elasticity_helper.py -> library/elasticity_helper.py
+#	renamed:    Ca2Pb.py -> material-examples/Ca2Pb.py
+#	renamed:    CsNiF3.py -> material-examples/CsNiF3.py
+#	renamed:    gelo.py -> material-examples/H20.py
+#	renamed:    NiTe2-3d.py -> material-examples/NiTe2-3d.py
+#	renamed:    NiTe2-defs.py -> material-examples/NiTe2-defs.py
+#	renamed:    NiTe2.py -> material-examples/NiTe2.py
+#	renamed:    ZrV2Ga4.py -> material-examples/ZrV2Ga4.py
+#	new file:   material-examples/gelo.py
+#	renamed:    NiTe2-B-pbesoc.png -> outputs/NiTe2-B-pbesoc.png
+#	renamed:    NiTe2-B-vdw.png -> outputs/NiTe2-B-vdw.png
+#	renamed:    NiTe2-E-pbesoc.png -> outputs/NiTe2-E-pbesoc.png
+#	renamed:    NiTe2-E-vdw.png -> outputs/NiTe2-E-vdw.png
+#	renamed:    output.png -> outputs/output.png
+#	renamed:    exemplo-mayavi-phong.py -> plot-libs-examples/exemplo-mayavi-phong.py
+#	renamed:    exemplo-mayavi.py -> plot-libs-examples/exemplo-mayavi.py
+#	renamed:    exemplo-plotly.py -> plot-libs-examples/exemplo-plotly.py
+#	renamed:    exemplo-vtk.py -> plot-libs-examples/exemplo-vtk.py
+#	renamed:    plots3d.py -> plot-libs-examples/plots3d.py
+#

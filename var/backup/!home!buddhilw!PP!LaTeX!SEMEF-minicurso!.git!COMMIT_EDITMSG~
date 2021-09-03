@@ -1,0 +1,44 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	new file:   Apres1/.ein-python.ipynb
+#	new file:   Apres1/.ipynb_checkpoints/.ein-python-checkpoint.ipynb
+#	new file:   Apres1/Apresentacao-1.md
+#	modified:   Apres1/Apresentacao-1.org
+#	new file:   Apres1/Apresentacao-1.pdf
+#	new file:   Apres1/Apresentacao-1.tex
+#	new file:   Apres1/arquivo-com-bibliografias.bib
+#	new file:   Apres1/img/KnuthAtOpenContentAlliance.jpg
+#	new file:   Apres1/img/Leslie_Lamport.jpg
+#	new file:   Apres1/img/mathjax.png
+#	new file:   Apres1/img/orgmode-auctex.png
+#	new file:   Apres1/img/orgmode-auctex2.png
+#	new file:   Apres1/ltximg/org-ltximg_02f7e53b1fa6b95149d0a520481813191e88fac7.png
+#	new file:   Apres1/ltximg/org-ltximg_75c7cc0c60b1abe0b8fc59b5a9cecc789c86a28c.png
+#	new file:   Apres1/ltximg/org-ltximg_b08372f26b9a06be8fc8253711d2b1738e045c28.png
+#	new file:   Apres1/ltximg/org-ltximg_d7b7ce880aa9405ea0e2c41f1b84ec93af0de9de.png
+#	new file:   Apres1/ltximg/org-ltximg_d8b968f215b568394d2b4496d0764839fcb65777.png
+#	new file:   Apres1/ltximg/org-ltximg_e3b0044e923bddf956e15765a5382cef3303182f.png
+#	new file:   Apres1/tangle/arquivo-com-bibliografias.bib
+#	new file:   Apres1/tangle/doc1.aux
+#	new file:   Apres1/tangle/doc1.bbl
+#	new file:   Apres1/tangle/doc1.blg
+#	new file:   Apres1/tangle/doc1.log
+#	new file:   Apres1/tangle/doc1.pdf
+#	new file:   Apres1/tangle/doc1.tex
+#	new file:   Apres1/temp/apresentacao-2.org
+#	new file:   Apres1/temp/apresentacao-2.out
+#	new file:   Apres1/temp/apresentacao-2.pdf
+#	new file:   Apres1/temp/apresentacao-2.tex
+#	renamed:    Apres1/materia.org -> Apres1/temp/materia.org
+#	renamed:    Apres1/materia.pdf -> Apres1/temp/materia.pdf
+#	new file:   teste-beamer-export/teste1.org
+#	new file:   teste-beamer-export/teste2.org
+#	new file:   teste-beamer-export/teste2.pdf
+#	new file:   teste-beamer-export/teste2.tex
+#
