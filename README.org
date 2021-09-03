@@ -1,14 +1,12 @@
-#+title: Emacstein - A Heavily Jingled Emacs
-This Emacs config are mostly to do because of  [[https://www.youtube.com/c/SystemCrafters?sub_confirmation=1][System Crafters]]. So, If you want to learn more about my config, start from there. And, then you probably will understand my bits of /add-ons/.
+#+title: Emacstein - A Heavily Jingled Emacs. Edição SEMEF-VIII
+
+Essa versão do Emacs é compatível com a utilizada na SEMEF, para utilização de Org-mode e LaTeX.
+# This Emacs config are mostly to do because of  [[https://www.youtube.com/c/SystemCrafters?sub_confirmation=1][System Crafters]]. So, If you want to learn more about my config, start from there. And, then you probably will understand my bits of /add-ons/.
 
 * Usage Instructions
 
 *Linux*
-
-1. Clone this repository to a folder on your system: =git clone https://github.com/BuddhiLW/Frank-init.git=
-2. Back up any existing Emacs configuration you may already have in your home directory  (likely ~/.emacs.d) in the =.emacs.d= folder (you could try moving it to =.emacs.d-old=)
-3. Rename the directory for the clone of this repo to =mv ./Frank-init ~/.emacs.d=.
-4. Start Emacs!
-
-
-
+- Clone esse repositório: =git clone https://github.com/BuddhiLW/Frank-init.git=
+- Mova o arquivo e renome =Frank-init= para =.emacs.d=, no diretório base do seu computador.
+- Inicie o Emacs!
+  
