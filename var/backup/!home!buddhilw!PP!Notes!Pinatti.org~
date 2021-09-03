@@ -1,0 +1,31 @@
+* Os tres problemas
+
+* To intall Packages
+  Unable to activate package `lsp-ui'.
+Required package `lsp-mode-6.0' is unavailable
+Unable to activate package `lsp-treemacs'.
+Required package `lsp-mode-6.0' is unavailable
+Unable to activate package `lsp-ivy'.
+Required package `lsp-mode-6.2.1' is unavailable
+Unable to activate package `lastfm'.
+Required package `request-0.3.0' is unavailable
+Unable to activate package `ivy-prescient'.
+Required package `prescient-5.1' is unavailable
+Unable to activate package `indium'.
+Required package `company-0.9.0' is unavailable
+Unable to activate package `git-commit'.
+Required package `transient-20200601' is unavailable
+Unable to activate package `forge'.
+Required package `magit-20190408' is unavailable
+Unable to activate package `exwm'.
+Required package `xelb-0.18' is unavailable
+Unable to activate package `diffpdf'.
+Required package `transient-0.3.0' is unavailable
+Unable to activate package `dap-mode'.
+Required package `lsp-mode-6.0' is unavailable
+Unable to activate package `company-quickhelp'.
+Required package `company-0.8.9' is unavailable
+Unable to activate package `company-box'.
+Required package `company-0.9.6' is unavailable
+Unable to activate package `ac-cider'.
+Required package `cider-0.8.0' is unavailable

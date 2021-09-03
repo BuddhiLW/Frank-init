@@ -1,0 +1,6 @@
+(use-package ein)
+(use-package esxml)
+(use-package prescient)
+(use-package company-prescient)
+(use-package xelb)
+(use-package cider)

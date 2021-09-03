@@ -1,0 +1,21 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch SEMEF
+# Your branch is up to date with 'origin/SEMEF'.
+#
+# Changes to be committed:
+#	modified:   Emacs.org
+#	modified:   var/pcache/unicode-fonts
+#	modified:   var/prescient-save.el
+#	modified:   var/transient/history.el
+#
+# Untracked files:
+#	etc/yasnippet/snippets/org-mode/elisp-source
+#	var/auto-package-update-last-update-day
+#	var/auto-save/sessions/14095-re-lapse~
+#	var/backup/!home!buddhilw!PP!Notes!Pinatti.org~
+#	var/backup/!home!buddhilw!PP!Notes!geopolitics.org~
+#	var/lsp/
+#

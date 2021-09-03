@@ -7,3 +7,6 @@
 [submodule "ob-julia-vterm.el"]
 	path = ob-julia-vterm.el
 	url = https://github.com/shg/ob-julia-vterm.el.git
+[submodule "ob-julia-vterm"]
+	path = ob-julia-vterm
+	url = https://github.com/emacsmirror/ob-julia-vterm.git
