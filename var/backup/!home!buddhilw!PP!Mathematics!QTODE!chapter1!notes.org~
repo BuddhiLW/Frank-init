@@ -1,0 +1,187 @@
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+DATE: Sun Sep  5 16:19:00 2021
+
+* Mass-Spring hung under gravity (general case, no friction)
+  Notation:
+  - $\Xi$: means restaurative, when dealing with forces and fields.
+  - $g$: subscript means gravity
+
+** Equation Model
+   
+   \begin{equation}
+     \begin{aligned}
+       F_{g} + F_{\Xi} = mg - k(y+a)
+     \end{aligned}
+   \end{equation}
+
+   In which, =a= is the incremental spring size such that the mass is
+   in equilibrium with the strings' restaurative force.
+
+   So, when $\sum{F} = 0 \, \land \, y=0$, =a= can be written as $a(m,k,g)$.
+
+   \begin{equation}
+     \begin{aligned}
+       \therefore a = \frac{mg}{k}
+     \end{aligned}
+   \end{equation}
+
+   Finally, we can derive
+
+   \begin{equation}
+     \begin{aligned}
+       \dfrac{\partial^2{y}}{\partial{t^2}} + \frac{k}{m}y=0
+     \end{aligned}
+   \end{equation}
+
+*** Two initial conditions
+
+    \begin{equation}
+    \begin{aligned}
+    \begin{cases}
+\phi{(0)}=y_0 \\
+\phi'{(0)}=y'_0
+    \end{cases}
+    \end{aligned}
+    \end{equation}
+
+
+** Solution in Julia
+
+   #+NAME: 7966eccb-e031-40b1-8e4a-24bfe4ee9b00
+   #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+     using Pkg
+     Pkg.add("DifferentialEquations")
+     using DifferentialEquations, Plots
+   #+end_src
+
+*** Transform [[*Equation Model][Equation Model]] into two equations of first order.
+
+    Let $\dot{u} = \dfrac{\partial^2{y}}{\partial{t^2}}$ and $v=y \,
+    \implies \, \dot{v} = u$.
+
+    \begin{equation}
+      \begin{aligned}
+	\begin{cases}
+	  \dot{u} = - \frac{k}{m}v\\
+	  \dot{v} = u
+	\end{cases}
+      \end{aligned}
+    \end{equation}
+   
+****  Code defining the equation
+     
+     #+NAME: de71d98d-2ea1-4de4-a6b8-ce7638a1f5c9
+     #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+       function mass_spring(du,u,p,t)
+	   du[1] = -(p[2]/p[1])*u[2] #p[2]=k, p[1]=m
+	   du[2] = u[1]
+       end
+     #+end_src
+
+     #+RESULTS: de71d98d-2ea1-4de4-a6b8-ce7638a1f5c9
+     : mass_spring (generic function with 1 method)
+
+     
+*** Initial conditions' code
+    #+NAME: 51b07536-a42f-4890-871a-8a6a0c2c01c0
+    #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+      tspan = (0., 4*2π*sqrt(1/1))
+      p = (1,1)
+      # m=1
+      # k=1
+      # g=9.8
+      u0=[1.,-1.] #y0=1 y'0=-1
+    #+end_src
+
+    #+RESULTS: 51b07536-a42f-4890-871a-8a6a0c2c01c0
+    : 2-element Vector{Float64}:
+    :   1.0
+    :  -1.0
+    
+*** Solvers
+
+    #+NAME: 700db531-5f60-4ecf-aff6-8073f0011311
+    #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+      prob = ODEProblem(mass_spring, u0, tspan, p)
+      sol = solve(prob,Tsit5(),reltol=1e-8,abstol=1e-8)
+    #+end_src
+
+    #+RESULTS: 700db531-5f60-4ecf-aff6-8073f0011311
+    #+begin_example
+    retcode: Success
+    Interpolation: specialized 4th order "free" interpolation
+    t: 281-element Vector{Float64}:
+      0.0
+      0.011486983549970353
+      0.03944051153388191
+      0.07595976924479338
+      0.11980835567005166
+      0.17131645818129287
+      0.2293966437507467
+      0.293470987106844
+      0.36249749645823426
+      0.4356236966575798
+      0.511915540412208
+      0.5905632075597412
+      0.6708118862661587
+      ⋮
+     24.189278013325243
+     24.28018972080525
+     24.369638217510023
+     24.457472392505547
+     24.545713280449874
+     24.634362275063868
+     24.7237801912023
+     24.814047234206935
+     24.90528886960723
+     24.997506285886704
+     25.09064899430843
+     25.132741228718345
+    u: 281-element Vector{Vector{Float64}}:
+     [1.0, -1.0]
+     [1.0114207562621262, -0.9884472943977076]
+     [1.0386526108644658, -0.9597920368206573]
+     [1.0730031873845538, -0.921229699837178]
+     [1.112353498733306, -0.8733096208413491]
+     [1.155840874665725, -0.8148815082250069]
+     [1.2011937838019922, -0.7464137550608191]
+     [1.2465221167014027, -0.6679690206521741]
+     [1.2896246333049552, -0.5804035709155208]
+     [1.328582964833627, -0.48463110247533464]
+     [1.3616559113659472, -0.38195965616995026]
+     [1.3874561272701589, -0.2737982738439389]
+     [1.4049393938962158, -0.16169508122705176]
+     ⋮
+     [-0.2226080641796086, -1.3965835542914191]
+     [-0.09489780285373431, -1.411026003046856]
+     [0.031527499176587, -1.4138620834335158]
+     [0.15543175527574607, -1.4056460947017873]
+     [0.2787015728195291, -1.3864795012287296]
+     [0.4003562742894484, -1.356360876601611]
+     [0.5198782101636747, -1.3151907163792045]
+     [0.6363188482780467, -1.2629720096220762]
+     [0.7487478046649277, -1.1997402630052643]
+     [0.8560465686626911, -1.1256927848417742]
+     [0.9570344440240529, -1.0411940483919582]
+     [0.9999999968849914, -0.9999999898421621]
+    #+end_example
+
+*** Plots
+
+    #+NAME: a74d6a3e-3386-490b-858c-233ee43b47ee
+    #+begin_src ein-julia :session localhost :results raw drawer :image output.png
+      t=range(tspan[1], stop=tspan[2], length=first(size(sol[1,:])))
+      yv = plot(sol, plotdensity=1000, vars=(1,2))
+      yt = plot(t,sol[1,:])
+      vt = plot(t,sol[2,:])
+      yvt = plot(t,sol[1,:],sol[2,:])
+      plot(plot(yvt),plot(yv, yt, vt, layout=(1,3),w=1), layout=(2,1))
+    #+end_src
+
+    #+RESULTS: a74d6a3e-3386-490b-858c-233ee43b47ee
+    :results:
+    [....]
+    :end:
+
+

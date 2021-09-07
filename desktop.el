@@ -234,3 +234,11 @@
 (use-package org-tree-slide
   :custom
   (org-image-actual-width nil))
+
+(use-package uimage)
+
+(use-package image+)
+
+(use-package image-dired+)
+
+(use-package image-archive)

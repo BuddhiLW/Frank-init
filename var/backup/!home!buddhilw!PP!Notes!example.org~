@@ -31,5 +31,69 @@ Região dois:
 : olá mundo
 
 MathJax
+* Comandos a se comentar
+** Tabela com operações de Buffer e Arquivos
+|----------+---------------------------------------------------|
+| Comandos | Funcionalidade                                    |
+|----------+---------------------------------------------------|
+| C-x C-0  | Mudar de Buffer                                   |
+| C-x 1    | Colapsar em um único Buffer                       |
+| C-x 2    | Repartir o Buffer Horizontalmente em dois         |
+| C-x 3    | Repartir o Buffer Verticalmente em dois           |
+| C-x C-f  | Navegar em diretórios/arquivos (*f*-ind *f*-iles) |
+| M-x      | Navegador de comandos                             |
+|----------+---------------------------------------------------|
 
+** Navegação eficiente (Normal Mode)
+Três modos principais:
+- *Modo Normal:*    Navegação e operações rápidas. 
+- *Modo Inserção:*  Inscrição de texto.               [tecla "i", em Normal Mode]
+- *Modo Visual:*    Seleção de texto.                 [tecla "v", em Normal Mode]
+
+  Em =Normal Mode=, o essencial:
+  |------------------------------+-------------------------------------------|
+  | Tecla/Comando                | Descrição (Movimentar-se)                 |
+  |------------------------------+-------------------------------------------|
+  | j                            | Para baixo                                |
+  | h                            | Para a esquerda                           |
+  | l                            | Para a direita                            |
+  | k                            | Para cima                                 |
+  |------------------------------+-------------------------------------------|
+  | Tecla/Comando                | Descrição (Copiar/Colar)                  |
+  |------------------------------+-------------------------------------------|
+  | *D*                          | Significado geral de Deletar              |
+  | dd                           | Deletar a linha completa                  |
+  | *P*                          | Significado geral de Paste (Colar)        |
+  | p                            | Cola o que estava no histório de Deletar  |
+  |------------------------------+-------------------------------------------|
+  | Tecla/Comando                | Descrição (Histórico)                     |
+  |------------------------------+-------------------------------------------|
+  | C-x u                        | Volta na história um passo no save.       |
+  | U                            | Volta agressivamente na história do save. |
+  | M-x undo-tree-mode RET C-x u | Volta na história em modo de árvore.      |
+  |------------------------------+-------------------------------------------|
+
+  Em =Visual Mode=, o essencial:
+
+  |------------------------------+-------------------------------------------|
+  | Tecla/Comando                | Descrição (Movimentar-se)                 |
+  |------------------------------+-------------------------------------------|
+  | j                            | Para baixo                                |
+  | h                            | Para a esquerda                           |
+  | l                            | Para a direita                            |
+  | k                            | Para cima                                 |
+  |------------------------------+-------------------------------------------|
+  | Tecla/Comando                | Descrição (Copiar/Colar)                  |
+  |------------------------------+-------------------------------------------|
+  | *D*                          | Significado geral de Deletar              |
+  | dd                           | Deletar a linha completa                  |
+  | *P*                          | Significado geral de Paste (Colar)        |
+  | p                            | Cola o que estava no histório de Deletar  |
+  |------------------------------+-------------------------------------------|
+  | Tecla/Comando                | Descrição (Histórico)                     |
+  |------------------------------+-------------------------------------------|
+  | C-x u                        | Volta na história um passo no save.       |
+  | U                            | Volta agressivamente na história do save. |
+  | M-x undo-tree-mode RET C-x u | Volta na história em modo de árvore.      |
+  |------------------------------+-------------------------------------------|
 

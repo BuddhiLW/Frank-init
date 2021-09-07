@@ -645,14 +645,20 @@ codepoints starting from codepoint-start."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(conda-anaconda-home "/opt/anaconda/")
+ '(ein:output-area-inlined-images t)
  '(helm-minibuffer-history-key "M-p")
+ '(image-animate-loop t)
+ '(image-dired-external-viewer "/usr/bin/sxiv")
  '(ob-ein-languages
    '(("ein-python" . python)
      ("ein-R" . R)
      ("ein-r" . R)
      ("ein-julia" . julia)))
  '(package-selected-packages
-   '(org-tree-slide latex-pretty-symbols latex-preview-pane org-pomodoro zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-roam-bibtex org-ql org-present org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-ivy lsp-grammarly lockfile-mode latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide helpful gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex command-log-mode cdnjs bibtex-utils auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
+   '(uimage image+ image-dired+ image-archive zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-tree-slide org-roam-bibtex org-ql org-present org-pomodoro org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-ivy lsp-grammarly lockfile-mode latex-preview-pane latex-pretty-symbols latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide helpful gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex command-log-mode cdnjs bibtex-utils auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider))
+ '(python-indent-guess-indent-offset-verbose nil)
+ '(thumbs-geometry "100x100")
+ '(thumbs-image-resizing-step 10))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -985,11 +991,36 @@ conda-env-subdirectory "envs")
 
 (use-package org-present)
 
+;;  (use-package versuri)
+  (use-package esxml)
+  (use-package prescient)
+  (use-package company-prescient)
+  (use-package xelb)
+  (use-package cider)
+
 (load "~/.emacs.d/editing.el")
 (load "~/.emacs.d/desktop.el")
+
+(defun my-scratch-buffer ()
+"Create a new scratch buffer -- \*hello-world\*"
+(interactive)
+  (let ((n 0)
+        bufname buffer)
+    (catch 'done
+      (while t
+        (setq bufname (concat "*hello-world"
+          (if (= n 0) "" (int-to-string n))
+            "*"))
+        (setq n (1+ n))
+        (when (not (get-buffer bufname))
+          (setq buffer (get-buffer-create bufname))
+          (with-current-buffer buffer
+            (org-mode))
+          ;; When called non-interactively, the `t` targets the other window (if it exists).
+          (throw 'done (display-buffer buffer t))) ))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-table ((t (:inherit fixed-pitch :background "#0f0f0d" :foreground "#c5c3c4" :height 1.5)))))
+ )

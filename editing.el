@@ -78,6 +78,11 @@
 
 ;; (use-package latex-extra)
 
+(eval-after-load "tex" 
+  '(setcdr (assoc "LaTeX" TeX-command-list)
+          '("%`%l%(mode) -shell-escape%' %t"
+          TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
+
 (setq org-latex-listings 'minted)
 (setq org-latex-custom-lang-environments
        '((emacs-lisp "common-lispcode")))
@@ -230,7 +235,7 @@
 
 (use-package org-roam
   :init
-  (add-hook 'after-init-hook 'org-roam-mode))
+  (add-hook 'after-init-hook 'org-mode))
 
 ;; (define-key key-translation-map (kbd "<tab> p") (kbd "φ"))
 (define-key key-translation-map (kbd "<f9> x") (kbd "ξ"))
@@ -257,38 +262,5 @@
   :hook (text-mode . (lambda ()
                        (require 'lsp-grammarly)
                        (lsp))))  ; or lsp-deferred
-<<<<<<< HEAD
-=======
-
-;; Input method and key binding configuration.
-(setq alternative-input-methods
-      '(("chinese-tonepy" . [?\ä])
-        ("chinese-sisheng"   . [?\å])))
-
-(setq default-input-method
-      (caar alternative-input-methods))
-
-(defun toggle-alternative-input-method (method &optional arg interactive)
-  (if arg
-      (toggle-input-method arg interactive)
-    (let ((previous-input-method current-input-method))
-      (when current-input-method
-        (deactivate-input-method))
-      (unless (and previous-input-method
-                   (string= previous-input-method method))
-        (activate-input-method method)))))
-
-(defun reload-alternative-input-methods ()
-  (dolist (config alternative-input-methods)
-    (let ((method (car config)))
-      (global-set-key (cdr config)
-                      `(lambda (&optional arg interactive)
-                         ,(concat "Behaves similar to `toggle-input-method', but uses \""
-                                  method "\" instead of `default-input-method'")
-                         (interactive "P\np")
-                         (toggle-alternative-input-method ,method arg interactive))))))
-
-(reload-alternative-input-methods)
 
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch :height 1.4)
->>>>>>> 0d7a1aedeb0e27371b4e335034cbc54715c1426a

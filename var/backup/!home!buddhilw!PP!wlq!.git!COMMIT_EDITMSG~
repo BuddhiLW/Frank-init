@@ -6,66 +6,14 @@
 # Your branch is up to date with 'origin/main'.
 #
 # Changes to be committed:
-#	deleted:    .#simulation.jl
-#	modified:   CFD/Barbara-ComputationalFluidDynamics.org
-#	new file:   CFD/ltximg/org-ltximg_78f553159293f393fe0e0c440e66ab625081cb02.png
-#	modified:   GeneralNotes/article-notes.org
-#	new file:   GeneralNotes/ltximg/org-ltximg_06a7bc1c9caed374c488172423aaea86df946ba6.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_0f963d96e227451f8a601195211585bba276127d.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_1a76f108422df2b0bb839baaacf794f6492f97a4.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_1c08ea7bdd82c3354f23233f8be2e6f70be918fc.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_1c575f44e455d4119290fc5001160bd6cd3c75f8.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_2856978373be07e17f426390b8038d13329c68ad.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_2d1431919d2b342374d3fe8b851d39d47a345266.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_30398324467d9c1c4595a1ac9c7aa5a288114904.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_31bf7368262755bdb320f1a827136ba402799dc7.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_32f0ad4bac8b1c970af946db49e87b2f832e62ce.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_460b715b44fbb34e1a20723de36f1b6066e29108.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_4a65a55cb1a13bd18faecbb74f1ab9bc41865f81.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_4a7166c88562496e483f35852ece88840664d928.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_4c1a3633780e3acfcb48e4fdbf931003c1e8d2fc.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_54060d26958894e389a0cc76e50111ae8c7ba94f.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_69454a4c8792b168287cbc4425b287cf4db2cc55.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_6b6edfa9887c44e1db8bef22a1a1c1a62e38d06e.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_6f1a950dd79606c557425e4f97a08cfee76e3d49.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_8981c95a8e16010a11ef0fd37d5f0afa1448b6d7.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_8a915db5e23b5e2a527f278b8e2dadfdd998a7fa.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_8c1b988b67eca602c146de15e0f7d38abe8ea262.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_8ef4f28f89063fb4e47636158693d133249123b8.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_9bca247b32c496150f23fdad75a58cbf10c7c7a4.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_a08481f80c6cded89783dbd6805748a1978de144.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_a68e9bdf447749321b1ef9f788ad3c5957b19148.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_b49083a439504ff61fdb44957fd64d409511bafe.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_b90ea27052e731836b094dea412ca06eb79379cc.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_b9f992e8b50e3eb0bfadb991d2bb3104b3b14243.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_c5ba5580a647981fcf75f6785020b675d6613099.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_c6d58da4bd2398f92e8d1409ff779d6dbd886512.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_cb48c742c557936b6706118e2564d4dd9615c72d.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_cf6d839a8ba739ab7a854f8a998f93d8d3b638fc.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_d745f8503ce7a1a43272cea888391e11a29fae96.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_e072ce7b4a31069613aa4028df12ac224dace319.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_eedf26a91e45ceb9331a719aecc6fae3b4ed05ef.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_efa0cc72bdf0be2fdc94e30b6efa0ac2c5ec5535.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_f42b5e46cb68159f3a7de4860704ac7bda82c1c4.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_f55af3e9fcbcfc55b9c304ff7d81b5a51fbb4a2d.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_f68d1d8d850fbbb624a65081700b52bf3c4e3251.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_f6dd969a20cf4e8a2e6bfcf54293ae2c445c5aaf.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_fbad684409d2e2b9d46c4746acf613b96e00f642.png
-#	new file:   GeneralNotes/ltximg/org-ltximg_fc8846f508cdc89b197d506cd4c6cfb1069f4015.png
-#	new file:   GeneralNotes/sol_variablee1.png
+#	new file:   NeuralPDE/NeuralPDE-w.jl
 #	modified:   NeuralPDE/NeuralPDE.org
-#	new file:   NeuralPDE/ltximg/org-ltximg_17bd3a8817bfeb9a746a91604d0b311196b5bfd2.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_2018facfd82990598996547122dd403efa5d249c.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_383a49efe31388189a8ae06206d425831335fc32.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_3b084ecc243a4d7f190baaea316462d78edb2801.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_3b4c4cd4990acfca91f4e04331cf772ff6a2f274.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_6f1a950dd79606c557425e4f97a08cfee76e3d49.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_6f506c38802dc2c0f0852fdceda2e1ad5f42724f.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_918b0e70fe6d156f46aff5015246e142020bd727.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_a556aaeca73ad5c4c344bd348d4d8d7b07c46b0c.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_c8734ffcad8bd0fedcdbb07eecf6479955e2ee20.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_d7b7ce880aa9405ea0e2c41f1b84ec93af0de9de.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_e176b6a4c860526f8c276aec8af16bcdb8397e35.png
-#	new file:   NeuralPDE/ltximg/org-ltximg_f356f7cff229aefe893c4dc2712bb03e960df584.png
-#	new file:   NeuralPDE/neuralPDE.jl
+#	new file:   NeuralPDE/ltximg/org-ltximg_057b06e52b36a3cffcca013492aa65b3f1b8c038.png
+#	new file:   NeuralPDE/ltximg/org-ltximg_256649e1ec8b475761771c28e2ef8a00787188a2.png
+#	new file:   NeuralPDE/ltximg/org-ltximg_34b96b311c0ad84f1005dd2f78a5f6276f68494a.png
+#	new file:   NeuralPDE/ltximg/org-ltximg_4f8db841fea6bea334d4d31b4e5979368330ec2e.png
+#	new file:   NeuralPDE/ltximg/org-ltximg_9db6be25fb5739163bcdcbb22576bcfbe4b3375e.png
+#	new file:   NeuralPDE/ltximg/org-ltximg_a86318116ca402fa6bf1729b9fbc321008adca59.png
+#	new file:   NeuralPDE/ltximg/org-ltximg_c3260c530ee15f572aeae3b5e66000eb57124f35.png
+#	modified:   NeuralPDE/neuralPDE.jl
 #

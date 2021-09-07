@@ -1,0 +1,341 @@
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+DATE: Sun Sep  5 16:19:00 2021
+#+DATE: Sun Sep  5 19:25:33 2021
+
+* Mass-Spring hung under gravity (general case, no friction)
+  Notation:
+  - $\Xi$: means restorative, when dealing with forces and fields.
+  - $g$: subscript means gravity
+
+** Equation Model
+   
+   \begin{equation}
+     \begin{aligned}
+       F_{g} + F_{\Xi} = mg - k(y+a)
+     \end{aligned}
+   \end{equation}
+
+   In which, =a= is the incremental spring size such that the mass is
+   in equilibrium with the strings' restorative force.
+
+   So, when $\sum{F} = 0 \, \land \, y=0$, =a= can be written as $a(m,k,g)$.
+
+   \begin{equation}
+     \begin{aligned}
+       \therefore a = \frac{mg}{k}
+     \end{aligned}
+   \end{equation}
+
+   Finally, we can derive
+
+   \begin{equation}
+     \begin{aligned}
+       \dfrac{\partial^2{y}}{\partial{t^2}} + \frac{k}{m}y=0
+     \end{aligned}
+   \end{equation}
+
+*** Two initial conditions
+
+    \begin{equation}
+    \begin{aligned}
+    \begin{cases}
+\phi{(0)}=y_0 \\
+\phi'{(0)}=y'_0
+    \end{cases}
+    \end{aligned}
+    \end{equation}
+
+
+** Solution in Julia
+
+   #+NAME: 7966eccb-e031-40b1-8e4a-24bfe4ee9b00
+   #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+     using Pkg
+     Pkg.add("DifferentialEquations")
+     Pkg.add("PyPlot")
+     using DifferentialEquations, Plots, PyPlot
+   #+end_src
+
+   #+RESULTS: 7966eccb-e031-40b1-8e4a-24bfe4ee9b00
+   #+begin_example
+
+
+
+
+
+
+
+
+
+
+
+
+   #+end_example
+
+*** Transform [[*Equation Model][Equation Model]] into two equationsof first order.
+
+    Let $\dot{u} = \dfrac{\partial^2{y}}{\partial{t^2}}$ and $v=y \,
+    \implies \, \dot{v} = u$.
+
+    \begin{equation}
+      \begin{aligned}
+	\begin{cases}
+	  \dot{u} = - \frac{k}{m}v\\
+	  \dot{v} = u
+	\end{cases}
+      \end{aligned}
+    \end{equation}
+   
+****  Code defining the equation
+     
+     #+NAME: de71d98d-2ea1-4de4-a6b8-ce7638a1f5c9
+     #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+       function mass_spring(du,u,p,t)
+	   du[1] = -(p[2]/p[1])*u[2] #p[2]=k, p[1]=m
+	   du[2] = u[1]
+       end
+     #+end_src
+
+     #+RESULTS: de71d98d-2ea1-4de4-a6b8-ce7638a1f5c9
+     : mass_spring (generic function with 1 method)
+
+     
+*** Initial conditions' code
+    #+NAME: 51b07536-a42f-4890-871a-8a6a0c2c01c0
+    #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+      tspan = (0., 4*2π*sqrt(1/1))
+      p = (1,1)
+      # m=1
+      # k=1
+      # g=9.8
+      u0=[1.,-1.] #y0=1 y'0=-1
+    #+end_src
+
+    #+RESULTS: 51b07536-a42f-4890-871a-8a6a0c2c01c0
+    : 2-element Vector{Float64}:
+    :   1.0
+    :  -1.0
+    
+*** Solvers
+
+    #+NAME: 700db531-5f60-4ecf-aff6-8073f0011311
+    #+begin_src ein-julia :session localhost :results output :tangle mass-spring.jl
+      prob = ODEProblem(mass_spring, u0, tspan, p)
+      sol = solve(prob,Tsit5(),reltol=1e-8,abstol=1e-8)
+    #+end_src
+
+    #+RESULTS: 700db531-5f60-4ecf-aff6-8073f0011311
+    #+begin_example
+    retcode: Success
+    Interpolation: specialized 4th order "free" interpolation
+    t: 281-element Vector{Float64}:
+      0.0
+      0.011486983549970353
+      0.03944051153388191
+      0.07595976924479338
+      0.11980835567005166
+      0.17131645818129287
+      0.2293966437507467
+      0.293470987106844
+      0.36249749645823426
+      0.4356236966575798
+      0.511915540412208
+      0.5905632075597412
+      0.6708118862661587
+      ⋮
+     24.189278013325243
+     24.28018972080525
+     24.369638217510023
+     24.457472392505547
+     24.545713280449874
+     24.634362275063868
+     24.7237801912023
+     24.814047234206935
+     24.90528886960723
+     24.997506285886704
+     25.09064899430843
+     25.132741228718345
+    u: 281-element Vector{Vector{Float64}}:
+     [1.0, -1.0]
+     [1.0114207562621262, -0.9884472943977076]
+     [1.0386526108644658, -0.9597920368206573]
+     [1.0730031873845538, -0.921229699837178]
+     [1.112353498733306, -0.8733096208413491]
+     [1.155840874665725, -0.8148815082250069]
+     [1.2011937838019922, -0.7464137550608191]
+     [1.2465221167014027, -0.6679690206521741]
+     [1.2896246333049552, -0.5804035709155208]
+     [1.328582964833627, -0.48463110247533464]
+     [1.3616559113659472, -0.38195965616995026]
+     [1.3874561272701589, -0.2737982738439389]
+     [1.4049393938962158, -0.16169508122705176]
+     ⋮
+     [-0.2226080641796086, -1.3965835542914191]
+     [-0.09489780285373431, -1.411026003046856]
+     [0.031527499176587, -1.4138620834335158]
+     [0.15543175527574607, -1.4056460947017873]
+     [0.2787015728195291, -1.3864795012287296]
+     [0.4003562742894484, -1.356360876601611]
+     [0.5198782101636747, -1.3151907163792045]
+     [0.6363188482780467, -1.2629720096220762]
+     [0.7487478046649277, -1.1997402630052643]
+     [0.8560465686626911, -1.1256927848417742]
+     [0.9570344440240529, -1.0411940483919582]
+     [0.9999999968849914, -0.9999999898421621]
+    #+end_example
+
+*** Plots (PyPlot)
+
+    #+NAME: a74d6a3e-3386-490b-858c-233ee43b47ee
+    #+begin_src ein-julia :session localhost
+      # %matplotlib inline
+      using Plots;pyplot
+      t=range(tspan[1], stop=tspan[2], length=first(size(sol[1,:])))
+      yv = Plots.plot(sol[1,:], sol[2,:], line=(color=:red))
+      yt = Plots.plot(t,sol[1,:], line=(:black))
+      vt = Plots.plot(t,sol[2,:], line=(:blue2))
+      yvt = Plots.plot(t,sol[1,:],sol[2,:], line=(pallete=:Dark2_5))
+      Plots.plot(Plots.plot(yvt),Plots.plot(yv, yt, vt, layout=(1,3),w=1), layout=(2,1))
+      Plots.savefig("output_Plots.png")
+    #+end_src
+
+    #+RESULTS: a74d6a3e-3386-490b-858c-233ee43b47ee
+    
+    #+ATTR_HTML: :width 500px
+    [[file:output_Plots.png][file:./output_Plots.png]]
+
+***** Some experiments with plots
+    #+NAME: ecc8ee88-8352-43b1-b105-57ff4ece4829
+    #+begin_src ein-julia :session localhost :results raw drawer :image output.png
+      using Plots;pyplot
+      fig = figure("pyplot_subplot_mixed",figsize=(10,10)) # Create a new blank figure
+      #fig.set_figheight(7) # Doesn't work
+      #fig.set_figwidth(3) # Doesn't work
+      subplot(221) # Create the 1st axis of a 2x2 arrax of axes
+      PyPlot.grid("on") # Create a grid on the axis
+      PyPlot.title("221") # Give the most recent axis a title
+      subplot(222,sol[1,:], sol[2,:]) # Create a plot and make it a polar plot, 2nd axis of 2x2 axis grid
+      PyPlot.title("222")
+      # ax = subplot(223,t,sol[1,:]) # Create a plot and make it a polar plot, 3rd axis of 2x2 axis grid
+      # ax.set_theta_zero_location("N") # Set 0 degrees to the top of the plot
+      # ax.set_theta_direction(-1) # Switch the polar plot to clockwise
+      # PyPlot.title("223")
+      # subplot(224,t,sol[2,:]) # Create the 4th axis of a 2x2 arrax of axes
+      # xlabel("This is an X axis")
+      # ylabel("This is a y axis")
+      # PyPlot.title("224")
+      fig.canvas.draw() # Update the figure
+      suptitle("2x2 Subplot")
+    #+end_src
+
+    #+RESULTS: ecc8ee88-8352-43b1-b105-57ff4ece4829
+    :results:
+    PyError ($(Expr(:escape, :(ccall(#= /home/buddhilw/.julia/packages/PyCall/BD546/src/pyfncall.jl:43 =# @pysym(:PyObject_Call), PyPtr, (PyPtr, PyPtr, PyPtr), o, pyargsptr, kw))))) <class 'TypeError'>
+    TypeError('only size-1 arrays can be converted to Python scalars')
+      File "/home/buddhilw/.local/lib/python3.9/site-packages/matplotlib/pyplot.py", line 1272, in subplot
+	key = SubplotSpec._from_subplot_args(fig, args)
+      File "/home/buddhilw/.local/lib/python3.9/site-packages/matplotlib/gridspec.py", line 640, in _from_subplot_args
+	rows, cols = map(int, [rows, cols])
+
+
+    Stacktrace:
+      [1] pyerr_check
+	@ ~/.julia/packages/PyCall/BD546/src/exception.jl:62 [inlined]
+      [2] pyerr_check
+	@ ~/.julia/packages/PyCall/BD546/src/exception.jl:66 [inlined]
+      [3] _handle_error(msg::String)
+	@ PyCall ~/.julia/packages/PyCall/BD546/src/exception.jl:83
+      [4] macro expansion
+	@ ~/.julia/packages/PyCall/BD546/src/exception.jl:97 [inlined]
+      [5] #107
+	@ ~/.julia/packages/PyCall/BD546/src/pyfncall.jl:43 [inlined]
+      [6] disable_sigint
+	@ ./c.jl:458 [inlined]
+      [7] __pycall!
+	@ ~/.julia/packages/PyCall/BD546/src/pyfncall.jl:42 [inlined]
+      [8] _pycall!(ret::PyCall.PyObject, o::PyCall.PyObject, args::Tuple{Int64, Vector{Float64}, Vector{Float64}}, nargs::Int64, kw::Ptr{Nothing})
+	@ PyCall ~/.julia/packages/PyCall/BD546/src/pyfncall.jl:29
+      [9] _pycall!(ret::PyCall.PyObject, o::PyCall.PyObject, args::Tuple{Int64, Vector{Float64}, Vector{Float64}}, kwargs::Base.Iterators.Pairs{Union{}, Union{}, Tuple{}, NamedTuple{(), Tuple{}}})
+	@ PyCall ~/.julia/packages/PyCall/BD546/src/pyfncall.jl:11
+     [10] pycall(::PyCall.PyObject, ::Type{PyCall.PyAny}, ::Int64, ::Vararg{Any, N} where N; kwargs::Base.Iterators.Pairs{Union{}, Union{}, Tuple{}, NamedTuple{(), Tuple{}}})
+	@ PyCall ~/.julia/packages/PyCall/BD546/src/pyfncall.jl:83
+     [11] pycall(::PyCall.PyObject, ::Type{PyCall.PyAny}, ::Int64, ::Vararg{Any, N} where N)
+	@ PyCall ~/.julia/packages/PyCall/BD546/src/pyfncall.jl:83
+     [12] subplot(::Int64, ::Vararg{Any, N} where N; kws::Base.Iterators.Pairs{Union{}, Union{}, Tuple{}, NamedTuple{(), Tuple{}}})
+	@ PyPlot ~/.julia/packages/PyPlot/XHEG0/src/PyPlot.jl:177
+     [13] subplot(::Int64, ::Vararg{Any, N} where N)
+	@ PyPlot ~/.julia/packages/PyPlot/XHEG0/src/PyPlot.jl:174
+     [14] top-level scope
+	@ In[48]:8
+     [15] eval
+	@ ./boot.jl:360 [inlined]
+     [16] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)
+	@ Base ./loading.jl:1116
+    :end:
+
+    #+NAME: 79f5864d-6db6-4c7f-b4de-be34acb58a41
+    #+begin_src ein-julia :session localhost :results output
+PyPlot.plot([1,2,3])
+    #+end_src
+
+    #+RESULTS: 79f5864d-6db6-4c7f-b4de-be34acb58a41
+    #+ATTR_HTML: :width 200px
+     [[file:ein-images/ob-ein-668dc5033e28a8de9363b00089504747.png]]
+    : 1-element Vector{PyCall.PyObject}:
+    :  PyObject <matplotlib.lines.Line2D object at 0x7f0b2f2dedc0>
+
+   #+NAME: c79215da-4b2a-431a-a581-0c2198d64a03
+   #+begin_src ein-julia :session localhost :results raw drawer
+     using PyPlot
+     # use x = linspace(0,2*pi,1000) in Julia 0.6
+     x = range(0; stop=2*π, length=1000); y = sin.(3 * x + 4 * cos.(2 * x));
+     PyPlot.plot(x, y, color="red", linewidth=2.0, linestyle="-.")
+     title("A sinusoidally modulated sinusoid")
+   #+end_src
+
+   #+RESULTS: c79215da-4b2a-431a-a581-0c2198d64a03
+   :results:
+   [[file:ein-images/ob-ein-e0d9471e84f6952defda4daea1c6bdef.png]]
+   PyObject Text(0.5, 1.0, 'A sinusoidally modulated sinusoid')
+   :end:
+ 
+***** Note
+    #+begin_example
+      The analogue of IPython's %matplotlib in Julia is to use the PyPlot package
+      (https://github.com/stevengj/PyPlot.jl), which gives a Julia interface to
+      Matplotlib including inline plots in IJulia notebooks. (The equivalent of
+      numpy is already loaded by default in Julia.)
+
+      Given PyPlot, the analogue of %matplotlib inline is using PyPlot, since
+      PyPlot defaults to inline plots in IJulia.
+
+      To enable separate GUI windows in PyPlot, analogous to %matplotlib, do using
+      PyPlot; pygui(true). To specify a particular gui backend, analogous to
+      %matplotlib gui, you can either do using PyPlot; pygui(:gui); using PyPlot;
+      pygui(true) (where gui is wx, qt, tk, or gtk), or you can do
+      ENV["MPLBACKEND"]=backend; using PyPlot; pygui(true) (where backend is the
+      name of a Matplotlib backend, like tkagg).
+
+      For more options, see the PyPlot documentation.
+    #+end_example
+
+#+NAME: bd2983b7-b7f7-4add-861f-2b118d692222
+#+BEGIN_SRC ein-python :session localhost :results raw drawer :image output.png
+  import matplotlib.pyplot as plt
+  import numpy as np
+
+  %matplotlib inline
+  x = np.linspace(0, 1, 100)
+  y = np.random.rand(100,1)
+  plt.plot(x,y)
+#+END_SRC
+
+#+RESULTS: bd2983b7-b7f7-4add-861f-2b118d692222
+:results:
+[<matplotlib.lines.Line2D at 0x7fd36b7eb130>]
+[[file:output.png]]
+:end:
+
+***** Recipes for PyPlot.jl
+      - https://github.com/gizmaa/Julia_Examples

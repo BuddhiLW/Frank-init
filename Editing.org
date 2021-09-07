@@ -164,12 +164,15 @@ Move configuration on Emacs.org to here.
 
       #+RESULTS:
 *** Pygments
-# #+begin_src emacs-lisp
-#   (eval-after-load "tex" 
-#     '(setcdr (assoc "LaTeX" TeX-command-list)
-#             '("%`%l%(mode) -shell-escape%' %t"
-#             TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
-# #+end_src
+#+begin_src emacs-lisp
+  (eval-after-load "tex" 
+    '(setcdr (assoc "LaTeX" TeX-command-list)
+            '("%`%l%(mode) -shell-escape%' %t"
+            TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
+#+end_src
+
+#+RESULTS:
+| %`%l%(mode) -shell-escape%' %t | TeX-run-TeX | nil | (latex-mode doctex-mode) | :help | Run LaTeX |
 
 
  #+name: setup-minted
@@ -366,8 +369,9 @@ Move configuration on Emacs.org to here.
   #+begin_src emacs-lisp
     (use-package org-roam
       :init
-      (add-hook 'after-init-hook 'org-roam-mode))
+      (add-hook 'after-init-hook 'org-mode))
     #+end_src
+    
 * TODO Unicode abreviation alias and setup
 SCHEDULED: <2021-06-25 Fri>
 #+begin_src emacs-lisp
