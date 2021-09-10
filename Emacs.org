@@ -472,10 +472,12 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-(use-package doom-themes
-  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
+  (use-package doom-themes
+    :init (load-theme 'doom-palenight t)) ;;wildavil's default -> doom-palenight
 
 #+end_src
+
+#+RESULTS:
 
 ** Better Modeline
 
@@ -651,7 +653,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 : julia
 
 #+begin_src emacs-lisp
-   (package-install-file "~/.emacs.d/ob-julia-vterm/ob-julia-vterm.el")  
+  ;; (package-install-file "~/.emacs.d/ob-julia-vterm/ob-julia-vterm.el")  
 #+end_src
 
 #+RESULTS:
@@ -999,6 +1001,12 @@ Chosing an image's size with :width property
 ** Configure Babel Languages
 
 #+begin_src emacs-lisp
+(use-package ein)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)   
   (add-hook 'org-mode-hook 'org-display-inline-images)
 #+end_src
@@ -1110,19 +1118,19 @@ It's a requirement for org-roam-bibtex,  org-roam, org-ref and bibtex-completion
 
 #+RESULTS:
 
-#+begin_src emacs-lisp
-  (use-package org-roam
-    :ensure t
-    :init
-    (setq org-roam-v2-ack t)
-    :custom
-    (org-roam-directory "~/org-roam")
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n i" . org-roam-node-insert))
-    :config
-    (org-roam-setup))
-#+end_src
+# #+begin_src emacs-lisp
+#   (use-package org-roam
+#     :ensure t
+#     :init
+#     (setq org-roam-v2-ack t)
+#     :custom
+#     (org-roam-directory "~/org-roam")
+#     :bind (("C-c n l" . org-roam-buffer-toggle)
+#            ("C-c n f" . org-roam-node-find)
+#            ("C-c n i" . org-roam-node-insert))
+#     :config
+#     (org-roam-setup))
+# #+end_src
 
 #+RESULTS:
 : org-roam-node-insert
@@ -1931,7 +1939,6 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 : t
 
 
-
 * Scratch Buffer
   #+begin_src emacs-lisp
 (defun my-scratch-buffer ()
@@ -1955,3 +1962,8 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
   #+RESULTS:
   : my-scratch-buffer
+
+* Font Icons
+=M-x all-the-icons-install-fonts=
+#+begin_src emacs-lisp
+#+end_src

@@ -213,7 +213,7 @@
 (add-hook  'LaTeX-mode-hook  'pdfokular  t) ; AUCTeX LaTeX mode
 
 (load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+;; (load "preview-latex.el" nil t t)
 
 (use-package latex-preview-pane)
 (use-package latex-pretty-symbols)
@@ -264,3 +264,31 @@
                        (lsp))))  ; or lsp-deferred
 
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch :height 1.4)
+
+;; (use-package evil-smartparens)
+(use-package ob-julia-vterm)
+(use-package smartparens)
+;; (use-package dap-mode)
+;; (use-package diffpdf)
+(use-package julia-vterm)
+;;  (use-package lsp)
+(use-package counsel)
+;;    (use-package company-quickhelp)
+;; (use-package company-box)
+(use-package cider)
+(use-package latex-extra)
+(use-package latex-preview-pane)
+(use-package lsp-latex)
+(use-package latex-pretty-symbols)
+(use-package latex-unicode-math-mode)
+(use-package org-latex-impatient)
+(use-package company-auctex)
+;; (use-package auto-complete-auctex)
+
+(use-package projectile)
+(use-package lsp-treemacs)
+(use-package treemacs)
+(use-package treemacs-all-the-icons)
+(use-package treemacs-magit)
+(use-package treemacs-evil)
+(use-package treemacs-icons-dired)
