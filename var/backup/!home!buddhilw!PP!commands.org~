@@ -1,0 +1,5 @@
+Capturar HDMI-1-0, à direita da tela principal (notebook).
+
+#+begin_src shell
+  ffmpeg -f x11grab -video_size 2560x1080 -framerate 45 -i :0.0+1920 -f alsa -i default -c:v libx264 -preset ultrafast -c:a aac screen-test.mp4
+#+end_src

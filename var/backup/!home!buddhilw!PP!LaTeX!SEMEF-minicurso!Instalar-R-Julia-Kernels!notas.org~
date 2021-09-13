@@ -1,0 +1,68 @@
+* Fonte:
+https://stackoverflow.com/questions/33024383/r-and-julia-kernels-not-available-in-jupyter-notebook
+
+* After Fresh Install of Anaconda
+After a fresh installation of Anaconda Distribution (either 2 or 3), following steps should be performed to achieve the desired kernels (R & Julia) on your notebook.
+To install R on Anaconda(2/3) Jupyter Notebook :
+
+** R
+ - Open 'Anaconda Command Prompt' & execute =conda update notebook= to
+ update your Jupyter notebook to the most recent version.
+
+ - Then install IRkernel by =conda install -c r notebook r-irkernel=
+
+ - Now you may open *R* in your command prompt by running R.exe
+ Install all necessary *R* packages using the following lines in the R
+ console by executing :
+
+ #+begin_src shell
+ install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 
+ 'devtools', 'uuid', 'digest'))
+ #+end_src
+
+ #+begin_src shell
+   devtools::install_github('IRkernel/IRkernel')
+ #+end_src
+
+ Finally, make the R kernel available to your Jupyter Notebook by executing:
+
+ Install only for the current user
+ - =IRkernel::installspec()=
+
+ For System-wide installation(all Users)
+ - =IRkernel::installspec(user = FALSE)=
+
+** Julia
+To install Julia on Anaconda(2/3) Jupyter Notebook :
+
+- First, download Julia version 0.4 or later and run the installer. Then
+run the Julia application (double-click on it); the Julia Console with
+a julia> prompt will appear.
+
+- Now, for the most important step, open 'Anaconda Command Prompt' &
+execute =where jupyter= to see the actual path of your Jupyter
+Notebook. The output will be something like
+"C:\Users\JohnDoe\AppData\Local\Continuum\Anaconda3\bin\jupyter.exe"
+
+- Copy the above location and go to your Julia console. Now, execute the
+following respectively:
+#+begin_src shell
+  ENV["JUPYTER"]="C:\\Users\\JohnDoe\\AppData\\Local\\Continuum\\Anaconda3\\bin\\jupyter.exe"
+#+end_src
+
+- =Pkg.add("IJulia")=
+
+- =Pkg.build("IJulia") (Optional, execute if further error occurs again.)=
+
+⬆ Notice that the backslashes have to be doubled when you type them as
+a Julia string. I've just assumed that the path is your Anaconda path
+with \bin\jupyter appended, but replace that with whatever where
+jupyter tells you.
+
+
+After few minutes, in Julia console execute:
+
+- using IJulia
+- notebook()
+
+Now, you can program Julia in your Anaconda Jupyter Notebook.

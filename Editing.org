@@ -164,14 +164,16 @@ Move configuration on Emacs.org to here.
 
       #+RESULTS:
 *** Pygments
-# #+begin_src emacs-lisp
-#   (eval-after-load "tex" 
-#     '(setcdr (assoc "LaTeX" TeX-command-list)
-#             '("%`%l%(mode) -shell-escape%' %t"
-#             TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
-# #+end_src
+#+begin_src emacs-lisp
+  (eval-after-load "tex" 
+    '(setcdr (assoc "LaTeX" TeX-command-list)
+            '("%`%l%(mode) -shell-escape%' %t"
+            TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
+#+end_src
 
 #+RESULTS:
+| %`%l%(mode) -shell-escape%' %t | TeX-run-TeX | nil | (latex-mode doctex-mode) | :help | Run LaTeX |
+
 
  #+name: setup-minted
  #+begin_src emacs-lisp :exports both :results silent
@@ -319,8 +321,8 @@ Move configuration on Emacs.org to here.
 
 ** Output evince setup
 #+begin_src emacs-lisp
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+  (load "auctex.el" nil t t)
+  ;; (load "preview-latex.el" nil t t)
 #+end_src
 
 #+RESULTS:
@@ -367,8 +369,9 @@ Move configuration on Emacs.org to here.
   #+begin_src emacs-lisp
     (use-package org-roam
       :init
-      (add-hook 'after-init-hook 'org-roam-mode))
+      (add-hook 'after-init-hook 'org-mode))
     #+end_src
+    
 * TODO Unicode abreviation alias and setup
 SCHEDULED: <2021-06-25 Fri>
 #+begin_src emacs-lisp
@@ -460,37 +463,37 @@ SCHEDULED: <2021-06-25 Fri>
 #+RESULTS:
 
 * Fast Input Methods
-#+begin_src emacs-lisp
-  ;; Input method and key binding configuration.
-  (setq alternative-input-methods
-        '(("chinese-tonepy" . [?\ä])
-          ("chinese-sisheng"   . [?\å])))
+# #+begin_src emacs-lisp
+#   ;; Input method and key binding configuration.
+#   (setq alternative-input-methods
+#         '(("chinese-tonepy" . [?\ä])
+#           ("chinese-sisheng"   . [?\å])))
   
-  (setq default-input-method
-        (caar alternative-input-methods))
+#   (setq default-input-method
+#         (caar alternative-input-methods))
   
-  (defun toggle-alternative-input-method (method &optional arg interactive)
-    (if arg
-        (toggle-input-method arg interactive)
-      (let ((previous-input-method current-input-method))
-        (when current-input-method
-          (deactivate-input-method))
-        (unless (and previous-input-method
-                     (string= previous-input-method method))
-          (activate-input-method method)))))
+#   (defun toggle-alternative-input-method (method &optional arg interactive)
+#     (if arg
+#         (toggle-input-method arg interactive)
+#       (let ((previous-input-method current-input-method))
+#         (when current-input-method
+#           (deactivate-input-method))
+#         (unless (and previous-input-method
+#                      (string= previous-input-method method))
+#           (activate-input-method method)))))
   
-  (defun reload-alternative-input-methods ()
-    (dolist (config alternative-input-methods)
-      (let ((method (car config)))
-        (global-set-key (cdr config)
-                        `(lambda (&optional arg interactive)
-                           ,(concat "Behaves similar to `toggle-input-method', but uses \""
-                                    method "\" instead of `default-input-method'")
-                           (interactive "P\np")
-                           (toggle-alternative-input-method ,method arg interactive))))))
+#   (defun reload-alternative-input-methods ()
+#     (dolist (config alternative-input-methods)
+#       (let ((method (car config)))
+#         (global-set-key (cdr config)
+#                         `(lambda (&optional arg interactive)
+#                            ,(concat "Behaves similar to `toggle-input-method', but uses \""
+#                                     method "\" instead of `default-input-method'")
+#                            (interactive "P\np")
+#                            (toggle-alternative-input-method ,method arg interactive))))))
   
-  (reload-alternative-input-methods)
-#+end_src
+#   (reload-alternative-input-methods)
+# #+end_src
 
 #+RESULTS:
 
@@ -500,3 +503,40 @@ SCHEDULED: <2021-06-25 Fri>
 #+end_src
 
 #+RESULTS:
+
+* Packages needed
+  #+begin_src emacs-lisp
+    ;; (use-package evil-smartparens)
+    (use-package ob-julia-vterm)
+    (use-package smartparens)
+    ;; (use-package dap-mode)
+    ;; (use-package diffpdf)
+    (use-package julia-vterm)
+    ;;  (use-package lsp)
+    (use-package counsel)
+    ;;    (use-package company-quickhelp)
+    ;; (use-package company-box)
+    (use-package cider)
+    (use-package latex-extra)
+    (use-package latex-preview-pane)
+    (use-package lsp-latex)
+    (use-package latex-pretty-symbols)
+    (use-package latex-unicode-math-mode)
+    (use-package org-latex-impatient)
+    (use-package company-auctex)
+    ;; (use-package auto-complete-auctex)
+  #+end_src
+
+  #+RESULTS:
+
+  #+begin_src emacs-lisp
+    (use-package projectile)
+    (use-package lsp-treemacs)
+    (use-package treemacs)
+    (use-package treemacs-all-the-icons)
+    (use-package treemacs-magit)
+    (use-package treemacs-evil)
+    (use-package treemacs-icons-dired)
+  #+end_src
+
+  #+RESULTS:

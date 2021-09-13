@@ -99,7 +99,7 @@
                     ;; Also handle undocumented (<active> <inactive>) form.
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
-         '(90 . 90) '(100 . 100)))))
+         '(90 . 90) '(95 . 95)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
@@ -295,7 +295,7 @@ codepoints starting from codepoint-start."
   :commands command-log-mode)
 
 (use-package doom-themes
-  :init (load-theme 'ewal-spacemacs-classic t)) ;;wildavil's default -> doom-paletnight
+  :init (load-theme 'doom-palenight t)) ;;wildavil's default -> doom-palenight
 
 (use-package all-the-icons)
 
@@ -386,7 +386,7 @@ codepoints starting from codepoint-start."
 
 (setq inferior-julia-program-name "julia")
 
-(package-install-file "~/.emacs.d/ob-julia-vterm/ob-julia-vterm.el")
+;; (package-install-file "~/.emacs.d/ob-julia-vterm/ob-julia-vterm.el")
 
 (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
 
@@ -569,7 +569,8 @@ codepoints starting from codepoint-start."
   ;; :hook (org-mode . org-bullets)
   :custom
   ;; (org-superstar-remove-leading-stars t)
-  (org-bullets-bullet-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")))
+  (org-bullets-bullet-list '("家" "ॐ" "同" "Ø" "א" "҉ " "҈ ")))
+;; ("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -615,6 +616,8 @@ codepoints starting from codepoint-start."
 
 (setq org-image-actual-width nil)
 
+(use-package ein)
+
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)   
 (add-hook 'org-mode-hook 'org-display-inline-images)
 
@@ -652,7 +655,7 @@ codepoints starting from codepoint-start."
      ("ein-r" . R)
      ("ein-julia" . julia)))
  '(package-selected-packages
-   '(org-tree-slide latex-pretty-symbols latex-preview-pane org-pomodoro zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-mode web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters racket-mode pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-roam-bibtex org-ql org-present org-noter-pdftools org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-ivy lsp-grammarly lockfile-mode latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide helpful gscholar-bibtex general forge flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex command-log-mode cdnjs bibtex-utils auto-package-update amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
+   '(load-relative zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree uimage treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-tree-slide org-roam-bibtex org-ql org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-ivy lsp-grammarly lockfile-mode latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful gscholar-bibtex ghub general flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex company-auctex command-log-mode closql cdnjs bibtex-utils auto-package-update auto-complete-auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -686,18 +689,6 @@ codepoints starting from codepoint-start."
 (use-package org-download)
 
 (use-package org-auto-tangle)
-
-(use-package org-roam
-  :ensure t
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-directory "~/org-roam")
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert))
-  :config
-  (org-roam-setup))
 
 (use-package org-ref)
 
@@ -985,11 +976,40 @@ conda-env-subdirectory "envs")
 
 (use-package org-present)
 
-(load "~/.emacs.d/editing.el")
-(load "~/.emacs.d/desktop.el")
+;;  (use-package versuri)
+  (use-package esxml)
+  (use-package prescient)
+  (use-package company-prescient)
+  (use-package xelb)
+  (use-package cider)
+
+(use-package load-relative)
+
+(load-relative "./editing.el")
+(load-relative "./desktop.el")
+
+(defun my-scratch-buffer ()
+"Create a new scratch buffer -- \*hello-world\*"
+(interactive)
+  (let ((n 0)
+        bufname buffer)
+    (catch 'done
+      (while t
+        (setq bufname (concat "*hello-world"
+          (if (= n 0) "" (int-to-string n))
+            "*"))
+        (setq n (1+ n))
+        (when (not (get-buffer bufname))
+          (setq buffer (get-buffer-create bufname))
+          (with-current-buffer buffer
+            (org-mode))
+          ;; When called non-interactively, the `t` targets the other window (if it exists).
+          (throw 'done (display-buffer buffer t))) ))))
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-table ((t (:inherit fixed-pitch :background "#0f0f0d" :foreground "#c5c3c4" :height 1.5)))))
+ )

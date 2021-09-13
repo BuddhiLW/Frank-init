@@ -1,0 +1,523 @@
+
+* Some Mathematical notations translated to Julia
+
+** Cartesian product:
+$A\times B$
+
+#+NAME: 754735eb-2b5d-4ce5-9567-634e59b5e166
+#+begin_src ein-julia :session localhost :results output
+  using Pkg
+  Pkg.add("LazySets")
+#+end_src
+
+#+RESULTS: 754735eb-2b5d-4ce5-9567-634e59b5e166
+#+begin_example
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#+end_example
+
+#+NAME: c9bdcd21-f970-4b1a-853f-a69edc5b6c32
+#+begin_src ein-julia :session localhost :results output
+  using LazySets
+  A=Interval(1,3)
+  B=Interval(3,5)
+  #zip(A,B)
+  
+  CartesianProduct(A,B)
+#+end_src
+
+#+RESULTS: c9bdcd21-f970-4b1a-853f-a69edc5b6c32
+: CartesianProduct{Float64, Interval{Float64, IntervalArithmetic.Interval{Float64}}, Interval{Float64, IntervalArithmetic.Interval{Float64}}}(Interval{Float64, IntervalArithmetic.Interval{Float64}}([1, 3]), Interval{Float64, IntervalArithmetic.Interval{Float64}}([3, 5]))
+
+#+NAME: 2d7ca66b-ffcb-457f-8be9-ed810b02f1d1
+#+begin_src ein-julia :session localhost :results output 
+  A=[1,2,3]
+  B=[3,4,5]
+  Iterators.product(A,B) |> collect
+#+end_src
+
+#+RESULTS: 2d7ca66b-ffcb-457f-8be9-ed810b02f1d1
+: 3×3 Matrix{Tuple{Int64, Int64}}:
+:  (1, 3)  (1, 4)  (1, 5)
+:  (2, 3)  (2, 4)  (2, 5)
+:  (3, 3)  (3, 4)  (3, 5)
+
+#+NAME: many-cols
+| a | b | c |
+|---+---+---|
+| d | e | f |
+|---+---+---|
+| g | h | i |
+
+#+NAME: no-hline
+#+BEGIN_SRC ein-python :output table :var tab=many-cols :hlines no 
+  tab
+#+END_SRC
+
+#+RESULTS: no-hline
+: [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
+
+#+NAME: with-rownames
+| one | 1 | 2 | 3 | 4 |  5 |
+| two | 6 | 7 | 8 | 9 | 10 |
+
+#+NAME: f2bbb259-aa6b-4c7d-86f8-df6d95a85ad0
+#+BEGIN_SRC ein-python :var tab=with-rownames :rownames yes :results value pp :output table
+  [[val + 10 for val in row] for row in tab]
+#+END_SRC
+
+#+RESULTS: f2bbb259-aa6b-4c7d-86f8-df6d95a85ad0
+: [[11, 12, 13, 14, 15], [16, 17, 18, 19, 20]]
+
+#+RESULTS:
+
+* Operations
+** vcat()
+*** TODO One dimensional
+
+#+NAME: 7a654911-0446-4586-8c24-6d170e87659f
+#+begin_src ein-julia :session localhost :results output
+  a = collect(1:5)
+  b = collect(5:5:30)
+  vcat(a,b)
+#+end_src
+
+#+RESULTS: 7a654911-0446-4586-8c24-6d170e87659f
+
+#+begin_example
+11-element Vector{Int64}:
+  1
+  2
+  3
+  4
+  5
+  5
+ 10
+ 15
+ 20
+ 25
+ 30
+#+end_example
+
+*** TODO Two Dimensional (flatten)
+(One vector of vectors)
+#+NAME: 627f0f06-eb3b-471c-ad2b-e003c513b092
+#+begin_src ein-julia :session localhost :results output
+  a = [collect(1:5)]
+  b = [collect(5:5:30), collect(10:10:50)]
+  vcat(a,b)
+#+end_src
+
+#+RESULTS: 627f0f06-eb3b-471c-ad2b-e003c513b092
+: 3-element Vector{Vector{Int64}}:
+:  [1, 2, 3, 4, 5]
+:  [5, 10, 15, 20, 25, 30]
+:  [10, 20, 30, 40, 50]
+
+** fill (index inteligently?)
+#+NAME: 8c301868-4529-4563-847e-8a903f337422
+#+begin_src ein-julia :session localhost :results output
+fill(5, 2)
+#+end_src
+
+#+RESULTS: 8c301868-4529-4563-847e-8a903f337422
+: 2-element Vector{Int64}:
+:  5
+:  5
+
+** splat
+Open data (flatten)
+#+NAME: 019cc04b-e1da-491c-94a5-e9dac523f770
+#+begin_src ein-julia :session localhost :results output
+allData = collect(1:2:15)
+data = vcat([[x fill(i, length(x)) i] for (i, x) in enumerate(allData)]...)
+#+end_src
+
+#+RESULTS: 019cc04b-e1da-491c-94a5-e9dac523f770
+: 8×3 Matrix{Int64}:
+:   1  1  1
+:   3  2  2
+:   5  3  3
+:   7  4  4
+:   9  5  5
+:  11  6  6
+:  13  7  7
+:  15  8  8
+
+* Linear Algebra
+** Generate orthonormal random matrix
+#+NAME: c54d1bde-8f2c-4a4c-a574-d2f916445448
+#+begin_src ein-julia :session localhost :results output
+  using Pkg;
+  Pkg.add("RandomMatrices")
+#+end_src
+
+#+NAME: 5ca4a14f-1f95-4782-8470-aa705a14e40a
+#+begin_src ein-julia :session localhost :results output
+using RandomMatrices
+Q = rand(Haar(1),3) 
+#+end_src
+
+#+RESULTS: 5ca4a14f-1f95-4782-8470-aa705a14e40a
+: 3×3 Matrix{Float64}:
+:   0.226614    0.875713  0.426347
+:  -0.973692    0.192955  0.121213
+:   0.0238816  -0.442599  0.896401
+
+#+NAME: 5cc5d7b1-ab73-45e3-97be-ba43b2622c48
+#+begin_src ein-julia :session localhost :results output
+Q'
+#+end_src
+
+#+RESULTS: 5cc5d7b1-ab73-45e3-97be-ba43b2622c48
+: 3×3 adjoint(::Matrix{Float64}) with eltype Float64:
+:  0.226614  -0.973692   0.0238816
+:  0.875713   0.192955  -0.442599
+:  0.426347   0.121213   0.896401
+
+#+NAME: bf6ae939-caec-4539-89d7-5a8b3f69192d
+#+begin_src ein-julia :session localhost :results output
+inv(Q)
+#+end_src
+
+#+NAME: a7947981-09e0-457f-9f92-eaf9644506a0
+#+begin_src ein-julia :session localhost :results output
+Q*Q'
+#+end_src
+
+#+RESULTS: a7947981-09e0-457f-9f92-eaf9644506a0
+: 3×3 Matrix{Float64}:
+:   1.0          -7.42462e-16  0.0
+:  -7.42462e-16   1.0          6.93889e-17
+:   0.0           6.93889e-17  1.0
+** Matrix product (epistemology)
+$(\mathbold{A} * \mathbold{B})_{ij} = \sum_{k=1}^n{a_{ik}*b_{kj}}$
+
+#+NAME: 590e91f4-f9b3-4ddf-9544-e28da4527aff
+#+begin_src ein-julia :session localhost :results output
+  function naive_mproduct(A,B)
+      for i in collect(1:3)
+          for j in collect(1:3)
+              sum=0
+              print("(A*B) Line: ", i,'\n')
+              print("(A*B) Collumn: ", j,'\n')
+              for k in collect(1:3)
+                  sum += A[i,k]*B[k,j]
+                  print(A[i,k], '\n', B[k,j], '\n','\n') 
+                  if k==3
+                      print("(A*B)_{",i,j,"}= ", sum, '\n','\n')
+                  end
+              end
+          end
+      end
+  end
+#+end_src
+
+#+RESULTS: 590e91f4-f9b3-4ddf-9544-e28da4527aff
+: naive_mproduct (generic function with 1 method)
+
+#+NAME: da5a3088-7415-4fcc-a445-f0238772d356
+#+begin_src ein-julia :session localhost :results output
+naive_mproduct(Q,Q')
+#+end_src
+
+#+RESULTS: da5a3088-7415-4fcc-a445-f0238772d356
+#+begin_example
+(A*B) Line: 1
+(A*B) Collumn: 1
+0.22661369961539535
+0.22661369961539535
+
+0.8757134608519507
+0.8757134608519507
+
+0.4263474705323379
+0.4263474705323379
+
+(A*B)_{11}= 1.0000000000000004
+
+(A*B) Line: 1
+(A*B) Collumn: 2
+0.22661369961539535
+-0.9736918925819086
+
+0.8757134608519507
+0.1929549758562601
+
+0.4263474705323379
+0.12121252250725345
+
+(A*B)_{12}= -7.424616477180734e-16
+
+(A*B) Line: 1
+(A*B) Collumn: 3
+0.22661369961539535
+0.023881571700476986
+
+0.8757134608519507
+-0.4425994936452245
+
+0.4263474705323379
+0.896401337994375
+
+(A*B)_{13}= 0.0
+
+(A*B) Line: 2
+(A*B) Collumn: 1
+-0.9736918925819086
+0.22661369961539535
+
+0.1929549758562601
+0.8757134608519507
+
+0.12121252250725345
+0.4263474705323379
+
+(A*B)_{21}= -7.424616477180734e-16
+
+(A*B) Line: 2
+(A*B) Collumn: 2
+-0.9736918925819086
+-0.9736918925819086
+
+0.1929549758562601
+0.1929549758562601
+
+0.12121252250725345
+0.12121252250725345
+
+(A*B)_{22}= 1.0000000000000002
+
+(A*B) Line: 2
+(A*B) Collumn: 3
+-0.9736918925819086
+0.023881571700476986
+
+0.1929549758562601
+-0.4425994936452245
+
+0.12121252250725345
+0.896401337994375
+
+(A*B)_{23}= 6.938893903907228e-17
+
+(A*B) Line: 3
+(A*B) Collumn: 1
+0.023881571700476986
+0.22661369961539535
+
+-0.4425994936452245
+0.8757134608519507
+
+0.896401337994375
+0.4263474705323379
+
+(A*B)_{31}= 0.0
+
+(A*B) Line: 3
+(A*B) Collumn: 2
+0.023881571700476986
+-0.9736918925819086
+
+-0.4425994936452245
+0.1929549758562601
+
+0.896401337994375
+0.12121252250725345
+
+(A*B)_{32}= 6.938893903907228e-17
+
+(A*B) Line: 3
+(A*B) Collumn: 3
+0.023881571700476986
+0.023881571700476986
+
+-0.4425994936452245
+-0.4425994936452245
+
+0.896401337994375
+0.896401337994375
+
+(A*B)_{33}= 0.9999999999999999
+
+#+end_example
+
+#+NAME: 6cf1d01c-c7e4-4072-9205-582e98caf086
+#+begin_src ein-julia :session localhost :results output
+  A=[1 2 3; 4 5 6; 7 8 9]
+  B=[11 12 13; 14 15 16; 17 18 19]
+  naive_mproduct(A,B)
+#+end_src
+
+#+RESULTS: 6cf1d01c-c7e4-4072-9205-582e98caf086
+#+begin_example
+(A*B) Line: 1
+(A*B) Collumn: 1
+1
+11
+
+2
+14
+
+3
+17
+
+(A*B)_{11}= 90
+
+(A*B) Line: 1
+(A*B) Collumn: 2
+1
+12
+
+2
+15
+
+3
+18
+
+(A*B)_{12}= 96
+
+(A*B) Line: 1
+(A*B) Collumn: 3
+1
+13
+
+2
+16
+
+3
+19
+
+(A*B)_{13}= 102
+
+(A*B) Line: 2
+(A*B) Collumn: 1
+4
+11
+
+5
+14
+
+6
+17
+
+(A*B)_{21}= 216
+
+(A*B) Line: 2
+(A*B) Collumn: 2
+4
+12
+
+5
+15
+
+6
+18
+
+(A*B)_{22}= 231
+
+(A*B) Line: 2
+(A*B) Collumn: 3
+4
+13
+
+5
+16
+
+6
+19
+
+(A*B)_{23}= 246
+
+(A*B) Line: 3
+(A*B) Collumn: 1
+7
+11
+
+8
+14
+
+9
+17
+
+(A*B)_{31}= 342
+
+(A*B) Line: 3
+(A*B) Collumn: 2
+7
+12
+
+8
+15
+
+9
+18
+
+(A*B)_{32}= 366
+
+(A*B) Line: 3
+(A*B) Collumn: 3
+7
+13
+
+8
+16
+
+9
+19
+
+(A*B)_{33}= 390
+
+#+end_example
+
+* Probability theory
+
+#+NAME: d2ee652f-1dd0-41b5-810a-adf56db093f6
+#+begin_src ein-julia :session localhost :results output
+  using Pkg;
+  Pkg.add("Distributions")
+#+end_src
+
+#+RESULTS: d2ee652f-1dd0-41b5-810a-adf56db093f6
+: [....]
+
+
+#+NAME: 14cf8086-21d9-435c-91a9-b09c47169abf
+#+begin_src ein-julia :session localhost :results output
+using Stats
+#+end_src
+
+#+RESULTS: 14cf8086-21d9-435c-91a9-b09c47169abf
+: [....]
+

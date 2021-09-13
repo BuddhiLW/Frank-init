@@ -1,0 +1,4 @@
+* Install initial programs
+#+begin_src shell
+  yay -Sy julia leiningen-with-completion anaconda all-repository-fonts texlive-core texlive-most gnuplot npm pip sbcl gimp mpv vlc evince dbus dbus-runit dbus-elogind dbus-x11
+#+end_src

@@ -78,6 +78,11 @@
 
 ;; (use-package latex-extra)
 
+(eval-after-load "tex" 
+  '(setcdr (assoc "LaTeX" TeX-command-list)
+          '("%`%l%(mode) -shell-escape%' %t"
+          TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
+
 (setq org-latex-listings 'minted)
 (setq org-latex-custom-lang-environments
        '((emacs-lisp "common-lispcode")))
@@ -208,7 +213,7 @@
 (add-hook  'LaTeX-mode-hook  'pdfokular  t) ; AUCTeX LaTeX mode
 
 (load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+;; (load "preview-latex.el" nil t t)
 
 (use-package latex-preview-pane)
 (use-package latex-pretty-symbols)
@@ -230,7 +235,7 @@
 
 (use-package org-roam
   :init
-  (add-hook 'after-init-hook 'org-roam-mode))
+  (add-hook 'after-init-hook 'org-mode))
 
 ;; (define-key key-translation-map (kbd "<tab> p") (kbd "φ"))
 (define-key key-translation-map (kbd "<f9> x") (kbd "ξ"))
@@ -258,34 +263,32 @@
                        (require 'lsp-grammarly)
                        (lsp))))  ; or lsp-deferred
 
-;; Input method and key binding configuration.
-(setq alternative-input-methods
-      '(("chinese-tonepy" . [?\ä])
-        ("chinese-sisheng"   . [?\å])))
-
-(setq default-input-method
-      (caar alternative-input-methods))
-
-(defun toggle-alternative-input-method (method &optional arg interactive)
-  (if arg
-      (toggle-input-method arg interactive)
-    (let ((previous-input-method current-input-method))
-      (when current-input-method
-        (deactivate-input-method))
-      (unless (and previous-input-method
-                   (string= previous-input-method method))
-        (activate-input-method method)))))
-
-(defun reload-alternative-input-methods ()
-  (dolist (config alternative-input-methods)
-    (let ((method (car config)))
-      (global-set-key (cdr config)
-                      `(lambda (&optional arg interactive)
-                         ,(concat "Behaves similar to `toggle-input-method', but uses \""
-                                  method "\" instead of `default-input-method'")
-                         (interactive "P\np")
-                         (toggle-alternative-input-method ,method arg interactive))))))
-
-(reload-alternative-input-methods)
-
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch :height 1.4)
+
+;; (use-package evil-smartparens)
+(use-package ob-julia-vterm)
+(use-package smartparens)
+;; (use-package dap-mode)
+;; (use-package diffpdf)
+(use-package julia-vterm)
+;;  (use-package lsp)
+(use-package counsel)
+;;    (use-package company-quickhelp)
+;; (use-package company-box)
+(use-package cider)
+(use-package latex-extra)
+(use-package latex-preview-pane)
+(use-package lsp-latex)
+(use-package latex-pretty-symbols)
+(use-package latex-unicode-math-mode)
+(use-package org-latex-impatient)
+(use-package company-auctex)
+;; (use-package auto-complete-auctex)
+
+(use-package projectile)
+(use-package lsp-treemacs)
+(use-package treemacs)
+(use-package treemacs-all-the-icons)
+(use-package treemacs-magit)
+(use-package treemacs-evil)
+(use-package treemacs-icons-dired)

@@ -9,4 +9,3 @@ Essa versão do Emacs é compatível com a utilizada na SEMEF, para utilização
 - Clone esse repositório: =git clone https://github.com/BuddhiLW/Frank-init.git=
 - Mova o arquivo e renome =Frank-init= para =.emacs.d=, no diretório base do seu computador.
 - Inicie o Emacs!
-  
