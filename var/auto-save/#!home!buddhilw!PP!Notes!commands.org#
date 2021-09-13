@@ -1,0 +1,5 @@
+
+* Webcam
+#+begin_src sh
+  mpv av://v4l2:/dev/video0 --profile=low-latency --untimed
+#+end_src
