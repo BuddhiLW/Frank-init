@@ -99,7 +99,7 @@
                     ;; Also handle undocumented (<active> <inactive>) form.
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
-         '(90 . 90) '(100 . 100)))))
+         '(90 . 90) '(95 . 95)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
@@ -569,7 +569,8 @@ codepoints starting from codepoint-start."
   ;; :hook (org-mode . org-bullets)
   :custom
   ;; (org-superstar-remove-leading-stars t)
-  (org-bullets-bullet-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")))
+  (org-bullets-bullet-list '("家" "ॐ" "同" "Ø" "א" "҉ " "҈ ")))
+;; ("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -654,7 +655,7 @@ codepoints starting from codepoint-start."
      ("ein-r" . R)
      ("ein-julia" . julia)))
  '(package-selected-packages
-   '(treemacs-icons-dired treemacs-evil treemacs-magit treemacs-all-the-icons treemacs projectile image-archive image-dired+ image+ uimage org-tree-slide org-pomodoro desktop-environment lsp-grammarly keytar flycheck-grammarly grammarly org-evil outshine zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters pyvenv python-mode prettier-js pnpm-mode pfuture pdf-view-restore paredit ox-hugo org-trello org-roam-bibtex org-ql org-present org-noter-pdftools org-latex-impatient org-inline-pdf org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-ivy lockfile-mode latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide helpful gscholar-bibtex git-commit ghub general flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex company-auctex command-log-mode closql cfrs cdnjs bibtex-utils auto-package-update auto-complete-auctex amd-mode all-the-icons-dired ag ace-window ace-link ac-slime ac-js2 ac-ispell ac-cider)))
+   '(load-relative zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree uimage treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-tree-slide org-roam-bibtex org-ql org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-ivy lsp-grammarly lockfile-mode latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful gscholar-bibtex ghub general flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex company-auctex command-log-mode closql cdnjs bibtex-utils auto-package-update auto-complete-auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -982,8 +983,10 @@ conda-env-subdirectory "envs")
   (use-package xelb)
   (use-package cider)
 
-(load "~/.emacs.d/editing.el")
-(load "~/.emacs.d/desktop.el")
+(use-package load-relative)
+
+(load-relative "./editing.el")
+(load-relative "./desktop.el")
 
 (defun my-scratch-buffer ()
 "Create a new scratch buffer -- \*hello-world\*"

@@ -168,7 +168,7 @@ Toggle transparency
                      ;; Also handle undocumented (<active> <inactive>) form.
                      ((numberp (cadr alpha)) (cadr alpha)))
                100)
-          '(90 . 90) '(100 . 100)))))
+          '(90 . 90) '(95 . 95)))))
  (global-set-key (kbd "C-c t") 'toggle-transparency)
 #+end_src
 
@@ -880,7 +880,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
     ;; :hook (org-mode . org-bullets)
     :custom
     ;; (org-superstar-remove-leading-stars t)
-    (org-bullets-bullet-list '("֍" "ॐ" "፠" "Ø" "א" "҉" "҈"))) 
+    (org-bullets-bullet-list '("家" "ॐ" "同" "Ø" "א" "҉ " "҈ ")))
+  ;; ("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")
 #+end_src
 
 #+RESULTS:
@@ -1919,7 +1920,7 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
 * Some general requirements left
 #+begin_src emacs-lisp
-;;  (use-package versuri)
+  ;;  (use-package versuri)
   (use-package esxml)
   (use-package prescient)
   (use-package company-prescient)
@@ -1928,16 +1929,23 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 #+end_src
 
 #+RESULTS:
+: t
 
 * Load Desktop.el and other auxiliaries
+
 #+begin_src emacs-lisp
-  (load "~/.emacs.d/editing.el")
-  (load "~/.emacs.d/desktop.el")
+(use-package load-relative)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (load-relative "./editing.el")
+  (load-relative "./desktop.el")
 #+end_src
 
 #+RESULTS:
 : t
-
 
 * Scratch Buffer
   #+begin_src emacs-lisp
