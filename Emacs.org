@@ -389,6 +389,7 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
   ;;          (text-mode . nyan-mode)
   ;;          (progn-mode . nyan-mode)))
 #+end_src
+** Rain 
 
 * Keybinding Configuration
 
@@ -471,10 +472,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 [[https://github.com/hlissner/emacs-doom-themes][doom-themes]] is a great set of themes with a lot of variety and support for many different Emacs modes.  Taking a look at the [[https://github.com/hlissner/emacs-doom-themes/tree/screenshots][screenshots]] might help you decide which one you like best.  You can also run =M-x counsel-load-theme= to choose between them easily.
 
 #+begin_src emacs-lisp
-
   (use-package doom-themes
     :init (load-theme 'doom-palenight t)) ;;wildavil's default -> doom-palenight
-
 #+end_src
 
 #+RESULTS:
@@ -681,16 +680,16 @@ The =efs/org-font-setup= function configures various text faces to tweak the siz
                             '(("^ *\\([-]\\) "
                                (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-    ;; Set faces for heading levels
-    (dolist (face '((org-level-1 . 1.2)
-                    (org-level-2 . 1.1)
-                    (org-level-3 . 1.05)
-                    (org-level-4 . 1.0)
-                    (org-level-5 . 1.1)
-                    (org-level-6 . 1.1)
-                    (org-level-7 . 1.1)
-                    (org-level-8 . 1.1)))
-      (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+    ;; ;; Set faces for heading levels
+    ;; (dolist (face '((org-level-1 . 1.2)
+    ;;                 (org-level-2 . 1.1)
+    ;;                 (org-level-3 . 1.05)
+    ;;                 (org-level-4 . 1.0)
+    ;;                 (org-level-5 . 1.1)
+    ;;                 (org-level-6 . 1.1)
+    ;;                 (org-level-7 . 1.1)
+    ;;                 (org-level-8 . 1.1)))
+    ;;   (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
     ;; Ensure that anything that should be fixed-pitch in Org files appears that way
     (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
@@ -886,12 +885,71 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+RESULTS:
 
+
+#+begin_src emacs-lisp
+  (use-package org-superstar
+    ;; :if (not dw/is-termux)
+    :after org
+    :hook (org-mode . org-superstar-mode)
+    :custom
+    (org-superstar-remove-leading-stars t)
+    (org-superstar-headline-bullets-list '("家" "ॐ" "同" "Ø" "א" "҉ " "҈ ")))
+  ;; ("◉" "○" "●" "○" "●" "○" "●")
+  ;; Replace list hyphen with dot
+  ;; (font-lock-add-keywords 'org-mode
+  ;;                         '(("^ *\\([-]\\) "
+  ;;                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  ;; Increase the size of various headings
+  ;; (set-face-attribute 'org-document-title nil :font "Cantarell" :weight 'bold :height 1.3)
+  ;; (dolist (face '((org-level-1 . 1.2)
+  ;;                 (org-level-2 . 1.1)
+  ;;                 (org-level-3 . 1.05)
+  ;;                 (org-level-4 . 1.0)
+  ;;                 (org-level-5 . 1.1)
+  ;;                 (org-level-6 . 1.1)
+  ;;                 (org-level-7 . 1.1)
+  ;;                 (org-level-8 . 1.1)))
+  ;;   (set-face-attribute (car face) nil :font "Cantarell" :weight 'medium :height (cdr face)))
+
+  ;; Make sure org-indent face is available
+  (require 'org-indent)
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+  ;; Get rid of the background on column views
+  (set-face-attribute 'org-column nil :background nil)
+  (set-face-attribute 'org-column-title nil :background nil)
+
+  ;; TODO: Others to consider
+  ;; '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+  ;; '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  ;; '(org-property-value ((t (:inherit fixed-pitch))) t)
+  ;; '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  ;; '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+  ;; '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+  ;; '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+#+end_src
+
+#+RESULTS:
+
+
 #+begin_src emacs-lisp
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 
 #+RESULTS:
+| org-evil--org-mode-hook-fn | org-ref-org-menu | (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | org-display-inline-images | efs/org-mode-visual-fill | (lambda nil (org-bullets-mode 1)) | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | efs/org-mode-setup | org-auto-tangle-mode | (lambda nil (display-line-numbers-mode 0)) | org-ref-setup-label-finders |
 
 # #+begin_src emacs-lisp  
 #     (use-package org-superstar
@@ -946,16 +1004,17 @@ This section contains the basic configuration for =org-mode= plus the configurat
 We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]] to center =org-mode= buffers for a more pleasing writing experience as it centers the contents of the buffer horizontally to seem more like you are editing a document.  This is really a matter of personal preference so you can remove the block below if you don't like the behavior.
 
 #+begin_src emacs-lisp
-
   (defun efs/org-mode-visual-fill ()
     (setq visual-fill-column-width 100
-          visual-fill-column-center-text t)
+	  visual-fill-column-center-text t)
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
     :hook (org-mode . efs/org-mode-visual-fill))
-
 #+end_src
+
+#+RESULTS:
+| org-evil--org-mode-hook-fn | org-ref-org-menu | (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | org-display-inline-images | efs/org-mode-visual-fill | (lambda nil (org-bullets-mode 1)) | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | efs/org-mode-setup | org-auto-tangle-mode | (lambda nil (display-line-numbers-mode 0)) | org-ref-setup-label-finders |
 
 # *** Inline Images
 # #+begin_src emacs-lisp
@@ -1012,10 +1071,14 @@ Chosing an image's size with :width property
   (add-hook 'org-mode-hook 'org-display-inline-images)
 #+end_src
 
-- Ob-julia unofficial
+#+begin_src emacs-lisp
+  ;; (use-package ob-julia)
+#+end_src
+
+ - Ob-julia unofficial
 
 #+begin_src emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/ob-julia")
+  (add-to-list 'load-path "~/.emacs.d/ob-julia")
 #+end_src
 
 To execute or export code in =org-mode= code blocks, you'll need to set up =org-babel-load-languages= for each language you'd like to use.  [[https://orgmode.org/worg/org-contrib/babel/languages.html][This page]] documents all of the languages that you can use with =org-babel=.
@@ -1103,6 +1166,54 @@ This snippet adds a hook to =org-mode= buffers so that =efs/org-babel-tangle-con
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
 #+end_src
+
+** Presentations
+   #+begin_src emacs-lisp
+     (defun dw/org-present-prepare-slide ()
+       (org-overview)
+       (org-show-entry)
+       (org-show-children))
+
+     (defun dw/org-present-hook ()
+       (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+					  (header-line (:height 4.5) variable-pitch)
+					  (org-document-title (:height 1.75) org-document-title)
+					  (org-code (:height 1.55) org-code)
+					  (org-verbatim (:height 1.55) org-verbatim)
+					  (org-block (:height 1.25) org-block)
+					  (org-block-begin-line (:height 0.7) org-block)))
+       (setq header-line-format " ")
+       (org-appear-mode -1)
+       (org-display-inline-images)
+       (dw/org-present-prepare-slide))
+
+     (defun dw/org-present-quit-hook ()
+       (setq-local face-remapping-alist '((default variable-pitch default)))
+       (setq header-line-format nil)
+       (org-present-small)
+       (org-remove-inline-images)
+       (org-appear-mode 1))
+
+     (defun dw/org-present-prev ()
+       (interactive)
+       (org-present-prev)
+       (dw/org-present-prepare-slide))
+
+     (defun dw/org-present-next ()
+       (interactive)
+       (org-present-next)
+       (dw/org-present-prepare-slide))
+
+     (use-package org-present
+       :bind (:map org-present-mode-keymap
+		   ("C-c C-j" . dw/org-present-next)
+		   ("C-c C-k" . dw/org-present-prev))
+       :hook ((org-present-mode . dw/org-present-hook)
+	      (org-present-mode-quit . dw/org-present-quit-hook)))
+   #+end_src
+
+   #+RESULTS:
+   : dw/org-present-prev
 
 ** Org-download
 #+begin_src emacs-lisp
@@ -1490,27 +1601,6 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
 #+RESULTS:
 
-* Applications
-
-** Some App
-
-This is an example of configuring another non-Emacs application using org-mode.  Not only do we write out the configuration at =.config/some-app/config=, we also compute the value that gets stored in this configuration from the Emacs Lisp block above it.
-
-#+NAME: the-value
-#+begin_src emacs-lisp :tangle no
-
-  (+ 55 100)
-
-#+end_src
-
-*NOTE*: Set the =:tangle= parameter below to =.config/some-app/config= for this to work!
-
-#+begin_src conf :tangle no :noweb yes
-
-  value=<<the-value()>>
-
-#+end_src
-
 * Runtime Performance
 
 Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
@@ -1523,41 +1613,40 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 #+end_src
 
 * Navigation
-** DONE Ace-link
-CLOSED: [2021-04-03 Sat 15:32]
-:LOGBOOK:
-- State "DONE"       from "NEXT"       [2021-04-03 Sat 15:32]
-:END:
-Ace-link provides easy of navigation inside emacs self-hyperlinks or ad-hoc ones.
-#+begin_src emacs-lisp
-  (use-package ace-link)
-  (ace-link-setup-default)
+** Ace-link
+ :LOGBOOK:
+ - State "DONE"       from "NEXT"       [2021-04-03 Sat 15:32]
+ :END:
+ Ace-link provides easy of navigation inside emacs self-hyperlinks or ad-hoc ones.
+ #+begin_src emacs-lisp
+   (use-package ace-link)
+   (ace-link-setup-default)
 
-  (define-key org-mode-map (kbd "ö") 'ace-link-org)
-#+end_src
+   (define-key org-mode-map (kbd "ö") 'ace-link-org)
+ #+end_src
 
-#+RESULTS:
-: ace-link-org
+ #+RESULTS:
+ : ace-link-org
 
-- ö = (AltGr-p)
-
+ - ö = (AltGr-p)
 
 
 
-# ** Keybinds
-# Change ISO_Level3_Shift for <f2> <=> 96  F12
-# Change 134 Super_R for Meta
 
-# keycode 133 = Super_L NoSymbol Super_L => Emacs's Meta
+ # ** Keybinds
+ # Change ISO_Level3_Shift for <f2> <=> 96  F12
+ # Change 134 Super_R for Meta
 
-# 108 ISO_Level3_Shift
-# 134 Super_R
-# 135 Super_R
-# 105 Control_R
-# 62  Shift_R
-# keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
-# keycode 134 = Super_R NoSymbol Super_R
-# keycode 135 = Super_R NoSymbol Super_R
+ # keycode 133 = Super_L NoSymbol Super_L => Emacs's Meta
+
+ # 108 ISO_Level3_Shift
+ # 134 Super_R
+ # 135 Super_R
+ # 105 Control_R
+ # 62  Shift_R
+ # keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+ # keycode 134 = Super_R NoSymbol Super_R
+ # keycode 135 = Super_R NoSymbol Super_R
 
 *** Fs
 67  F1
@@ -1573,301 +1662,6 @@ Ace-link provides easy of navigation inside emacs self-hyperlinks or ad-hoc ones
 95  F11
 96  F12
 
-* Font config
-** Fast Input methods
-
-Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to-alternate-two-input-methods-in-emacs][Input Method Alternation]].
-#+begin_src emacs-lisp
-  ;; ;; Input method and key binding configuration.
-  ;; (setq alternative-input-methods
-  ;;       '(("chinese-tonepy" . [?\œ])
-  ;;         '("chinese-sisheng"   . [?\¶])))
-  
-  ;; (setq default-input-method
-  ;;       (caar alternative-input-methods))
-  
-  ;; (defun toggle-alternative-input-method (method &optional arg interactive)
-  ;;   (if arg
-  ;;       (toggle-input-method arg interactive)
-  ;;     (let ((previous-input-method current-input-method))
-  ;;       (when current-input-method
-  ;;         (deactivate-input-method))
-  ;;       (unless (and previous-input-method
-  ;;                    (string= previous-input-method method))
-  ;;         (activate-input-method method)))))
-  
-  ;; (defun reload-alternative-input-methods ()
-  ;;   (dolist (config alternative-input-methods)
-  ;;     (let ((method (car config)))
-  ;;       (global-set-key (cdr config)
-  ;;                       `(lambda (&optional arg interactive)
-  ;;                          ,(concat "Behaves similar to `toggle-input-method', but uses \""
-  ;;                                   method "\" instead of `default-input-method'")
-  ;;                          (interactive "P\np")
-  ;;                          (toggle-alternative-input-method ,method arg interactive))))))
-  
-  ;; (reload-alternative-input-methods)
-#+end_src
-
-#+RESULTS:
-* EXWM setup
-#+begin_src emacs-lisp
-  ;; (defun efs/exwm-update-class ()
-  ;;   (exwm-workspace-rename-buffer exwm-class-name))
-  
-  ;; (use-package exwm
-  ;;   :config
-  ;;   ;; Set the default number of workspaces
-  ;;   (setq exwm-workspace-number 5)
-  
-  ;;   ;; When window "class" updates, use it to set the buffer name
-  ;;   ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-  
-  ;;   ;; These keys should always pass through to Emacs
-  ;;   (setq exwm-input-prefix-keys
-  ;;         '(?\C-x
-  ;;           ?\C-u
-  ;;           ?\C-h
-  ;;           ?\M-x
-  ;;           ?\M-`
-  ;;           ?\M-&
-  ;;           ?\M-:
-  ;;           ?\C-\M-j  ;; Buffer list
-  ;;           ?\C-\ ))  ;; Ctrl+Space
-  
-  ;;   ;; Ctrl+Q will enable the next key to be sent directly
-  ;;   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-  
-  ;;   ;; Set up global key bindings.  These always work, no matter the input state!
-  ;;   ;; Keep in mind that changing this list after EXWM initializes has no effect.
-  ;;   (setq exwm-input-global-keys
-  ;;         `(
-  ;;           ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-  ;;           ([?\s-r] . exwm-reset)
-  
-  ;;           ;; Move between windows
-  ;;           ([s-left] . windmove-left)
-  ;;           ([s-right] . windmove-right)
-  ;;           ([s-up] . windmove-up)
-  ;;           ([s-down] . windmove-down)
-  
-  ;;           ;; Launch applications via shell command
-  ;;           ([?\s-&] . (lambda (command)
-  ;;                        (interactive (list (read-shell-command "$ ")))
-  ;;                        (start-process-shell-command command nil command)))
-  
-  ;;           ;; Switch workspace
-  ;;           ([?\s-w] . exwm-workspace-switch)
-  
-  ;;           ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-  ;;           ,@(mapcar (lambda (i)
-  ;;                       `(,(kbd (format "s-%d" i)) .
-  ;;                         (lambda ()
-  ;;                           (interactive)
-  ;;                           (exwm-workspace-switch-create ,i))))
-  ;;                     (number-sequence 0 9))))
-  
-  ;;   (exwm-enable))
-#+end_src
-
-#+RESULTS:
-* From LARBS to E-LARBS
-** Bindings
-*** remaps (script)
-#+begin_src shell :tangle ~/.local/bin/remaps
-  #!/bin/sh
-
-  # This script is called on startup to remap keys.
-  # Increase key speed via a rate change
-  xset r rate 300 50
-  # Map the caps lock key to super...
-  setxkbmap -option caps:super
-  # But when it is pressed only once, treat it as escape.
-  killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
-  # Map the menu button to right super as well.
-  xmodmap -e 'keycode 135 = Super_R'
-  # Turn off the caps lock if on since there is no longer a key for it.
-  xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
-
-  # Set right alt as F12, to make dinamic bindings in emacs
-  # clear F12
-  # xmodmap -e 'keycode 108 = F12'
-  # set 105 Control_R as 108 ISO_Level3_Shift
-  # xmodmap -e 
-  # -> put AltGr as meta in emacs
-  # 108 ISO_Level3_Shift
-  # xmodmap -e 'keycode 108 = '
-#+end_src
-** .profile
-#+begin_src shell :tangle ~/.profile
-  #!/bin/zsh
-
-  # profile file. Runs on login. Environmental variables are set here.
-
-  # If you don't plan on reverting to bash, you can remove the link in ~/.profile
-  # to clean up.
-
-  # Adds `~/.local/bin` to $PATH
-  export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-
-  unsetopt PROMPT_SP
-
-  #Default programs:
-  export EDITOR="emacs"
-  export TERMINAL="st"
-  export BROWSER="brave"
-
-  # ~/ Clean-up:
-  export XDG_CONFIG_HOME="$HOME/.config"
-  export XDG_DATA_HOME="$HOME/.local/share"
-  export XDG_CACHE_HOME="$HOME/.cache"
-  export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-  export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-  export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
-  export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
-  export LESSHISTFILE="-"
-  export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
-  export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
-  export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-  #export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-  #export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
-  export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
-  export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
-  export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
-  export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-  export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
-  export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-  export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-  export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
-  export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
-  export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
-  export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
-
-  # Other program settings:
-  export DICS="/usr/share/stardict/dic/"
-  export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
-  export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
-  export LESS=-R
-  export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
-  export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
-  export LESS_TERMCAP_me="$(printf '%b' '[0m')"
-  export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
-  export LESS_TERMCAP_se="$(printf '%b' '[0m')"
-  export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
-  export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
-  export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
-  export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
-  export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
-  export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
-  export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
-
-  # This is the list for lf icons:
-  export LF_ICONS="di=📁:\
-  fi=📃:\
-  tw=🤝:\
-  ow=📂:\
-  ln=⛓:\
-  or=❌:\
-  ex=🎯:\
-  ,*.txt=✍:\
-  ,*.mom=✍:\
-  ,*.me=✍:\
-  ,*.ms=✍:\
-  ,*.png=🖼:\
-  ,*.webp=🖼:\
-  ,*.ico=🖼:\
-  ,*.jpg=📸:\
-  ,*.jpe=📸:\
-  ,*.jpeg=📸:\
-  ,*.gif=🖼:\
-  ,*.svg=🗺:\
-  ,*.tif=🖼:\
-  ,*.tiff=🖼:\
-  ,*.xcf=🖌:\
-  ,*.html=🌎:\
-  ,*.xml=📰:\
-  ,*.gpg=🔒:\
-  ,*.css=🎨:\
-  ,*.pdf=📚:\
-  ,*.djvu=📚:\
-  ,*.epub=📚:\
-  ,*.csv=📓:\
-  ,*.xlsx=📓:\
-  ,*.tex=📜:\
-  ,*.md=📘:\
-  ,*.r=📊:\
-  ,*.R=📊:\
-  ,*.rmd=📊:\
-  ,*.Rmd=📊:\
-  ,*.m=📊:\
-  ,*.mp3=🎵:\
-  ,*.opus=🎵:\
-  ,*.ogg=🎵:\
-  ,*.m4a=🎵:\
-  ,*.flac=🎼:\
-  ,*.wav=🎼:\
-  ,*.mkv=🎥:\
-  ,*.mp4=🎥:\
-  ,*.webm=🎥:\
-  ,*.mpeg=🎥:\
-  ,*.avi=🎥:\
-  ,*.mov=🎥:\
-  ,*.mpg=🎥:\
-  ,*.wmv=🎥:\
-  ,*.m4b=🎥:\
-  ,*.flv=🎥:\
-  ,*.zip=📦:\
-  ,*.rar=📦:\
-  ,*.7z=📦:\
-  ,*.tar.gz=📦:\
-  ,*.z64=🎮:\
-  ,*.v64=🎮:\
-  ,*.n64=🎮:\
-  ,*.gba=🎮:\
-  ,*.nes=🎮:\
-  ,*.gdi=🎮:\
-  ,*.1=ℹ:\
-  ,*.nfo=ℹ:\
-  ,*.info=ℹ:\
-  ,*.log=📙:\
-  ,*.iso=📀:\
-  ,*.img=📀:\
-  ,*.bib=🎓:\
-  ,*.ged=👪:\
-  ,*.part=💔:\
-  ,*.torrent=🔽:\
-  ,*.jar=♨:\
-  ,*.java=♨:\
-  "
-
-  [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
-
-  if pacman -Qs libxft-bgra >/dev/null 2>&1; then
-          # Start graphical server on user's current tty if not already running.
-          [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx
-  else
-          echo "\033[31mIMPORTANT\033[0m: Note that \033[32m\`libxft-bgra\`\033[0m must be installed for this build of dwm.
-  Please run:
-          \033[32myay -S libxft-bgra-git\033[0m
-  and replace \`libxft\`. Afterwards, you may start the graphical server by running \`startx\`."
-  fi
-
-  # Switch escape and caps if tty and no passwd required:
-  sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
-
-#+end_src
-
-#+begin_src emacs-lisp
-  (use-package evil-multiedit
-    :hook (web-mode . evil-multiedit-mode))
-#+end_src
-
-#+RESULTS:
-| evil-multiedit-mode | (lambda nil (when (string-equal tsx (file-name-extension buffer-file-name)) (setup-tide-mode))) |
-
-# evil multiedit
-# multiple-cursors
-** Brazilian Keyboard Layout 
 * Animated images (gif)
 #+begin_src emacs-lisp
   ;; Copyright (C) 2014 Matus Goljer <matus.goljer@gmail.com>
@@ -1931,22 +1725,6 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 #+RESULTS:
 : t
 
-* Load Desktop.el and other auxiliaries
-
-#+begin_src emacs-lisp
-(use-package load-relative)
-#+end_src
-
-#+RESULTS:
-
-#+begin_src emacs-lisp
-  (load-relative "./editing.el")
-  (load-relative "./desktop.el")
-#+end_src
-
-#+RESULTS:
-: t
-
 * Scratch Buffer
   #+begin_src emacs-lisp
 (defun my-scratch-buffer ()
@@ -1971,7 +1749,31 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
   #+RESULTS:
   : my-scratch-buffer
 
+
 * Font Icons
 =M-x all-the-icons-install-fonts=
 #+begin_src emacs-lisp
 #+end_src
+
+* Periodic Tables
+  #+begin_src emacs-lisp
+    (use-package chembalance)
+    (use-package chemtable)
+  #+end_src
+ 
+* Load Desktop.el and other auxiliaries
+
+#+begin_src emacs-lisp
+(use-package load-relative)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (load-relative "./editing.el")
+  (load-relative "./desktop.el")
+#+end_src
+
+#+RESULTS:
+: t
+

@@ -396,16 +396,16 @@ codepoints starting from codepoint-start."
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-  ;; Set faces for heading levels
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+  ;; ;; Set faces for heading levels
+  ;; (dolist (face '((org-level-1 . 1.2)
+  ;;                 (org-level-2 . 1.1)
+  ;;                 (org-level-3 . 1.05)
+  ;;                 (org-level-4 . 1.0)
+  ;;                 (org-level-5 . 1.1)
+  ;;                 (org-level-6 . 1.1)
+  ;;                 (org-level-7 . 1.1)
+  ;;                 (org-level-8 . 1.1)))
+  ;;   (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
   (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
@@ -572,6 +572,58 @@ codepoints starting from codepoint-start."
   (org-bullets-bullet-list '("家" "ॐ" "同" "Ø" "א" "҉ " "҈ ")))
 ;; ("֍" "ॐ" "፠" "Ø" "א" "҉" "҈")
 
+(use-package org-superstar
+  ;; :if (not dw/is-termux)
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :custom
+  (org-superstar-remove-leading-stars t)
+  (org-superstar-headline-bullets-list '("家" "ॐ" "同" "Ø" "א" "҉ " "҈ ")))
+;; ("◉" "○" "●" "○" "●" "○" "●")
+;; Replace list hyphen with dot
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([-]\\) "
+;;                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+;; Increase the size of various headings
+;; (set-face-attribute 'org-document-title nil :font "Cantarell" :weight 'bold :height 1.3)
+;; (dolist (face '((org-level-1 . 1.2)
+;;                 (org-level-2 . 1.1)
+;;                 (org-level-3 . 1.05)
+;;                 (org-level-4 . 1.0)
+;;                 (org-level-5 . 1.1)
+;;                 (org-level-6 . 1.1)
+;;                 (org-level-7 . 1.1)
+;;                 (org-level-8 . 1.1)))
+;;   (set-face-attribute (car face) nil :font "Cantarell" :weight 'medium :height (cdr face)))
+
+;; Make sure org-indent face is available
+(require 'org-indent)
+
+;; Ensure that anything that should be fixed-pitch in Org files appears that way
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+(set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+;; Get rid of the background on column views
+(set-face-attribute 'org-column nil :background nil)
+(set-face-attribute 'org-column-title nil :background nil)
+
+;; TODO: Others to consider
+;; '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+;; '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;; '(org-property-value ((t (:inherit fixed-pitch))) t)
+;; '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;; '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+;; '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+;; '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
@@ -608,7 +660,7 @@ codepoints starting from codepoint-start."
 
 (defun efs/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
-        visual-fill-column-center-text t)
+	visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
@@ -620,6 +672,8 @@ codepoints starting from codepoint-start."
 
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)   
 (add-hook 'org-mode-hook 'org-display-inline-images)
+
+;; (use-package ob-julia)
 
 (add-to-list 'load-path "~/.emacs.d/ob-julia")
 
@@ -654,8 +708,9 @@ codepoints starting from codepoint-start."
      ("ein-R" . R)
      ("ein-r" . R)
      ("ein-julia" . julia)))
+ '(org-agenda-files nil)
  '(package-selected-packages
-   '(load-relative zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree uimage treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-tree-slide org-roam-bibtex org-ql org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-ivy lsp-grammarly lockfile-mode latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful gscholar-bibtex ghub general flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex company-auctex command-log-mode closql cdnjs bibtex-utils auto-package-update auto-complete-auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
+   '(all-the-icons-ibuffer all-the-icons-ivy all-the-icons-completion aggressive-fill-paragraph aggressive-indent aggressive-completion aggresive-indent load-relative zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree uimage treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-tree-slide org-roam-bibtex org-ql org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-ivy lsp-grammarly lockfile-mode latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful gscholar-bibtex ghub general flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex company-auctex command-log-mode closql cdnjs bibtex-utils auto-package-update auto-complete-auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -685,6 +740,48 @@ codepoints starting from codepoint-start."
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+
+(defun dw/org-present-prepare-slide ()
+  (org-overview)
+  (org-show-entry)
+  (org-show-children))
+
+(defun dw/org-present-hook ()
+  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+				     (header-line (:height 4.5) variable-pitch)
+				     (org-document-title (:height 1.75) org-document-title)
+				     (org-code (:height 1.55) org-code)
+				     (org-verbatim (:height 1.55) org-verbatim)
+				     (org-block (:height 1.25) org-block)
+				     (org-block-begin-line (:height 0.7) org-block)))
+  (setq header-line-format " ")
+  (org-appear-mode -1)
+  (org-display-inline-images)
+  (dw/org-present-prepare-slide))
+
+(defun dw/org-present-quit-hook ()
+  (setq-local face-remapping-alist '((default variable-pitch default)))
+  (setq header-line-format nil)
+  (org-present-small)
+  (org-remove-inline-images)
+  (org-appear-mode 1))
+
+(defun dw/org-present-prev ()
+  (interactive)
+  (org-present-prev)
+  (dw/org-present-prepare-slide))
+
+(defun dw/org-present-next ()
+  (interactive)
+  (org-present-next)
+  (dw/org-present-prepare-slide))
+
+(use-package org-present
+  :bind (:map org-present-mode-keymap
+	      ("C-c C-j" . dw/org-present-next)
+	      ("C-c C-k" . dw/org-present-prev))
+  :hook ((org-present-mode . dw/org-present-hook)
+	 (org-present-mode-quit . dw/org-present-quit-hook)))
 
 (use-package org-download)
 
@@ -855,36 +952,6 @@ conda-env-subdirectory "envs")
 
 (define-key org-mode-map (kbd "ö") 'ace-link-org)
 
-;; ;; Input method and key binding configuration.
-;; (setq alternative-input-methods
-;;       '(("chinese-tonepy" . [?\œ])
-;;         '("chinese-sisheng"   . [?\¶])))
-
-;; (setq default-input-method
-;;       (caar alternative-input-methods))
-
-;; (defun toggle-alternative-input-method (method &optional arg interactive)
-;;   (if arg
-;;       (toggle-input-method arg interactive)
-;;     (let ((previous-input-method current-input-method))
-;;       (when current-input-method
-;;         (deactivate-input-method))
-;;       (unless (and previous-input-method
-;;                    (string= previous-input-method method))
-;;         (activate-input-method method)))))
-
-;; (defun reload-alternative-input-methods ()
-;;   (dolist (config alternative-input-methods)
-;;     (let ((method (car config)))
-;;       (global-set-key (cdr config)
-;;                       `(lambda (&optional arg interactive)
-;;                          ,(concat "Behaves similar to `toggle-input-method', but uses \""
-;;                                   method "\" instead of `default-input-method'")
-;;                          (interactive "P\np")
-;;                          (toggle-alternative-input-method ,method arg interactive))))))
-
-;; (reload-alternative-input-methods)
-
 ;; (defun efs/exwm-update-class ()
 ;;   (exwm-workspace-rename-buffer exwm-class-name))
 
@@ -977,16 +1044,11 @@ conda-env-subdirectory "envs")
 (use-package org-present)
 
 ;;  (use-package versuri)
-  (use-package esxml)
-  (use-package prescient)
-  (use-package company-prescient)
-  (use-package xelb)
-  (use-package cider)
-
-(use-package load-relative)
-
-(load-relative "./editing.el")
-(load-relative "./desktop.el")
+(use-package esxml)
+(use-package prescient)
+(use-package company-prescient)
+(use-package xelb)
+(use-package cider)
 
 (defun my-scratch-buffer ()
 "Create a new scratch buffer -- \*hello-world\*"
@@ -1007,6 +1069,14 @@ conda-env-subdirectory "envs")
           (throw 'done (display-buffer buffer t))) ))))
 
 
+
+(use-package chembalance)
+(use-package chemtable)
+
+(use-package load-relative)
+
+(load-relative "./editing.el")
+(load-relative "./desktop.el")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

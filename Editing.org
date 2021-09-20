@@ -6,12 +6,19 @@
 * Flycheck (spelling checker)
 #+begin_src emacs-lisp
   (use-package flycheck
-    :config
-    (global-flycheck-mode))
+    :ensure t)
 #+end_src
 
 #+RESULTS:
-: t
+
+# #+begin_src emacs-lisp
+# (use-package flycheck
+#   :ensure t
+#   :init (global-flycheck-mode))
+# #+end_src
+
+# #+RESULTS:
+
 
 ** Proselint
 #+begin_src emacs-lisp
@@ -86,6 +93,7 @@
   #+end_src
 
     #+RESULTS:
+    | outshine-mode | auto-complete-mode | indent-guide-mode | evil-smartparens-mode | smartparens-mode | rainbow-delimiters-mode | fira-code-mode | prettify-symbols-mode |
 
 * DONE Parenthesis
   CLOSED: [2021-06-22 Tue 15:21] DEADLINE: <2021-06-20 Sun> SCHEDULED: <2021-06-17 Thu>
@@ -135,18 +143,18 @@ Move configuration on Emacs.org to here.
 
 * Yasnippets
   #+begin_src emacs-lisp
-    (use-package yasnippet
-      :ensure t
-      :config
-      (add-to-list 'load-path
-                   "~/.emacs.d/etc/yasnippets/snippets/")
-      (yas-global-mode 1))
-    (use-package yasnippet-snippets)
-    (use-package yasnippet-classic-snippets)
+    ;; (use-package yasnippet
+    ;;   :ensure t
+    ;;   :config
+    ;;   (add-to-list 'load
+    ;;                "~/.emacs.default/etc/yasnippets/snippets/")
+    ;;   (yas-global-mode 1))
+    ;; (use-package yasnippet-snippets)
+    ;; (use-package yasnippet-classic-snippets)
     #+end_src
 
     #+RESULTS:
-  
+    
 * Language-specific
 ** LaTeX
 *** AUCTeX
@@ -190,161 +198,168 @@ Move configuration on Emacs.org to here.
            "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
  #+end_src
 
-** Output
-#+begin_src emacs-lisp
-  ;; ; SyncTeX basics
+*** Output
+ #+begin_src emacs-lisp
+   ;; ; SyncTeX basics
 
-  ;; ; un-urlify and urlify-escape-only should be improved to handle all special characters, not only spaces.
-  ;; ; The fix for spaces is based on the first comment on http://emacswiki.org/emacs/AUCTeX#toc20
+   ;; ; un-urlify and urlify-escape-only should be improved to handle all special characters, not only spaces.
+   ;; ; The fix for spaces is based on the first comment on http://emacswiki.org/emacs/AUCTeX#toc20
 
-  ;; (defun un-urlify (fname-or-url)
-  ;;   "Transform file:///absolute/path from Gnome into /absolute/path with very limited support for special characters"
-  ;;   (if (string= (substring fname-or-url 0 8) "file:///")
-  ;;       (url-unhex-string (substring fname-or-url 7))
-  ;;     fname-or-url))
+   ;; (defun un-urlify (fname-or-url)
+   ;;   "Transform file:///absolute/path from Gnome into /absolute/path with very limited support for special characters"
+   ;;   (if (string= (substring fname-or-url 0 8) "file:///")
+   ;;       (url-unhex-string (substring fname-or-url 7))
+   ;;     fname-or-url))
 
-  ;; (defun urlify-escape-only (path)
-  ;;   "Handle special characters for urlify"
-  ;;   (replace-regexp-in-string " " "%20" path))
+   ;; (defun urlify-escape-only (path)
+   ;;   "Handle special characters for urlify"
+   ;;   (replace-regexp-in-string " " "%20" path))
 
-  ;; (defun urlify (absolute-path)
-  ;;   "Transform /absolute/path to file:///absolute/path for Gnome with very limited support for special characters"
-  ;;   (if (string= (substring absolute-path 0 1) "/")
-  ;;       (concat "file://" (urlify-escape-only absolute-path))
-  ;;       absolute-path))
-
-
-  ;; ; SyncTeX backward search - based on http://emacswiki.org/emacs/AUCTeX#toc20, reproduced on https://tex.stackexchange.com/a/49840/21017
-
-  ;; (defun th-evince-sync (file linecol &rest ignored)
-  ;;   (let* ((fname (un-urlify file))
-  ;;          (buf (find-file fname))
-  ;;          (line (car linecol))
-  ;;          (col (cadr linecol)))
-  ;;     (if (null buf)
-  ;;         (message "[Synctex]: Could not open %s" fname)
-  ;;       (switch-to-buffer buf)
-  ;;       (goto-line (car linecol))
-  ;;       (unless (= col -1)
-  ;;         (move-to-column col)))))
-
-  ;; (defvar *dbus-evince-signal* nil)
-
-  ;; (defun enable-evince-sync ()
-  ;;   (require 'dbus)
-  ;;   ; cl is required for setf, taken from: http://lists.gnu.org/archive/html/emacs-orgmode/2009-11/msg01049.html
-  ;;   (require 'cl)
-  ;;   (when (and
-  ;;          (eq window-system 'x)
-  ;;          (fboundp 'dbus-register-signal))
-  ;;     (unless *dbus-evince-signal*
-  ;;       (setf *dbus-evince-signal*
-  ;;             (dbus-register-signal
-  ;;              ;; :session nil "/org/gnome/evince/Window/0"
-  ;;              "org.gnome.evince.Window" "SyncSource"
-  ;;              'th-evince-sync)))))
-
-  ;; (add-hook 'LaTeX-mode-hook 'enable-evince-sync)
+   ;; (defun urlify (absolute-path)
+   ;;   "Transform /absolute/path to file:///absolute/path for Gnome with very limited support for special characters"
+   ;;   (if (string= (substring absolute-path 0 1) "/")
+   ;;       (concat "file://" (urlify-escape-only absolute-path))
+   ;;       absolute-path))
 
 
-  ;; ; SyncTeX forward search - based on https://tex.stackexchange.com/a/46157
+   ;; ; SyncTeX backward search - based on http://emacswiki.org/emacs/AUCTeX#toc20, reproduced on https://tex.stackexchange.com/a/49840/21017
 
-  ;; ;; universal time, need by evince
-  ;; (defun utime ()
-  ;;   (let ((high (nth 0 (current-time)))
-  ;;         (low (nth 1 (current-time))))
-  ;;    (+ (* high (lsh 1 16) ) low)))
+   ;; (defun th-evince-sync (file linecol &rest ignored)
+   ;;   (let* ((fname (un-urlify file))
+   ;;          (buf (find-file fname))
+   ;;          (line (car linecol))
+   ;;          (col (cadr linecol)))
+   ;;     (if (null buf)
+   ;;         (message "[Synctex]: Could not open %s" fname)
+   ;;       (switch-to-buffer buf)
+   ;;       (goto-line (car linecol))
+   ;;       (unless (= col -1)
+   ;;         (move-to-column col)))))
 
-  ;; ;; Forward search.
-  ;; ;; Adapted from http://dud.inf.tu-dresden.de/~ben/evince_synctex.tar.gz
-  ;; ;; (defun auctex-evince-forward-sync (pdffile texfile line)
-  ;; ;;   (let ((dbus-name
-  ;; ;;      (dbus-call-method :session
-  ;; ;;                "org.gnome.evince.Daemon"  ; service
-  ;; ;;                "/org/gnome/evince/Daemon" ; path
-  ;; ;;                "org.gnome.evince.Daemon"  ; interface
-  ;; ;;                "FindDocument"
-  ;; ;;                (urlify pdffile)
-  ;; ;;                t     ; Open a new window if the file is not opened.
-  ;; ;;                )))
-  ;; ;;     (dbus-call-method :session
-  ;; ;;           dbus-name
-  ;; ;;           "/org/gnome/evince/Window/0"
-  ;; ;;           "org.gnome.evince.Window"
-  ;; ;;           "SyncView"
-  ;; ;;           (urlify-escape-only texfile)
-  ;; ;;           (list :struct :int32 line :int32 1)
-  ;; ;;   (utime))))
+   ;; (defvar *dbus-evince-signal* nil)
 
-  ;; ;; (defun auctex-evince-view ()
-  ;; ;;   (let ((pdf (file-truename (concat default-directory
-  ;; ;;                     (TeX-master-file (TeX-output-extension)))))
-  ;; ;;     (tex (buffer-file-name))
-  ;; ;;     (line (line-number-at-pos)))
-  ;; ;;     (auctex-evince-forward-sync pdf tex line)))
+   ;; (defun enable-evince-sync ()
+   ;;   (require 'dbus)
+   ;;   ; cl is required for setf, taken from: http://lists.gnu.org/archive/html/emacs-orgmode/2009-11/msg01049.html
+   ;;   (require 'cl)
+   ;;   (when (and
+   ;;          (eq window-system 'x)
+   ;;          (fboundp 'dbus-register-signal))
+   ;;     (unless *dbus-evince-signal*
+   ;;       (setf *dbus-evince-signal*
+   ;;             (dbus-register-signal
+   ;;              ;; :session nil "/org/gnome/evince/Window/0"
+   ;;              "org.gnome.evince.Window" "SyncSource"
+   ;;              'th-evince-sync)))))
 
-  ;; ;; New view entry: Evince via D-bus.
-  ;; (setq TeX-view-program-list '())
-  ;; (add-to-list 'TeX-view-program-list
-  ;;          '("evince" auctex-evince-view))
+   ;; (add-hook 'LaTeX-mode-hook 'enable-evince-sync)
 
-  ;; ;; Prepend Evince via D-bus to program selection list
-  ;; ;; overriding other settings for PDF viewing.
-  ;; (setq TeX-view-program-selection '())
-  ;; (add-to-list 'TeX-view-program-selection
-  ;;          '(output-pdf "evince"))
-#+end_src
 
-#+RESULTS:
-| output-pdf | evince |
+   ;; ; SyncTeX forward search - based on https://tex.stackexchange.com/a/46157
+
+   ;; ;; universal time, need by evince
+   ;; (defun utime ()
+   ;;   (let ((high (nth 0 (current-time)))
+   ;;         (low (nth 1 (current-time))))
+   ;;    (+ (* high (lsh 1 16) ) low)))
+
+   ;; ;; Forward search.
+   ;; ;; Adapted from http://dud.inf.tu-dresden.de/~ben/evince_synctex.tar.gz
+   ;; ;; (defun auctex-evince-forward-sync (pdffile texfile line)
+   ;; ;;   (let ((dbus-name
+   ;; ;;      (dbus-call-method :session
+   ;; ;;                "org.gnome.evince.Daemon"  ; service
+   ;; ;;                "/org/gnome/evince/Daemon" ; path
+   ;; ;;                "org.gnome.evince.Daemon"  ; interface
+   ;; ;;                "FindDocument"
+   ;; ;;                (urlify pdffile)
+   ;; ;;                t     ; Open a new window if the file is not opened.
+   ;; ;;                )))
+   ;; ;;     (dbus-call-method :session
+   ;; ;;           dbus-name
+   ;; ;;           "/org/gnome/evince/Window/0"
+   ;; ;;           "org.gnome.evince.Window"
+   ;; ;;           "SyncView"
+   ;; ;;           (urlify-escape-only texfile)
+   ;; ;;           (list :struct :int32 line :int32 1)
+   ;; ;;   (utime))))
+
+   ;; ;; (defun auctex-evince-view ()
+   ;; ;;   (let ((pdf (file-truename (concat default-directory
+   ;; ;;                     (TeX-master-file (TeX-output-extension)))))
+   ;; ;;     (tex (buffer-file-name))
+   ;; ;;     (line (line-number-at-pos)))
+   ;; ;;     (auctex-evince-forward-sync pdf tex line)))
+
+   ;; ;; New view entry: Evince via D-bus.
+   ;; (setq TeX-view-program-list '())
+   ;; (add-to-list 'TeX-view-program-list
+   ;;          '("evince" auctex-evince-view))
+
+   ;; ;; Prepend Evince via D-bus to program selection list
+   ;; ;; overriding other settings for PDF viewing.
+   ;; (setq TeX-view-program-selection '())
+   ;; (add-to-list 'TeX-view-program-selection
+   ;;          '(output-pdf "evince"))
+ #+end_src
+
+ #+RESULTS:
+ | output-pdf | evince |
  
 
+ #+begin_src emacs-lisp
+   (setq TeX-PDF-mode t)
+
+   (defun pdfevince ()
+      (add-to-list 'TeX-output-view-style
+                    '("^pdf$" "." "evince %o %(outpage)")))
+
+
+   (defun pdfokular ()
+      (add-to-list 'TeX-output-view-style
+                    '("^pdf$" "." "okular %o %(outpage)")))
+
+
+   ;; (add-hook  'LaTeX-mode-hook  'pdfevince  t) ; AUCTeX LaTeX mode
+   (add-hook  'LaTeX-mode-hook  'pdfokular  t) ; AUCTeX LaTeX mode
+ #+end_src
+
+ #+RESULTS:
+ | pdfevince |
+
+*** Output evince setup
+ #+begin_src emacs-lisp
+   (load "auctex.el" nil t t)
+   ;; (load "preview-latex.el" nil t t)
+ #+end_src
+
+ #+RESULTS:
+ : t
+
+*** Preview
+ #+begin_src emacs-lisp
+   (use-package latex-preview-pane)
+   (use-package latex-pretty-symbols)
+ #+end_src
+
+ #+RESULTS:
+
+
+ #+begin_src emacs-lisp
+   (setq TeX-PDF-mode t)
+   (require 'tex)
+   (TeX-global-PDF-mode t)
+ #+end_src
+
+ #+RESULTS:
+ : t
+** R
 #+begin_src emacs-lisp
-  (setq TeX-PDF-mode t)
-
-  (defun pdfevince ()
-     (add-to-list 'TeX-output-view-style
-                   '("^pdf$" "." "evince %o %(outpage)")))
-
-
-  (defun pdfokular ()
-     (add-to-list 'TeX-output-view-style
-                   '("^pdf$" "." "okular %o %(outpage)")))
-
-
-  ;; (add-hook  'LaTeX-mode-hook  'pdfevince  t) ; AUCTeX LaTeX mode
-  (add-hook  'LaTeX-mode-hook  'pdfokular  t) ; AUCTeX LaTeX mode
+     (use-package poly-R)
+     (use-package ess)
 #+end_src
 
 #+RESULTS:
-| pdfevince |
-
-** Output evince setup
-#+begin_src emacs-lisp
-  (load "auctex.el" nil t t)
-  ;; (load "preview-latex.el" nil t t)
-#+end_src
-
-#+RESULTS:
-: t
-
-** Preview
-#+begin_src emacs-lisp
-  (use-package latex-preview-pane)
-  (use-package latex-pretty-symbols)
-#+end_src
-
-#+RESULTS:
-
-
-#+begin_src emacs-lisp
-  (setq TeX-PDF-mode t)
-  (require 'tex)
-  (TeX-global-PDF-mode t)
-#+end_src
-
-#+RESULTS:
-: t
 
 * Outshine - Org-folding for non-Org buffers
 #+begin_src emacs-lisp
@@ -540,3 +555,44 @@ SCHEDULED: <2021-06-25 Fri>
   #+end_src
 
   #+RESULTS:
+
+* Pomorodo
+  #+begin_src emacs-lisp
+    (use-package org-pomodoro)
+  #+end_src
+
+  #+RESULTS:
+
+* Org-tree-slide
+  #+begin_src emacs-lisp
+    (use-package org-tree-slide
+      :custom
+      (org-image-actual-width nil))
+  #+end_src
+
+# * Doom
+#   <el
+
+* Aggresive Completion/Indent
+** Auto-complete
+  #+begin_src emacs-lisp
+    ;; (use-package aggressive-completion)
+   #+end_src
+
+  #+RESULTS:
+
+** Auto-indent
+#+begin_src emacs-lisp
+  (use-package aggressive-indent
+    :hook (prog-mode . aggresive-indent))
+#+end_src
+
+#+RESULTS:
+| aggresive-indent | outshine-mode | auto-complete-mode | indent-guide-mode | evil-smartparens-mode | smartparens-mode | rainbow-delimiters-mode | fira-code-mode | prettify-symbols-mode |
+
+#+begin_src emacs-lisp
+  ;; (use-package aggressive-fill-paragraph)
+  #+end_src
+
+#+RESULTS:
+

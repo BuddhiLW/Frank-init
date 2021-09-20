@@ -1,6 +1,5 @@
 (use-package flycheck
-  :config
-  (global-flycheck-mode))
+  :ensure t)
 
 (use-package flymake-proselint)
 
@@ -63,14 +62,14 @@
 (use-package auto-complete
   :hook ((prog-mode . auto-complete-mode)))
 
-(use-package yasnippet
-  :ensure t
-  :config
-  (add-to-list 'load-path
-               "~/.emacs.d/etc/yasnippets/snippets/")
-  (yas-global-mode 1))
-(use-package yasnippet-snippets)
-(use-package yasnippet-classic-snippets)
+;; (use-package yasnippet
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'load
+;;                "~/.emacs.default/etc/yasnippets/snippets/")
+;;   (yas-global-mode 1))
+;; (use-package yasnippet-snippets)
+;; (use-package yasnippet-classic-snippets)
 
 (use-package auctex
   :ensure tex-mode
@@ -222,6 +221,9 @@
 (require 'tex)
 (TeX-global-PDF-mode t)
 
+(use-package poly-R)
+(use-package ess)
+
 (use-package outshine
   :hook ((outline-minor-mode-hook . outshine-mode)
 	 (prog-mode . outshine-mode)))
@@ -292,3 +294,16 @@
 (use-package treemacs-magit)
 (use-package treemacs-evil)
 (use-package treemacs-icons-dired)
+
+(use-package org-pomodoro)
+
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil))
+
+;; (use-package aggressive-completion)
+
+(use-package aggressive-indent
+  :hook (prog-mode . aggresive-indent))
+
+;; (use-package aggressive-fill-paragraph)

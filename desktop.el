@@ -259,7 +259,7 @@
 ;; 	      (lambda ()
 ;; 		(start-process-shell-command
 ;; 		 "xrandr" nil "xrandr --output eDP1 --right-of HDMI-1-0 --auto")))
-(start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off --output HDMI-1-2 --primary --mode 2560x1080 --pos 1920x0 --rotate normal")
+(start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off --output HDMI-1-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal")
 (setq exwm-randr-workspace-output-plist '(3 "eDP-1" 4 "eDP-1"))
 (exwm-randr-enable)
 
@@ -313,12 +313,6 @@
   (interactive)
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_TOGGLE\""))
 
-(use-package org-pomodoro)
-
-(use-package org-tree-slide
-  :custom
-  (org-image-actual-width nil))
-
 (use-package uimage)
 
 (use-package image+)
@@ -326,3 +320,74 @@
 (use-package image-dired+)
 
 (use-package image-archive)
+
+(use-package edwina
+  :ensure t
+  :config
+  (setq display-buffer-base-action '(display-buffer-below-selected))
+  ;; (edwina-setup-dwm-keys)
+  (edwina-mode 1))
+
+;; (defun efs/exwm-update-class ()
+;;   (exwm-workspace-rename-buffer exwm-class-name))
+
+;; (use-package exwm
+;;   :config
+;;   ;; Set the default number of workspaces
+;;   (setq exwm-workspace-number 5)
+
+;;   ;; When window "class" updates, use it to set the buffer name
+;;   ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+;;   ;; These keys should always pass through to Emacs
+;;   (setq exwm-input-prefix-keys
+;;         '(?\C-x
+;;           ?\C-u
+;;           ?\C-h
+;;           ?\M-x
+;;           ?\M-`
+;;           ?\M-&
+;;           ?\M-:
+;;           ?\C-\M-j  ;; Buffer list
+;;           ?\C-\ ))  ;; Ctrl+Space
+
+;;   ;; Ctrl+Q will enable the next key to be sent directly
+;;   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+;;   ;; Set up global key bindings.  These always work, no matter the input state!
+;;   ;; Keep in mind that changing this list after EXWM initializes has no effect.
+;;   (setq exwm-input-global-keys
+;;         `(
+;;           ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+;;           ([?\s-r] . exwm-reset)
+
+;;           ;; Move between windows
+;;           ([s-left] . windmove-left)
+;;           ([s-right] . windmove-right)
+;;           ([s-up] . windmove-up)
+;;           ([s-down] . windmove-down)
+
+;;           ;; Launch applications via shell command
+;;           ([?\s-&] . (lambda (command)
+;;                        (interactive (list (read-shell-command "$ ")))
+;;                        (start-process-shell-command command nil command)))
+
+;;           ;; Switch workspace
+;;           ([?\s-w] . exwm-workspace-switch)
+
+;;           ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+;;           ,@(mapcar (lambda (i)
+;;                       `(,(kbd (format "s-%d" i)) .
+;;                         (lambda ()
+;;                           (interactive)
+;;                           (exwm-workspace-switch-create ,i))))
+;;                     (number-sequence 0 9))))
+
+;;   (exwm-enable))
+
+(use-package evil-multiedit
+  :hook (web-mode . evil-multiedit-mode))
+
+(use-package all-the-icons-completion)
+(use-package all-the-icons-ivy)
+(use-package all-the-icons-ibuffer)
