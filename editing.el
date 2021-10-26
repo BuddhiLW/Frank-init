@@ -51,9 +51,9 @@
 
 (use-package evil-smartparens
   :hook ((after-init . evil-smartparens-mode)
-	 (prog-mode . evil-smartparens-mode)
-	 (text-mode . evil-smartparens-mode)
-	 (special-mode . evil-smartparens-mode)))
+         (prog-mode . evil-smartparens-mode)
+         (text-mode . evil-smartparens-mode)
+         (special-mode . evil-smartparens-mode)))
 
 (use-package indent-guide
   :init (indent-guide-global-mode t)
@@ -221,6 +221,8 @@
 (require 'tex)
 (TeX-global-PDF-mode t)
 
+(use-package auto-complete-auctex)
+
 (use-package poly-R)
 (use-package ess)
 
@@ -259,11 +261,11 @@
 
 (use-package keytar)
 
-(use-package lsp-grammarly
-  :ensure t
-  :hook (text-mode . (lambda ()
-                       (require 'lsp-grammarly)
-                       (lsp))))  ; or lsp-deferred
+;; (use-package lsp-grammarly
+;;   :ensure t
+;;   :hook (text-mode . (lambda ()
+;;                        (require 'lsp-grammarly)
+;;                        (lsp))))  ; or lsp-deferred
 
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch :height 1.4)
 
@@ -280,7 +282,7 @@
 (use-package cider)
 (use-package latex-extra)
 (use-package latex-preview-pane)
-(use-package lsp-latex)
+;; (use-package lsp-latex)
 (use-package latex-pretty-symbols)
 (use-package latex-unicode-math-mode)
 (use-package org-latex-impatient)
@@ -288,8 +290,8 @@
 ;; (use-package auto-complete-auctex)
 
 (use-package projectile)
-(use-package lsp-treemacs)
-(use-package treemacs)
+;; (use-package lsp-treemacs)
+;; (use-package treemacs)
 (use-package treemacs-all-the-icons)
 (use-package treemacs-magit)
 (use-package treemacs-evil)
@@ -303,7 +305,7 @@
 
 ;; (use-package aggressive-completion)
 
-(use-package aggressive-indent
-  :hook (prog-mode . aggresive-indent))
+;; (use-package aggressive-indent
+  ;; :hook (prog-mode . aggresive-indent))
 
 ;; (use-package aggressive-fill-paragraph)

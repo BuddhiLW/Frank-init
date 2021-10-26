@@ -1,16 +1,23 @@
-;; ;; (defun efs/run-in-background (command)
-;; ;;   (let ((command-parts (split-string command "[ ]+")))
-;; ;;     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
+(defun efs/run-in-background (command)
+  (let ((command-parts (split-string command "[ ]+")))
+    (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
 
-;; (defun  efs/set-wallpaper ()
-;;   (interactive)
-;;   ;; NOTE: You will need to update this to a valid background path!
-;;   (start-process-shell-command
-;;    "feh" nil  "feh --bg-scale ~/.emacs.d/wal/wall1.jpeg"))
+(defun  efs/set-wallpaper ()
+  (interactive)
+  ;; NOTE: You will need to update this to a valid background path!
+  (start-process-shell-command
+   "wal" nil  "wal -i ~/Walpaper/"))
 
-;; (defun efs/exwm-init-hook ()
+(defun  efs/screen-layout ()
+  (interactive)
+  ;; NOTE: You will need to update this to a valid background path!
+  (start-process-shell-command
+   "sh" nil  "sh ~/.screenlayout/default.sh"))
+
+
+(defun efs/exwm-init-hook ()
 ;;   ;; Make workspace 1 be the one where we land at startup
-;;   (exwm-workspace-switch-create 1)
+  (exwm-workspace-switch-create 1)
 
 ;;   ;; Open eshell by default
 ;;   ;; (eshell)
@@ -18,24 +25,24 @@
 ;;   ;; NOTE: The next two are disabled because we now use Polybar!
 
 ;;   ;; Show battery status in the mode line
-;;   (display-battery-mode 1)
+  (display-battery-mode 1)
 
 ;;   ;; Show the time and date in modeline
-;;   (setq display-time-day-and-date t)
-;;   (display-time-mode 1)
+  (setq display-time-day-and-date t)
+  (display-time-mode 1)
 ;;   ;; Also take a look at display-time-format and format-time-string
 
 ;;   ;; Start the Polybar panel
-;;   (efs/start-panel)
+  ;; (efs/start-panel)
 
 ;;   ;; Launch apps that will run in the background
-;;   (efs/run-in-background "dunst")
-;;   (efs/run-in-background "nm-applet")
-;;   (efs/run-in-background "pasystray")
-;;   (efs/run-in-background "blueman-applet"))
+  (efs/run-in-background "dunst")
+  (efs/run-in-background "nm-applet")
+  (efs/run-in-background "pasystray")
+  (efs/run-in-background "blueman-applet"))
 
-;; (defun efs/exwm-update-class ()
-;;   (exwm-workspace-rename-buffer exwm-class-name))
+(defun efs/exwm-update-class ()
+  (exwm-workspace-rename-buffer exwm-class-name))
 
 ;; (defun efs/exwm-update-title ()
 ;;   (pcase exwm-class-name
@@ -45,8 +52,8 @@
 ;; ;; position a window
 ;; (defun efs/position-window ()
 ;;   (let* ((pos (frame-position))
-;; 	 (pos-x (car pos))
-;; 	 (pos-y (cdr pos)))
+;;          (pos-x (car pos))
+;;          (pos-y (cdr pos)))
 
 ;;     (exwm-floating-move (- pos-x) (- pos-y))))
 
@@ -58,12 +65,12 @@
 ;;     ("mpv" (exwm-floating-toggle-floating)
 ;;      (exwm-layout-toggle-mode-line))))
 
-;; ;; This function should be used only after configuring autorandr!
-;; ;; (defun efs/update-displays ()
-;;   ;; (efs/run-in-background "autorandr --change --force")
-;;   ;; (efs/set-wallpaper)
-;;   ;; (message "Display config: %s"
-;; 	   ;; (string-trim (shell-command-to-string "autorandr --current"))))
+;; ;;This function should be used only after configuring autorandr!
+;; (defun efs/update-displays ()
+;;   (efs/run-in-background "autorandr --change --force")
+;;   (efs/set-wallpaper)
+;;   (message "Display config: %s"
+;;            (string-trim (shell-command-to-string "autorandr --current"))))
 
 ;; (use-package exwm
 ;;   :config
@@ -86,7 +93,7 @@
 ;;   ;; (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
 
 ;;   ;; ;
-;; 					; NOTE: Uncomment the following two options if you want window buffers
+;;                                         ; NOTE: Uncomment the following two options if you want window buffers
 ;;   ;;       to be available on all workspaces!
 
 ;;   ;; Automatically move EXWM buffer to current workspace when selected
@@ -103,13 +110,13 @@
 ;;   (require 'exwm-randr)
 ;;   ;; (exwm-randr-enable)
 ;;   ;; ;;
-;;   (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 1920x1200 --pos 0x0 --rotate normal")
-;;   ;; (setq exwm-randr-workspace-output-plist '(1 "eDP-1"))
-;;   ;; (add-hook 'exwm-randr-screen-change-hook
-;;   ;; 	    (lambda ()
-;;   ;; 	      (start-process-shell-command
-;;   ;; 	       "xrandr" nil "xrandr --ouput eDP-1 --right-of HDMI-1-2 --auto")))
-;;   ;; (exwm-randr-enable)
+;;   ;; (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off --output HDMI-1-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal")
+;;   (setq exwm-randr-workspace-output-plist '(1 "HDMI-1-0"))
+;;   (add-hook 'exwm-randr-screen-change-hook
+;;             (lambda ()
+;;               (start-process-shell-command
+;;                "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off --output HDMI-1-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal")))
+;;   (exwm-randr-enable)
 
 ;;   ;; This will need to be updated to the name of a display!  You can find
 ;;   ;; the names of your displays by looking at arandr or the output of xrandr
@@ -134,19 +141,19 @@
 
 ;;   ;; Window focus should follow the mouse pointer
 ;;   (setq mouse-autoselect-window t
-;; 	focus-follows-mouse t)
+;;         focus-follows-mouse t)
 
 ;;   ;; These keys should always pass through to Emacs
 ;;   (setq exwm-input-prefix-keys
-;; 	'(?\C-x
-;; 	  ?\C-u
-;; 	  ?\C-h
-;; 	  ?\M-x
-;; 	  ?\M-`
-;; 	  ?\M-&
-;; 	  ?\M-:
-;; 	  ?\C-\M-j  Buffer list
-;; 	  ?\C-\ )) ;; Ctrl+Space
+;;         '(?\C-x
+;;           ?\C-u
+;;           ?\C-h
+;;           ?\M-x
+;;           ?\M-`
+;;           ?\M-&
+;;           ?\M-:
+;;           ?\C-\M-j  Buffer list
+;;           ?\C-\ )) ;; Ctrl+Space
 
 ;;   ;; Ctrl+Q will enable the next key to be sent directly
 ;;   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
@@ -154,42 +161,55 @@
 ;;   ;; Set up global key bindings.  These always work, no matter the input state!
 ;;   ;; Keep in mind that changing this list after EXWM initializes has no effect.
 ;;   (setq exwm-input-global-keys
-;; 	`(
-;; 	  Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-;; 	  ([?\s-r] . exwm-reset)
+;;         `(
+;;           Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+;;           ([?\s-r] . exwm-reset)
 
-;; 	  Move between windows
-;; 	  ([s-left] . windmove-left)
-;; 	  ([s-right] . windmove-right)
-;; 	  ([s-up] . windmove-up)
-;; 	  ([s-down] . windmove-down)
+;;           Move between windows
+;;           ([s-left] . windmove-left)
+;;           ([s-right] . windmove-right)
+;;           ([s-up] . windmove-up)
+;;           ([s-down] . windmove-down)
 
-;; 	  ;; Launch applications via shell command
-;; 	  ([?\s-&] . (lambda (command)
-;; 		       (interactive (list (read-shell-command "$ ")))
-;; 		       (start-process-shell-command command nil command)))
+;;           ;; Launch applications via shell command
+;;           ([?\s-&] . (lambda (command)
+;;                        (interactive (list (read-shell-command "$ ")))
+;;                        (start-process-shell-command command nil command)))
 
-;; 	  ;; Switch workspace
-;; 	  ([?\s-w] . exwm-workspace-switch)
-;; 	  ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+;;           ;; Switch workspace
+;;           ([?\s-w] . exwm-workspace-switch)
+;;           ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
 
-;; 	  ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-;; 	  ,@(mapcar (lambda (i)
-;; 		      `(,(kbd (format "s-%d" i)) .
-;; 			(lambda ()
-;; 			  (interactive)
-;; 			  (exwm-workspace-switch-create ,i))))
-;; 		    (number-sequence 0 9))))
+;;           ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+;;           ,@(mapcar (lambda (i)
+;;                       `(,(kbd (format "s-%d" i)) .
+;;                         (lambda ()
+;;                           (interactive)
+;;                           (exwm-workspace-switch-create ,i))))
+;;                     (number-sequence 0 9))))
 
 ;;   (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
 
 ;;   (exwm-enable))
+
+(require 'exwm-randr)
+;;     (setq exwm-randr-workspace-output-plist '(0 "eDP1"))
+;;     (add-hook 'exwm-randr-screen-change-hook
+;; 	      (lambda ()
+;; 		(start-process-shell-command
+;; 		 "xrandr" nil "xrandr --output eDP1 --right-of HDMI-1-0 --auto")))
+(start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off --output HDMI-1-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal")
+(setq exwm-randr-workspace-output-plist '(3 "eDP-1" 4 "eDP-1"))
+(exwm-randr-enable)
 
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
 
 (use-package exwm
   :config
+  ;; Call layout function
+  (efs/screen-layout)
+
   ;; Set the default number of workspaces
   (setq exwm-workspace-number 5)
 
@@ -210,15 +230,15 @@
 
   ;; These keys should always pass through to Emacs
   (setq exwm-input-prefix-keys
-	'(?\C-x
-	  ?\C-u
-	  ?\C-
-	  ?\M-x
-	  ?\M-`
-	  ?\M-&
-	  ?\M-:
-	  ?\C-\M-j  ;; Buffer list
-	  ?\C-\ ))  ;; Ctrl+Space
+        '(?\C-x
+          ?\C-u
+          ?\C-
+          ?\M-x
+          ?\M-`
+          ?\M-&
+          ?\M-:
+          ?\C-\M-j  ;; Buffer list
+          ?\C-\ ))  ;; Ctrl+Space
 
   ;; Ctrl+Q will enable the next key to be sent directly
   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
@@ -226,42 +246,32 @@
   ;; Set up global key bindings.  These always work, no matter the input state!
   ;; Keep in mind that changing this list after EXWM initializes has no effect.
   (setq exwm-input-global-keys
-	`(
-	  ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-	  ([?\s-r] . exwm-reset)
+        `(
+          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+          ([?\s-r] . exwm-reset)
 
-	  ;; Move between windows
-	  ([s-left] . windmove-left)
-	  ([s-right] . windmove-right)
-	  ([s-up] . windmove-up)
-	  ([s-down] . windmove-down)
+          ;; Move between windows
+          ([s-left] . windmove-left)
+          ([s-right] . windmove-right)
+          ([s-up] . windmove-up)
+          ([s-down] . windmove-down)
 
-	  ;; Launch applications via shell command
-	  ([?\s-&] . (lambda (command)
-		       (interactive (list (read-shell-command "$ ")))
-		       (start-process-shell-command command nil command)))
+          ;; Launch applications via shell command
+          ([?\s-&] . (lambda (command)
+                       (interactive (list (read-shell-command "$ ")))
+                       (start-process-shell-command command nil command)))
 
-	  ;; Switch workspace
-	  ([?\s-w] . exwm-workspace-switch)
-	  ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+          ;; Switch workspace
+          ([?\s-w] . exwm-workspace-switch)
+          ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
 
-	  ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-	  ,@(mapcar (lambda (i)
-		      `(,(kbd (format "s-%d" i)) .
-			(lambda ()
-			  (interactive)
-			  (exwm-workspace-switch-create ,i))))
-		    (number-sequence 0 9)))))
-
-(require 'exwm-randr)
-;;     (setq exwm-randr-workspace-output-plist '(0 "eDP1"))
-;;     (add-hook 'exwm-randr-screen-change-hook
-;; 	      (lambda ()
-;; 		(start-process-shell-command
-;; 		 "xrandr" nil "xrandr --output eDP1 --right-of HDMI-1-0 --auto")))
-(start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output HDMI-1 --off --output HDMI-1-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal")
-(setq exwm-randr-workspace-output-plist '(3 "eDP-1" 4 "eDP-1"))
-(exwm-randr-enable)
+          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+          ,@(mapcar (lambda (i)
+                      `(,(kbd (format "s-%d" i)) .
+                        (lambda ()
+                          (interactive)
+                          (exwm-workspace-switch-create ,i))))
+                    (number-sequence 0 9)))))
 
 (use-package desktop-environment
   :after exwm
@@ -327,6 +337,40 @@
   (setq display-buffer-base-action '(display-buffer-below-selected))
   ;; (edwina-setup-dwm-keys)
   (edwina-mode 1))
+
+;; Input method and key binding configuration.
+(setq alternative-input-methods
+      '(("chinese-tonepy" . [?\ß])
+        ("chinese-sisheng" . [?\ð])))
+;;   (setq alternative-input-methods
+;;         '(("chinese-tonepy" . [?\ß])
+;;         '("chinese-sisheng" . [?\ð])))
+
+(setq
+ default-input-method
+ (caar alternative-input-methods))
+
+(defun toggle-alternative-input-method (method &optional arg interactive)
+  (if arg
+      (toggle-input-method arg interactive)
+    (let ((previous-input-method current-input-method))
+      (when current-input-method
+        (deactivate-input-method))
+      (unless (and previous-input-method
+                   (string= previous-input-method method))
+        (activate-input-method method)))))
+
+(defun reload-alternative-input-methods ()
+  (dolist (config alternative-input-methods)
+    (let ((method (car config)))
+      (global-set-key (cdr config)
+                      `(lambda (&optional arg interactive)
+                         ;; ,(concat "Behaves similar to `toggle-input-method', but uses \""
+                         ;; 	  method "\" instead of `default-input-method'")
+                         (interactive "P\np")
+                         (toggle-alternative-input-method ,method arg interactive))))))
+
+(reload-alternative-input-methods)
 
 ;; (defun efs/exwm-update-class ()
 ;;   (exwm-workspace-rename-buffer exwm-class-name))

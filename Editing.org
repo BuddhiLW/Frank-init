@@ -92,8 +92,6 @@
 	     (prog-mode . rainbow-delimiters-mode)))
   #+end_src
 
-    #+RESULTS:
-    | outshine-mode | auto-complete-mode | indent-guide-mode | evil-smartparens-mode | smartparens-mode | rainbow-delimiters-mode | fira-code-mode | prettify-symbols-mode |
 
 * DONE Parenthesis
   CLOSED: [2021-06-22 Tue 15:21] DEADLINE: <2021-06-20 Sun> SCHEDULED: <2021-06-17 Thu>
@@ -103,6 +101,7 @@
 Move configuration on Emacs.org to here.
 
 **** Parens
+# ((
 #+begin_src emacs-lisp
   (use-package smartparens
     :hook (prog-mode . smartparens-mode))
@@ -117,9 +116,9 @@ Move configuration on Emacs.org to here.
 #+begin_src emacs-lisp
   (use-package evil-smartparens
     :hook ((after-init . evil-smartparens-mode)
-	   (prog-mode . evil-smartparens-mode)
-	   (text-mode . evil-smartparens-mode)
-	   (special-mode . evil-smartparens-mode)))
+           (prog-mode . evil-smartparens-mode)
+           (text-mode . evil-smartparens-mode)
+           (special-mode . evil-smartparens-mode)))
 #+end_src
 
 #+RESULTS:
@@ -353,6 +352,13 @@ Move configuration on Emacs.org to here.
 
  #+RESULTS:
  : t
+*** Auto-complete
+#+begin_src emacs-lisp
+(use-package auto-complete-auctex)
+#+end_src
+
+#+RESULTS:
+
 ** R
 #+begin_src emacs-lisp
      (use-package poly-R)
@@ -468,11 +474,11 @@ SCHEDULED: <2021-06-25 Fri>
 #+RESULTS:
 
 #+begin_src emacs-lisp
-  (use-package lsp-grammarly
-    :ensure t
-    :hook (text-mode . (lambda ()
-                         (require 'lsp-grammarly)
-                         (lsp))))  ; or lsp-deferred
+  ;; (use-package lsp-grammarly
+  ;;   :ensure t
+  ;;   :hook (text-mode . (lambda ()
+  ;;                        (require 'lsp-grammarly)
+  ;;                        (lsp))))  ; or lsp-deferred
 #+end_src
 
 #+RESULTS:
@@ -534,7 +540,7 @@ SCHEDULED: <2021-06-25 Fri>
     (use-package cider)
     (use-package latex-extra)
     (use-package latex-preview-pane)
-    (use-package lsp-latex)
+    ;; (use-package lsp-latex)
     (use-package latex-pretty-symbols)
     (use-package latex-unicode-math-mode)
     (use-package org-latex-impatient)
@@ -546,8 +552,8 @@ SCHEDULED: <2021-06-25 Fri>
 
   #+begin_src emacs-lisp
     (use-package projectile)
-    (use-package lsp-treemacs)
-    (use-package treemacs)
+    ;; (use-package lsp-treemacs)
+    ;; (use-package treemacs)
     (use-package treemacs-all-the-icons)
     (use-package treemacs-magit)
     (use-package treemacs-evil)
@@ -583,8 +589,8 @@ SCHEDULED: <2021-06-25 Fri>
 
 ** Auto-indent
 #+begin_src emacs-lisp
-  (use-package aggressive-indent
-    :hook (prog-mode . aggresive-indent))
+  ;; (use-package aggressive-indent
+    ;; :hook (prog-mode . aggresive-indent))
 #+end_src
 
 #+RESULTS:

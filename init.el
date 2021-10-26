@@ -6,9 +6,14 @@
 (defvar efs/default-variable-font-size 180)
 
 ;; Make frame transparency overridable
-(defvar efs/frame-transparency '(90 . 90))
+(defvar efs/frame-transparency '(95 . 90))
 
 (setq org-roam-v2-ack t)
+
+(defun transparency (value)
+  "Sets the transparency of the frame window. 0=transparent/100=opaque"
+  (interactive "nTransparency Value 0 - 100 opaque:")
+  (set-frame-parameter (selected-frame) 'alpha value))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -83,10 +88,10 @@
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
-		term-mode-hook
-		shell-mode-hook
-		treemacs-mode-hook
-		eshell-mode-hook))
+                term-mode-hook
+                shell-mode-hook
+                ;; treemacs-mode-hook
+                eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (defun toggle-transparency ()
@@ -99,7 +104,7 @@
                     ;; Also handle undocumented (<active> <inactive>) form.
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
-         '(90 . 90) '(95 . 95)))))
+         '(100 . 90) '(95 . 100)))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height efs/default-font-size)
@@ -295,14 +300,16 @@ codepoints starting from codepoint-start."
   :commands command-log-mode)
 
 (use-package doom-themes
-  :init (load-theme 'doom-palenight t)) ;;wildavil's default -> doom-palenight
+  :init (load-theme 'doom-Iosvkem t)) ;;wildavil's default -> doom-palenight
 
 (use-package all-the-icons)
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+  :custom ((doom-modeline-height 10)))
 (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+(setq doom-modeline--batery-status t)
+(setq doom-modeline-lsp t)
 
 (use-package which-key
   :defer 0
@@ -386,7 +393,7 @@ codepoints starting from codepoint-start."
 
 (setq inferior-julia-program-name "julia")
 
-;; (package-install-file "~/.emacs.d/ob-julia-vterm/ob-julia-vterm.el")
+(package-install-file "~/.emacs.default/ob-julia-vterm.el/ob-julia-vterm.el")
 
 (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
 
@@ -697,20 +704,11 @@ codepoints starting from codepoint-start."
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(conda-anaconda-home "/opt/anaconda/")
- '(helm-minibuffer-history-key "M-p")
  '(ob-ein-languages
-   '(("ein-python" . python)
-     ("ein-R" . R)
-     ("ein-r" . R)
-     ("ein-julia" . julia)))
- '(org-agenda-files nil)
- '(package-selected-packages
-   '(all-the-icons-ibuffer all-the-icons-ivy all-the-icons-completion aggressive-fill-paragraph aggressive-indent aggressive-completion aggresive-indent load-relative zenity-color-picker yasnippet-snippets yasnippet-classic-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree uimage treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters pyvenv python-mode prettier-js pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-tree-slide org-roam-bibtex org-ql org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-ivy lsp-grammarly lockfile-mode latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful gscholar-bibtex ghub general flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein edit-indirect doom-modeline dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-box company-bibtex company-auctex command-log-mode closql cdnjs bibtex-utils auto-package-update auto-complete-auctex amd-mode all-the-icons-dired ag ace-link ac-slime ac-js2 ac-ispell ac-cider)))
+  '(("ein-python" . python)
+    ("ein-R" . R)
+    ("ein-r" . R)
+    ("ein-julia" . julia))))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -797,7 +795,7 @@ codepoints starting from codepoint-start."
 
 (use-package org-roam-bibtex)
 
-(use-package org-ql)
+;; (use-package org-ql)
 
 (use-package ts)
 
@@ -813,7 +811,7 @@ codepoints starting from codepoint-start."
 (setq
 conda-env-home-directory (expand-file-name "~/.conda/")
 conda-env-subdirectory "envs")
-
+(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
 (conda-env-initialize-interactive-shells)
 (conda-env-initialize-eshell)
 (conda-env-autoactivate-mode t)
@@ -952,66 +950,6 @@ conda-env-subdirectory "envs")
 
 (define-key org-mode-map (kbd "ö") 'ace-link-org)
 
-;; (defun efs/exwm-update-class ()
-;;   (exwm-workspace-rename-buffer exwm-class-name))
-
-;; (use-package exwm
-;;   :config
-;;   ;; Set the default number of workspaces
-;;   (setq exwm-workspace-number 5)
-
-;;   ;; When window "class" updates, use it to set the buffer name
-;;   ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-;;   ;; These keys should always pass through to Emacs
-;;   (setq exwm-input-prefix-keys
-;;         '(?\C-x
-;;           ?\C-u
-;;           ?\C-h
-;;           ?\M-x
-;;           ?\M-`
-;;           ?\M-&
-;;           ?\M-:
-;;           ?\C-\M-j  ;; Buffer list
-;;           ?\C-\ ))  ;; Ctrl+Space
-
-;;   ;; Ctrl+Q will enable the next key to be sent directly
-;;   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-;;   ;; Set up global key bindings.  These always work, no matter the input state!
-;;   ;; Keep in mind that changing this list after EXWM initializes has no effect.
-;;   (setq exwm-input-global-keys
-;;         `(
-;;           ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-;;           ([?\s-r] . exwm-reset)
-
-;;           ;; Move between windows
-;;           ([s-left] . windmove-left)
-;;           ([s-right] . windmove-right)
-;;           ([s-up] . windmove-up)
-;;           ([s-down] . windmove-down)
-
-;;           ;; Launch applications via shell command
-;;           ([?\s-&] . (lambda (command)
-;;                        (interactive (list (read-shell-command "$ ")))
-;;                        (start-process-shell-command command nil command)))
-
-;;           ;; Switch workspace
-;;           ([?\s-w] . exwm-workspace-switch)
-
-;;           ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-;;           ,@(mapcar (lambda (i)
-;;                       `(,(kbd (format "s-%d" i)) .
-;;                         (lambda ()
-;;                           (interactive)
-;;                           (exwm-workspace-switch-create ,i))))
-;;                     (number-sequence 0 9))))
-
-;;   (exwm-enable))
-
-(use-package evil-multiedit
-  :hook (web-mode . evil-multiedit-mode))
-
 ;; Copyright (C) 2014 Matus Goljer <matus.goljer@gmail.com>
 ;; Package-requires: ((dash "2.5.0"))
 (defun org-inline-image--get-current-image ()
@@ -1077,9 +1015,3 @@ conda-env-subdirectory "envs")
 
 (load-relative "./editing.el")
 (load-relative "./desktop.el")
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
