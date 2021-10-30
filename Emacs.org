@@ -43,6 +43,14 @@ The following variables are used to tweak some of the configuration pieces for u
 #+RESULTS:
 : transparency
 
+#+begin_src emacs-lisp
+  (defun  efs/screen-layout ()
+    (interactive)
+    ;; NOTE: You will need to update this to a valid background path!
+    (start-process-shell-command
+     "sh" nil  "sh ~/.screenlayout/default.sh"))
+  ;; (efs/screen-layout)
+#+end_src
 
 * Tips for Use
 
@@ -1243,22 +1251,24 @@ It's a requirement for org-roam-bibtex,  org-roam, org-ref and bibtex-completion
 
 #+RESULTS:
 
-# #+begin_src emacs-lisp
-#   (use-package org-roam
-#     :ensure t
-#     :init
-#     (setq org-roam-v2-ack t)
-#     :custom
-#     (org-roam-directory "~/org-roam")
-#     :bind (("C-c n l" . org-roam-buffer-toggle)
-#            ("C-c n f" . org-roam-node-find)
-#            ("C-c n i" . org-roam-node-insert))
-#     :config
-#     (org-roam-setup))
-# #+end_src
+ #+begin_src emacs-lisp
+   (use-package org-roam
+     :ensure t
+     :custom
+     (org-roam-directory "~/buddhi-roam")
+     :bind (("C-c n l" . org-roam-buffer-toggle)
+            ("C-c n f" . org-roam-node-find)
+            ("C-c n g" . org-roam-graph)
+            ("C-c n i" . org-roam-node-insert))
+     :config
+     (org-roam-db-autosyc-mode)
+     (require 'org-roam-protocol))
+
+   (use-package graphviz-dot-mode
+     :ensure t)
+ #+end_src
 
 #+RESULTS:
-: org-roam-node-insert
 
 #+begin_src emacs-lisp
 (use-package org-ref)
@@ -1761,7 +1771,6 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 
   #+RESULTS:
   : my-scratch-buffer
-
 
 * Font Icons
 =M-x all-the-icons-install-fonts=

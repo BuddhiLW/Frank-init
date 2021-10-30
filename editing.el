@@ -5,6 +5,11 @@
 
 ;; (use-package textlint)
 
+(setq ispell-program-name "/usr/bin/hunspell")
+(setq ispell-program-name "hunspell")
+(ispell-set-spellchecker-params)
+(ispell-hunspell-add-multi-dic "pt_BR,en_US")
+
 ;;; package --- quick flyspell functionality.
 ;;; Commentary:
 ;; Easy spell checking; one can activate diverse capabilites of

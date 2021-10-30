@@ -1,4 +1,4 @@
-#+title: Emacs Desktop Environment
++title: Emacs Desktop Environment
 #+PROPERTY: header-args:emacs-lisp :tangle ./desktop.el
 
 * Window Management

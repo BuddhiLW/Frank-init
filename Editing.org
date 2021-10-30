@@ -35,6 +35,16 @@
 #+RESULTS:
 
 ** Some keybindings around <f8>
+#+begin_src emacs-lisp
+  (setq ispell-program-name "/usr/bin/hunspell")
+  (setq ispell-program-name "hunspell")
+  (ispell-set-spellchecker-params)
+  (ispell-hunspell-add-multi-dic "pt_BR,en_US")
+#+end_src
+
+#+RESULTS:
+: hunspell
+
    #+begin_src emacs-lisp
      ;;; package --- quick flyspell functionality.
      ;;; Commentary:

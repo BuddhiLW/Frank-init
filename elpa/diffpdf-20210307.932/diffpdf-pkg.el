@@ -1,2 +1,0 @@
-;;; Generated package description from /home/buddhilw/.emacs.d/elpa/diffpdf-20210307.932/diffpdf.el  -*- no-byte-compile: t -*-
-(define-package "diffpdf" "20210307.932" "Transient diffpdf" '((emacs "25.1") (transient "0.3.0")) :commit "fdb37bb696aaec6cb2bcece3760866760e68edc4" :authors '(("Shuguang Sun" . "shuguang79@qq.com")) :maintainer '("Shuguang Sun" . "shuguang79@qq.com") :keywords '("tools") :url "https://github.com/ShuguangSun/diffpdf.el")

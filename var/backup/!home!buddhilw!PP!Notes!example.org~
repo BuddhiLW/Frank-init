@@ -1,4 +1,4 @@
-* Exemplo
+* Exemplo 1
 
 iedsakdsaodsddsajdaskda
 "Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -8,7 +8,7 @@ This continues at length and variously. The text is not really Greek, but badly 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
 
 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
-* dasdsa
+* Exemplo 2 
 
 Yas-snippets
 
@@ -24,7 +24,7 @@ Hello world! cursor 1!
 Região dois:
 
 #+begin_src julia :session main :result output
-"olá mundo"
+  "olá mundo"
 #+end_src
 
 #+RESULTS:
@@ -36,7 +36,7 @@ MathJax
 |----------+---------------------------------------------------|
 | Comandos | Funcionalidade                                    |
 |----------+---------------------------------------------------|
-| C-x C-0  | Mudar de Buffer                                   |
+| C-x o    | Mudar de Buffer                                   |
 | C-x 1    | Colapsar em um único Buffer                       |
 | C-x 2    | Repartir o Buffer Horizontalmente em dois         |
 | C-x 3    | Repartir o Buffer Verticalmente em dois           |
@@ -69,31 +69,84 @@ Três modos principais:
   | Tecla/Comando                | Descrição (Histórico)                     |
   |------------------------------+-------------------------------------------|
   | C-x u                        | Volta na história um passo no save.       |
-  | U                            | Volta agressivamente na história do save. |
+  | u                            | Volta agressivamente na história do save. |
   | M-x undo-tree-mode RET C-x u | Volta na história em modo de árvore.      |
   |------------------------------+-------------------------------------------|
 
-  Em =Visual Mode=, o essencial:
+** Seleções de texto eficientes (Visual mode)
+Uma vez que pressionamos =v= em =normal mode=, algumas maneiras eficientes de seleção são:
 
-  |------------------------------+-------------------------------------------|
-  | Tecla/Comando                | Descrição (Movimentar-se)                 |
-  |------------------------------+-------------------------------------------|
-  | j                            | Para baixo                                |
-  | h                            | Para a esquerda                           |
-  | l                            | Para a direita                            |
-  | k                            | Para cima                                 |
-  |------------------------------+-------------------------------------------|
-  | Tecla/Comando                | Descrição (Copiar/Colar)                  |
-  |------------------------------+-------------------------------------------|
-  | *D*                          | Significado geral de Deletar              |
-  | dd                           | Deletar a linha completa                  |
-  | *P*                          | Significado geral de Paste (Colar)        |
-  | p                            | Cola o que estava no histório de Deletar  |
-  |------------------------------+-------------------------------------------|
-  | Tecla/Comando                | Descrição (Histórico)                     |
-  |------------------------------+-------------------------------------------|
-  | C-x u                        | Volta na história um passo no save.       |
-  | U                            | Volta agressivamente na história do save. |
-  | M-x undo-tree-mode RET C-x u | Volta na história em modo de árvore.      |
-  |------------------------------+-------------------------------------------|
+|---------------+----------------------------------------------------|
+| Tecla/Comando | Descrição (Movimentos clássicos)                   |
+|---------------+----------------------------------------------------|
+| 0             | Seleciona da posição ao início da linha            |
+| "$"           | Seleciona da posição ao fim da linha               |
+| %             | Seleciona a região entre colchetes: (, [ ou {      |
+| w             | Seleciona a região de uma palavra à frente         |
+|---------------+----------------------------------------------------|
+| Tecla/Comando | Descrição (Moção inicial (em Normal Mode para VM)) |
+|---------------+----------------------------------------------------|
+| Shift-v       | Seleciona toda a linha                             |
+| C-v           | Modo de seleção visual em bloco                    |
+|---------------+----------------------------------------------------|
+
+** Usos avançados
+
+- Achar um padrão no arquivo (search): C-s 
+  + C-s (Emacs' Incremental search)
+  + In Normal Mode: /<padrão-a-procurar> RET
+    * =n= próximo
+    * =N= anterior
+
+- Substituição de strings
+  + query-and-replace-regexp (C-M-%)
+  + query-replace (M-%)
+
+#+begin_src emacs-lisp
+  (evil-select-search-module 'evil-search-module 'evil-search)
+#+end_src
+
+#+RESULTS:
+: evil-search
+
+#+begin_src js :tangle ../js/.js
+  import axios from 'axios'
+  const axios = require('axios');
+
+  // Make a request for a user with a given ID
+  axios.get('/user?ID=d7x9ak23kd0')
+      .then(function (response) {
+          // handle success
+          console.log(response);
+      })
+      .catch(function (error) {
+          // handle error
+          console.log(error);
+      })
+      .then(function () {
+          // always executed
+      });
+
+  // Optionally the request above could also be done as
+  axios.get('/user', {
+      params: {
+          ID: d7x9ak23kd0 then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+      .then(function () {
+          // always executed
+      });  
+
+  // Want to use async/await? Add the `async` keyword to your outer function/method.
+  async function getUser() {
+      try {
+          const response = await axios.get('/user?ID=d7x9ak23kd0 sole.log(response);
+      } catch (error) {
+          console.error(error);
+      }
+  }
+#+end_src
 

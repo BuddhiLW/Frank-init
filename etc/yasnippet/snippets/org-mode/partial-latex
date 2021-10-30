@@ -2,4 +2,4 @@
 # name:partial latex
 # key: \p 
 # --
-\partial{$1}
+\partial{$0}

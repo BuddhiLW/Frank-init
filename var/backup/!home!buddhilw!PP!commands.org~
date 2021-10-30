@@ -1,5 +1,14 @@
-Capturar HDMI-1-0, à direita da tela principal (notebook).
+* Capturar HDMI-1-0, à direita da tela principal (notebook).
 
 #+begin_src shell
   ffmpeg -f x11grab -video_size 2560x1080 -framerate 45 -i :0.0+1920 -f alsa -i default -c:v libx264 -preset ultrafast -c:a aac screen-test.mp4
+#+end_src
+
+#+begin_src shell
+ffmpeg -i ./showcase.mp4 -ss 00:01:30 -t 00:02:40  -i ./PREMIERE\ Felipe\ Gordon\ -\ Highly\ Smooth\ Tone\ \(Feat.\ Julio\ Rigal\ \&\ Equilibrium\)\[Heist\ Recordings\].mp3 -c copy -map 0:v:0 -map 1:a:0 output.mp4 -shortest -af "volume=0.5dB, volume=0.5"
+#+end_src
+* Webcam
+
+#+begin_src shell
+mpv av://v4l2:/dev/video0 --profile=low-latency --untimed
 #+end_src
