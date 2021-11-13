@@ -435,3 +435,51 @@
 (use-package all-the-icons-completion)
 (use-package all-the-icons-ivy)
 (use-package all-the-icons-ibuffer)
+
+;; Or if you use use-package
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (add-to-list 'dashboard-items '(agenda) t)
+  (setq dashboard-week-agenda t))
+
+(use-package quelpa-use-package)
+;; Don't forget to run M-x eaf-install-dependencies
+(use-package eaf
+  :demand t
+  :quelpa (eaf :fetcher github
+              :repo  "manateelazycat/emacs-application-framework"
+              :files ("*"))
+  :load-path "~/.emacs.default/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
+  :init
+  (use-package epc      :defer t :ensure t)
+  (use-package ctable   :defer t :ensure t)
+  (use-package deferred :defer t :ensure t)
+  (use-package s        :defer t :ensure t)
+  (setq browse-url-browser-function 'eaf-open-browser))
+
+;; (require 'eaf-markdown-previewer)
+;; (require 'eaf-netease-cloud-music)
+(require 'eaf-terminal)
+(require 'eaf-camera)
+;; (require 'eaf-rss-reader)
+;; (require 'eaf-vue-demo)
+(require 'eaf-pdf-viewer)
+(require 'eaf-music-player)
+(require 'eaf-browser)
+(require 'eaf-org-previewer)
+(require 'eaf-demo)
+(require 'eaf-jupyter)
+;; (require 'eaf-mindmap)
+(require 'eaf-video-player)
+;; (require 'eaf-file-manager)
+;; (require 'eaf-file-sender)
+;; (require 'eaf-system-monitor)
+(require 'eaf-image-viewer)
+;; (require 'eaf-file-browser)
+;; (require 'eaf-airshare)
+;; (require 'eaf-mermaid)
+
+(add-to-list 'load-path "~/.emacs.default/site-lisp/emacs-application-framework/app/video-player/")
+(require 'eaf-video-player)

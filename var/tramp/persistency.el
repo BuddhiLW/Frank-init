@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <21/10/26 08:31:12 /home/buddhilw/.emacs.default/var/tramp/persistency.el>
+;; -*- emacs-lisp -*- <21/11/12 15:57:44 /home/buddhilw/.emacs.default/var/tramp/persistency.el>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
@@ -56,7 +56,7 @@
   ("gid-string" "root")
   ("readlink" "\\readlink"))
  ((tramp-file-name "sudo" "root" nil "laptop" nil nil nil)
-  ("uname" "Linux 5.14.14-artix1-1")
+  ("uname" "Linux 5.14.16-artix1-1")
   ("locale" "LC_ALL=en_US.utf8")
   ("test" "test")
   ("remote-path"

@@ -1,4 +1,4 @@
-+title: Emacs Desktop Environment
+#+title: Emacs Desktop Environment
 #+PROPERTY: header-args:emacs-lisp :tangle ./desktop.el
 
 * Window Management
@@ -1011,6 +1011,7 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 * From LARBS to E-LARBS
 ** Bindings
 *** remaps (script)
+# < <
 #+begin_src shell :tangle ~/.local/bin/remaps
   #!/bin/sh
 
@@ -1177,7 +1178,7 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
   ,*.jar=♨:\
   ,*.java=♨:\
   "
-
+  # <<<<<<<
   [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
 
   if pacman -Qs libxft-bgra >/dev/null 2>&1; then
@@ -1213,3 +1214,71 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 #+end_src
 
 #+RESULTS:
+* Dashboard
+#+begin_src emacs-lisp
+    ;; Or if you use use-package
+    (use-package dashboard
+      :ensure t
+      :config
+      (dashboard-setup-startup-hook)
+      (add-to-list 'dashboard-items '(agenda) t)
+      (setq dashboard-week-agenda t))
+#+end_src
+
+#+RESULTS:
+: t
+* EAF Emacs Framework
+
+#+begin_src emacs-lisp
+  (use-package quelpa-use-package)
+  ;; Don't forget to run M-x eaf-install-dependencies
+  (use-package eaf
+    :demand t
+    :quelpa (eaf :fetcher github
+                :repo  "manateelazycat/emacs-application-framework"
+                :files ("*"))
+    :load-path "~/.emacs.default/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
+    :init
+    (use-package epc      :defer t :ensure t)
+    (use-package ctable   :defer t :ensure t)
+    (use-package deferred :defer t :ensure t)
+    (use-package s        :defer t :ensure t)
+    (setq browse-url-browser-function 'eaf-open-browser))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  ;; (require 'eaf-markdown-previewer)
+  ;; (require 'eaf-netease-cloud-music)
+  (require 'eaf-terminal)
+  (require 'eaf-camera)
+  ;; (require 'eaf-rss-reader)
+  ;; (require 'eaf-vue-demo)
+  (require 'eaf-pdf-viewer)
+  (require 'eaf-music-player)
+  (require 'eaf-browser)
+  (require 'eaf-org-previewer)
+  (require 'eaf-demo)
+  (require 'eaf-jupyter)
+  ;; (require 'eaf-mindmap)
+  (require 'eaf-video-player)
+  ;; (require 'eaf-file-manager)
+  ;; (require 'eaf-file-sender)
+  ;; (require 'eaf-system-monitor)
+  (require 'eaf-image-viewer)
+  ;; (require 'eaf-file-browser)
+  ;; (require 'eaf-airshare)
+  ;; (require 'eaf-mermaid)
+#+end_src
+
+#+RESULTS:
+: eaf-image-viewer
+
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "~/.emacs.default/site-lisp/emacs-application-framework/app/video-player/")
+  (require 'eaf-video-player)
+#+end_src
+
+#+RESULTS:
+: eaf-video-player

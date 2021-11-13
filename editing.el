@@ -1,3 +1,31 @@
+;; (use-package evil-smartparens)
+(use-package ob-julia-vterm)
+(use-package smartparens)
+;; (use-package dap-mode)
+;; (use-package diffpdf)
+(use-package julia-vterm)
+;;  (use-package lsp)
+(use-package counsel)
+;;    (use-package company-quickhelp)
+;; (use-package company-box)
+(use-package cider)
+(use-package latex-extra)
+(use-package latex-preview-pane)
+;; (use-package lsp-latex)
+(use-package latex-pretty-symbols)
+(use-package latex-unicode-math-mode)
+(use-package org-latex-impatient)
+(use-package company-auctex)
+;; (use-package auto-complete-auctex)
+
+(use-package projectile)
+;; (use-package lsp-treemacs)
+;; (use-package treemacs)
+(use-package treemacs-all-the-icons)
+(use-package treemacs-magit)
+(use-package treemacs-evil)
+(use-package treemacs-icons-dired)
+
 (use-package flycheck
   :ensure t)
 
@@ -60,6 +88,13 @@
          (text-mode . evil-smartparens-mode)
          (special-mode . evil-smartparens-mode)))
 
+(use-package paren
+  :ensure nil
+  :init
+  (setq show-paren-delay 0)
+  :config
+  (show-paren-mode +1))
+
 (use-package indent-guide
   :init (indent-guide-global-mode t)
   :hook (prog-mode . indent-guide-mode))
@@ -93,7 +128,8 @@
 (setq org-latex-minted-options
       '(("frame" "lines")
         ("fontsize" "\\scriptsize")
-        ("linenos" "")))
+        ("linenos" "")
+        ("bgcolor" "LightGrey")))
 (setq org-latex-to-pdf-process
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
@@ -274,39 +310,32 @@
 
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch :height 1.4)
 
-;; (use-package evil-smartparens)
-(use-package ob-julia-vterm)
-(use-package smartparens)
-;; (use-package dap-mode)
-;; (use-package diffpdf)
-(use-package julia-vterm)
-;;  (use-package lsp)
-(use-package counsel)
-;;    (use-package company-quickhelp)
-;; (use-package company-box)
-(use-package cider)
-(use-package latex-extra)
-(use-package latex-preview-pane)
-;; (use-package lsp-latex)
-(use-package latex-pretty-symbols)
-(use-package latex-unicode-math-mode)
-(use-package org-latex-impatient)
-(use-package company-auctex)
-;; (use-package auto-complete-auctex)
-
-(use-package projectile)
-;; (use-package lsp-treemacs)
-;; (use-package treemacs)
-(use-package treemacs-all-the-icons)
-(use-package treemacs-magit)
-(use-package treemacs-evil)
-(use-package treemacs-icons-dired)
-
 (use-package org-pomodoro)
 
 (use-package org-tree-slide
   :custom
   (org-image-actual-width nil))
+
+(use-package flycheck
+  :hook (clojure . flycheck))
+
+(use-package flycheck-clojure)
+
+(add-hook 'clojure-mode 'flymake-mode-on)
+
+(use-package evil-paredit)
+
+(use-package paredit
+  :ensure t
+  ;; :hook ((cider-repl-mode . paredit-mode)
+  ;;        (cider-mode-hook . paredit-mode)
+  ;;        (clojure . paredit-mode)
+  ;;        (clojure-script . paredit-mode))
+  :init
+  (setq paredit-mode 1))
+
+;; (defun turn-on-paredit () (paredit-mode 1))
+;; (add-hook 'cider-mode-hook 'turn-on-paredit)
 
 ;; (use-package aggressive-completion)
 

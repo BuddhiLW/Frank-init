@@ -2,7 +2,16 @@
 ;; Automatically written history of CIDER REPL session
 ;; Edit at your own risk
 
-("(exit)" "(sin 9)" "(scatter-plot time-data-com B-data-com)" "(length time-data-com)" "(length B-data-com)" "B-data-com" "time-data-com" "B-data-com" "(view (scatter-plot time-data Vs-data
+("(shadow.cljs.devtools.api/nrepl-select :app)" "(shadow.cljs.devtools.api/nrepl-select)" "(shadow.cljs.devtools.api/nrepl-select :app)" "orders" "@orders" "@giggin.state/orders" "(ns giggin.state)" "@orders" "@giggin.state/orders" "orders" "(ns giggin.state
+  (:require [reagent.core :as r]))
+" "(shadow.cljs.devtools.api/nrepl-select :app)" "@giggin.state/orders" "
+@orders" "@gigs-atom" "(shadow.cljs.devtools.api/nrepl-select :app)" "@orders" "orders" "(ns giggin.state
+  (:require [reagent.core :as r]))
+" "@giggin.state/orders" "giggin.state/orders" "@giggin.state/orders" "giggin.state/orders" "@giggin.state/orders" "(ns giggin.state
+  (:require [reagent.core :as r]))
+" "(shadow.cljs.devtools.api/nrepl-select :app)" "@giggin.state/orders" "@giggin.state" "(ns giggin.state
+  (:require [reagent.core :as r]))
+" "(shadow.cljs.devtools.api/nrepl-select :app)" "(assoc gigs :one 1)" "@gigs-atom" "(swap! gigs-atom assoc :one 1)" "@gigs-atom" "(deref gigs-atom)" "(def gigs-atom (atom {}))" "gigs" "(assoc gigs :one 1)" "gigs" "(def gigs {})" "(exit)" "(sin 9)" "(scatter-plot time-data-com B-data-com)" "(length time-data-com)" "(length B-data-com)" "B-data-com" "time-data-com" "B-data-com" "(view (scatter-plot time-data Vs-data
                     :title \"Experimento sem núcleo\"
                     :x-label \"Tempo (s)\"
                     :y-label \"Campo Magnético (B)\"

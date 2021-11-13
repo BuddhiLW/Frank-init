@@ -171,57 +171,6 @@
    :config
     (unicode-fonts-setup))
 
-(defun my-correct-symbol-bounds (pretty-alist)
-  "Prepend a TAB character to each symbol in this alist,
-this way compose-region called by prettify-symbols-mode
-will use the correct width of the symbols
-instead of the width measured by char-width."
-  (mapcar (lambda (el)
-            (setcdr el (string ?\t (cdr el)))
-            el)
-          pretty-alist))
-
-(defun my-ligature-list (ligatures codepoint-start)
-  "Create an alist of strings to replace with
-codepoints starting from codepoint-start."
-  (let ((codepoints (-iterate '1+ codepoint-start (length ligatures))))
-    (-zip-pair ligatures codepoints)))
-
-                                        ; list can be found at https://github.com/i-tu/Hasklig/blob/master/GlyphOrderAndAliasDB#L1588
-(setq my-hasklig-ligatures
-      (let* ((ligs '("&&" "***" "*>" "\\\\" "||" "|>" "::"
-                     "==" "===" "==>" "=>" "=<<" "!!" ">>"
-                     ">>=" ">>>" ">>-" ">-" "->" "-<" "-<<"
-                     "<*" "<*>" "<|" "<|>" "<$>" "<>" "<-"
-                     "<<" "<<<" "<+>" ".." "..." "++" "+++"
-                     "/=" ":::" ">=>" "->>" "<=>" "<=<" "<->")))
-        (my-correct-symbol-bounds (my-ligature-list ligs #Xe100))))
-
-;; nice glyphs for haskell with hasklig
-(defun my-set-hasklig-ligatures ()
-  "Add hasklig ligatures for use with prettify-symbols-mode."
-  (setq prettify-symbols-alist
-        (append my-hasklig-ligatures prettify-symbols-alist))
-  (prettify-symbols-mode))
-
-(add-hook 'haskell-mode-hook 'my-set-hasklig-ligatures)
-
-(setq my-fira-code-ligatures
-  (let* ((ligs '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
-                "{-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
-                "--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
-                "#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
-                ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
-                "/**" "/=" "/==" "/>" "//" "///" "&&" "||" "||="
-                "|=" "|>" "^=" "$>" "++" "+++" "+>" "=:=" "=="
-                "===" "==>" "=>" "=>>" "<=" "=<<" "=/=" ">-" ">="
-                ">=>" ">>" ">>-" ">>=" ">>>" "<*" "<*>" "<|" "<|>"
-                "<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
-                "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
-                "<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"
-                "x" ":" "+" "+" "*")))
-    (my-correct-symbol-bounds (my-ligature-list ligs #Xe100))))
-
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 
@@ -404,6 +353,17 @@ codepoints starting from codepoint-start."
 
 (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
 
+(use-package clojure-mode)
+  ;; :hook ((paredit-mode . clojure-mode))
+
+(use-package clojure-mode-extra-font-locking)
+
+(use-package kibit-helper)
+
+(use-package anakondo)
+(use-package flymake-kondor)
+(use-package flycheck-clj-kondo)
+
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
@@ -450,7 +410,8 @@ codepoints starting from codepoint-start."
 (use-package org
   :pin org
   :commands (org-capture org-agenda)
-  :hook (org-mode . efs/org-mode-setup)
+  :hook ((org-mode . efs/org-mode-setup)
+         (org-mode . auto-fill-mode))
   :config
   (setq org-ellipsis " ▾")
 
@@ -475,103 +436,103 @@ codepoints starting from codepoint-start."
   (setq org-habit-graph-column 60)
 
   (setq org-todo-keywords
-    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+          (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
 
   (setq org-refile-targets
-    '(("Archive.org" :maxlevel . 1)
-      ("Tasks.org" :maxlevel . 1)))
+        '(("Archive.org" :maxlevel . 1)
+          ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
   (setq org-tag-alist
-    '((:startgroup)
-       ; Put mutually exclusive tags here
-       (:endgroup)
-       ("@errand" . ?E)
-       ("@home" . ?H)
-       ("@work" . ?W)
-       ("agenda" . ?a)
-       ("planning" . ?p)
-       ("publish" . ?P)
-       ("batch" . ?b)
-       ("note" . ?n)
-       ("idea" . ?i)))
+        '((:startgroup)
+                                        ; Put mutually exclusive tags here
+          (:endgroup)
+          ("@errand" . ?E)
+          ("@home" . ?H)
+          ("@work" . ?W)
+          ("agenda" . ?a)
+          ("planning" . ?p)
+          ("publish" . ?P)
+          ("batch" . ?b)
+          ("note" . ?n)
+          ("idea" . ?i)))
 
   ;; Configure custom agenda views
   (setq org-agenda-custom-commands
-   '(("d" "Dashboard"
-     ((agenda "" ((org-deadline-warning-days 7)))
-      (todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))
-      (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+        '(("d" "Dashboard"
+           ((agenda "" ((org-deadline-warning-days 7)))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))
+            (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
-    ("n" "Next Tasks"
-     ((todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))))
+          ("n" "Next Tasks"
+           ((todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))))
 
-    ("W" "Work Tasks" tags-todo "+work-email")
+          ("W" "Work Tasks" tags-todo "+work-email")
 
-    ;; Low-effort next actions
-    ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-     ((org-agenda-overriding-header "Low Effort Tasks")
-      (org-agenda-max-todos 20)
-      (org-agenda-files org-agenda-files)))
+          ;; Low-effort next actions
+          ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+           ((org-agenda-overriding-header "Low Effort Tasks")
+            (org-agenda-max-todos 20)
+            (org-agenda-files org-agenda-files)))
 
-    ("w" "Workflow Status"
-     ((todo "WAIT"
-            ((org-agenda-overriding-header "Waiting on External")
-             (org-agenda-files org-agenda-files)))
-      (todo "REVIEW"
-            ((org-agenda-overriding-header "In Review")
-             (org-agenda-files org-agenda-files)))
-      (todo "PLAN"
-            ((org-agenda-overriding-header "In Planning")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
-      (todo "BACKLOG"
-            ((org-agenda-overriding-header "Project Backlog")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
-      (todo "READY"
-            ((org-agenda-overriding-header "Ready for Work")
-             (org-agenda-files org-agenda-files)))
-      (todo "ACTIVE"
-            ((org-agenda-overriding-header "Active Projects")
-             (org-agenda-files org-agenda-files)))
-      (todo "COMPLETED"
-            ((org-agenda-overriding-header "Completed Projects")
-             (org-agenda-files org-agenda-files)))
-      (todo "CANC"
-            ((org-agenda-overriding-header "Cancelled Projects")
-             (org-agenda-files org-agenda-files)))))))
+          ("w" "Workflow Status"
+           ((todo "WAIT"
+                  ((org-agenda-overriding-header "Waiting on External")
+                   (org-agenda-files org-agenda-files)))
+            (todo "REVIEW"
+                  ((org-agenda-overriding-header "In Review")
+                   (org-agenda-files org-agenda-files)))
+            (todo "PLAN"
+                  ((org-agenda-overriding-header "In Planning")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "BACKLOG"
+                  ((org-agenda-overriding-header "Project Backlog")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "READY"
+                  ((org-agenda-overriding-header "Ready for Work")
+                   (org-agenda-files org-agenda-files)))
+            (todo "ACTIVE"
+                  ((org-agenda-overriding-header "Active Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "COMPLETED"
+                  ((org-agenda-overriding-header "Completed Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "CANC"
+                  ((org-agenda-overriding-header "Cancelled Projects")
+                   (org-agenda-files org-agenda-files)))))))
 
   (setq org-capture-templates
-    `(("t" "Tasks / Projects")
-      ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
+        `(("t" "Tasks / Projects")
+          ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
-      ("j" "Journal Entries")
-      ("jj" "Journal" entry
+          ("j" "Journal Entries")
+          ("jj" "Journal" entry
            (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
            "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
            ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
            :clock-in :clock-resume
            :empty-lines 1)
-      ("jm" "Meeting" entry
+          ("jm" "Meeting" entry
            (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
            "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
            :clock-in :clock-resume
            :empty-lines 1)
 
-      ("w" "Workflows")
-      ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+          ("w" "Workflows")
+          ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
            "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
 
-      ("m" "Metrics Capture")
-      ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
-       "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
+          ("m" "Metrics Capture")
+          ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
+           "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
 
   (define-key global-map (kbd "C-c j")
     (lambda () (interactive) (org-capture nil "jj")))
@@ -697,6 +658,7 @@ codepoints starting from codepoint-start."
    '((emacs-lisp . t)
      (python . t)
      (browser . t)
+     (ditaa . t)
      ;; (ipython . t)
      (julia-vterm . t)
      ;; (julia . t)
@@ -711,22 +673,11 @@ codepoints starting from codepoint-start."
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(conda-anaconda-home "/opt/anaconda/")
- '(ein:output-area-inlined-images t)
- '(helm-minibuffer-history-key "M-p")
- '(mailcap-user-mime-data '(("sxiv %s > /dev/null" "image/*" nil)))
  '(ob-ein-languages
-   '(("ein-python" . python)
-     ("ein-R" . R)
-     ("ein-r" . R)
-     ("ein-julia" . julia)))
- '(package-selected-packages
-   '(jupyter zenity-color-picker yasnippet-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet visual-fill-column use-package unicode-fonts unicode-escape undo-tree uimage ts treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tidal tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters pyvenv python-mode prettier-js poly-R pnpm-mode pdf-view-restore paredit ox-hugo outshine org-trello org-tree-slide org-superstar org-roam-bibtex org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-jedi lsp-ivy lsp-grammarly lockfile-mode load-relative latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra keytar julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful helm-bibtex gscholar-bibtex graphviz-dot-mode ghub general flymake-proselint flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-nerd-commenter evil-multiedit evil-collection eterm-256color ess eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein eglot edwina edit-indirect doom-modeline dmenu dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-jedi company-box company-bibtex company-auctex command-log-mode closql chemtable chembalance cdnjs bibtex-utils auto-package-update auto-complete-auctex amd-mode all-the-icons-ivy all-the-icons-ibuffer all-the-icons-dired all-the-icons-completion aggressive-indent ag ace-link ac-slime ac-js2 ac-ispell ac-cider a))
- '(python-indent-guess-indent-offset-verbose nil))
+  '(("ein-python" . python)
+    ("ein-R" . R)
+    ("ein-r" . R)
+    ("ein-julia" . julia))))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -844,7 +795,7 @@ codepoints starting from codepoint-start."
 (setq
 conda-env-home-directory (expand-file-name "~/.conda/")
 conda-env-subdirectory "envs")
-
+(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
 (conda-env-initialize-interactive-shells)
 (conda-env-initialize-eshell)
 (conda-env-autoactivate-mode t)
@@ -1048,9 +999,3 @@ conda-env-subdirectory "envs")
 
 (load-relative "./editing.el")
 (load-relative "./desktop.el")
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

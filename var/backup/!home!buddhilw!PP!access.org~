@@ -1,3 +1,71 @@
+#+LATEX_COMPILER: xelatex
+#+latex_header: \usepackage{minted}
+#+latex_header: \usepackage{fontspec} %Font package
+# #+latex_header: \usemainfont{Noto Sans CJK}
+#+latex_header: \newfontfamily\ch[Mapping=tex-text]{Source Han Sans C} 
+#+latex_header: \DeclareTextFontCommand{\unifont}{\ch}
+
 * Magit
-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
-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
+\begin{center}
+    \begin{verbatim}
+        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
+        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
+        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
+        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
+        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
+    \end{verbatim}
+\end{center}
+
+** Olá - nível 2 
+*** Olá - nível 3
+
+#+begin_src elisp :results output :export both :eval no
+  (defalias 'org-babel-execute:python 'org-babel-execute:ein-python)
+#+end_src
+
+#+RESULTS:
+: org-babel-execute:python
+
+#+NAME: 6b8a3b08-1552-482d-8aee-1d799a2f252c
+#+begin_src python :session localhost :results output :eval no
+import numpy as np
+#+end_src
+
+#+RESULTS: 6b8a3b08-1552-482d-8aee-1d799a2f252c
+
+#+NAME: a9d50f90-4733-4a0c-8218-98c880c08e07
+#+begin_src python :session localhost :results output :export both :eval no
+  np.cos(np.sin(np.pi + np.pi/2))
+#+end_src
+
+#+RESULTS: a9d50f90-4733-4a0c-8218-98c880c08e07
+: 0.5403023058681398
+
+#+NAME: 0895970d-75df-4e61-a80b-749aa10e1d6f
+#+begin_src ein-python :eval no
+3
+#+end_src
+*** Org nivel 3 - Matemática
+*AucTeX* =verbatim= +strike-trough+ /itálico/ 
+
+\begin{equation}
+  \begin{aligned}
+    \forall \, (x,y), \, \exists z, &\ni \quad  x^2 + y^2 = z^2 \\
+    &\in \\
+    &\ni \lambda 
+  \end{aligned}
+\end{equation}
+
+# leq:=l(atex) eq(uation)
+\ch{你好}
+
+\vspace{5mm}
+
+\textrm{ABCD - Roman Serifada}
+
+\textbf{ABCD - Negrito/Forçada}
+
+\texttt{ABCD - TypeWriter ou Monospace}
+
+\textsf{ABCD - Sans Serifada}
+

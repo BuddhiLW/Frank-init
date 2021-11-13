@@ -3,6 +3,43 @@
 
 
 
+* Packages needed
+  #+begin_src emacs-lisp
+    ;; (use-package evil-smartparens)
+    (use-package ob-julia-vterm)
+    (use-package smartparens)
+    ;; (use-package dap-mode)
+    ;; (use-package diffpdf)
+    (use-package julia-vterm)
+    ;;  (use-package lsp)
+    (use-package counsel)
+    ;;    (use-package company-quickhelp)
+    ;; (use-package company-box)
+    (use-package cider)
+    (use-package latex-extra)
+    (use-package latex-preview-pane)
+    ;; (use-package lsp-latex)
+    (use-package latex-pretty-symbols)
+    (use-package latex-unicode-math-mode)
+    (use-package org-latex-impatient)
+    (use-package company-auctex)
+    ;; (use-package auto-complete-auctex)
+  #+end_src
+
+  #+RESULTS:
+
+  #+begin_src emacs-lisp
+    (use-package projectile)
+    ;; (use-package lsp-treemacs)
+    ;; (use-package treemacs)
+    (use-package treemacs-all-the-icons)
+    (use-package treemacs-magit)
+    (use-package treemacs-evil)
+    (use-package treemacs-icons-dired)
+  #+end_src
+
+  #+RESULTS:
+
 * Flycheck (spelling checker)
 #+begin_src emacs-lisp
   (use-package flycheck
@@ -102,10 +139,10 @@
 	     (prog-mode . rainbow-delimiters-mode)))
   #+end_src
 
-
-* DONE Parenthesis
-  CLOSED: [2021-06-22 Tue 15:21] DEADLINE: <2021-06-20 Sun> SCHEDULED: <2021-06-17 Thu>
+* Parenthesis
+  DEADLINE: <2021-06-20 Sun> SCHEDULED: <2021-06-17 Thu>
 :LOGBOOK:
+- State "DONE"       from "BACKLOG"    [2021-10-30 Sat 13:12]
 - State "DONE"       from "NEXT"       [2021-06-22 Tue 15:21]
 :END:
 Move configuration on Emacs.org to here.
@@ -132,6 +169,20 @@ Move configuration on Emacs.org to here.
 #+end_src
 
 #+RESULTS:
+
+** Paren
+#+begin_src emacs-lisp
+(use-package paren
+  :ensure nil
+  :init
+  (setq show-paren-delay 0)
+  :config
+  (show-paren-mode +1))
+#+end_src
+
+#+RESULTS:
+: t
+
 * Indent Guide
   #+begin_src emacs-lisp
     (use-package indent-guide
@@ -194,17 +245,18 @@ Move configuration on Emacs.org to here.
 
  #+name: setup-minted
  #+begin_src emacs-lisp :exports both :results silent
-   (setq org-latex-listings 'minted)
-   (setq org-latex-custom-lang-environments
-          '((emacs-lisp "common-lispcode")))
-   (setq org-latex-minted-options
-         '(("frame" "lines")
-           ("fontsize" "\\scriptsize")
-           ("linenos" "")))
-   (setq org-latex-to-pdf-process
-         '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+      (setq org-latex-listings 'minted)
+      (setq org-latex-custom-lang-environments
+             '((emacs-lisp "common-lispcode")))
+      (setq org-latex-minted-options
+            '(("frame" "lines")
+              ("fontsize" "\\scriptsize")
+              ("linenos" "")
+              ("bgcolor" "LightGrey")))
+      (setq org-latex-to-pdf-process
+            '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
  #+end_src
 
 *** Output
@@ -403,7 +455,7 @@ Move configuration on Emacs.org to here.
       (add-hook 'after-init-hook 'org-mode))
     #+end_src
     
-* TODO Unicode abreviation alias and setup
+* Unicode abreviation alias and setup
 SCHEDULED: <2021-06-25 Fri>
 #+begin_src emacs-lisp
 ;; (define-key key-translation-map (kbd "<tab> p") (kbd "φ"))
@@ -535,43 +587,6 @@ SCHEDULED: <2021-06-25 Fri>
 
 #+RESULTS:
 
-* Packages needed
-  #+begin_src emacs-lisp
-    ;; (use-package evil-smartparens)
-    (use-package ob-julia-vterm)
-    (use-package smartparens)
-    ;; (use-package dap-mode)
-    ;; (use-package diffpdf)
-    (use-package julia-vterm)
-    ;;  (use-package lsp)
-    (use-package counsel)
-    ;;    (use-package company-quickhelp)
-    ;; (use-package company-box)
-    (use-package cider)
-    (use-package latex-extra)
-    (use-package latex-preview-pane)
-    ;; (use-package lsp-latex)
-    (use-package latex-pretty-symbols)
-    (use-package latex-unicode-math-mode)
-    (use-package org-latex-impatient)
-    (use-package company-auctex)
-    ;; (use-package auto-complete-auctex)
-  #+end_src
-
-  #+RESULTS:
-
-  #+begin_src emacs-lisp
-    (use-package projectile)
-    ;; (use-package lsp-treemacs)
-    ;; (use-package treemacs)
-    (use-package treemacs-all-the-icons)
-    (use-package treemacs-magit)
-    (use-package treemacs-evil)
-    (use-package treemacs-icons-dired)
-  #+end_src
-
-  #+RESULTS:
-
 * Pomorodo
   #+begin_src emacs-lisp
     (use-package org-pomodoro)
@@ -587,7 +602,60 @@ SCHEDULED: <2021-06-25 Fri>
   #+end_src
 
 # * Doom
-#   <el
+#   
+
+* TODO Move Stuff
+
+* Flycheck (coding)
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :hook (clojure . flycheck))
+#+end_src
+
+#+RESULTS:
+| flycheck-mode-on | flycheck-mode | paredit | flycheck |
+
+#+begin_src emacs-lisp
+  (use-package flycheck-clojure)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (add-hook 'clojure-mode 'flymake-mode-on)
+#+end_src
+
+#+RESULTS:
+| flymake-mode-on |
+
+* Paredit
+#+begin_src emacs-lisp
+  (use-package evil-paredit)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (use-package paredit
+    :ensure t
+    ;; :hook ((cider-repl-mode . paredit-mode)
+    ;;        (cider-mode-hook . paredit-mode)
+    ;;        (clojure . paredit-mode)
+    ;;        (clojure-script . paredit-mode))
+    :init
+    (setq paredit-mode 1))
+#+end_src
+
+#+RESULTS:
+| paredit-mode |
+
+#+begin_src emacs-lisp
+  ;; (defun turn-on-paredit () (paredit-mode 1))
+  ;; (add-hook 'cider-mode-hook 'turn-on-paredit)
+#+end_src
+
+#+RESULTS:
+| turn-on-paredit | evil-normalize-keymaps | doom-modeline-update-cider |
 
 * Aggresive Completion/Indent
 ** Auto-complete
