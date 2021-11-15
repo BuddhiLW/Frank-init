@@ -420,16 +420,12 @@
   (setq org-log-into-drawer t)
 
   (setq org-agenda-files
-        '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Monday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Tuesday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Wendnesday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Thrusday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Friday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Saturday.org"
-          "~/Projects/Code/emacs-from-scratch/OrgFiles/Sunday.org"))
+        '("~/Projects/Tasks.org"
+          "~/Projects/Habits.org"
+          "~/Projects/IMPA.org"
+          "~/Projects/ProcSel.org"
+          "~/Projects/University.org"
+          "~/Projects/Research.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
@@ -673,11 +669,19 @@
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(conda-anaconda-home "/opt/anaconda/")
+ '(helm-minibuffer-history-key "M-p")
  '(ob-ein-languages
-  '(("ein-python" . python)
-    ("ein-R" . R)
-    ("ein-r" . R)
-    ("ein-julia" . julia))))
+   '(("ein-python" . python)
+     ("ein-R" . R)
+     ("ein-r" . R)
+     ("ein-julia" . julia)))
+ '(package-selected-packages
+   '(zenity-color-picker yasnippet-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet vlc visual-fill-column unicode-fonts unicode-escape undo-tree uimage ts treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tidal tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters quelpa-use-package pyvenv python-mode prettier-js poly-R pnpm-mode pdf-view-restore ox-hugo outshine org-trello org-tree-slide org-superstar org-roam-bibtex org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode nrepl-sync npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-jedi lsp-ivy lsp-grammarly lockfile-mode load-relative latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra kibit-helper keytar jupyter julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful helm-bibtex gscholar-bibtex graphviz-dot-mode ghub general flymake-proselint flymake-kondor flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-clojure flycheck-clj-kondo flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-paredit evil-nerd-commenter evil-multiedit evil-collection eterm-256color ess eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein eglot edwina edit-indirect eaf doom-modeline dmenu dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dashboard dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-jedi company-box company-bibtex company-auctex command-log-mode closql clojure-mode-extra-font-locking chemtable chembalance cdnjs calfw-org calfw-ical calfw-gcal calfw-cal calfw bibtex-utils auto-package-update auto-complete-auctex anakondo amd-mode all-the-icons-ivy all-the-icons-ibuffer all-the-icons-dired all-the-icons-completion aggressive-indent ag ace-link ac-slime ac-js2 ac-ispell ac-cider a)))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -795,7 +799,7 @@
 (setq
 conda-env-home-directory (expand-file-name "~/.conda/")
 conda-env-subdirectory "envs")
-(custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
+
 (conda-env-initialize-interactive-shells)
 (conda-env-initialize-eshell)
 (conda-env-autoactivate-mode t)
@@ -995,7 +999,18 @@ conda-env-subdirectory "envs")
 (use-package chembalance)
 (use-package chemtable)
 
+(use-package calfw-org)
+(use-package calfw-cal)
+(use-package calfw-ical)
+(use-package calfw-gcal)
+
 (use-package load-relative)
 
 (load-relative "./editing.el")
 (load-relative "./desktop.el")
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

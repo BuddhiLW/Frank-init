@@ -1,9 +1,0 @@
-{
-    "configurations": [{
-        "name": "Web Browser",
-        "type": "chrome",
-        "url": "file:///home/buddhilw/PP/BootCamp/projeto-buzzQuizz/code/html/screen2.html",
-	"port": "9222",
-	"root": "src"
-    }]    
-}

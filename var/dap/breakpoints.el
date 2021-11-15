@@ -1,1 +1,0 @@
-#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("/home/buddhilw/PP/Python/OOP/Aulas.org" ((:point 889)) "/home/buddhilw/PP/LaTeX/SEMEF-minicurso/Apres1/Apresentacao-1.org" ((:point 564) (:point 1405)) "/home/buddhilw/PP/LaTeX/SEMEF-minicurso/Apres1/tangle/doc1.tex" ((:point 1318))))

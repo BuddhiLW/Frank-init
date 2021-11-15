@@ -1,2 +1,0 @@
-let querier = c => document.querie(c);
-let listen = element => event => f => element.addEventListener(event, f);

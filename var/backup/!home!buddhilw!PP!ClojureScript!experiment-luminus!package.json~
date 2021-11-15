@@ -1,8 +1,0 @@
-  { 
-   	 "devDependencies": {
-     "swank-js": ">=0.0.1"
-    },
-      "scripts": {
-      "swank": "node node_modules/swank-js"
-    }
-  }

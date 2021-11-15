@@ -1,0 +1,2 @@
+devtools://devtools/bundled/inspector.html
+devtools://devtools/bundled/inspector.html

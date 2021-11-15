@@ -1,7 +1,0 @@
-\documentclass[12pt]{abntex2}
-\usepackage {numprint,siunitx,xcolor}
-\usepackage{tabu}
-
-\begin{document}
-
-\end{document}

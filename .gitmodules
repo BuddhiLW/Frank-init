@@ -10,3 +10,6 @@
 [submodule "ob-julia-vterm"]
 	path = ob-julia-vterm
 	url = https://github.com/emacsmirror/ob-julia-vterm.git
+[submodule "eaf-video-player"]
+	path = eaf-video-player
+	url = https://github.com/emacs-eaf/eaf-video-player.git

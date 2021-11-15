@@ -1,8 +1,11 @@
 /transient/
 *elpa/*
+/var/
+/var/*
+/var
 var/
 var/*
-var
+var/
 elpa/*
 exwm
 thumbs

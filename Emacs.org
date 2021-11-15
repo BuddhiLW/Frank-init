@@ -629,7 +629,6 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 #+RESULTS:
 
-
 * Org Mode
 [[https://orgmode.org/][Org Mode]] is one of the hallmark features of Emacs.  It is a rich document editor, project planner, task and time tracker, blogging engine, and literate coding utility all wrapped up in one package.
 
@@ -692,7 +691,6 @@ The =efs/org-font-setup= function configures various text faces to tweak the siz
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
 
 #+begin_src emacs-lisp
-
   (defun efs/org-mode-setup ()
     (org-indent-mode)
     (variable-pitch-mode 1)
@@ -711,16 +709,12 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (setq org-log-into-drawer t)
 
     (setq org-agenda-files
-          '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Monday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Tuesday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Wendnesday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Thrusday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Friday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Saturday.org"
-            "~/Projects/Code/emacs-from-scratch/OrgFiles/Sunday.org"))
+          '("~/Projects/Tasks.org"
+            "~/Projects/Habits.org"
+            "~/Projects/IMPA.org"
+            "~/Projects/ProcSel.org"
+            "~/Projects/University.org"
+            "~/Projects/Research.org"))
 
     (require 'org-habit)
     (add-to-list 'org-modules 'org-habit)
@@ -832,6 +826,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+end_src
 
+#+RESULTS:
+| org-evil--org-mode-hook-fn | org-ref-org-menu | (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | org-display-inline-images | efs/org-mode-visual-fill | (lambda nil (org-bullets-mode 1)) | org-superstar-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | auto-fill-mode | efs/org-mode-setup | org-auto-tangle-mode | (lambda nil (display-line-numbers-mode 0)) |
 
 *** Nicer Heading Bullets 
 
@@ -1725,6 +1721,16 @@ Dial the GC threshold back down so that garbage collection happens more frequent
     (use-package chemtable)
   #+end_src
  
+* Calendar Calfw
+#+begin_src emacs-lisp
+  (use-package calfw-org)
+  (use-package calfw-cal)
+  (use-package calfw-ical)
+  (use-package calfw-gcal)
+#+end_src
+
+#+RESULTS:
+
 * Load Desktop.el and other auxiliaries
 
 #+begin_src emacs-lisp

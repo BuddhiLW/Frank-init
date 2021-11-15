@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name:latex equation
-# key: eq
-# --
-#+begin_example
-\begin{equation}
-$0
-\end{equation}
-#+end_example

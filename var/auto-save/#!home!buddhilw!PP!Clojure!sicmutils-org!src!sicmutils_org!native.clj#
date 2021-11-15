@@ -1,4 +1,0 @@
-(ns sicmutils-org.native
-  (:require [uncomplicate.neanderthal
-             [core :refer :all]
-             [native :refer :all]]))

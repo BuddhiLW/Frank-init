@@ -1,2 +1,0 @@
-* Rclone backup wagner
-$ rclone sync -P /mnt/ rclone:wagner-backup/
