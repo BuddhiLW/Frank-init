@@ -8,8 +8,15 @@ Essa versão do Emacs é compatível com a utilizada na SEMEF, para utilização
 *Linux*
 - Clone esse repositório: =git clone https://github.com/BuddhiLW/Frank-init.git=
 - Mova o arquivo e renome =Frank-init= para =.emacs.d=, no diretório base do seu computador.
-- Inicie o Emacs!
-  
+- Inicie o Emacs (ainda terá a versão básica).
+- Navegue ao diretório =~/.emacs.d/Emacs.org=, usando =C-x C-f=.
+- Utilize o comando =C-c C-x C-t= (tangle)
+- Faça o mesmo para =~/.emacs.d/Editing.org=, =/.emacs.d/Desktop.org=
+  e =/.emacs.d/PL.org=.
+- Reinicie o _Emacs_.
 
+Nesse momento, o =Emacs= instalará todas as dependências, pacotes e
+configurações os quais utilizo no meu sistema. Ao fim, voilà, chega-se
+a minha versão de =Emacs=.
 
 
