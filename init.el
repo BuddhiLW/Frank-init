@@ -213,7 +213,16 @@
   (efs/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
+    "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.default/Emacs.org")) :which-key "Emacs config")
+    "k" '(lambda () (interactive) (org-babel-previous-src-block) :which-key "Previous block")
+    "j" '(lambda () (interactive) (org-babel-next-src-block) :which-key "Next block")
+    "ph" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Habits.org")) :which-key "Habits")
+    "pi" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/IMPA.org")) :which-key "IMPA")
+    "pps" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/ProcSel.org")) :which-key "Processo Seletivo")
+    "ppp" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Programming.org")) :which-key "Programming")
+    "pr" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Research.org")) :which-key "Reasearch")
+    "pt" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Tasks.org")))
+    "pu" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/University.org")))))
 
 (use-package evil
   :init
@@ -262,10 +271,12 @@
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 10)))
-(setq doom-modeline-buffer-file-name-style 'truncate-with-project)
-(setq doom-modeline--batery-status t)
-(setq doom-modeline-lsp t)
+  :custom ((doom-modeline-height 10))
+  :config
+  (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (setq doom-modeline--batery-status t)
+  (setq doom-modeline-lsp t)
+  (display-battery-mode 1))
 
 (use-package which-key
   :defer 0
@@ -353,8 +364,14 @@
 
 (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
 
-(use-package clojure-mode)
-  ;; :hook ((paredit-mode . clojure-mode))
+(use-package clojure-mode
+  :hook ((clojure-mode . subword-mode)
+         (clojure-mode . paredit-mode)
+         (clojure-mode . smartparens-strict-mode)
+         (clojure-mode . aggressive-indent-mode)))
+;; :hook ((paredit-mode . clojure-mode))
+
+(setq clojure-align-forms-automatically t)
 
 (use-package clojure-mode-extra-font-locking)
 
@@ -407,10 +424,20 @@
   (variable-pitch-mode 1)
   (visual-line-mode 1))
 
+;; (defun bw/org-motion-setup ()
+;;   (general-create-definer bw/org-leader-keys
+;;     :keymaps '(normal visual emacs)
+;;     :prefix "SPC")
+;;   (bw/org-leader-keys
+;;    "j" '(lambdaorg-babel-next-src-block)
+;;    "k" '(org-babel-previous-src-block)
+;;    "SPC" '(org-ctrl-c-ctrl-c)))
+
 (use-package org
   :pin org
   :commands (org-capture org-agenda)
   :hook ((org-mode . efs/org-mode-setup)
+         ;; (org-mode . bw/org-motion-setup)
          (org-mode . auto-fill-mode))
   :config
   (setq org-ellipsis " ▾")
@@ -655,6 +682,8 @@
      (python . t)
      (browser . t)
      (ditaa . t)
+     (R . t)
+     (go . t) 
      ;; (ipython . t)
      (julia-vterm . t)
      ;; (julia . t)
@@ -669,19 +698,11 @@
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(conda-anaconda-home "/opt/anaconda/")
- '(helm-minibuffer-history-key "M-p")
  '(ob-ein-languages
-   '(("ein-python" . python)
-     ("ein-R" . R)
-     ("ein-r" . R)
-     ("ein-julia" . julia)))
- '(package-selected-packages
-   '(zenity-color-picker yasnippet-snippets xwidgete xref-js2 widgetjs which-key webkit-color-picker web-beautify vuiet vlc visual-fill-column unicode-fonts unicode-escape undo-tree uimage ts treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons tide tidal tern sudo-edit spaceline slime-company scss-mode scribble-mode saveplace-pdf-view rjsx-mode rainbow-mode rainbow-delimiters quelpa-use-package pyvenv python-mode prettier-js poly-R pnpm-mode pdf-view-restore ox-hugo outshine org-trello org-tree-slide org-superstar org-roam-bibtex org-present org-pomodoro org-noter-pdftools org-latex-impatient org-inline-pdf org-evil org-easy-img-insert org-download org-bullets org-brain org-auto-tangle ob-latex-as-png ob-julia-vterm ob-html-chrome ob-clojurescript ob-browser nyan-mode nrepl-sync npm-mode npm no-littering neotree mutt-mode lsp-ui lsp-latex lsp-jedi lsp-ivy lsp-grammarly lockfile-mode load-relative latex-unicode-math-mode latex-preview-pane latex-pretty-symbols latex-extra kibit-helper keytar jupyter julia-snail jst jss jsfmt js3-mode js2-highlight-vars js-react-redux-yasnippets js-doc ivy-rich ivy-prescient indium indent-guide image-dired+ image-archive image+ helpful helm-bibtex gscholar-bibtex graphviz-dot-mode ghub general flymake-proselint flymake-kondor flymake-gjshint flymake-eslint flymake-css flycheck-grammarly flycheck-elm flycheck-clojure flycheck-clj-kondo flycheck-aspell fira-code-mode exwm exec-path-from-shell ewal-spacemacs-themes ewal-evil-cursors ewal-doom-themes evil-surround evil-smartparens evil-paredit evil-nerd-commenter evil-multiedit evil-collection eterm-256color ess eslintd-fix eslint-fix eshell-git-prompt emojify emmet-mode elm-yasnippets elm-mode ein eglot edwina edit-indirect eaf doom-modeline dmenu dired-single dired-ranger dired-rainbow dired-open dired-hide-dotfiles dired-collapse diffpdf desktop-environment dashboard dap-mode counsel-projectile counsel-dash counsel-css context-coloring conda company-quickhelp company-prescient company-jedi company-box company-bibtex company-auctex command-log-mode closql clojure-mode-extra-font-locking chemtable chembalance cdnjs calfw-org calfw-ical calfw-gcal calfw-cal calfw bibtex-utils auto-package-update auto-complete-auctex anakondo amd-mode all-the-icons-ivy all-the-icons-ibuffer all-the-icons-dired all-the-icons-completion aggressive-indent ag ace-link ac-slime ac-js2 ac-ispell ac-cider a)))
+  '(("ein-python" . python)
+    ("ein-R" . R)
+    ("ein-r" . R)
+    ("ein-julia" . julia))))
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
@@ -795,14 +816,15 @@
 ;; (require 'elgantt)
 ;; ;; (setq elgantt-agenda-files (concat user-emacs-directory "lisp/elgantt/test.org"))
 
-(use-package conda)
-(setq
-conda-env-home-directory (expand-file-name "~/.conda/")
-conda-env-subdirectory "envs")
-
-(conda-env-initialize-interactive-shells)
-(conda-env-initialize-eshell)
-(conda-env-autoactivate-mode t)
+(use-package conda
+  :config
+  (setq
+   conda-env-home-directory (expand-file-name "~/.conda/")
+   conda-env-subdirectory "envs")
+  (custom-set-variables '(conda-anaconda-home "/opt/anaconda2/"))
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell)
+  (conda-env-autoactivate-mode t))
 
 (use-package term
   :commands term
@@ -1004,13 +1026,48 @@ conda-env-subdirectory "envs")
 (use-package calfw-ical)
 (use-package calfw-gcal)
 
+(use-package ox-reveal)
+
+(use-package htmlize)
+
+(defun tidy-html ()
+  "Tidies the HTML content in the buffer using `tidy'"
+  (interactive)
+  (shell-command-on-region
+   ;; beginning and end of buffer
+   (point-min)
+   (point-max)
+   ;; command and parameters
+   "tidy -i -w 120 -q"
+   ;; output buffer
+   (current-buffer)
+   ;; replace?
+   t
+   ;; name of the error buffer
+   "*Tidy Error Buffer*"
+   ;; show error buffer?
+   t))
+
+(use-package celestial-mode-line
+  :config
+  (setq calendar-longitude "20.54S")
+  (setq calendar-latitude "47.40W")
+  (setq calendar-location-name "Franca, SP")
+  (setq global-mode-string '("" celestial-mode-line-string display-time-string))
+  (defvar celestial-mode-line-phase-representation-alist '((0 . "○") (1 . "☽") (2 . "●") (3 . "☾")))
+  (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "☀↑ ") (sunset . "☀↓ ")))
+  (defvar celestial-mode-line-phase-representation-alist '((0 . "( )") (1 . "|)") (2 . "(o)") (3 . "|)")))
+  (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "*^") (sunset . "*v")))
+  (celestial-mode-line-start-timer)
+  :init
+  (define-key global-map
+    (kbd "µ")
+    (display-message-or-buffer (message "`%s'" (eval '(solar-sunrise-sunset-string (calendar-current-date)))))))
+
+(message "hello")
+
 (use-package load-relative)
 
+(load-relative "./pl.el")
 (load-relative "./editing.el")
 (load-relative "./desktop.el")
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

@@ -111,6 +111,10 @@
 ;; (use-package yasnippet-snippets)
 ;; (use-package yasnippet-classic-snippets)
 
+(use-package yasnippet
+  :config
+  (setq yas-global-mode 1))
+
 (use-package auctex
   :ensure tex-mode
   :hook (tex-mode . auctex-mode))
@@ -128,8 +132,8 @@
 (setq org-latex-minted-options
       '(("frame" "lines")
         ("fontsize" "\\scriptsize")
-        ("linenos" "")
-        ("bgcolor" "LightGrey")))
+        ("linenos" "false")
+        ("bgcolor" "LightGray")))
 (setq org-latex-to-pdf-process
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
@@ -308,6 +312,36 @@
 ;;                        (require 'lsp-grammarly)
 ;;                        (lsp))))  ; or lsp-deferred
 
+;; Input method and key binding configuration.
+(setq alternative-input-methods
+      '(("chinese-tonepy" . [?\ä])
+        ("chinese-sisheng"   . [?\å])))
+
+(setq default-input-method
+      (caar alternative-input-methods))
+
+(defun toggle-alternative-input-method (method &optional arg interactive)
+  (if arg
+      (toggle-input-method arg interactive)
+    (let ((previous-input-method current-input-method))
+      (when current-input-method
+        (deactivate-input-method))
+      (unless (and previous-input-method
+                   (string= previous-input-method method))
+        (activate-input-method method)))))
+
+(defun reload-alternative-input-methods ()
+  (dolist (config alternative-input-methods)
+    (let ((method (car config)))
+      (global-set-key (cdr config)
+                      `(lambda (&optional arg interactive)
+                         ,(concat "Behaves similar to `toggle-input-method', but uses \""
+                                  method "\" instead of `default-input-method'")
+                         (interactive "P\np")
+                         (toggle-alternative-input-method ,method arg interactive))))))
+
+(reload-alternative-input-methods)
+
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch :height 1.4)
 
 (use-package org-pomodoro)
@@ -339,7 +373,8 @@
 
 ;; (use-package aggressive-completion)
 
-;; (use-package aggressive-indent
-  ;; :hook (prog-mode . aggresive-indent))
+(use-package aggressive-indent
+  :config
+  (setq global-aggressive-indent-mode 1))
 
 ;; (use-package aggressive-fill-paragraph)

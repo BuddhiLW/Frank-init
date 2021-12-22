@@ -853,6 +853,118 @@ Here are some things you might want to consider changing:
 
   #+end_src
 
+** Distro Tube's repo (DT)
+#+begin_src conf :tangle "/sudo::/etc/pacman.conf" :mkdirp yes
+  #
+  # /etc/pacman.conf
+  #
+  # See the pacman.conf(5) manpage for option and repository directives
+
+  #
+  # GENERAL OPTIONS
+  #
+  [options]
+  # The following paths are commented out with their default values listed.
+  # If you wish to use different paths, uncomment and update the paths.
+  #RootDir     = /
+  #DBPath      = /var/lib/pacman/
+  #CacheDir    = /var/cache/pacman/pkg/
+  #LogFile     = /var/log/pacman.log
+  #GPGDir      = /etc/pacman.d/gnupg/
+  #HookDir     = /etc/pacman.d/hooks/
+  HoldPkg     = pacman glibc
+  #XferCommand = /usr/bin/curl -L -C - -f -o %o %u
+  #XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
+  #CleanMethod = KeepInstalled
+  Architecture = auto
+
+  # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+  #IgnorePkg   =
+  #IgnoreGroup =
+
+  #NoUpgrade   =
+  #NoExtract   =
+
+  # Misc options
+  #UseSyslog
+  Color
+  #NoProgressBar
+  CheckSpace
+  #VerbosePkgLists
+  ILoveCandy
+  #ParallelDownloads = 5
+
+  # By default, pacman accepts packages signed by keys that its local keyring
+  # trusts (see pacman-key and its man page), as well as unsigned packages.
+  SigLevel    = Required DatabaseOptional
+  LocalFileSigLevel = Optional
+  #RemoteFileSigLevel = Required
+
+  # NOTE: You must run `pacman-key --init` before first using pacman; the local
+  # keyring can then be populated with the keys of all official Artix Linux
+  # packagers with `pacman-key --populate artix`.
+
+  #
+  # REPOSITORIES
+  #   - can be defined here or included from another file
+  #   - pacman will search repositories in the order defined here
+  #   - local/custom mirrors can be added here or in separate files
+  #   - repositories listed first will take precedence when packages
+  #     have identical names, regardless of version number
+  #   - URLs will have $repo replaced by the name of the current repo
+  #   - URLs will have $arch replaced by the name of the architecture
+  #
+  # Repository entries are of the format:
+  #       [repo-name]
+  #       Server = ServerName
+  #       Include = IncludePath
+  #
+  # The header [repo-name] is crucial - it must be present and
+  # uncommented to enable the repo.
+  #
+
+  # The gremlins repositories are disabled by default. To enable, uncomment the
+  # repo name header and Include lines. You can add preferred servers immediately
+  # after the header, and they will be used before the default mirrors.
+
+  #[gremlins]
+  #Include = /etc/pacman.d/mirrorlist
+
+  [system]
+  Include = /etc/pacman.d/mirrorlist
+
+  [world]
+  Include = /etc/pacman.d/mirrorlist
+
+  #[galaxy-gremlins]
+  #Include = /etc/pacman.d/mirrorlist
+
+  [galaxy]
+  Include = /etc/pacman.d/mirrorlist
+
+  # If you want to run 32 bit applications on your x86_64 system,
+  # enable the lib32 repositories as required here.
+
+  #[lib32-gremlins]
+  #Include = /etc/pacman.d/mirrorlist
+
+  #[lib32]
+  #Include = /etc/pacman.d/mirrorlist
+
+  # An example of a custom package repository.  See the pacman manpage for
+  # tips on creating your own repositories.
+  #[custom]
+  #SigLevel = Optional TrustAll
+  #Server = file:///home/custompkgs
+  [extra]
+  Include = /etc/pacman.d/mirrorlist-arch
+  [community]
+  Include = /etc/pacman.d/mirrorlist-arch
+
+  [dt-arch-repo]			
+  SigLevel = Optional DatabaseOptional
+  Server = https://gitlab.com/dwt1/$repo/-/raw/master/$arch
+#+end_src
 * Keyboard setup
 
 - INFO: us intl, capslock as escape
@@ -1235,8 +1347,8 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
   (use-package eaf
     :demand t
     :quelpa (eaf :fetcher github
-                :repo  "manateelazycat/emacs-application-framework"
-                :files ("*"))
+                 :repo  "manateelazycat/emacs-application-framework"
+                 :files ("*"))
     :load-path "~/.emacs.default/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
     :init
     (use-package epc      :defer t :ensure t)
@@ -1245,8 +1357,6 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
     (use-package s        :defer t :ensure t)
     (setq browse-url-browser-function 'eaf-open-browser))
 #+end_src
-
-#+RESULTS:
 
 #+begin_src emacs-lisp
   ;; (require 'eaf-markdown-previewer)
@@ -1269,7 +1379,7 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
   (require 'eaf-image-viewer)
   ;; (require 'eaf-file-browser)
   ;; (require 'eaf-airshare)
-  ;; (require 'eaf-mermaid)
+  ;; (require 'eaf-mermaid))
 #+end_src
 
 #+RESULTS:
@@ -1282,3 +1392,155 @@ Copy pasta from [[https://stackoverflow.com/questions/12032231/is-it-possible-to
 
 #+RESULTS:
 : eaf-video-player
+
+* Homecooked Macros
+
+#+begin_src emacs-lisp
+(use-package elmacro)
+#+end_src
+
+** Flush all org src names
+This is useful when you want to copy and paste the same steps as a
+baseline, but you don't want to conflicting source-code block's names.
+
+#+begin_src emacs-lisp
+(defun flush-org-names ()
+  (interactive)
+  (setq last-command-event 103)
+  (evil-goto-first-line nil)
+  (setq last-command-event 86)
+  (evil-visual-line nil nil 'line t)
+  (setq last-command-event 71)
+  (evil-goto-line nil)
+  (setq last-command-event 13)
+  (flush-lines "[+]NAME:" nil nil t)
+  (setq last-command-event 13)
+  (counsel-M-x)
+  (setq last-command-event 'f4))
+#+end_src
+
+#+RESULTS:
+: flush-org-names
+
+#+begin_src emacs-lisp
+ (global-set-key (kbd "C-c C-o f") 'flush-org-names)
+#+end_src
+
+#+RESULTS:
+: flush-org-names
+
+* Periodic Tables
+  #+begin_src emacs-lisp
+    (use-package chembalance)
+    (use-package chemtable)
+  #+end_src
+ 
+* Calendar Calfw
+#+begin_src emacs-lisp
+  (use-package calfw-org)
+  (use-package calfw-cal)
+  (use-package calfw-ical)
+  (use-package calfw-gcal)
+#+end_src
+
+#+RESULTS:
+
+* Reveal.js presentations
+#+begin_src emacs-lisp
+  (use-package ox-reveal)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
+
+#+RESULTS:
+ 
+* Emacs extension by shell scripting
+- nǐ hǎo
+- 你好
+- Não tem tempo ruim.
+
+#+begin_src emacs-lisp
+  (defun tidy-html ()
+    "Tidies the HTML content in the buffer using `tidy'"
+    (interactive)
+    (shell-command-on-region
+     ;; beginning and end of buffer
+     (point-min)
+     (point-max)
+     ;; command and parameters
+     "tidy -i -w 120 -q"
+     ;; output buffer
+     (current-buffer)
+     ;; replace?
+     t
+     ;; name of the error buffer
+     "*Tidy Error Buffer*"
+     ;; show error buffer?
+     t))
+#+end_src
+
+#+RESULTS:
+: tidy-html
+
+* Celestial-mode-line
+#+begin_src emacs-lisp
+  (use-package celestial-mode-line
+    :config
+    (setq calendar-longitude "20.54S")
+    (setq calendar-latitude "47.40W")
+    (setq calendar-location-name "Franca, SP")
+    (setq global-mode-string '("" celestial-mode-line-string display-time-string))
+    (defvar celestial-mode-line-phase-representation-alist '((0 . "○") (1 . "☽") (2 . "●") (3 . "☾")))
+    (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "☀↑ ") (sunset . "☀↓ ")))
+    (defvar celestial-mode-line-phase-representation-alist '((0 . "( )") (1 . "|)") (2 . "(o)") (3 . "|)")))
+    (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "*^") (sunset . "*v")))
+    (celestial-mode-line-start-timer))
+#+end_src
+
+#+RESULTS:
+: t
+
+#+begin_src emacs-lisp :tangle no
+(eval '(solar-sunrise-sunset-string (calendar-current-date)))
+#+end_src
+
+#+RESULTS:
+: Sunrise 3:55am (-03), sunset 8:37pm (-03) at Franca, SP (16:42 hrs daylight)
+
+** Bindings for retriving data
+#+begin_src emacs-lisp
+(defun my/func ()
+  (interactive)
+  (display-message-or-buffer (message "`%s'" (solar-sunrise-sunset-string (calendar-current-date)))))
+
+(define-key global-map (kbd "µ") #'my/func)
+#+end_src
+
+#+RESULTS:
+: ‘Sunrise 3:55am (-03), sunset 8:37pm (-03) at Franca, SP (16:42 hrs daylight)’
+
+#+begin_src emacs-lisp
+(message "hello")
+#+end_src
+
+#+RESULTS:
+: hello
+
+‘Sunrise 3:55am (-03), sunset 8:37pm (-03) at Franca, SP (16:42 hrs daylight)’
+
+* Forecast
+#+begin_src emacs-lisp
+  (use-package sunshine
+    :config
+    (setq sunshine-location "Franca,BR")
+    (setq sunshine-appid "9aab453d27bd304db6f42cedef3b554a"))
+#+end_src
+
+#+RESULTS:
+: t
+
+

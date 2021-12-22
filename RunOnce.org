@@ -1,0 +1,11 @@
+#+TITLE: Some configurations that are ment to be Run Once.
+
+
+* Common Lisp dynamic
+#+begin_src emacs-lisp :tangle no
+  (load (expand-file-name "~/.local/quicklisp/slime-helper.el"))
+  (setq inferior-lisp-program "sbcl")
+#+end_src
+
+#+RESULTS:
+: sbcl

@@ -449,8 +449,8 @@
 (use-package eaf
   :demand t
   :quelpa (eaf :fetcher github
-              :repo  "manateelazycat/emacs-application-framework"
-              :files ("*"))
+               :repo  "manateelazycat/emacs-application-framework"
+               :files ("*"))
   :load-path "~/.emacs.default/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
   :init
   (use-package epc      :defer t :ensure t)
@@ -479,7 +479,80 @@
 (require 'eaf-image-viewer)
 ;; (require 'eaf-file-browser)
 ;; (require 'eaf-airshare)
-;; (require 'eaf-mermaid)
+;; (require 'eaf-mermaid))
 
 (add-to-list 'load-path "~/.emacs.default/site-lisp/emacs-application-framework/app/video-player/")
 (require 'eaf-video-player)
+
+(use-package elmacro)
+
+(defun flush-org-names ()
+  (interactive)
+  (setq last-command-event 103)
+  (evil-goto-first-line nil)
+  (setq last-command-event 86)
+  (evil-visual-line nil nil 'line t)
+  (setq last-command-event 71)
+  (evil-goto-line nil)
+  (setq last-command-event 13)
+  (flush-lines "[+]NAME:" nil nil t)
+  (setq last-command-event 13)
+  (counsel-M-x)
+  (setq last-command-event 'f4))
+
+(global-set-key (kbd "C-c C-o f") 'flush-org-names)
+
+(use-package chembalance)
+(use-package chemtable)
+
+(use-package calfw-org)
+(use-package calfw-cal)
+(use-package calfw-ical)
+(use-package calfw-gcal)
+
+(use-package ox-reveal)
+
+(use-package htmlize)
+
+(defun tidy-html ()
+  "Tidies the HTML content in the buffer using `tidy'"
+  (interactive)
+  (shell-command-on-region
+   ;; beginning and end of buffer
+   (point-min)
+   (point-max)
+   ;; command and parameters
+   "tidy -i -w 120 -q"
+   ;; output buffer
+   (current-buffer)
+   ;; replace?
+   t
+   ;; name of the error buffer
+   "*Tidy Error Buffer*"
+   ;; show error buffer?
+   t))
+
+(use-package celestial-mode-line
+  :config
+  (setq calendar-longitude "20.54S")
+  (setq calendar-latitude "47.40W")
+  (setq calendar-location-name "Franca, SP")
+  (setq global-mode-string '("" celestial-mode-line-string display-time-string))
+  (defvar celestial-mode-line-phase-representation-alist '((0 . "○") (1 . "☽") (2 . "●") (3 . "☾")))
+  (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "☀↑ ") (sunset . "☀↓ ")))
+  (defvar celestial-mode-line-phase-representation-alist '((0 . "( )") (1 . "|)") (2 . "(o)") (3 . "|)")))
+  (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "*^") (sunset . "*v")))
+  (celestial-mode-line-start-timer))
+
+(defun my/func ()
+  (interactive)
+  (display-message-or-buffer (message "`%s'" (solar-sunrise-sunset-string (calendar-current-date)))))
+
+(define-key global-map (kbd "µ") #'my/func)
+
+(message "hello")
+
+(use-package sunshine
+  :config
+  (setq sunshine-location "Franca,BR")
+  (setq sunshine-appid "9aab453d27bd304db6f42cedef3b554a"))

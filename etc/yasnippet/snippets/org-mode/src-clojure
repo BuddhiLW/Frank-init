@@ -3,6 +3,6 @@
 # key: <cl
 # --
 #+begin_src clojure
-$1
+$0
 #+end_src
 

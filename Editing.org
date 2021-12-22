@@ -214,6 +214,15 @@ Move configuration on Emacs.org to here.
     #+end_src
 
     #+RESULTS:
+
+#+begin_src emacs-lisp
+  (use-package yasnippet
+    :config
+    (setq yas-global-mode 1))
+#+end_src
+
+#+RESULTS:
+: t
     
 * Language-specific
 ** LaTeX
@@ -251,8 +260,8 @@ Move configuration on Emacs.org to here.
       (setq org-latex-minted-options
             '(("frame" "lines")
               ("fontsize" "\\scriptsize")
-              ("linenos" "")
-              ("bgcolor" "LightGrey")))
+              ("linenos" "false")
+              ("bgcolor" "LightGray")))
       (setq org-latex-to-pdf-process
             '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
               "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
@@ -546,40 +555,44 @@ SCHEDULED: <2021-06-25 Fri>
 #+RESULTS:
 
 * Fast Input Methods
-# #+begin_src emacs-lisp
-#   ;; Input method and key binding configuration.
-#   (setq alternative-input-methods
-#         '(("chinese-tonepy" . [?\ä])
-#           ("chinese-sisheng"   . [?\å])))
+#+begin_src emacs-lisp
+  ;; Input method and key binding configuration.
+  (setq alternative-input-methods
+        '(("chinese-tonepy" . [?\ä])
+          ("chinese-sisheng"   . [?\å])))
   
-#   (setq default-input-method
-#         (caar alternative-input-methods))
+  (setq default-input-method
+        (caar alternative-input-methods))
   
-#   (defun toggle-alternative-input-method (method &optional arg interactive)
-#     (if arg
-#         (toggle-input-method arg interactive)
-#       (let ((previous-input-method current-input-method))
-#         (when current-input-method
-#           (deactivate-input-method))
-#         (unless (and previous-input-method
-#                      (string= previous-input-method method))
-#           (activate-input-method method)))))
+  (defun toggle-alternative-input-method (method &optional arg interactive)
+    (if arg
+        (toggle-input-method arg interactive)
+      (let ((previous-input-method current-input-method))
+        (when current-input-method
+          (deactivate-input-method))
+        (unless (and previous-input-method
+                     (string= previous-input-method method))
+          (activate-input-method method)))))
   
-#   (defun reload-alternative-input-methods ()
-#     (dolist (config alternative-input-methods)
-#       (let ((method (car config)))
-#         (global-set-key (cdr config)
-#                         `(lambda (&optional arg interactive)
-#                            ,(concat "Behaves similar to `toggle-input-method', but uses \""
-#                                     method "\" instead of `default-input-method'")
-#                            (interactive "P\np")
-#                            (toggle-alternative-input-method ,method arg interactive))))))
+  (defun reload-alternative-input-methods ()
+    (dolist (config alternative-input-methods)
+      (let ((method (car config)))
+        (global-set-key (cdr config)
+                        `(lambda (&optional arg interactive)
+                           ,(concat "Behaves similar to `toggle-input-method', but uses \""
+                                    method "\" instead of `default-input-method'")
+                           (interactive "P\np")
+                           (toggle-alternative-input-method ,method arg interactive))))))
   
-#   (reload-alternative-input-methods)
-# #+end_src
+  (reload-alternative-input-methods)
+#+end_src
 
 #+RESULTS:
 
+- ABC romano
+- 你好, 我时 (...)
+- nǐ hǎo, wǒ shì (...)
+  
 * Org-mode fontsize
 #+begin_src emacs-lisp
 (set-face-attribute 'org-table nil :inherit 'fixed-pitch :height 1.4)
@@ -667,16 +680,16 @@ SCHEDULED: <2021-06-25 Fri>
 
 ** Auto-indent
 #+begin_src emacs-lisp
-  ;; (use-package aggressive-indent
-    ;; :hook (prog-mode . aggresive-indent))
+  (use-package aggressive-indent
+    :config
+    (setq global-aggressive-indent-mode 1))
 #+end_src
 
 #+RESULTS:
-| aggresive-indent | outshine-mode | auto-complete-mode | indent-guide-mode | evil-smartparens-mode | smartparens-mode | rainbow-delimiters-mode | fira-code-mode | prettify-symbols-mode |
+: t
 
 #+begin_src emacs-lisp
   ;; (use-package aggressive-fill-paragraph)
   #+end_src
 
 #+RESULTS:
-

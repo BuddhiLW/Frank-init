@@ -326,10 +326,9 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
 
 #+begin_src emacs-lisp
-  
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  
+
   (use-package general
     :after evil
     :config
@@ -337,12 +336,21 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
       :keymaps '(normal insert visual emacs)
       :prefix "SPC"
       :global-prefix "C-SPC")
-  
+
     (efs/leader-keys
       "t"  '(:ignore t :which-key "toggles")
       "tt" '(counsel-load-theme :which-key "choose theme")
-      "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
-  
+      "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.default/Emacs.org")) :which-key "Emacs config")
+      "k" '(lambda () (interactive) (org-babel-previous-src-block) :which-key "Previous block")
+      "j" '(lambda () (interactive) (org-babel-next-src-block) :which-key "Next block")
+      "ph" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Habits.org")) :which-key "Habits")
+      "pi" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/IMPA.org")) :which-key "IMPA")
+      "pps" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/ProcSel.org")) :which-key "Processo Seletivo")
+      "ppp" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Programming.org")) :which-key "Programming")
+      "pr" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Research.org")) :which-key "Reasearch")
+      "pt" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/Tasks.org")))
+      "pu" '(lambda () (interactive) (find-file (expand-file-name "~/Projects/University.org")))))
+
   (use-package evil
     :init
     (setq evil-want-keybinding nil)
@@ -353,33 +361,33 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
     (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-  
+
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-  
+
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
-  
+
   (use-package evil-collection
     :after evil
     :init
     (setq evil-want-keybinding nil)
     :config
     (evil-collection-init))
-  
+
   ;;   (use-package general
   ;;   :config
   ;;   (general-evil-setup t)
-  
+
   ;;   (general-create-definer dw/leader-key-def
   ;;     :keymaps '(normal insert visual emacs)
   ;;     :prefix "SPC"
   ;;     :global-prefix "C-SPC")
-  
+
   ;;   (general-create-definer dw/ctrl-c-keys
   ;;     :prefix "C-c"))
-  
+
 #+end_src
 
 #+RESULTS:
@@ -420,14 +428,16 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
   (use-package doom-modeline
     :init (doom-modeline-mode 1)
-    :custom ((doom-modeline-height 10)))
-  (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (setq doom-modeline--batery-status t)
-  (setq doom-modeline-lsp t)
+    :custom ((doom-modeline-height 10))
+    :config
+    (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+    (setq doom-modeline--batery-status t)
+    (setq doom-modeline-lsp t)
+    (display-battery-mode 1))
 #+end_src
 
 #+RESULTS:
-: truncate-with-project
+: t
 
 ** Which Key
 
@@ -600,12 +610,23 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 *** Major mode (code formatter included)
 #+begin_src emacs-lisp
-  (use-package clojure-mode)
-    ;; :hook ((paredit-mode . clojure-mode))
+  (use-package clojure-mode
+    :hook ((clojure-mode . subword-mode)
+           (clojure-mode . paredit-mode)
+           (clojure-mode . smartparens-strict-mode)
+           (clojure-mode . aggressive-indent-mode)))
+  ;; :hook ((paredit-mode . clojure-mode))
 #+end_src
 
 #+RESULTS:
-| clojure-mode | clojure-paredit-setup |
+: t
+
+#+begin_src emacs-lisp
+(setq clojure-align-forms-automatically t)
+#+end_src
+
+#+RESULTS:
+: t
 
 *** Extra font-locking
 #+begin_src emacs-lisp
@@ -675,6 +696,7 @@ The =efs/org-font-setup= function configures various text faces to tweak the siz
 
 #+RESULTS:
 : efs/org-font-setup
+ 
 
 ** Org-auto-tangle
    #+begin_src emacs-lisp
@@ -688,6 +710,7 @@ The =efs/org-font-setup= function configures various text faces to tweak the siz
 
 ** Basic Config
 
+*** Setup
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
 
 #+begin_src emacs-lisp
@@ -696,10 +719,20 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (variable-pitch-mode 1)
     (visual-line-mode 1))
 
+  ;; (defun bw/org-motion-setup ()
+  ;;   (general-create-definer bw/org-leader-keys
+  ;;     :keymaps '(normal visual emacs)
+  ;;     :prefix "SPC")
+  ;;   (bw/org-leader-keys
+  ;;    "j" '(lambdaorg-babel-next-src-block)
+  ;;    "k" '(org-babel-previous-src-block)
+  ;;    "SPC" '(org-ctrl-c-ctrl-c)))
+
   (use-package org
     :pin org
     :commands (org-capture org-agenda)
     :hook ((org-mode . efs/org-mode-setup)
+           ;; (org-mode . bw/org-motion-setup)
            (org-mode . auto-fill-mode))
     :config
     (setq org-ellipsis " ▾")
@@ -823,11 +856,10 @@ This section contains the basic configuration for =org-mode= plus the configurat
       (lambda () (interactive) (org-capture nil "jj")))
 
     (efs/org-font-setup))
-
 #+end_src
 
 #+RESULTS:
-| org-evil--org-mode-hook-fn | org-ref-org-menu | (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | org-display-inline-images | efs/org-mode-visual-fill | (lambda nil (org-bullets-mode 1)) | org-superstar-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | auto-fill-mode | efs/org-mode-setup | org-auto-tangle-mode | (lambda nil (display-line-numbers-mode 0)) |
+| bw/org-motion-setup | org-evil--org-mode-hook-fn | org-ref-org-menu | (lambda nil (add-hook 'after-save-hook #'efs/org-babel-tangle-config)) | org-tempo-setup | org-display-inline-images | efs/org-mode-visual-fill | (lambda nil (org-bullets-mode 1)) | org-superstar-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | auto-fill-mode | efs/org-mode-setup | org-auto-tangle-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | (lambda nil (display-line-numbers-mode 0)) |
 
 *** Nicer Heading Bullets 
 
@@ -1016,6 +1048,8 @@ Chosing an image's size with :width property
 
 #+RESULTS:
 
+*** Specific 
+
 ** Configure Babel Languages
 
 #+begin_src emacs-lisp
@@ -1049,6 +1083,8 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
        (python . t)
        (browser . t)
        (ditaa . t)
+       (R . t)
+       (go . t) 
        ;; (ipython . t)
        (julia-vterm . t)
        ;; (julia . t)
@@ -1064,7 +1100,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
 #+end_src
 
 #+RESULTS:
-: ((conf-unix . conf-unix) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (julia-vterm . julia) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+: ((conf-unix . conf-unix) (dot . graphviz-dot) (conf-unix . conf-unix) (ein-julia . julia) (ein-r . R) (ein-R . R) (ein-python . python) (ein . python) (julia-vterm . julia) (browser . html) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
 
 #+begin_src emacs-lisp
   (custom-set-variables
@@ -1272,19 +1308,20 @@ As it is hand-maiden: https://github.com/legalnonsense/elgantt/,
 
 ** Anaconda
    #+begin_src emacs-lisp
-     (use-package conda)
-     (setq
-     conda-env-home-directory (expand-file-name "~/.conda/")
-     conda-env-subdirectory "envs")
-     (custom-set-variables '(conda-anaconda-home "/opt/anaconda/"))
-     (conda-env-initialize-interactive-shells)
-     (conda-env-initialize-eshell)
-     (conda-env-autoactivate-mode t)
+     (use-package conda
+       :config
+       (setq
+        conda-env-home-directory (expand-file-name "~/.conda/")
+        conda-env-subdirectory "envs")
+       (custom-set-variables '(conda-anaconda-home "/opt/anaconda2/"))
+       (conda-env-initialize-interactive-shells)
+       (conda-env-initialize-eshell)
+       (conda-env-autoactivate-mode t))
    #+end_src
 
    #+RESULTS:
    : t
-
+ 
 * Terminals
 ** term-mode
 
@@ -1731,6 +1768,91 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 
 #+RESULTS:
 
+* Reveal.js presentations
+pt-br: 
+
+#+begin_src emacs-lisp
+  (use-package ox-reveal)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
+
+#+RESULTS:
+ 
+* Emacs extension by shell scripting
+
+#+begin_src emacs-lisp
+  (defun tidy-html ()
+    "Tidies the HTML content in the buffer using `tidy'"
+    (interactive)
+    (shell-command-on-region
+     ;; beginning and end of buffer
+     (point-min)
+     (point-max)
+     ;; command and parameters
+     "tidy -i -w 120 -q"
+     ;; output buffer
+     (current-buffer)
+     ;; replace?
+     t
+     ;; name of the error buffer
+     "*Tidy Error Buffer*"
+     ;; show error buffer?
+     t))
+#+end_src
+
+#+RESULTS:
+: tidy-html
+
+* Celestial-mode-line
+#+begin_src emacs-lisp
+  (use-package celestial-mode-line
+    :config
+    (setq calendar-longitude "20.54S")
+    (setq calendar-latitude "47.40W")
+    (setq calendar-location-name "Franca, SP")
+    (setq global-mode-string '("" celestial-mode-line-string display-time-string))
+    (defvar celestial-mode-line-phase-representation-alist '((0 . "○") (1 . "☽") (2 . "●") (3 . "☾")))
+    (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "☀↑ ") (sunset . "☀↓ ")))
+    (defvar celestial-mode-line-phase-representation-alist '((0 . "( )") (1 . "|)") (2 . "(o)") (3 . "|)")))
+    (defvar celestial-mode-line-sunrise-sunset-alist '((sunrise . "*^") (sunset . "*v")))
+    (celestial-mode-line-start-timer)
+    :init
+    (define-key global-map
+      (kbd "µ")
+      (display-message-or-buffer (message "`%s'" (eval '(solar-sunrise-sunset-string (calendar-current-date)))))))
+#+end_src
+
+#+RESULTS:
+: t
+
+#+begin_src emacs-lisp :tangle no
+(eval '(solar-sunrise-sunset-string (calendar-current-date)))
+#+end_src
+
+#+RESULTS:
+: Sunrise 3:55am (-03), sunset 8:37pm (-03) at Franca, SP (16:42 hrs daylight)
+
+** Bindings for retriving data
+#+begin_src emacs-lisp :tangle no
+#+end_src
+
+#+RESULTS:
+: ‘Sunrise 3:55am (-03), sunset 8:37pm (-03) at Franca, SP (16:42 hrs daylight)’
+
+#+begin_src emacs-lisp
+(message "hello")
+#+end_src
+
+#+RESULTS:
+: hello
+
+‘Sunrise 3:55am (-03), sunset 8:37pm (-03) at Franca, SP (16:42 hrs daylight)’
+
 * Load Desktop.el and other auxiliaries
 
 #+begin_src emacs-lisp
@@ -1740,6 +1862,7 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 #+RESULTS:
 
 #+begin_src emacs-lisp
+  (load-relative "./pl.el")
   (load-relative "./editing.el")
   (load-relative "./desktop.el")
 #+end_src

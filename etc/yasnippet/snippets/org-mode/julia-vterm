@@ -3,5 +3,5 @@
 # key: <vj
 # --
 #+begin_src julia :session main :result output
-$1
+$0
 #+end_src
