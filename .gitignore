@@ -9,3 +9,13 @@ var/
 elpa/*
 exwm
 thumbs
+site-lisp/*
+var/
+var/*
+ob-julia-vterm
+ob-julua-vterm.el
+indium-chrome-profile
+exwm
+quelpa
+elpa
+Projects
